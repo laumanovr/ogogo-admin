@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.23.9",
+    "@tumarsoft/ogogo-ui": "^0.1.0",
     "axios": "^1.6.5",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",

@@ -1,6 +1,6 @@
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 
-const findComponent = (path: string) => () => import(`../views/${path}.vue`);
+// const findComponent = (path: string) => () => import(`../views/${path}.vue`);
 
 import { Component } from "vue";
 import Login from "@/pages/Login.vue";
