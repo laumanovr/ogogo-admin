@@ -1,0 +1,12 @@
+@import "./colors.scss";
+@import "./fonts.scss";
+
+body * {
+  font-family: "Montserrat", sans-serif;
+}
+
+.head-title {
+  font-weight: 700;
+  font-size: 36px;
+  margin: 25px 0;
+}
