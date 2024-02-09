@@ -6,22 +6,28 @@
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc && vite build",
-    "preview": "vite preview",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
-    "format": "prettier .  --write"
+    "format": "prettier .  --write",
+    "serve": "vue-cli-service serve"
   },
   "dependencies": {
     "@babel/preset-env": "^7.23.9",
+    "@vue/compiler-sfc": "^3.4.15",
     "axios": "^1.6.5",
+    "lodash": "^4.17.21",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
+    "uuid": "^9.0.1",
     "vue": "^3.3.11",
+    "vue-i18n": "^9.9.1",
     "vue-router": "^4.2.5"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.7.2",
+    "@types/lodash": "^4.14.202",
     "@types/node": "^20.11.16",
-    "@vitejs/plugin-vue": "^4.5.2",
+    "@types/uuid": "^9.0.8",
+    "@vitejs/plugin-vue": "^5.0.3",
     "babel-eslint": "^10.1.0",
     "eslint": "^8.56.0",
     "eslint-config-airbnb-base": "^15.0.0",
