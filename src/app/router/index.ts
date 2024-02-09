@@ -1,31 +1,36 @@
-import {
-  createRouter,
-  createWebHistory,
-  RouteLocationNormalized,
-  RouteRecordRaw,
-} from "vue-router";
 import { Component } from "vue";
-import Login from "@/pages/Login.vue";
-import Home from "@/pages/Home.vue";
 import { AuthMiddleware } from "@/app/router/middlware/auth";
 import { AccessRequestMiddleware } from "@/app/router/middlware/access-request";
 import Chain from "./middlware/chain";
 import { flattenRoutes, transformToRouter } from "@/shared/utils/route";
+import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import Home from "@/pages/Home.vue";
 
-// const findComponent = (path: string) => () => import(`../views/${path}.vue`);
+const findComponent = (path: string) => () => import(`../../pages/${path}.vue`);
 
-const routes: { path: string; component: Component; name: string }[] = [
-  {
-    path: "/",
-    name: "login",
-    component: Login,
-  },
-  {
-    path: "/home",
-    name: "home",
-    component: Home,
-  },
-];
+const routes: { path: string; component: () => Promise<any>; name: string }[] =
+  [
+    {
+      path: "/",
+      name: "login",
+      component: findComponent("Login"),
+    },
+    {
+      path: "/property",
+      name: "property",
+      component: findComponent("Property"),
+    },
+    {
+      path: "/property/:id",
+      name: "propertyDetail",
+      component: findComponent("PropertyDetail"),
+    },
+    {
+      path: "/home",
+      name: "home",
+      component: Home,
+    },
+  ];
 
 // console.log(import.meta.env.VUE_APP_API_SERVER);
 // console.log(process.env.VUE_APP_API_SERVER);
