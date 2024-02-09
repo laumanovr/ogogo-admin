@@ -3,6 +3,7 @@ import App from "@/app/App.vue";
 import router from "./app/router";
 import "./app/style/main.scss";
 import { SButton } from "@tumarsoft/ogogo-ui";
+import "@tumarsoft/ogogo-ui/styles"
 
 const app = createApp(App);
 

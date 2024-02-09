@@ -1,8 +1,8 @@
 <template>
   <Header />
   <slot></slot>
-  <o-btn :title="'hello'"></o-btn>
-  <SButton></SButton>
+  <o-btn>asdfsad</o-btn>
+  <SButton>hello</SButton>
 </template>
 
 <script lang="ts" setup>
