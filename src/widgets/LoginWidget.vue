@@ -2,17 +2,30 @@
   <div class="login-container">
     <div class="login-block">
       <div class="login-logo">
-        <img src="../shared/ui/assets/Ogogo-logo.png" alt="img">
+        <img src="../shared/ui/assets/Ogogo-logo.png" alt="img" />
       </div>
       <Form class="form-block" ref="loginForm">
         <div class="form-title">Вход</div>
         <div>
-          <Input label="Логин" width="100%" :rules="rules" v-model="loginObj.login"/>
+          <Input
+            label="Логин"
+            width="100%"
+            :rules="rules"
+            v-model="loginObj.login"
+          />
         </div>
         <div class="input-password">
-          <Input type="password" label="Пароль" width="100%" :rules="rules" v-model="loginObj.password"/>
+          <Input
+            type="password"
+            label="Пароль"
+            width="100%"
+            :rules="rules"
+            v-model="loginObj.password"
+          />
         </div>
-        <Button size="large" color="violet" @click="onSubmitLogin">Войти</Button>
+        <Button size="large" color="violet" @click="onSubmitLogin"
+          >Войти</Button
+        >
       </Form>
     </div>
   </div>
@@ -23,16 +36,18 @@ import Form from "../../node_modules/ogogo-uikit/src/components/Form/Form.vue";
 import Input from "../../node_modules/ogogo-uikit/src/components/Input/Input.vue";
 import Button from "../../node_modules/ogogo-uikit/src/components/SButton/SButton.vue";
 // ----------------------------------------------------
-import {ref, reactive} from "vue";
+import { ref, reactive } from "vue";
 
-const loginObj = reactive({login: "", password: ""});
-const rules = [{validate: (value) => value.length >= 1, message: "Обязательное поле"}];
+const loginObj = reactive({ login: "", password: "" });
+const rules = [
+  { validate: (value) => value.length >= 1, message: "Обязательное поле" },
+];
 const loginForm = ref(null);
 
 const onSubmitLogin = () => {
   const isValid = loginForm.value.validateForm();
   console.log(isValid);
-}
+};
 </script>
 
 <style lang="scss">
