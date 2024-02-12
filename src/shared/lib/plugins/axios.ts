@@ -3,16 +3,16 @@ import axios from "axios";
 // import { actionTypes } from "@/store/auth/types";
 // import { actionTypes as notificationActionTypes } from "@/store/notification";
 // import { getItem } from "@/utils/persistanceStorage";
-import { i18n } from "@/shared/plugins/i18n";
+import { i18n } from "@/shared/lib/plugins/i18n";
 import { getItem } from "../utils/persistanceStorage";
 import { INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES } from "@/app/router/index.type";
 // import getCustomErrorMessage from '@/utils/error-dictionary'
 // import { INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES } from '@/utils/consts'
 
-axios.defaults.baseURL = "https://api-test.scoring.kg";
+axios.defaults.baseURL = import.meta.env.VITE_API_SERVER;
 
-console.log(axios.defaults.baseURL);
-console.log(import.meta.env.VUE_APP_API_SERVER);
+// console.log(axios.defaults.baseURL);
+// console.log(import.meta.env.VITE_API_SERVER);
 
 function runWhen(error) {
   const errorCode = error?.response?.data?.error?.errorCode;

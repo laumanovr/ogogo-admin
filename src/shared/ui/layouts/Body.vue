@@ -1,15 +1,14 @@
 <template>
-  <span>Header</span>
-
-  <div>
+  <div class="">
     <form @submit.prevent="onSubmit">
       <label for="login">login</label>
-      <input id="login" v-model="cred.login" />
+      <input id="login" v-model="cred.login" class="mr-40" />
       <label for="password">password</label>
       <input id="password" v-model="cred.password" />
-      <button type="submit">login</button>
+      <button type="submit" class="ml-40">login</button>
     </form>
   </div>
+  <!-- <button @click="getList">get list</button> -->
 </template>
 
 <script lang="ts" setup>
@@ -20,6 +19,13 @@ import { getItem, setItem } from "@/shared/utils/persistanceStorage";
 import { AuthLoginPayloadInterface } from "@/shared/api/auth/types";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/shared/store/auth";
+import { getGeneralParameters } from "@/shared/api/common";
+// import config from "../../../node_modules/ogogo-ui/uno.config";
+// import { onMounted } from "vue";
+
+// onMounted(() => {
+// console.log(config);
+// });
 
 const router = useRouter();
 
@@ -29,6 +35,10 @@ const cred: ILogin = reactive({
   login: "",
   password: "",
 });
+
+function getList() {
+  getGeneralParameters();
+}
 
 function onSubmit(): void {
   let phoneNumber = cred.login;
@@ -100,19 +110,20 @@ function getOrCreateCertKey() {
   return certKey;
 }
 
-// function login() {
-//   // resetErrors();
-//   // loading.value = true;
-//   userStore
-//     .login({ ...cred })
-//     .then(() => {
-//       router.push({ name: "crm" });
-//     })
-//     .catch((err: ILoginResultFail) => {
-//       error.value = [err.localizatedErrorCode];
-//     })
-//     .finally(() => {
-//       loading.value = false;
-//     });
-// }
+function login() {
+  // resetErrors();
+  // loading.value = true;
+  userStore
+    .login({ ...cred })
+    .then(() => {
+      router.push({ name: "crm" });
+    })
+    .catch((err: ILoginResultFail) => {
+      error.value = [err.localizatedErrorCode];
+    })
+    .finally(() => {
+      loading.value = false;
+    });
+}
 </script>
+<!-- @/shared/lib/utils/persistanceStorage -->

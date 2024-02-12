@@ -9,11 +9,11 @@ import {
 } from "./index.types";
 import { useAlertStore } from "@/shared/store/alert";
 import { getCurrentUser, login } from "@/shared/api/auth";
-import { getItem, setItem } from "@/shared/utils/persistanceStorage";
+import { getItem, setItem } from "@/shared/lib/utils/persistanceStorage";
 import {
   AuthorizationChannelEvent,
   BroadcastChannelName,
-} from "@/shared/utils/consts";
+} from "@/shared/lib/utils/consts";
 // import { login as loginApi } from "@/api/auth/index";
 
 // import type {
