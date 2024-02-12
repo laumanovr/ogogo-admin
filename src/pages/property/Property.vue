@@ -87,13 +87,7 @@
       </div>
     </template>
     <template v-else>
-      <div class="empty-container">
-        <div class="empty-action">
-          <img src="../app/assets/img/empty-folder.svg" alt="empty">
-          <p>Здесь пока пусто, добавьте свойство</p>
-          <Button size="large" color="violet" @click="addProperty">+ Добавить свойство</Button>
-        </div>
-      </div>
+      <EmptyData buttonTitle="Добавить свойство" @onClick="addProperty"/>
     </template>
   </div>
 </template>
@@ -108,6 +102,7 @@ import Select from "/node_modules/ogogo-uikit/src/components/Select/Select.vue";
 import Input from "/node_modules/ogogo-uikit/src/components/Input/Input.vue";
 // -----------------------------------------------------------------
 import {ref, reactive, computed} from "vue";
+import EmptyData from "../../features/EmptyData.vue";
 
 const items = reactive([
   {name: 'JavaScript', id: 'id-js'},
@@ -157,7 +152,7 @@ const onSubmit = () => {
 </script>
 
 <style lang="scss">
-@import "../app/style/colors.scss";
+@import "../../app/style/colors";
 
 .property-container {
   .filter-container {
@@ -179,23 +174,6 @@ const onSubmit = () => {
 
     .search-input {
 
-    }
-  }
-
-  .empty-container {
-    margin-top: 40px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-
-    .button {
-      margin: 0 auto;
-    }
-
-    p {
-      margin: 24px 0;
-      font-weight: 500;
-      font-size: 16px;
     }
   }
 }
