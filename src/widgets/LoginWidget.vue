@@ -19,9 +19,9 @@
 </template>
 
 <script lang="ts" setup>
-import Form from "/node_modules/ogogo-uikit/src/components/Form/Form.vue";
-import Input from "/node_modules/ogogo-uikit/src/components/Input/Input.vue";
-import Button from "/node_modules/ogogo-uikit/src/components/SButton/SButton.vue";
+import Form from "../../node_modules/ogogo-uikit/src/components/Form/Form.vue";
+import Input from "../../node_modules/ogogo-uikit/src/components/Input/Input.vue";
+import Button from "../../node_modules/ogogo-uikit/src/components/SButton/SButton.vue";
 // ----------------------------------------------------
 import {ref, reactive} from "vue";
 
