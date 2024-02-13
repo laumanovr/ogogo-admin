@@ -5,7 +5,7 @@ import pinia from "@/app/store/index";
 import "./app/style/main.scss";
 import interceptors from "@/shared/lib/plugins/axios";
 import "virtual:uno.css";
-import { i18n } from "@/shared/lib/plugins/i18n";
+import i18n from "@/shared/lib/plugins/i18n";
 
 interceptors();
 
