@@ -1,15 +1,15 @@
 <template>
   <div class="property-value-container">
     <div class="title-container">
-      <Button color="white" @click="goBack">
-        <IconRender name="ArrowIcon" direction="left"/>
+      <SButton color="white" @click="goBack">
+        <SIconRender name="ArrowIcon" direction="left"/>
         Назад
-      </Button>
+      </SButton>
       <h2 class="head-title">Свойства/Значение</h2>
     </div>
     <div class="actions">
-      <Input isSearchable isClearable width="100%"/>
-      <Button color="violet" :disabled="isDisabled">Сохранить</Button>
+      <SInput isSearchable isClearable width="100%"/>
+      <SButton color="violet" :disabled="isDisabled">Сохранить</SButton>
     </div>
     <div class="table-container">
       <div class="table-data group">
@@ -39,10 +39,7 @@
 </template>
 
 <script lang="ts" setup>
-import Button from "/node_modules/ogogo-uikit/src/components/SButton/SButton.vue";
-import IconRender from "/node_modules/ogogo-uikit/src/components/Icons/IconRender/IconRender.vue";
-import Input from "/node_modules/ogogo-uikit/src/components/Input/Input.vue";
-// ---------------------------------
+import {SButton, SIconRender, SInput} from "@tumarsoft/ogogo-ui";
 import {ref, reactive, computed} from "vue";
 import {useRouter} from 'vue-router';
 
@@ -50,7 +47,7 @@ const router = useRouter();
 
 const currentValues = reactive([]);
 
-const isDisabled = computed(() => currentValues.every((item) => !item.recent));
+const isDisabled = computed(() => currentValues.every((item: { recent: any; }) => !item.recent));
 
 const goBack = () => {
   router.push('/property');
@@ -61,7 +58,7 @@ const addValue = () => {
 }
 
 const onSave = () => {
-  const newValues = currentValues.filter((item) => item.recent);
+  const newValues = currentValues.filter((item: { recent: any; }) => item.recent);
 }
 </script>
 
