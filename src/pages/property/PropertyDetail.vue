@@ -3,13 +3,13 @@
     <div class="title-container">
       <SButton color="white" @click="goBack">
         <SIconRender name="ArrowIcon" direction="left"/>
-        Назад
+        {{$t('lang-943d7231-c402-4b11-929c-b26a3ee10276')}}
       </SButton>
       <h2 class="head-title">Свойства/Значение</h2>
     </div>
     <div class="actions">
       <SInput isSearchable isClearable width="100%"/>
-      <SButton color="violet" :disabled="isDisabled">Сохранить</SButton>
+      <SButton color="violet" :disabled="isDisabled">{{$t('lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf')}}</SButton>
     </div>
     <div class="table-container">
       <div class="table-data group">
