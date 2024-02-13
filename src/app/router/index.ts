@@ -5,26 +5,26 @@ import Chain from "./middlware/chain";
 import { flattenRoutes, transformToRouter } from "@/shared/lib/utils/route";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import catergoryRoute from "@/pages/category/router";
-// import Home from "@/pages/Home.vue";
-
-const findComponent = (path: string) => () => import(`../../pages/${path}.vue`);
+import Login from "@/pages/login/Login.vue";
+import Property from "@/pages/property/Property.vue";
+import PropertyDetail from "@/pages/property-detail/PropertyDetail.vue";
 
 const routes: { path: string; component: () => Promise<any>; name: string }[] =
   [
     {
       path: "/",
       name: "login",
-      component: findComponent("Login"),
+      component: Login,
     },
     {
       path: "/property",
       name: "property",
-      component: findComponent("Property"),
+      component: Property,
     },
     {
       path: "/property/:id",
       name: "propertyDetail",
-      component: findComponent("PropertyDetail"),
+      component: PropertyDetail,
     },
     catergoryRoute,
     // {
