@@ -1,16 +1,14 @@
-import { Component } from "vue";
 import { AuthMiddleware } from "@/app/router/middlware/auth";
 import { AccessRequestMiddleware } from "@/app/router/middlware/access-request";
 import Chain from "./middlware/chain";
 import { flattenRoutes, transformToRouter } from "@/shared/lib/utils/route";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Home from "@/pages/Home.vue";
+import catergoryRoute from "@/pages/category/router";
 import Login from "@/pages/login/Login.vue";
 import Property from "@/pages/property/Property.vue";
 import PropertyDetail from "@/pages/property-detail/PropertyDetail.vue";
 
-
-const routes: { path: string; component: () => Promise<any>; name: string }[] =
+const routes: RouteRecordRaw[] =
   [
     {
       path: "/",
@@ -27,15 +25,13 @@ const routes: { path: string; component: () => Promise<any>; name: string }[] =
       name: "propertyDetail",
       component: PropertyDetail,
     },
-    {
-      path: "/home",
-      name: "home",
-      component: Home,
-    },
+    catergoryRoute,
+    // {
+    //   path: "/home",
+    //   name: "home",
+    //   component: Home,
+    // },
   ];
-
-// console.log(import.meta.env.VUE_APP_API_SERVER);
-// console.log(process.env.VUE_APP_API_SERVER);
 
 const router = createRouter({
   history: createWebHistory(),

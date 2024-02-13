@@ -7,7 +7,7 @@
         @click="onMenuItemChange(MenuItems.Products)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <BoxIcon :color="isProductsActive" />
+        <IconRenderer :color="isProductsActive" :name="'BoxIcon'" />
         <p :class="`text-${isProductsActive} text-size-12`">
           {{ $t("lang-9839245b-e40e-4ae1-92e9-0421dc97a154") }}
         </p>
@@ -16,7 +16,7 @@
         @click="onMenuItemChange(MenuItems.Stores)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <ShopIcon :color="isStoresActive" />
+        <IconRenderer :color="isStoresActive" :name="'ShopIcon'" />
         <p :class="`text-${isStoresActive} text-size-12`">
           {{ $t("lang-425a5a16-bf0a-4ded-a7bc-cbe7490b659a") }}
         </p>
@@ -25,7 +25,7 @@
         @click="onMenuItemChange(MenuItems.Category)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <GridIcon :color="isCategoryActive" />
+        <IconRenderer :color="isCategoryActive" :name="'GridIcon'" />
         <!-- <img src="../../ui/assets/Grid.png" /> -->
         <p :class="`text-${isCategoryActive} text-size-12`">
           {{ $t("lang-75805fdb-eac2-4c87-b481-563e318789b5") }}
@@ -36,13 +36,15 @@
 </template>
 
 <script lang="ts" setup>
-import BoxIcon from "@/shared/ui/icons/header-menu/BoxIcon.vue";
-import ShopIcon from "@/shared/ui/icons/header-menu/ShopIcon.vue";
-import GridIcon from "@/shared/ui/icons/header-menu/GridIcon.vue";
+import IconRenderer from "../../../../node_modules/ogogo-uikit/src/components/Icons/IconRender/IconRender.vue";
 import { MenuItems } from "@/shared/lib/utils/enums";
 import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
 
 const activeButton = ref(MenuItems.Category);
+
+// const route = useRoute();
+const router = useRouter();
 
 const isProductsActive = computed(() => {
   return activeButton.value === MenuItems.Products ? "violet-700" : "gray-400";
@@ -55,6 +57,7 @@ const isCategoryActive = computed(() => {
 });
 
 function onMenuItemChange(value: MenuItems) {
+  router.push("/" + value);
   activeButton.value = value;
 }
 </script>

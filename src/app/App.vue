@@ -1,17 +1,13 @@
 <template>
   <div>
-    <Header />
-
-    <div class="wrapper-layout">
-      <slot>
-        <router-view />
-      </slot>
-    </div>
+    <Layout>
+      <router-view />
+    </Layout>
   </div>
 </template>
 
 <script lang="ts" setup>
-import Header from "@/shared/ui/layouts/Header.vue";
+import Layout from "@/shared/ui/layouts/Layout.vue";
 </script>
 
 <style>
