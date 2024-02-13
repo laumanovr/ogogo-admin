@@ -1,4 +1,3 @@
-import { Component } from "vue";
 import { AuthMiddleware } from "@/app/router/middlware/auth";
 import { AccessRequestMiddleware } from "@/app/router/middlware/access-request";
 import Chain from "./middlware/chain";
@@ -9,7 +8,7 @@ import Login from "@/pages/login/Login.vue";
 import Property from "@/pages/property/Property.vue";
 import PropertyDetail from "@/pages/property-detail/PropertyDetail.vue";
 
-const routes: { path: string; component: () => Promise<any>; name: string }[] =
+const routes: RouteRecordRaw[] =
   [
     {
       path: "/",
