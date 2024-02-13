@@ -2,7 +2,7 @@ import { defineConfig } from "vite";
 import vue from "@vitejs/plugin-vue";
 import * as path from "path";
 import UnoCSS from "unocss/vite";
-import config from "./node_modules/ogogo-ui/uno.config";
+import config from "./node_modules/ogogo-uikit/uno.config";
 
 // console.log(config);
 
