@@ -1,13 +1,11 @@
 import { defineConfig } from "unocss";
-import config from "./node_modules/ogogo-uikit/uno.config";
-
+// import config from "./node_modules/ogogo-uikit/uno.config";
+const config = {rules: {}};
 console.log(config);
 
 export default defineConfig({
   presets: [],
   rules: [
-    ...config.rules,
-
     // Flexbox properties
     [/^d-flex$/, () => ({ display: "flex" })],
     [/^flex-([\d]+)$/, ([_, num]) => ({ flex: `${num}` })], // flex: {number}
