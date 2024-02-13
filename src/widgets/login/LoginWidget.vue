@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <Loader v-if="isLoading"/>
     <div class="login-block">
       <div class="login-logo">
         <img src="../../shared/ui/assets/Ogogo-logo.png" alt="img" />
@@ -10,8 +11,8 @@
           <Input
             label="Логин"
             width="100%"
-            :rules="rules"
-            v-model="loginObj.login"
+            :rules="requiredField"
+            v-model="loginObj.pin"
           />
         </div>
         <div class="input-password">
@@ -19,34 +20,42 @@
             type="password"
             label="Пароль"
             width="100%"
-            :rules="rules"
+            :rules="requiredField"
             v-model="loginObj.password"
           />
         </div>
-        <Button size="large" color="violet" @click="onSubmitLogin"
-          >Войти</Button
-        >
+        <Button size="large" color="violet" @click="onSubmitLogin">Войти</Button>
       </Form>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import Form from "../../node_modules/ogogo-uikit/src/components/Form/Form.vue";
-import Input from "../../node_modules/ogogo-uikit/src/components/Input/Input.vue";
-import Button from "../../node_modules/ogogo-uikit/src/components/SButton/SButton.vue";
+import Form from "/node_modules/ogogo-uikit/src/components/Form/Form.vue";
+import Input from "/node_modules/ogogo-uikit/src/components/Input/Input.vue";
+import Button from "/node_modules/ogogo-uikit/src/components/SButton/SButton.vue";
 // ----------------------------------------------------
 import { ref, reactive } from "vue";
+import {requiredField} from "@/shared/lib/utils/rules";
+import {useAuthStore} from "@/shared/store/auth";
+const authStore = useAuthStore();
 
-const loginObj = reactive({ login: "", password: "" });
-const rules = [
-  { validate: (value) => value.length >= 1, message: "Обязательное поле" },
-];
+const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
+const isLoading = ref(false);
 
 const onSubmitLogin = () => {
   const isValid = loginForm.value.validateForm();
-  console.log(isValid);
+  if (isValid) {
+    isLoading.value = true;
+    authStore.login(loginObj).then((resp) => {
+      console.log(resp);
+      isLoading.value = false;
+    }).catch((err) => {
+      console.log(err);
+      isLoading.value = false;
+    })
+  }
 };
 </script>
 

@@ -95,14 +95,9 @@ export const useAuthStore = defineStore("auth", {
   },
   actions: {
     login(payload: ILogin): Promise<ILoginResultSuccess | ILoginResultFail> {
-      // clear alerts for request
-      const alertStore = useAlertStore();
-      alertStore.clearAlerts();
-
       return new Promise((resolve, reject) => {
         login(payload)
           .then((result) => {
-            // this.fidoAuth = data.fidoAuth;
 
             const needChangePassword = result?.needChangePassword ?? false;
             setItem("needChangePassword", needChangePassword);
