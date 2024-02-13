@@ -69,8 +69,8 @@ export const useAuthStore = defineStore("auth", {
             const oldSessionId = getItem("sessionId");
 
             setItem("sessionId", result?.sessionId);
-            this.getCurrentUser()
-              .then((path) => {
+            return this.getCurrentUser()
+              .then((user) => {
                 // send event of updating profile and redirecting to route path to other tabs
                 if (BroadcastChannel) {
                   const tabId = sessionStorage.getItem("tabId");
@@ -87,6 +87,7 @@ export const useAuthStore = defineStore("auth", {
                 }
 
                 setItem("active-session", true);
+                resolve(user)
               })
               .catch(reject);
           })
@@ -110,14 +111,15 @@ export const useAuthStore = defineStore("auth", {
       return new Promise<AuthGetProfileResultInterface>((resolve, reject) => {
         getCurrentUser()
           .then((user) => {
-            const lastUserId = getItem("last-user-id");
-            setItem("last-user-id", this.currentUser.id);
-            if (
-              lastUserId === undefined ||
-              lastUserId === "" ||
-              (lastUserId && lastUserId !== this.currentUser.id)
-            ) {
-            }
+            // const lastUserId = getItem("last-user-id");
+            // setItem("last-user-id", this.currentUser.id);
+            // if (
+            //   lastUserId === undefined ||
+            //   lastUserId === "" ||
+            //   (lastUserId && lastUserId !== this.currentUser.id)
+            // ) {
+            // }
+            resolve(user)
           })
           .catch((error) => {
             reject(error);
