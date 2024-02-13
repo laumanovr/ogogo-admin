@@ -5,3 +5,7 @@ export const BroadcastChannelName = {
 export const AuthorizationChannelEvent = {
   LoggingIn: "LoggingIn",
 };
+
+export const routesList = {
+  category: "category",
+};

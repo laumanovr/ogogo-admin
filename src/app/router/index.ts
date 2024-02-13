@@ -4,7 +4,8 @@ import { AccessRequestMiddleware } from "@/app/router/middlware/access-request";
 import Chain from "./middlware/chain";
 import { flattenRoutes, transformToRouter } from "@/shared/lib/utils/route";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Home from "@/pages/Home.vue";
+import catergoryRoute from "@/pages/category/router";
+// import Home from "@/pages/Home.vue";
 
 const findComponent = (path: string) => () => import(`../../pages/${path}.vue`);
 
@@ -25,15 +26,13 @@ const routes: { path: string; component: () => Promise<any>; name: string }[] =
       name: "propertyDetail",
       component: findComponent("PropertyDetail"),
     },
-    {
-      path: "/home",
-      name: "home",
-      component: Home,
-    },
+    catergoryRoute,
+    // {
+    //   path: "/home",
+    //   name: "home",
+    //   component: Home,
+    // },
   ];
-
-// console.log(import.meta.env.VUE_APP_API_SERVER);
-// console.log(process.env.VUE_APP_API_SERVER);
 
 const router = createRouter({
   history: createWebHistory(),
