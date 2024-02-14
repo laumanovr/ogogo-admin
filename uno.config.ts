@@ -42,6 +42,16 @@ export default defineConfig({
       ([_, top, right]) => ({ padding: `${top}px ${right}px` }),
     ],
 
+    // Margin shorthand
+    [
+      /^mr-(\d+)$/,
+      ([_, num]) => ({ "margin-right": `${num}px` }),
+    ],
+    [
+      /^mt-(\d+)$/,
+      ([_, num]) => ({ "margin-top": `${num}px` }),
+    ],
+
     // Text styles
     [/^text-(\d+)$/, ([_, size]) => ({ "font-size": `${size}px` })], // Text size
     [/^font-bold$/, () => ({ "font-weight": "bold" })], // Bold text
