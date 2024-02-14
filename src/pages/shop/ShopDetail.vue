@@ -37,8 +37,8 @@
       </div>
     </div>
     <div class="d-flex mt-40">
-      <SButton size="large" color="violet" class="mr-8">Утвердить</SButton>
-      <SButton size="large" color="gray">Отклонить</SButton>
+      <SButton size="large" color="violet" class="mr-8">{{ $t('lang-12fe79b5-20d2-4f2f-90a4-58ce16506ba3') }}</SButton>
+      <SButton size="large" color="gray">{{ $t('lang-c06435a1-c1cb-40b3-a0f0-f4220e0f88ab') }}</SButton>
     </div>
   </div>
 </template>
