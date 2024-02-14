@@ -5,20 +5,11 @@ import {
   AuthLoginResultInterface,
 } from "@/shared/api/auth/types";
 
-export const login = (
-  credentials: AuthLoginPayloadInterface
-): Promise<AuthLoginResultInterface> => {
-  const formData = new FormData();
-  Object.keys(credentials).forEach((key) => {
-    formData.append(key, credentials[key]);
-  });
+export const login = (credentials: AuthLoginPayloadInterface): Promise<AuthLoginResultInterface> => {
   return axios({
     method: "POST",
-    url: "/api/auth/login",
-    data: formData,
-    headers: {
-      "content-type": "multipart/form-data",
-    },
+    url: "/api/Clients/Login",
+    data: credentials,
   }).then((response) => response.data.result);
 };
 

@@ -3,13 +3,13 @@
     <div class="empty-action">
       <img src="../app/assets/img/empty-folder.svg" alt="empty">
       <p>{{props.text}}</p>
-      <Button size="large" color="violet" @click="addData">+ {{props.buttonTitle}}</Button>
+      <SButton size="large" color="violet" @click="addData">+ {{props.buttonTitle}}</SButton>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import Button from "/node_modules/ogogo-uikit/src/components/SButton/SButton.vue";
+import {SButton} from "@tumarsoft/ogogo-ui";
 
 const emit = defineEmits(['onClick']);
 

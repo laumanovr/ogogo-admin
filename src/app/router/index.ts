@@ -1,37 +1,17 @@
-import { Component } from "vue";
 import { AuthMiddleware } from "@/app/router/middlware/auth";
 import { AccessRequestMiddleware } from "@/app/router/middlware/access-request";
 import Chain from "./middlware/chain";
 import { flattenRoutes, transformToRouter } from "@/shared/lib/utils/route";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import catergoryRoute from "@/pages/category/router";
-import Login from "@/pages/login/Login.vue";
-import Property from "@/pages/property/Property.vue";
-import PropertyDetail from "@/pages/property-detail/PropertyDetail.vue";
+import categoryRoute from "@/pages/category/router";
+import propertyRoutes from "@/pages/property/router";
+import loginRoutes from "@/pages/login/router";
 
-const routes: { path: string; component: () => Promise<any>; name: string }[] =
+const routes: RouteRecordRaw[] =
   [
-    {
-      path: "/",
-      name: "login",
-      component: Login,
-    },
-    {
-      path: "/property",
-      name: "property",
-      component: Property,
-    },
-    {
-      path: "/property/:id",
-      name: "propertyDetail",
-      component: PropertyDetail,
-    },
-    catergoryRoute,
-    // {
-    //   path: "/home",
-    //   name: "home",
-    //   component: Home,
-    // },
+    categoryRoute,
+    ...propertyRoutes,
+    ...loginRoutes
   ];
 
 const router = createRouter({

@@ -3,22 +3,22 @@
     <h2 class="head-title">Свойства</h2>
     <template v-if="currentProperties.length">
       <div class="filter-container">
-        <Tabs :tab-mode="'filter-tabs'">
-          <TabItem value="one" :active-tab="tab" @changeTab="handleTabChange">Свойства</TabItem>
-          <TabItem value="two" :active-tab="tab" @changeTab="handleTabChange">Группы свойств</TabItem>
-        </Tabs>
+        <STabs :tab-mode="'filter-tabs'">
+          <STabItem value="one" :active-tab="tab" @changeTab="handleTabChange">Свойства</STabItem>
+          <STabItem value="two" :active-tab="tab" @changeTab="handleTabChange">Группы свойств</STabItem>
+        </STabs>
         <div class="filter-actions">
           <div class="search-input">
-            <Input isSearchable/>
+            <SInput isSearchable/>
           </div>
           <div class="icon-border">
-            <IconRender name="SettingsIcon"/>
+            <SIconRender name="SettingsIcon"/>
           </div>
-          <Button size="medium" color="violet" @click="onSubmit" :disabled="isDisabled">Сохранить</Button>
+          <SButton size="medium" color="violet" @click="onSubmit" :disabled="isDisabled">Сохранить</SButton>
         </div>
       </div>
       <div class="table-container">
-        <TabWindow value="one" :active-tab="tab">
+        <STabWindow value="one" :active-tab="tab">
           <div class="table-data">
             <table class="table">
               <thead>
@@ -45,11 +45,11 @@
                 <td><input v-model="item.nameKg"/></td>
                 <td><input v-model="item.nameEn"/></td>
                 <td><input type="text"/></td>
-                <td><Select :items="items" showValue="name" getValue="id" v-model="item.tip"/></td>
+                <td><SSelect :items="items" showValue="name" getValue="id" v-model="item.tip"/></td>
                 <td><input v-model="item.validText"/></td>
-                <td><Select :items="items" showValue="name" getValue="id"/></td>
-                <td><Select :items="items" showValue="name" getValue="id"/></td>
-                <td><Select :items="items" showValue="name" getValue="id"/></td>
+                <td><SSelect :items="items" showValue="name" getValue="id"/></td>
+                <td><SSelect :items="items" showValue="name" getValue="id"/></td>
+                <td><SSelect :items="items" showValue="name" getValue="id"/></td>
                 <td>
                   <router-link to="/property/2">Значений: 0</router-link>
                 </td>
@@ -57,8 +57,8 @@
               </tbody>
             </table>
           </div>
-        </TabWindow>
-        <TabWindow value="two" :active-tab="tab">
+        </STabWindow>
+        <STabWindow value="two" :active-tab="tab">
           <div class="table-data group">
             <table class="table">
               <thead>
@@ -83,7 +83,7 @@
               </tbody>
             </table>
           </div>
-        </TabWindow>
+        </STabWindow>
       </div>
     </template>
     <template v-else>
@@ -93,14 +93,7 @@
 </template>
 
 <script lang="ts" setup>
-import Button from "/node_modules/ogogo-uikit/src/components/SButton/SButton.vue";
-import Tabs from "/node_modules/ogogo-uikit/src/components/Tabs/Tabs.vue";
-import TabItem from "/node_modules/ogogo-uikit/src/components/Tabs/TabItem/TabItem.vue";
-import TabWindow from "/node_modules/ogogo-uikit/src/components/Tabs/TabWindow/TabWindow.vue";
-import IconRender from "/node_modules/ogogo-uikit/src/components/Icons/IconRender/IconRender.vue";
-import Select from "/node_modules/ogogo-uikit/src/components/Select/Select.vue";
-import Input from "/node_modules/ogogo-uikit/src/components/Input/Input.vue";
-// -----------------------------------------------------------------
+import {SButton, STabs, STabItem, STabWindow, SIconRender, SSelect, SInput} from "@tumarsoft/ogogo-ui";
 import {ref, reactive, computed} from "vue";
 import EmptyData from "../../features/EmptyData.vue";
 

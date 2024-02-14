@@ -13,6 +13,7 @@
   "dependencies": {
     "@babel/preset-env": "^7.23.9",
     "@vue/compiler-sfc": "^3.4.15",
+    "@tumarsoft/ogogo-ui": "^0.1.4",
     "axios": "^1.6.5",
     "lodash": "^4.17.21",
     "pinia": "^2.1.7",
