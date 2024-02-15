@@ -44,12 +44,24 @@ export default defineConfig({
 
     // Margin shorthand
     [
+      /^margin-(\d+)-(\d+)$/,
+      ([_, top, right]) => ({ margin: `${top}px ${right}px` }),
+    ],
+    [
       /^mr-(\d+)$/,
       ([_, num]) => ({ "margin-right": `${num}px` }),
     ],
     [
+      /^ml-(\d+)$/,
+      ([_, num]) => ({ "margin-left": `${num}px` }),
+    ],
+    [
       /^mt-(\d+)$/,
       ([_, num]) => ({ "margin-top": `${num}px` }),
+    ],
+    [
+      /^mb-(\d+)$/,
+      ([_, num]) => ({ "margin-bottom": `${num}px` }),
     ],
 
     // Text styles
