@@ -5,13 +5,13 @@
         <SIconRender name="ArrowIcon" direction="left"/>
         {{$t('lang-943d7231-c402-4b11-929c-b26a3ee10276')}}
       </SButton>
-      <div class="shop-title"><img src="../../app/assets/img/shop-logo.png" alt="" class="mr-8">Moi telefon</div>
+      <div class="shop-title"><img src="../../app/assets/img/shop-logo.png" alt="" class="mr-8">Мой телефон</div>
     </div>
     <h2 class="head-title md">Изменённые данные</h2>
     <div class="shop-logo-block">
       <div class="d-flex items-center">
         <img src="../../app/assets/img/shop-logo.png" alt="logo" class="logo mr-24">
-        <div class="logo-title">Moi telefon</div>
+        <div class="logo-title">Мой телефон</div>
       </div>
       <div class="d-flex mt-24">
         <img src="../../app/assets/img/ava.png" alt="img" class="mr-12">
@@ -62,7 +62,7 @@ const goBack = () => {
     margin-bottom: 24px;
     .shop-title {
       margin-left: 24px;
-      font-weight: 500;
+      font-weight: 600;
       font-size: 14px;
       display: flex;
       align-items: center;
@@ -77,6 +77,9 @@ const goBack = () => {
     .logo {
       width: 96px;
       height: 96px;
+    }
+    .logo-title {
+      font-weight: 600;
     }
   }
 }
