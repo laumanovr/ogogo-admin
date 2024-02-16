@@ -10,38 +10,24 @@
           <p>{{ props.title }}</p>
         </div>
         <div class="d-flex flex-row items-center gap-10">
-          <img
-            width="14px"
-            height="14px"
-            src="../../shared/ui/assets/tree-icon.png"
-          />
+          <img class="w-14 h-14" src="../../shared/ui/assets/tree-icon.png" />
           <p>169</p>
           <p>{{ $t("lang-afd3cd36-ac2b-4852-bde7-3d2cb4d7842b") }}</p>
           <p>169</p>
         </div>
         <div class="d-flex flex-row items-center gap-10">
+          <img class="w-17 h-17" src="../../shared/ui/assets/star-icon.png" />
           <img
-            width="17px"
-            height="17px"
-            src="../../shared/ui/assets/star-icon.png"
-          />
-          <img
-            width="17px"
-            height="17px"
+            class="w-17 h-17"
             src="../../shared/ui/assets/paper-and-mouse-icon.png"
           />
           <img
-            width="17px"
-            height="17px"
+            class="w-17 h-17"
             src="../../shared/ui/assets/article-icon.png"
           />
         </div>
       </div>
-      <img
-        width="17px"
-        height="5px"
-        src="../../shared/ui/assets/three-dots.png"
-      />
+      <img class="w-17 h-5" src="../../shared/ui/assets/three-dots.png" />
     </div>
     <img />
     <div class="body d-flex flex-row flex-wrap gap-8">
@@ -132,10 +118,4 @@ const props = defineProps({
   left: -22px;
   top: 10%;
 }
-
-// .left-toolbar {
-//   display: flex;
-//   flex-direction: row;
-//   justify-content: space-between;
-// }
 </style>
