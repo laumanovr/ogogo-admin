@@ -1,18 +1,20 @@
 <template>
-  <div>
-    <Layout>
+    <component :is="currentComponent">
       <router-view />
-    </Layout>
-  </div>
+    </component>
 </template>
 
 <script lang="ts" setup>
 import Layout from "@/shared/ui/layouts/Layout.vue";
-</script>
+import Empty from "@/shared/ui/layouts/Empty.vue";
+import {computed} from "vue";
 
-<style>
-.wrapper-layout {
-  max-width: 1440px;
-  margin: 0 auto;
-}
-</style>
+const isLoggedIn = true;
+const currentComponent = computed(() => {
+  if (isLoggedIn) {
+    return Layout;
+  } else {
+    return Empty;
+  }
+})
+</script>

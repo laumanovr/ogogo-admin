@@ -20,6 +20,14 @@ body {
   font-weight: 700;
   font-size: 36px;
   margin: 25px 0;
+  &.md {
+    font-size: 20px;
+  }
+}
+
+.sm-img {
+  width: 24px;
+  height: 24px;
 }
 
 .table-container {

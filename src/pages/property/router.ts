@@ -4,7 +4,7 @@ const routes = [
     {
         path: "/property",
         name: "property",
-        component: findComponent("property", "Property"),
+        component: findComponent("property", "PropertyList"),
     },
     {
         path: "/property/:id",
