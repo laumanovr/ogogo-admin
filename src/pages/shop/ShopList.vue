@@ -50,7 +50,7 @@ const tableData = reactive([
 
 const onChangePage = (page) => {
   console.log(page);
-}
+};
 </script>
 
 <style lang="scss">

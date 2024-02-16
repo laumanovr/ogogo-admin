@@ -11,7 +11,7 @@
       </div>
       <BreadCrumbs/>
     </div>
-    <h2 class="head-title md" id="main">Главное о товаре</h2>
+    <h2 class="head-title md" id="main">{{ $t('lang-3c525f10-24ab-44fa-9eda-8a503e97b2e9') }}</h2>
     <div class="d-flex mt-24">
       <div class="content-block">
         <div>
@@ -29,7 +29,7 @@
           </div>
         </div>
         <div class="price-block mt-40" id="price">
-          <div class="head-title md">Цена (в сомах)</div>
+          <div class="head-title md">{{ $t('lang-3bbbc87b-85a5-4434-a8b7-999c9146de08') }}</div>
           <SInput label="Цена" width="260px" class="mr-12"/>
           <SInput label="Скидка в %" width="260px" class="mr-12"/>
           <SInput label="Цена со скидкой" width="260px"/>
@@ -39,7 +39,7 @@
           </div>
         </div>
         <div class="leftover" id="leftover">
-          <div class="head-title md">Остаток</div>
+          <div class="head-title md">{{ $t('lang-a6dc23d1-d5cc-4c0a-8412-32f6ff24a2dd') }}</div>
           <SInput label="Кол-во" width="100%"/>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
@@ -47,9 +47,8 @@
           </div>
         </div>
         <div class="photo-block" id="photo">
-          <div class="head-title md">Фото</div>
-          <p class="hint mb-24">Добавьте изображение товара. Изображение максимум 2000 х 2000 px, в формате PNG или
-            JPEG. Размер файла – не более 15 МБ.</p>
+          <div class="head-title md">{{ $t('lang-d820a72f-7c7f-4ac0-b993-8d57d1904dde') }}</div>
+          <p class="hint mb-24">{{ $t('lang-7c1a3ecf-841c-4ea1-951b-a5d27099a805') }}</p>
           <div class="d-flex flex-wrap">
             <img src="../../app/assets/img/iphone.jpg" alt="image" class="photo mr-8 mb-8" v-for="i in 5">
           </div>
@@ -59,9 +58,8 @@
           </div>
         </div>
         <div class="video-block" id="video">
-          <div class="head-title md">Видео</div>
-          <p class="hint mb-24">На карточке может быть только одно видео – покажем его первым. Принимаем качественные
-            ролики не больше 30 МБ и не длинее 5 минут.</p>
+          <div class="head-title md">{{ $t('lang-65a33216-17a3-4f12-9e78-ef1b73efcdf0') }}</div>
+          <p class="hint mb-24">{{ $t('lang-9fc0c45e-0828-49af-a325-a11dbc4a9829') }}</p>
           <div class="d-flex flex-wrap">
             <img src="../../app/assets/img/iphone.jpg" alt="image" class="video mr-8">
           </div>
@@ -71,9 +69,8 @@
           </div>
         </div>
         <div class="characteristic-block" id="character">
-          <div class="head-title md">Характеристики</div>
-          <p class="hint mb-24">Это характеристики товара, которые могут быть выбраны покупателем при покупке. Например,
-            цвет, материал, объем и другие характеристики, которые могут варьироваться для одного и того же товара</p>
+          <div class="head-title md">{{ $t('lang-c00a03d8-8bb2-4d54-93e7-fc0379b86f51') }}</div>
+          <p class="hint mb-24">{{ $t('lang-0c4310a2-d07f-450a-9258-a907b7feb038') }}</p>
           <div class="selects d-flex flex-wrap justify-between">
             <SSelect label="Цвет" class="mb-16"/>
             <SSelect label="Конфигурация памяти" class="mb-16"/>
@@ -97,8 +94,8 @@
       </div>
     </div>
     <div class="d-flex mt-40">
-      <SButton size="large" color="violet" class="mr-12">Опубликовать</SButton>
-      <SButton size="large" color="gray">Отклонить</SButton>
+      <SButton size="large" color="violet" class="mr-12">{{ $t('lang-01b61f03-58d8-4b95-880e-a6b75920efad') }}</SButton>
+      <SButton size="large" color="gray">{{ $t('lang-c06435a1-c1cb-40b3-a0f0-f4220e0f88ab') }}</SButton>
     </div>
   </div>
 </template>

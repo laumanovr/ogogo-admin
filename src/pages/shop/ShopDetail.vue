@@ -15,25 +15,25 @@
       </div>
       <div class="d-flex mt-24">
         <img src="../../app/assets/img/ava.png" alt="img" class="mr-12">
-        <SInput placeHolder="Добавить комментарий" width="100%"/>
+        <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
       </div>
     </div>
     <div class="shop-name-block mt-32">
       <div>
-        <SInput label="Наименование" width="100%"/>
+        <SInput :label="$t('lang-83ea23b9-0c12-4c48-a823-39cbc73f7219')" width="100%"/>
       </div>
       <div class="d-flex mt-24">
         <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
-        <SInput placeHolder="Добавить комментарий" width="100%"/>
+        <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
       </div>
     </div>
     <div class="description-block mt-32">
       <div>
-        <STextArea label="Описание" width="100%" height="150px"/>
+        <STextArea :label="$t('lang-b1c420fe-8beb-4452-bf7c-165f69e8eabf')" width="100%" height="150px"/>
       </div>
       <div class="d-flex mt-24">
         <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
-        <SInput placeHolder="Добавить комментарий" width="100%"/>
+        <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
       </div>
     </div>
     <div class="d-flex mt-40">
