@@ -1,7 +1,7 @@
 import { ref } from "vue";
 import lodash from "lodash";
 import { v4 as uuid } from "uuid";
-import { i18n } from "@/shared/lib/plugins/i18n";
+import i18n from "@/shared/lib/plugins/i18n";
 
 import { useAlertStore } from "@/shared/store/alert/index";
 import type { IAlertParams, IAlert } from "@/shared/lib/utils/alert.types";

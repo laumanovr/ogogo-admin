@@ -3,7 +3,7 @@ import axios from "axios";
 // import { actionTypes } from "@/store/auth/types";
 // import { actionTypes as notificationActionTypes } from "@/store/notification";
 // import { getItem } from "@/utils/persistanceStorage";
-import { i18n } from "@/shared/lib/plugins/i18n";
+import i18n from "@/shared/lib/plugins/i18n";
 import { getItem } from "../utils/persistanceStorage";
 import { INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES } from "@/app/router/index.type";
 // import getCustomErrorMessage from '@/utils/error-dictionary'

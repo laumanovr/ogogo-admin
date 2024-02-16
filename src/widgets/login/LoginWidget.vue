@@ -1,12 +1,14 @@
 <template>
   <div class="login-container">
-    <Loader v-if="isLoading"/>
+    <Loader v-if="isLoading" />
     <div class="login-block">
       <div class="login-logo">
         <img src="../../shared/ui/assets/Ogogo-logo.png" alt="img" />
       </div>
       <SForm class="form-block" ref="loginForm">
-        <div class="form-title">{{$t('lang-29a329cd-0145-44d5-804d-446c68eb158a')}}</div>
+        <div class="form-title">
+          {{ $t("lang-29a329cd-0145-44d5-804d-446c68eb158a") }}
+        </div>
         <div>
           <SInput
             :label="$t('lang-5b5360db-a6ff-43a7-a8d4-f35517b9c4a8')"
@@ -24,18 +26,20 @@
             v-model="loginObj.password"
           />
         </div>
-        <SButton size="large" color="violet" @click="onSubmitLogin">{{$t('lang-09888a35-0a9f-46d7-bc1e-34bbae78ccd9')}}</SButton>
+        <SButton size="large" color="violet" @click="onSubmitLogin">{{
+          $t("lang-09888a35-0a9f-46d7-bc1e-34bbae78ccd9")
+        }}</SButton>
       </SForm>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {SButton, SForm, SInput} from "@tumarsoft/ogogo-ui";
+import { SButton, SForm, SInput } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
-import {useRouter} from "vue-router";
-import {requiredField} from "@/shared/lib/utils/rules";
-import {useAuthStore} from "@/shared/store/auth";
+import { useRouter } from "vue-router";
+import { requiredField } from "@/shared/lib/utils/rules";
+import { useAuthStore } from "@/shared/store/auth";
 const authStore = useAuthStore();
 const router = useRouter();
 
@@ -47,14 +51,17 @@ const onSubmitLogin = () => {
   const isValid = loginForm.value.validateForm();
   if (isValid) {
     isLoading.value = true;
-    authStore.login(loginObj).then((resp: any) => {
-      console.log(resp);
-      isLoading.value = false;
-      router.push('/property');
-    }).catch((err: any) => {
-      console.log(err);
-      isLoading.value = false;
-    })
+    authStore
+      .login(loginObj)
+      .then((resp: any) => {
+        console.log(resp);
+        isLoading.value = false;
+        router.push("/property");
+      })
+      .catch((err: any) => {
+        console.log(err);
+        isLoading.value = false;
+      });
   }
 };
 </script>

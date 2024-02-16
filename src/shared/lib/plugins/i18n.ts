@@ -4,7 +4,7 @@ import { createI18n } from "vue-i18n";
 
 export type Locales = "ru" | "en";
 
-export const i18n = createI18n({
+export default createI18n({
   locale: "ru",
   allowComposition: true,
   fallBackLocale: "ru",
