@@ -18,14 +18,14 @@
           <SInput label="Наименование товара" width="100%"/>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
-            <SInput placeHolder="Добавить комментарий" width="100%"/>
+            <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
         <div class="mt-24">
           <STextArea label="Описание товара" width="100%"/>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
-            <SInput placeHolder="Добавить комментарий" width="100%"/>
+            <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
         <div class="price-block mt-40" id="price">
@@ -35,7 +35,7 @@
           <SInput label="Цена со скидкой" width="260px"/>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
-            <SInput placeHolder="Добавить комментарий" width="100%"/>
+            <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
         <div class="leftover" id="leftover">
@@ -43,7 +43,7 @@
           <SInput label="Кол-во" width="100%"/>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
-            <SInput placeHolder="Добавить комментарий" width="100%"/>
+            <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
         <div class="photo-block" id="photo">
@@ -54,7 +54,7 @@
           </div>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
-            <SInput placeHolder="Добавить комментарий" width="100%"/>
+            <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
         <div class="video-block" id="video">
@@ -65,7 +65,7 @@
           </div>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
-            <SInput placeHolder="Добавить комментарий" width="100%"/>
+            <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
         <div class="characteristic-block" id="character">
