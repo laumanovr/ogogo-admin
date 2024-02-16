@@ -137,7 +137,7 @@ const changeAnchor = (anchor) => {
 }
 
 const goBack = () => {
-  router.push('/product');
+  router.push('/products');
 }
 
 const handleScroll = () => {

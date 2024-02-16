@@ -49,7 +49,7 @@ import {useRouter} from "vue-router";
 const router = useRouter();
 
 const goBack = () => {
-  router.push('/shop');
+  router.push('/shops');
 }
 </script>
 

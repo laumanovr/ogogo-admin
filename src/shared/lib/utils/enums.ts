@@ -1,5 +1,5 @@
 export enum MenuItems {
   Category = "category",
-  Stores = "stores",
+  Stores = "shops",
   Products = "products",
 }
