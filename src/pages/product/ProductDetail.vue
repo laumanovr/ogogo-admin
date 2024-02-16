@@ -106,21 +106,26 @@
 <script lang="ts" setup>
 import { SInput, SButton, STextArea, SSelect, SIconRender } from "@tumarsoft/ogogo-ui";
 import BreadCrumbs from "../../features/Breadcrumbs.vue";
-import {ref, reactive, onMounted, nextTick} from "vue";
-import {useRouter} from "vue-router";
+import { ref, reactive, onMounted, onUnmounted } from "vue";
+import { useRouter } from "vue-router";
+
 const router = useRouter();
 
 onMounted(() => {
-  window.addEventListener('scroll', handleScroll);
+  window.addEventListener("scroll", handleScroll);
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
 });
 
 const anchors = reactive([
-    {link: 'main', name: 'Главное о товаре'},
-    {link: 'price', name: 'Цена'},
-    {link: 'leftover', name: 'Остаток'},
-    {link: 'photo', name: 'Фото'},
-    {link: 'video', name: 'Видео'},
-    {link: 'character', name: 'Характеристики'},
+  {link: "main", name: "Главное о товаре"},
+  {link: "price", name: "Цена"},
+  {link: "leftover", name: "Остаток"},
+  {link: "photo", name: "Фото"},
+  {link: "video", name: "Видео"},
+  {link: "character", name: "Характеристики"},
 ]);
 
 const currentAnchor = ref("");
@@ -130,15 +135,15 @@ const changeAnchor = (anchor) => {
   isDisableScroll.value = true;
   currentAnchor.value = anchor;
   const element = document.getElementById(anchor);
-  element.scrollIntoView({ behavior: 'smooth' });
+  element.scrollIntoView({behavior: "smooth"});
   setTimeout(() => {
-    isDisableScroll.value = false
+    isDisableScroll.value = false;
   }, 800);
-}
+};
 
 const goBack = () => {
-  router.push('/products');
-}
+  router.push("/products");
+};
 
 const handleScroll = () => {
   if (!isDisableScroll.value) {
@@ -155,11 +160,12 @@ const handleScroll = () => {
       }
     });
   }
-}
+};
 </script>
 
 <style lang="scss">
 @import "../../app/style/colors.scss";
+
 .product-detail-container {
   .content-block {
     max-width: 812px;
@@ -201,6 +207,7 @@ const handleScroll = () => {
       position: sticky;
       top: 12px;
     }
+
     .anchor-item {
       display: block;
       font-weight: 600;
@@ -211,6 +218,7 @@ const handleScroll = () => {
       text-decoration: none;
       color: $black;
       border-left: 3px solid transparent;
+
       &.active {
         border-left-color: $violet-600;
       }
