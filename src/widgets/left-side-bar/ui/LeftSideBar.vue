@@ -1,38 +1,62 @@
 <template>
   <div class="left-side-bar-container">
     <div class="item"></div>
-    <div class="empty-category-container">
-      <IconRender name="ArrowIcon" size="small" @click="addSubCategory" />
-      <img src="../../../shared/ui/assets/fileIcon.png" />
-      <span>{{ $t("lang-b14d63cd-580a-4645-8c82-860175a3830f") }}</span>
+    <div v-for="(item, i) in categories" :key="i">
+      <CategoryMenuItem
+        :title="item.title"
+        :index="i"
+        :item="item"
+        :depth="depth"
+      />
     </div>
     <div class="add-category-container" @click="addCategory">
       <img src="../../../shared/ui/assets/plus-icon.png" />
       <span>{{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</span>
     </div>
+    <AddCategoryConfirmationModal
+      @close="onClose"
+      @save="onSave"
+      :value="addCategoryConfirmationModalValue"
+    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import IconRender from "../../../../node_modules/ogogo-uikit/src/components/Icons/IconRender/IconRender.vue";
+import CategoryMenuItem from "@/widgets/left-side-bar/ui/CategoryMenuItem.vue";
+import AddCategoryConfirmationModal from "@/features/category/ui/AddCategoryConfirmationModal.vue";
 
-let categories = ref([]);
-let subCategories = ref([]);
+let categories = ref([
+  { title: "lang-b14d63cd-580a-4645-8c82-860175a3830f", children: [] },
+]);
+// let subCategories = ref([]);
 
+let addCategoryConfirmationModalValue = ref(false);
+
+let depth = ref(0);
 function addCategory() {
-  console.log("addCategory");
+  addCategoryConfirmationModalValue.value = true;
 }
-function addSubCategory() {
-  console.log("addSubCategory");
-}
+
+const onClose = () => {
+  addCategoryConfirmationModalValue.value = false;
+};
+
+const onSave = () => {
+  addCategory();
+  categories.value.push({
+    title: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
+    children: [],
+  });
+  onClose();
+};
 </script>
 
 <style lang="scss" scoped>
 // @import "../app/style/colors.scss";
 
 .left-side-bar-container {
-  width: 350px;
+  width: auto;
   height: 100vh;
 }
 .empty-category-container,
