@@ -3,7 +3,7 @@ import { useAuthStore } from "@/shared/store/auth/index";
 import { BaseHandler } from "@/app/router/middlware/auth.type";
 import type { IRoute } from "@/app/router/middlware/auth.type";
 import { useAlert } from "@/shared/lib/utils/alert";
-import { i18n } from "@/shared/lib/plugins/i18n";
+import i18n from "@/shared/lib/plugins/i18n";
 
 export class AccessRequestMiddleware extends BaseHandler {
   handle(

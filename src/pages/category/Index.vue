@@ -1,51 +1,24 @@
 <template>
-  <div class="property-container">
-    <h2 class="head-title">Свойства</h2>
+  <div class="category-main-wrapper">
+    <div class="left-side-bar-container">
+      <LeftSideBar />
+    </div>
+    <CategorySettings />
   </div>
 </template>
 
-<script lang="ts" setup></script>
+<script lang="ts" setup>
+import LeftSideBar from "@/widgets/left-side-bar/ui/LeftSideBar.vue";
+import CategorySettings from "@/widgets/category-settings/ui/CategorySettings.vue";
+</script>
 
-<style lang="scss">
-// @import "../app/style/colors.scss";
-
-.property-container {
-  .filter-container {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 24px;
-
-    .filter-actions {
-      display: flex;
-      align-items: center;
-    }
-
-    .icon-border {
-      border: 1px solid;
-      border-radius: 8px;
-      padding: 10px 11px 8px;
-      margin: 0 12px;
-    }
-
-    .search-input {
-    }
-  }
-
-  .empty-container {
-    margin-top: 40px;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-
-    .button {
-      margin: 0 auto;
-    }
-
-    p {
-      margin: 24px 0;
-      font-weight: 500;
-      font-size: 16px;
-    }
-  }
+<style scoped>
+.category-main-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  gap: 48px;
+}
+.left-side-bar-container {
 }
 </style>

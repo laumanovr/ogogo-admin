@@ -7,7 +7,7 @@
         @click="onMenuItemChange(MenuItems.Products)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRenderer :color="isProductsActive" :name="'BoxIcon'" />
+        <SIconRender :color="isProductsActive" :name="'BoxIcon'" />
         <p :class="`text-${isProductsActive} text-size-12`">
           {{ $t("lang-9839245b-e40e-4ae1-92e9-0421dc97a154") }}
         </p>
@@ -16,7 +16,7 @@
         @click="onMenuItemChange(MenuItems.Stores)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRenderer :color="isStoresActive" :name="'ShopIcon'" />
+        <SIconRender :color="isStoresActive" :name="'ShopIcon'" />
         <p :class="`text-${isStoresActive} text-size-12`">
           {{ $t("lang-425a5a16-bf0a-4ded-a7bc-cbe7490b659a") }}
         </p>
@@ -25,7 +25,7 @@
         @click="onMenuItemChange(MenuItems.Category)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRenderer :color="isCategoryActive" :name="'GridIcon'" />
+        <SIconRender :color="isCategoryActive" :name="'GridIcon'" />
         <!-- <img src="../../ui/assets/Grid.png" /> -->
         <p :class="`text-${isCategoryActive} text-size-12`">
           {{ $t("lang-75805fdb-eac2-4c87-b481-563e318789b5") }}
@@ -36,7 +36,7 @@
 </template>
 
 <script lang="ts" setup>
-import {SIconRender} from "@tumarsoft/ogogo-ui";
+import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { MenuItems } from "@/shared/lib/utils/enums";
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
