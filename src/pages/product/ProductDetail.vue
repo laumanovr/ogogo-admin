@@ -15,14 +15,14 @@
     <div class="d-flex mt-24">
       <div class="content-block">
         <div>
-          <SInput label="Наименование товара" width="100%"/>
+          <SInput :label="$t('lang-cb1dea14-fb31-4e97-9364-9e33b4227c3a')" width="100%"/>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
             <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
         <div class="mt-24">
-          <STextArea label="Описание товара" width="100%"/>
+          <STextArea :label="$t('lang-240d2d7a-5a93-4647-a066-22a368702e04')" width="100%"/>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
             <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
@@ -30,9 +30,9 @@
         </div>
         <div class="price-block mt-40" id="price">
           <div class="head-title md">{{ $t('lang-3bbbc87b-85a5-4434-a8b7-999c9146de08') }}</div>
-          <SInput label="Цена" width="260px" class="mr-12"/>
-          <SInput label="Скидка в %" width="260px" class="mr-12"/>
-          <SInput label="Цена со скидкой" width="260px"/>
+          <SInput :label="$t('lang-333319c2-2df4-4057-a56a-28ddd7a790a1')" width="260px" class="mr-12"/>
+          <SInput :label="$t('lang-1f6f2dca-070c-48bc-941f-e1300024ffbb')" width="260px" class="mr-12"/>
+          <SInput :label="$t('lang-5eb99c46-ed5f-4a24-85ad-d551ad812256')" width="260px"/>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
             <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
@@ -40,7 +40,7 @@
         </div>
         <div class="leftover" id="leftover">
           <div class="head-title md">{{ $t('lang-a6dc23d1-d5cc-4c0a-8412-32f6ff24a2dd') }}</div>
-          <SInput label="Кол-во" width="100%"/>
+          <SInput :label="$t('lang-3a76c0f0-6ebc-413e-8455-9363f5436da1')" width="100%"/>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
             <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
