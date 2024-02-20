@@ -5,7 +5,7 @@
         <SIconRender name="ArrowIcon" direction="left"/>
         {{ $t('lang-943d7231-c402-4b11-929c-b26a3ee10276') }}
       </SButton>
-      <div class="d-flex items-center margin-0-24">
+      <div class="d-flex items-center ml-24 mr-24">
         <img src="../../app/assets/img/shop-logo.png" alt="" class="sm-img mr-8">
         Мой телефон
       </div>
@@ -21,7 +21,7 @@
             <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
-        <div class="mt-24">
+        <div class="mt-24 description">
           <STextArea :label="$t('lang-240d2d7a-5a93-4647-a066-22a368702e04')" width="100%"/>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
@@ -88,7 +88,7 @@
               :class="{'active': anchor.link === currentAnchor}"
               @click="changeAnchor(anchor.link)"
           >
-            {{ anchor.name }}
+            {{ $t(anchor.name) }}
           </a>
         </div>
       </div>
@@ -117,12 +117,12 @@ onUnmounted(() => {
 });
 
 const anchors = reactive([
-  {link: "main", name: "Главное о товаре"},
-  {link: "price", name: "Цена"},
-  {link: "leftover", name: "Остаток"},
-  {link: "photo", name: "Фото"},
-  {link: "video", name: "Видео"},
-  {link: "character", name: "Характеристики"},
+  {link: "main", name: "lang-3c525f10-24ab-44fa-9eda-8a503e97b2e9"},
+  {link: "price", name: "lang-333319c2-2df4-4057-a56a-28ddd7a790a1"},
+  {link: "leftover", name: "lang-a6dc23d1-d5cc-4c0a-8412-32f6ff24a2dd"},
+  {link: "photo", name: "lang-d820a72f-7c7f-4ac0-b993-8d57d1904dde"},
+  {link: "video", name: "lang-65a33216-17a3-4f12-9e78-ef1b73efcdf0"},
+  {link: "character", name: "lang-c00a03d8-8bb2-4d54-93e7-fc0379b86f51"}
 ]);
 
 const currentAnchor = ref("");
@@ -173,6 +173,12 @@ const handleScroll = () => {
     font-size: 14px;
   }
 
+  .description {
+    .textarea-field {
+      width: 100%; //
+    }
+  }
+
   .photo-block {
     .photo {
       width: 180px;
@@ -193,9 +199,8 @@ const handleScroll = () => {
 
   .dropdown {
     width: calc(50% - 6px);
-    max-width: none; // delete later
     input {
-      width: calc(100% - 48px); //delete later
+      width: 100%; //
     }
   }
 
