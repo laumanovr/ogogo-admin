@@ -1,5 +1,5 @@
 <template>
-  <div class="category-main-wrapper">
+  <div class="category-main-wrapper mt-16">
     <div class="left-side-bar-container">
       <LeftSideBar />
     </div>

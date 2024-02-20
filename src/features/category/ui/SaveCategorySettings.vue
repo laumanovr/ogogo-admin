@@ -4,6 +4,9 @@
       <p class="font-bold">
         {{ $t("lang-4e447adf-5042-41dd-bea9-ea3cecf11f3d") }}
       </p>
+      <div class="w-p100 h-p100 d-flex items-center justify-center">
+        <img src="../../../shared/ui/assets/gallery-slash.png" />
+      </div>
     </div>
     <p class="mb-28">{{ $t("lang-f311a0ea-a62e-4875-817c-a342d01d6181") }}</p>
     <SButton color="violet" class="save-button">{{
