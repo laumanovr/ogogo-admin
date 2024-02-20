@@ -10,7 +10,7 @@
         size="small"
         :direction="item.children.length > 0 ? 'bottom' : 'right'"
       />
-      <img src="../../../shared/ui/assets/fileIcon.png" />
+      <img src="../../../../shared/ui/assets/fileIcon.png" />
       <span>{{ $t(`${props.title}`) }}</span>
     </div>
     <img
@@ -18,7 +18,7 @@
       width="10px"
       height="10px"
       @click="addSubCategory"
-      src="../../../shared/ui/assets/plus-icon.png"
+      src="../../../../shared/ui/assets/plus-icon.png"
     />
   </div>
   <div

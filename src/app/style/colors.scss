@@ -29,7 +29,7 @@ $violet-900: #4c1d95;
 // gray
 $gray-50: #f7f8fa;
 $gray-100: #f2f3f5;
-$gray-150: #f3F4f6;
+$gray-150: #f3f4f6;
 $gray-200: #dfe1e5;
 $gray-300: #c5c9d1;
 $gray-400: #a5abb8;
@@ -40,7 +40,7 @@ $gray-800: #282b30;
 $gray-900: #141619;
 
 // red
-$red-50 : #fef2f2;
+$red-50: #fef2f2;
 $red-100: #fee2e2;
 $red-200: #fecaca;
 $red-300: #fca5a5;
@@ -49,7 +49,7 @@ $red-500: #ef4444;
 $red-600: #dc2626;
 $red-700: #b91c1c;
 $red-800: #991b1b;
-$red-900: #7f1d1d;
+$red-900: #e32d2d;
 
 // orange
 $orange-50: #fff7ed;
@@ -86,3 +86,83 @@ $sky-600: #0284c7;
 $sky-700: #0369a1;
 $sky-800: #075985;
 $sky-900: #0c4a6e;
+
+:root {
+  --green-50: #{$green-50};
+  --green-100: #{$green-100};
+  --green-200: #{$green-200};
+  --green-300: #{$green-300};
+  --green-400: #{$green-400};
+  --green-500: #{$green-500};
+  --green-600: #{$green-600};
+  --green-700: #{$green-700};
+  --green-800: #{$green-800};
+  --green-900: #{$green-900};
+
+  --violet-50: #{$violet-50};
+  --violet-100: #{$violet-100};
+  --violet-200: #{$violet-200};
+  --violet-300: #{$violet-300};
+  --violet-400: #{$violet-400};
+  --violet-500: #{$violet-500};
+  --violet-600: #{$violet-600};
+  --violet-700: #{$violet-700};
+  --violet-800: #{$violet-800};
+  --violet-900: #{$violet-900};
+
+  --gray-50: #{$gray-50};
+  --gray-100: #{$gray-100};
+  --gray-150: #{$gray-150};
+  --gray-200: #{$gray-200};
+  --gray-300: #{$gray-300};
+  --gray-400: #{$gray-400};
+  --gray-500: #{$gray-500};
+  --gray-600: #{$gray-600};
+  --gray-700: #{$gray-700};
+  --gray-800: #{$gray-800};
+  --gray-900: #{$gray-900};
+
+  --red-50: #{$red-50};
+  --red-100: #{$red-100};
+  --red-200: #{$red-200};
+  --red-300: #{$red-300};
+  --red-400: #{$red-400};
+  --red-500: #{$red-500};
+  --red-600: #{$red-600};
+  --red-700: #{$red-700};
+  --red-800: #{$red-800};
+  --red-900: #{$red-900};
+
+  --orange-50: #{$orange-50};
+  --orange-100: #{$orange-100};
+  --orange-200: #{$orange-200};
+  --orange-300: #{$orange-300};
+  --orange-400: #{$orange-400};
+  --orange-500: #{$orange-500};
+  --orange-600: #{$orange-600};
+  --orange-700: #{$orange-700};
+  --orange-800: #{$orange-800};
+  --orange-900: #{$orange-900};
+
+  --yellow-50: #{$yellow-50};
+  --yellow-100: #{$yellow-100};
+  --yellow-200: #{$yellow-200};
+  --yellow-300: #{$yellow-300};
+  --yellow-400: #{$yellow-400};
+  --yellow-500: #{$yellow-500};
+  --yellow-600: #{$yellow-600};
+  --yellow-700: #{$yellow-700};
+  --yellow-800: #{$yellow-800};
+  --yellow-900: #{$yellow-900};
+
+  --sky-50: #{$sky-50};
+  --sky-100: #{$sky-100};
+  --sky-200: #{$sky-200};
+  --sky-300: #{$sky-300};
+  --sky-400: #{$sky-400};
+  --sky-500: #{$sky-500};
+  --sky-600: #{$sky-600};
+  --sky-700: #{$sky-700};
+  --sky-800: #{$sky-800};
+  --sky-900: #{$sky-900};
+}

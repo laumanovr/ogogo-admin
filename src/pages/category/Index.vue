@@ -8,8 +8,8 @@
 </template>
 
 <script lang="ts" setup>
-import LeftSideBar from "@/widgets/left-side-bar/ui/LeftSideBar.vue";
-import CategorySettings from "@/widgets/category-settings/ui/CategorySettings.vue";
+import LeftSideBar from "@/widgets/category/left-side-bar/ui/LeftSideBar.vue";
+import CategorySettings from "@/widgets/category/category-settings/ui/CategorySettings.vue";
 </script>
 
 <style scoped>

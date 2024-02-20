@@ -41,7 +41,7 @@ import { MenuItems } from "@/shared/lib/utils/enums";
 import { computed, ref } from "vue";
 import { useRouter } from "vue-router";
 
-const activeButton = ref(MenuItems.Category);
+const activeButton = ref(null);
 
 // const route = useRoute();
 const router = useRouter();
@@ -57,7 +57,12 @@ const isCategoryActive = computed(() => {
 });
 
 function onMenuItemChange(value: MenuItems) {
-  router.push("/" + value);
+  if (value === MenuItems.Category) {
+    router.push("/" + value + "/" + "empty");
+  } else {
+    router.push("/" + value);
+  }
+
   activeButton.value = value;
 }
 </script>
