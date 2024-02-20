@@ -1,7 +1,7 @@
 <template>
   <SModal :isModalOpen="isShowModal" class="filter-modal" width="420px" height="100%"
           @onClose="toggleFilterModal">
-    <div class="modal-content">
+    <div class="modal-content" ref="modalContent">
       <div class="filter-title">Фильтры</div>
       <div class="section">
         <div class="section-title">Тип свойства</div>
@@ -48,8 +48,8 @@
       <div class="section">
         <div class="section-title">Группа свойств</div>
         <SInput isSearchable/>
-        <div class="property-items">
-          <div v-for="item in 20">
+        <div class="property-items" :style="{'max-height': maxHeight+'px'}">
+          <div v-for="item in 50">
             <SCheckbox>Характеристики</SCheckbox>
           </div>
         </div>
@@ -64,12 +64,18 @@
 
 <script lang="ts" setup>
 import { SModal, SRadioButton, SCheckbox, SInput, SButton } from "@tumarsoft/ogogo-ui";
-import { ref } from "vue";
+import { ref, nextTick } from "vue";
 
 const isShowModal = ref(false);
+const modalContent = ref(null);
+const maxHeight = ref(0);
 
 const toggleFilterModal = () => {
   isShowModal.value = !isShowModal.value;
+  nextTick(() => {
+    const rect = modalContent.value.getBoundingClientRect();
+    maxHeight.value = (rect.height / 2);
+  });
 };
 
 defineExpose({
@@ -124,7 +130,7 @@ defineExpose({
 
   .property-items {
     overflow-y: auto;
-    max-height: 200px;
+    //max-height: 200px;
     margin-top: 15px;
 
     &::-webkit-scrollbar {
