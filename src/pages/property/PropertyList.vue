@@ -11,7 +11,7 @@
           <div class="search-input">
             <SInput isSearchable/>
           </div>
-          <div class="icon-border">
+          <div class="icon-border" @click="toggleFilterModal">
             <SIconRender name="SettingsIcon"/>
           </div>
           <SButton size="medium" color="violet" @click="onSubmit" :disabled="isDisabled">Сохранить</SButton>
@@ -45,11 +45,19 @@
                 <td><input v-model="item.nameKg"/></td>
                 <td><input v-model="item.nameEn"/></td>
                 <td><input type="text"/></td>
-                <td><SSelect :items="items" showValue="name" getValue="id" v-model="item.tip"/></td>
+                <td>
+                  <SSelect :items="items" showValue="name" getValue="id" v-model="item.tip"/>
+                </td>
                 <td><input v-model="item.validText"/></td>
-                <td><SSelect :items="items" showValue="name" getValue="id"/></td>
-                <td><SSelect :items="items" showValue="name" getValue="id"/></td>
-                <td><SSelect :items="items" showValue="name" getValue="id"/></td>
+                <td>
+                  <SSelect :items="items" showValue="name" getValue="id"/>
+                </td>
+                <td>
+                  <SSelect :items="items" showValue="name" getValue="id"/>
+                </td>
+                <td>
+                  <SSelect :items="items" showValue="name" getValue="id"/>
+                </td>
                 <td>
                   <router-link to="/property/2">Значений: 0</router-link>
                 </td>
@@ -85,6 +93,66 @@
           </div>
         </STabWindow>
       </div>
+      <SModal :isModalOpen="isShowModal" class="filter-modal" width="420px" height="100%" @onClose="toggleFilterModal">
+        <div class="modal-content">
+          <div class="filter-title">Фильтры</div>
+          <div class="section">
+            <div class="section-title">Тип свойства</div>
+            <div>
+              <SRadioButton>Все</SRadioButton>
+            </div>
+            <div>
+              <SRadioButton>Справочник</SRadioButton>
+            </div>
+            <div>
+              <SRadioButton>Ручное</SRadioButton>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">Тип данных</div>
+            <div>
+              <SCheckbox>Текстовой</SCheckbox>
+            </div>
+            <div>
+              <SCheckbox>Числовое</SCheckbox>
+            </div>
+            <div>
+              <SCheckbox>Дробные числа</SCheckbox>
+            </div>
+            <div>
+              <SCheckbox>Булеан</SCheckbox>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">Локализация значении</div>
+            <div>
+              <SRadioButton>Все</SRadioButton>
+            </div>
+            <div>
+              <SRadioButton>Нет</SRadioButton>
+            </div>
+            <div>
+              <SRadioButton>Есть</SRadioButton>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-title">Группа свойств</div>
+            <SInput isSearchable/>
+            <div class="property-items">
+              <div v-for="item in 20">
+                <SCheckbox>Характеристики</SCheckbox>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="filter-actions">
+          <SButton size="large" color="gray">Сбросить</SButton>
+          <SButton size="large" color="violet">Применить</SButton>
+        </div>
+      </SModal>
     </template>
     <template v-else>
       <EmptyData buttonTitle="Добавить свойство" @onClick="addProperty"/>
@@ -93,47 +161,49 @@
 </template>
 
 <script lang="ts" setup>
-import {SButton, STabs, STabItem, STabWindow, SIconRender, SSelect, SInput} from "@tumarsoft/ogogo-ui";
-import {ref, reactive, computed} from "vue";
+import {
+  SButton,
+  STabs,
+  STabItem,
+  STabWindow,
+  SIconRender,
+  SSelect,
+  SInput,
+  SModal,
+  SRadioButton,
+  SCheckbox
+} from "@tumarsoft/ogogo-ui";
+import { ref, reactive, computed } from "vue";
 import EmptyData from "../../features/EmptyData.vue";
-
-const items = reactive([
-  {name: 'JavaScript', id: 'id-js'},
-  {name: 'NodeJS', id: 'id-nodejs'},
-  {name: 'HTML', id: 'id-html'},
-  {name: 'CSS', id: 'id-css'},
-  {name: 'Python', id: 'id-python'},
-  {name: 'Ruby', id: 'id-ruby'},
-  {name: 'PHP', id: 'id-php'},
-])
 
 const currentProperties = reactive([]);
 const currentGroupProperties = reactive([]);
 const tab = ref("one");
+const isShowModal = ref(false);
 
 const isDisabled = computed(() => tab.value === "one" ? currentProperties.every((item) => !item.recent) : currentGroupProperties.every((item) => !item.recent));
 
 const handleTabChange = (newTab) => {
   tab.value = newTab;
-}
+};
 
 const addProperty = () => {
-  currentProperties.push({recent: true})
-}
+  currentProperties.push({recent: true});
+};
 
 const onSubmitProperty = () => {
   const newProperties = currentProperties.filter((item) => item.recent);
-  console.log('newProperties', newProperties);
-}
+  console.log("newProperties", newProperties);
+};
 
 const addGroupProperty = () => {
   currentGroupProperties.push({recent: true});
-}
+};
 
 const onSubmitGroupProperty = () => {
   const newGroupProperties = currentGroupProperties.filter((item) => item.recent);
-  console.log('newGroupProperties', newGroupProperties);
-}
+  console.log("newGroupProperties", newGroupProperties);
+};
 
 const onSubmit = () => {
   if (tab.value === "one") {
@@ -141,7 +211,11 @@ const onSubmit = () => {
   } else {
     onSubmitGroupProperty();
   }
-}
+};
+
+const toggleFilterModal = () => {
+  isShowModal.value = !isShowModal.value;
+};
 </script>
 
 <style lang="scss">
@@ -167,6 +241,76 @@ const onSubmit = () => {
 
     .search-input {
 
+    }
+  }
+
+  .filter-modal {
+    .modal-content {
+      height: calc(100% - 75px);
+      overflow-y: auto;
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $gray-300;
+        border-radius: 4px;
+      }
+    }
+
+    .filter-title {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 35px;
+    }
+
+    .section {
+      &:not(:last-child) {
+        margin-bottom: 30px;
+      }
+
+      &-title {
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 20px;
+      }
+    }
+
+    .radio-text, .checkbox-title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .checkbox-container {
+      margin-bottom: 8px;
+    }
+
+    .property-items {
+      overflow-y: auto;
+      max-height: 200px;
+      margin-top: 15px;
+
+      &::-webkit-scrollbar {
+        width: 8px;
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: $gray-300;
+        border-radius: 4px;
+      }
+    }
+
+    .filter-actions {
+      display: flex;
+      justify-content: space-between;
+      padding: 24px 0 24px;
+      position: absolute;
+      bottom: 0;
+      width: calc(100% - 56px);
+
+      .button {
+        width: calc(50% - 4px);
+      }
     }
   }
 }
