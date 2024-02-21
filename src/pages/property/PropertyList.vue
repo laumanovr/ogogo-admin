@@ -34,7 +34,7 @@
       <FilterModal ref="filterModal"/>
     </template>
     <template v-else>
-      <EmptyData buttonTitle="Добавить свойство" @onClick="addData"/>
+      <EmptyData :buttonTitle="$t('lang-1d55fd08-eaa6-4b4b-84b9-225f2d0dc1ad')" @onClick="addData"/>
     </template>
   </div>
 </template>
