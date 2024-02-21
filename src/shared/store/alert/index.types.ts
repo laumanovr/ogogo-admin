@@ -10,9 +10,15 @@ export interface IAlertState {
   left: IAlert[];
   right: IAlert[];
   center: IAlert[];
+  successMessage: IAlert,
+  errorMessage: IAlert,
+  infoMessage: IAlert,
 }
 
 export interface IAlert {
+  successMessage: null,
+  errorMessage: null,
+  infoMessage: null,
   id: string;
   message: string;
   caption: string;
