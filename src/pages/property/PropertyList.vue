@@ -1,11 +1,15 @@
 <template>
   <div class="property-container">
-    <h2 class="head-title">Свойства</h2>
+    <h2 class="head-title">{{ $t('lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2') }}</h2>
     <template v-if="hasData">
       <div class="filter-container">
         <STabs :tab-mode="'filter-tabs'">
-          <STabItem value="one" :active-tab="tab" @changeTab="handleTabChange">Свойства</STabItem>
-          <STabItem value="two" :active-tab="tab" @changeTab="handleTabChange">Группы свойств</STabItem>
+          <STabItem value="one" :active-tab="tab" @changeTab="handleTabChange">
+            {{ $t('lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2') }}
+          </STabItem>
+          <STabItem value="two" :active-tab="tab" @changeTab="handleTabChange">
+            {{ $t('lang-62162f8a-3945-4c7f-b4ef-6121d5db1a6b') }}
+          </STabItem>
         </STabs>
         <div class="filter-actions">
           <div class="search-input">
@@ -14,7 +18,9 @@
           <div class="icon-border" @click="openFilterModal">
             <SIconRender name="SettingsIcon"/>
           </div>
-          <SButton size="medium" color="violet" @click="onSubmit">Сохранить</SButton>
+          <SButton size="medium" color="violet" @click="onSubmit">
+            {{ $t('lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf') }}
+          </SButton>
         </div>
       </div>
       <div class="table-container">
