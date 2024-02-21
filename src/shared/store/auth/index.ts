@@ -88,14 +88,8 @@ export const useAuthStore = defineStore("auth", {
 
                 setItem("active-session", true);
                 resolve(user)
-              })
-              .catch(reject);
-          })
-          .then((data) => {})
-          .catch((err) => {
-            this.user = null;
-            this.isLoggedIn = false;
-
+              }).catch(reject);
+          }).catch((err) => {
             if (axios.isAxiosError(err)) {
               reject(err?.response?.data);
             } else {
