@@ -18,11 +18,11 @@
   justify-content: center;
   align-items: center;
   .loader {
-    border: 16px solid $gray-50;
+    border: 3px solid $gray-50;
     border-radius: 50%;
     border-top-color: $violet-500;
-    width: 100px;
-    height: 100px;
+    width: 50px;
+    height: 50px;
     -webkit-animation: spin 1.5s linear infinite;
     animation: spin 1.5s linear infinite;
   }
