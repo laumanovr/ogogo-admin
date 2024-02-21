@@ -2,7 +2,7 @@
   <SModal :isModalOpen="isShowModal" class="filter-modal" width="420px" height="100%"
           @onClose="toggleFilterModal">
     <div class="modal-content" ref="modalContent">
-      <div class="filter-title">Фильтры</div>
+      <div class="filter-title">{{ $t('lang-7de4a879-828e-48b2-997c-310f0d6e0d75') }}</div>
       <div class="section">
         <div class="section-title">Тип свойства</div>
         <div>
@@ -56,8 +56,8 @@
       </div>
     </div>
     <div class="filter-actions">
-      <SButton size="large" color="gray">Сбросить</SButton>
-      <SButton size="large" color="violet">Применить</SButton>
+      <SButton size="large" color="gray">{{ $t('lang-7967cf86-49d6-41c2-bdd7-23c6f8e5e8ea') }}</SButton>
+      <SButton size="large" color="violet">{{ $t('lang-bdc9ab1e-91af-43ea-8bb9-e23c8ea98755') }}</SButton>
     </div>
   </SModal>
 </template>
