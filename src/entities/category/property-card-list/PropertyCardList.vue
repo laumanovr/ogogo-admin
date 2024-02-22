@@ -37,7 +37,31 @@
           />
         </div>
       </div>
-      <img class="w-17 h-5" src="../../../shared/ui/assets/three-dots.png" />
+      <div
+        class="relative hover:bg-slate-50 px-2 cursor-pointer rounded"
+        @click="onOpenPropertyToolsDropdown"
+      >
+        <img class="w-17 h-5" src="../../../shared/ui/assets/three-dots.png" />
+        <ul
+          v-if="openPropertyToolsDropdown"
+          class="flex flex-col list-none rounded-lg shadow-2xl px-1.2 py-1.2 bg-white absolute left--14"
+        >
+          <li
+            class="flex gap-4 cursor-pointer hover:bg-slate-50 px-2.5 py-3 rounded"
+          >
+            <img src="../../../shared/ui/assets/settings-icon.png" />{{
+              $t("lang-910d305f-6cda-4bea-9829-3a26101da8a3")
+            }}
+          </li>
+          <li
+            class="flex gap-4 cursor-pointer hover:bg-slate-50 px-2.5 py-3 rounded"
+          >
+            <img src="../../../shared/ui/assets/delete-icon.png" />{{
+              $t("lang-4d04ae16-7603-4e88-8a14-bf133f2e2c4a")
+            }}
+          </li>
+        </ul>
+      </div>
     </div>
     <div v-if="!hideBody" class="body d-flex flex-row flex-wrap gap-8">
       <div class="add-value d-flex flex-row items-center gap-10">
@@ -88,6 +112,12 @@ let hideBody = ref(false);
 
 const onHideBody = () => {
   hideBody.value = !hideBody.value;
+};
+
+let openPropertyToolsDropdown = ref(false);
+
+const onOpenPropertyToolsDropdown = () => {
+  openPropertyToolsDropdown.value = !openPropertyToolsDropdown.value;
 };
 </script>
 <style scoped lang="scss">

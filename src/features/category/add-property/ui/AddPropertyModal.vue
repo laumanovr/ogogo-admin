@@ -1,9 +1,9 @@
 <template>
   <SModal
     :isModalOpen="props.value"
-    width="100"
     height="auto"
     @onClose="onClose"
+    :width="'440px'"
   >
     <div class="add-property-modal-main-wrapper">
       <p class="font-bold">
@@ -59,6 +59,7 @@ const onClose = () => {
 
 <style scoped lang="scss">
 .add-property-modal-main-wrapper {
+  width: auto;
   height: 100%;
   display: flex;
   flex-direction: column;
@@ -67,6 +68,7 @@ const onClose = () => {
   gap: 16px;
 }
 .buttons-container {
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

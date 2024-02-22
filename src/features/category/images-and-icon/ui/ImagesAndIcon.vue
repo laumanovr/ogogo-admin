@@ -59,9 +59,14 @@
 import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
 import ImageRecomendationModal from "./ImageRecomendationModal.vue";
+import { useImagesAndIconStore } from "../images-and-icon-store";
+import { useSaveCategorySettingsStore } from "../../save-category-settings/save-category-settings-store";
 
 let imageUrl = ref(null);
 let iconUrl = ref(null);
+
+const store = useImagesAndIconStore();
+const saveCategorySettingsStore = useSaveCategorySettingsStore();
 
 function handleImageUpload(event: any) {
   const file = event.target.files[0];
@@ -94,7 +99,8 @@ function handleIconUpload(event: any) {
   // reader.readAsDataURL(file);
 }
 
-function resizeImage(file: any) {
+function resizeImage(file: File) {
+  saveCategorySettingsStore.setFile(file);
   const reader = new FileReader();
   reader.onload = (event) => {
     const img = new Image();
@@ -120,6 +126,9 @@ function resizeImage(file: any) {
         }
       }
 
+      console.log(width);
+      console.log(height);
+
       canvas.width = width;
       canvas.height = height;
 
@@ -133,6 +142,7 @@ function resizeImage(file: any) {
       imageUrl.value = resizedImageUrl;
     };
     img.src = event.target.result as string;
+    store.setImgUrl(event.target.result);
   };
   reader.readAsDataURL(file);
 }
@@ -182,6 +192,7 @@ function resizeIcon(file: any) {
 
 const closeImage = () => {
   imageUrl.value = null;
+  store.setImgUrl(null);
 };
 const closeIcon = () => {
   iconUrl.value = null;

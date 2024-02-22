@@ -14,7 +14,7 @@
 import ImagesAndIcon from "@/features/category/images-and-icon/ui/ImagesAndIcon.vue";
 import PropertyNamingFields from "@/features/property-naming-fields/ui/PropertyNamingFields.vue";
 import AddProperty from "@/features/category/add-property/ui/AddProperty.vue";
-import SaveCategorySettings from "@/features/category/ui/SaveCategorySettings.vue";
+import SaveCategorySettings from "@/features/category/save-category-settings/SaveCategorySettings.vue";
 </script>
 <style scoped lang="scss">
 .main-wrapper {

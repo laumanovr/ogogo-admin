@@ -46,7 +46,7 @@
 <script lang="ts" setup>
 import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
-import AddCategoryConfirmationModal from "@/features/category/ui/AddCategoryConfirmationModal.vue";
+import AddCategoryConfirmationModal from "@/features/category/save-category-settings/AddCategoryConfirmationModal.vue";
 
 const props = defineProps({
   title: {

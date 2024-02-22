@@ -24,7 +24,7 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import CategoryMenuItem from "@/widgets/category/left-side-bar/ui/CategoryMenuItem.vue";
-import AddCategoryConfirmationModal from "@/features/category/ui/AddCategoryConfirmationModal.vue";
+import AddCategoryConfirmationModal from "@/features/category/save-category-settings/AddCategoryConfirmationModal.vue";
 
 let categories = ref([
   { title: "lang-b14d63cd-580a-4645-8c82-860175a3830f", children: [] },
