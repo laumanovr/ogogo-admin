@@ -31,6 +31,16 @@
           {{ $t("lang-75805fdb-eac2-4c87-b481-563e318789b5") }}
         </p>
       </div>
+      <div
+          @click="onMenuItemChange(MenuItems.Properties)"
+          class="cursor-pointer d-flex flex-col items-center"
+      >
+        <SIconRender :color="isPropertyActive" :name="'PropertyIcon'" />
+        <!-- <img src="../../ui/assets/Grid.png" /> -->
+        <p :class="`text-${isPropertyActive} text-size-12`">
+          {{ $t("lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2") }}
+        </p>
+      </div>
     </div>
   </div>
 </template>
@@ -39,12 +49,18 @@
 import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { MenuItems } from "@/shared/lib/utils/enums";
 import { computed, ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
-const activeButton = ref(MenuItems.Category);
-
-// const route = useRoute();
+const route = useRoute();
 const router = useRouter();
+
+const activeButton = ref("");
+
+Object.values(MenuItems).forEach((item: any) => {
+  if (route.path.includes(item)) {
+    activeButton.value = item;
+  }
+});
 
 const isProductsActive = computed(() => {
   return activeButton.value === MenuItems.Products ? "violet-700" : "gray-400";
@@ -55,6 +71,9 @@ const isStoresActive = computed(() => {
 const isCategoryActive = computed(() => {
   return activeButton.value === MenuItems.Category ? "violet-700" : "gray-400";
 });
+const isPropertyActive = computed(() => {
+  return activeButton.value === MenuItems.Properties ? "violet-700" : "gray-400";
+});
 
 function onMenuItemChange(value: MenuItems) {
   router.push("/" + value);
@@ -62,7 +81,7 @@ function onMenuItemChange(value: MenuItems) {
 }
 </script>
 
-<style>
+<style lang="scss" scoped>
 .header {
   height: 80px;
   display: flex;
