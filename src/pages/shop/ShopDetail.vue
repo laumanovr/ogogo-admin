@@ -36,7 +36,7 @@
         <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
       </div>
     </div>
-    <div class="d-flex mt-40">
+    <div class="d-flex mt-40 actions">
       <SButton size="large" color="violet" class="mr-8">{{ $t('lang-12fe79b5-20d2-4f2f-90a4-58ce16506ba3') }}</SButton>
       <SButton size="large" color="gray">{{ $t('lang-c06435a1-c1cb-40b3-a0f0-f4220e0f88ab') }}</SButton>
     </div>
@@ -76,6 +76,19 @@ const goBack = () => {
     }
     .logo-title {
       font-weight: 600;
+    }
+  }
+
+  .input-container {
+    width: 100%;
+  }
+
+  .textarea-container {
+    width: 100%;
+  }
+  .actions {
+    .button {
+      min-width: 130px;
     }
   }
 }

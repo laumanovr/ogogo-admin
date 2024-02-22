@@ -78,8 +78,13 @@ const onSave = () => {
     align-items: center;
     margin-bottom: 24px;
 
+    .input-container {
+      width: 100%;
+    }
+
     .button {
       margin-left: 12px;
+      min-width: 120px;
     }
   }
 }
