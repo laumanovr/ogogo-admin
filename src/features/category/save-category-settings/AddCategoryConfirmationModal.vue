@@ -12,7 +12,7 @@
       <p class="text mb-10">
         {{ $t("lang-6d09ed42-5da2-4bef-a54f-3a2f23735af1") }}
       </p>
-      <div class="buttons-container d-flex justify-end gap-12">
+      <div class="buttons-container d-flex justify-end gap-12 mt-40">
         <SButton color="gray" class="button" @click="onClose">
           {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}</SButton
         >

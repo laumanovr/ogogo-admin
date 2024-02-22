@@ -6,7 +6,7 @@
     {{ $t("lang-e0326aaa-d508-49a7-b6f8-389a6a0d922b") }}
   </p>
   <SButton color="gray" class="add-button" @click="onOpenModal">
-    <img src="../../../shared/ui/assets/plus-icon.png" />
+    <img src="../../../../shared/ui/assets/plus-icon.png" />
     <p>{{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</p></SButton
   >
   <PropertyCardList />
@@ -15,8 +15,8 @@
 
 <script lang="ts" setup>
 import { SButton } from "@tumarsoft/ogogo-ui";
-import AddPropertyModal from "@/features/add-property/ui/AddPropertyModal.vue";
-import PropertyCardList from "@/entities/property-card-list/PropertyCardList.vue";
+import AddPropertyModal from "@/features/category/add-property/ui/AddPropertyModal.vue";
+import PropertyCardList from "@/entities/category/property-card-list/PropertyCardList.vue";
 import { ref } from "vue";
 
 let modalValue = ref(false);

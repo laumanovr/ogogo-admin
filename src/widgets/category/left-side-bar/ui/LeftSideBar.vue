@@ -10,7 +10,7 @@
       />
     </div>
     <div class="add-category-container" @click="addCategory">
-      <img src="../../../shared/ui/assets/plus-icon.png" />
+      <img src="../../../../shared/ui/assets/plus-icon.png" />
       <span>{{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</span>
     </div>
     <AddCategoryConfirmationModal
@@ -23,13 +23,12 @@
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import CategoryMenuItem from "@/widgets/left-side-bar/ui/CategoryMenuItem.vue";
-import AddCategoryConfirmationModal from "@/features/category/ui/AddCategoryConfirmationModal.vue";
+import CategoryMenuItem from "@/widgets/category/left-side-bar/ui/CategoryMenuItem.vue";
+import AddCategoryConfirmationModal from "@/features/category/save-category-settings/AddCategoryConfirmationModal.vue";
 
 let categories = ref([
   { title: "lang-b14d63cd-580a-4645-8c82-860175a3830f", children: [] },
 ]);
-// let subCategories = ref([]);
 
 let addCategoryConfirmationModalValue = ref(false);
 
