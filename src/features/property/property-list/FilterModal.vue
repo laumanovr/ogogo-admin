@@ -1,6 +1,12 @@
 <template>
-  <SModal :isModalOpen="isShowModal" class="filter-modal" width="420px" height="100%"
-          @onClose="toggleFilterModal">
+  <SModal
+      :isModalOpen="isShowModal"
+      class="filter-modal"
+      width="420px"
+      height="100%"
+      position="right"
+      @onClose="toggleFilterModal"
+  >
     <div class="modal-content" ref="modalContent">
       <div class="filter-title">{{ $t('lang-7de4a879-828e-48b2-997c-310f0d6e0d75') }}</div>
       <div class="section">
@@ -130,7 +136,6 @@ defineExpose({
 
   .property-items {
     overflow-y: auto;
-    //max-height: 200px;
     margin-top: 15px;
 
     &::-webkit-scrollbar {
