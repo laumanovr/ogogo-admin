@@ -9,14 +9,13 @@ import loginRoutes from "@/pages/login/router";
 import shopRoutes from "@/pages/shop/router";
 import productRoutes from "@/pages/product/router";
 
-const routes: RouteRecordRaw[] =
-  [
-    categoryRoute,
-    ...propertyRoutes,
-    ...loginRoutes,
-    ...shopRoutes,
-    ...productRoutes
-  ];
+const routes: RouteRecordRaw[] = [
+  ...categoryRoute,
+  ...propertyRoutes,
+  ...loginRoutes,
+  ...shopRoutes,
+  ...productRoutes,
+];
 
 const router = createRouter({
   history: createWebHistory(),

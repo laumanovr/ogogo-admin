@@ -1,8 +1,8 @@
 <template>
   <component :is="currentComponent">
-    <Loader v-if="loaderStore.isLoading"/>
-    <SToaster ref="toaster"/>
-    <router-view/>
+    <Loader v-if="loaderStore.isLoading" />
+    <SToaster ref="toaster" />
+    <router-view />
   </component>
 </template>
 
@@ -28,21 +28,30 @@ const currentComponent = computed(() => {
   }
 });
 
-watch(() => alertStore.successMessage, (newValue: any) => {
-  if (newValue) {
-    toaster.value.showSuccess(newValue);
+watch(
+  () => alertStore.successMessage,
+  (newValue: any) => {
+    if (newValue) {
+      toaster.value.showSuccess(newValue);
+    }
   }
-});
+);
 
-watch(() => alertStore.errorMessage, (newValue: any) => {
-  if (newValue) {
-    toaster.value.showError(newValue);
+watch(
+  () => alertStore.errorMessage,
+  (newValue: any) => {
+    if (newValue) {
+      toaster.value.showError(newValue);
+    }
   }
-});
+);
 
-watch(() => alertStore.infoMessage, (newValue: any) => {
-  if (newValue) {
-    toaster.value.showInfo(newValue);
+watch(
+  () => alertStore.infoMessage,
+  (newValue: any) => {
+    if (newValue) {
+      toaster.value.showInfo(newValue);
+    }
   }
-});
+);
 </script>
