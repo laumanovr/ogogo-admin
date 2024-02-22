@@ -1,147 +1,84 @@
 <template>
   <div class="property-container">
-    <h2 class="head-title">Свойства</h2>
-    <template v-if="currentProperties.length">
+    <h2 class="head-title">{{ $t('lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2') }}</h2>
+    <template v-if="hasData">
       <div class="filter-container">
         <STabs :tab-mode="'filter-tabs'">
-          <STabItem value="one" :active-tab="tab" @changeTab="handleTabChange">Свойства</STabItem>
-          <STabItem value="two" :active-tab="tab" @changeTab="handleTabChange">Группы свойств</STabItem>
+          <STabItem value="one" :active-tab="tab" @changeTab="handleTabChange">
+            {{ $t('lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2') }}
+          </STabItem>
+          <STabItem value="two" :active-tab="tab" @changeTab="handleTabChange">
+            {{ $t('lang-62162f8a-3945-4c7f-b4ef-6121d5db1a6b') }}
+          </STabItem>
         </STabs>
         <div class="filter-actions">
           <div class="search-input">
             <SInput isSearchable/>
           </div>
-          <div class="icon-border">
+          <div class="icon-border" @click="openFilterModal">
             <SIconRender name="SettingsIcon"/>
           </div>
-          <SButton size="medium" color="violet" @click="onSubmit" :disabled="isDisabled">Сохранить</SButton>
+          <SButton size="medium" color="violet" @click="onSubmit">
+            {{ $t('lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf') }}
+          </SButton>
         </div>
       </div>
       <div class="table-container">
         <STabWindow value="one" :active-tab="tab">
-          <div class="table-data">
-            <table class="table">
-              <thead>
-              <tr>
-                <th @click="addProperty"><span>+</span></th>
-                <th>Ключ <span>*</span></th>
-                <th>Название ru <span>*</span></th>
-                <th>Название kg</th>
-                <th>Название en</th>
-                <th>Тип свойства <span>*</span></th>
-                <th>Тип данных <span>*</span></th>
-                <th>Валидация</th>
-                <th>Локализация значения</th>
-                <th>Группа свойств</th>
-                <th>Подгруппа свойств</th>
-                <th>Значения</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="(item, i) in currentProperties" :key="i" class="table-row">
-                <td></td>
-                <td><input v-model="item.key"/></td>
-                <td><input v-model="item.nameRu"/></td>
-                <td><input v-model="item.nameKg"/></td>
-                <td><input v-model="item.nameEn"/></td>
-                <td><input type="text"/></td>
-                <td><SSelect :items="items" showValue="name" getValue="id" v-model="item.tip"/></td>
-                <td><input v-model="item.validText"/></td>
-                <td><SSelect :items="items" showValue="name" getValue="id"/></td>
-                <td><SSelect :items="items" showValue="name" getValue="id"/></td>
-                <td><SSelect :items="items" showValue="name" getValue="id"/></td>
-                <td>
-                  <router-link to="/property/2">Значений: 0</router-link>
-                </td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+          <PropertyTable ref="propertyTable"/>
         </STabWindow>
         <STabWindow value="two" :active-tab="tab">
-          <div class="table-data group">
-            <table class="table">
-              <thead>
-              <tr>
-                <th @click="addGroupProperty"><span>+</span></th>
-                <th>Порядковый номер <span>*</span></th>
-                <th>Название ru <span>*</span></th>
-                <th>Название kg <span>*</span></th>
-                <th>Название en <span>*</span></th>
-                <th>Иконка</th>
-              </tr>
-              </thead>
-              <tbody>
-              <tr v-for="(item, i) in currentGroupProperties" :key="i" class="table-row">
-                <td></td>
-                <td><input type="text"/></td>
-                <td><input type="text"/></td>
-                <td><input type="text"/></td>
-                <td><input type="text"/></td>
-                <td></td>
-              </tr>
-              </tbody>
-            </table>
-          </div>
+          <GroupPropertyTable ref="groupPropertyTable"/>
         </STabWindow>
       </div>
+      <FilterModal ref="filterModal"/>
     </template>
     <template v-else>
-      <EmptyData buttonTitle="Добавить свойство" @onClick="addProperty"/>
+      <EmptyData :buttonTitle="$t('lang-1d55fd08-eaa6-4b4b-84b9-225f2d0dc1ad')" @onClick="addData"/>
     </template>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {SButton, STabs, STabItem, STabWindow, SIconRender, SSelect, SInput} from "@tumarsoft/ogogo-ui";
-import {ref, reactive, computed} from "vue";
+import {
+  SButton,
+  STabs,
+  STabItem,
+  STabWindow,
+  SIconRender,
+  SInput,
+} from "@tumarsoft/ogogo-ui";
+import { ref } from "vue";
+import PropertyTable from "../../features/property/property-list/PropertyTable.vue";
+import GroupPropertyTable from "../../features/property/property-list/GroupPropertyTable.vue";
 import EmptyData from "../../features/EmptyData.vue";
+import FilterModal from "../../features/property/property-list/FilterModal.vue";
 
-const items = reactive([
-  {name: 'JavaScript', id: 'id-js'},
-  {name: 'NodeJS', id: 'id-nodejs'},
-  {name: 'HTML', id: 'id-html'},
-  {name: 'CSS', id: 'id-css'},
-  {name: 'Python', id: 'id-python'},
-  {name: 'Ruby', id: 'id-ruby'},
-  {name: 'PHP', id: 'id-php'},
-])
-
-const currentProperties = reactive([]);
-const currentGroupProperties = reactive([]);
 const tab = ref("one");
-
-const isDisabled = computed(() => tab.value === "one" ? currentProperties.every((item) => !item.recent) : currentGroupProperties.every((item) => !item.recent));
+const filterModal = ref(null);
+const propertyTable = ref(null);
+const groupPropertyTable = ref(null);
+const hasData = ref(false);
 
 const handleTabChange = (newTab) => {
   tab.value = newTab;
+};
+
+const addData = () => {
+  hasData.value = true;
 }
 
-const addProperty = () => {
-  currentProperties.push({recent: true})
-}
-
-const onSubmitProperty = () => {
-  const newProperties = currentProperties.filter((item) => item.recent);
-  console.log('newProperties', newProperties);
-}
-
-const addGroupProperty = () => {
-  currentGroupProperties.push({recent: true});
-}
-
-const onSubmitGroupProperty = () => {
-  const newGroupProperties = currentGroupProperties.filter((item) => item.recent);
-  console.log('newGroupProperties', newGroupProperties);
-}
+const openFilterModal = () => {
+  filterModal.value.toggleFilterModal();
+};
 
 const onSubmit = () => {
   if (tab.value === "one") {
-    onSubmitProperty();
+    propertyTable.value.submitProperty();
   } else {
-    onSubmitGroupProperty();
+    groupPropertyTable.value.submitGroupProperty();
   }
-}
+};
 </script>
 
 <style lang="scss">
