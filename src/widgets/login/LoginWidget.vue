@@ -64,7 +64,7 @@ const onSubmitLogin = () => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .login-container {
   display: flex;
   justify-content: center;
@@ -96,6 +96,10 @@ const onSubmitLogin = () => {
     }
 
     .button {
+      width: 100%;
+    }
+
+    .input-container {
       width: 100%;
     }
   }
