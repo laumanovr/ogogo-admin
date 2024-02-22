@@ -30,9 +30,11 @@
         </div>
         <div class="price-block mt-40" id="price">
           <div class="head-title md">{{ $t('lang-3bbbc87b-85a5-4434-a8b7-999c9146de08') }}</div>
-          <SInput :label="$t('lang-333319c2-2df4-4057-a56a-28ddd7a790a1')" width="260px" class="mr-12"/>
-          <SInput :label="$t('lang-1f6f2dca-070c-48bc-941f-e1300024ffbb')" width="260px" class="mr-12"/>
-          <SInput :label="$t('lang-5eb99c46-ed5f-4a24-85ad-d551ad812256')" width="260px"/>
+          <div class="d-flex">
+            <SInput :label="$t('lang-333319c2-2df4-4057-a56a-28ddd7a790a1')" width="100%" class="mr-12"/>
+            <SInput :label="$t('lang-1f6f2dca-070c-48bc-941f-e1300024ffbb')" width="100%" class="mr-12"/>
+            <SInput :label="$t('lang-5eb99c46-ed5f-4a24-85ad-d551ad812256')" width="100%"/>
+          </div>
           <div class="d-flex mt-24">
             <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
             <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
@@ -71,11 +73,19 @@
         <div class="characteristic-block" id="character">
           <div class="head-title md">{{ $t('lang-c00a03d8-8bb2-4d54-93e7-fc0379b86f51') }}</div>
           <p class="hint mb-24">{{ $t('lang-0c4310a2-d07f-450a-9258-a907b7feb038') }}</p>
-          <div class="selects d-flex flex-wrap justify-between">
-            <SSelect label="Цвет" class="mb-16"/>
-            <SSelect label="Конфигурация памяти" class="mb-16"/>
-            <SSelect label="Состояние" class="mb-16"/>
-            <SSelect label="Экран" class="mb-16"/>
+          <div class="d-flex flex-wrap justify-between">
+            <div class="mb-16 selects">
+              <SSelect label="Цвет"/>
+            </div>
+            <div class="mb-16 selects">
+              <SSelect label="Конфигурация памяти"/>
+            </div>
+            <div class="mb-16 selects">
+              <SSelect label="Состояние"/>
+            </div>
+            <div class="mb-16 selects">
+              <SSelect label="Экран"/>
+            </div>
           </div>
         </div>
       </div>
@@ -93,7 +103,7 @@
         </div>
       </div>
     </div>
-    <div class="d-flex mt-40">
+    <div class="d-flex mt-40 actions">
       <SButton size="large" color="violet" class="mr-12">{{ $t('lang-01b61f03-58d8-4b95-880e-a6b75920efad') }}</SButton>
       <SButton size="large" color="gray">{{ $t('lang-c06435a1-c1cb-40b3-a0f0-f4220e0f88ab') }}</SButton>
     </div>
@@ -160,7 +170,7 @@ const handleScroll = () => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../../app/style/colors.scss";
 
 .product-detail-container {
@@ -173,10 +183,8 @@ const handleScroll = () => {
     font-size: 14px;
   }
 
-  .description {
-    .textarea-field {
-      width: 100%; //
-    }
+  .textarea-container {
+    width: 100%;
   }
 
   .photo-block {
@@ -197,10 +205,11 @@ const handleScroll = () => {
     }
   }
 
-  .dropdown {
+  .selects {
     width: calc(50% - 6px);
-    input {
-      width: 100%; //
+
+    .dropdown {
+      width: 100%;
     }
   }
 
@@ -224,6 +233,16 @@ const handleScroll = () => {
       &.active {
         border-left-color: $violet-600;
       }
+    }
+  }
+
+  .input-container {
+    width: 100%;
+  }
+
+  .actions {
+    .button {
+      min-width: 165px;
     }
   }
 }
