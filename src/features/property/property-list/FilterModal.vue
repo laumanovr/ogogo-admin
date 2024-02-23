@@ -53,7 +53,7 @@
 
       <div class="section">
         <div class="section-title">Группа свойств</div>
-        <SInput isSearchable/>
+        <SInput isSearchable width="100%"/>
         <div class="property-items" :style="{'max-height': maxHeight+'px'}">
           <div v-for="item in 50">
             <SCheckbox>Характеристики</SCheckbox>
@@ -146,6 +146,10 @@ defineExpose({
       background-color: $gray-300;
       border-radius: 4px;
     }
+  }
+
+  .input-container {
+    width: calc(100% - 10px);
   }
 
   .filter-actions {

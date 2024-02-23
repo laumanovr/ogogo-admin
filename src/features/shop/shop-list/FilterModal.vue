@@ -38,7 +38,7 @@
 
       <div class="section">
         <div class="section-title">Магазины</div>
-        <SInput isSearchable/>
+        <SInput isSearchable width="100%"/>
         <div class="property-items" :style="{'max-height': maxHeight+'px'}">
           <div v-for="item in 30">
             <SCheckbox>Mobi Market</SCheckbox>
@@ -132,6 +132,10 @@ defineExpose({
       background-color: $gray-300;
       border-radius: 4px;
     }
+  }
+
+  .input-container {
+    width: calc(100% - 10px);
   }
 
   .filter-actions {
