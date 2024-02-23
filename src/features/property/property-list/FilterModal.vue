@@ -89,7 +89,7 @@ defineExpose({
 });
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../../../app/style/colors.scss";
 
 .filter-modal {
