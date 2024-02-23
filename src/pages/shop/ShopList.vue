@@ -1,7 +1,7 @@
 <template>
   <div class="shop-container">
     <h2 class="head-title">{{ $t('lang-dec7f483-cf4a-406a-8241-bfeb9cf1baef') }}</h2>
-    <FilterSearch/>
+    <FilterSearch @onClick="openModal"/>
     <STable
         :headers="headers"
         :data="tableData"
@@ -19,13 +19,15 @@
         </router-link>
       </template>
     </STable>
+    <FilterModal ref="filterModal"/>
   </div>
 </template>
 
 <script lang="ts" setup>
 import { SInput, SButton, SIconRender, STable, SBadge } from "@tumarsoft/ogogo-ui";
-import FilterSearch from "../../widgets/filter-search/FilterSearch.vue";
 import { ref, reactive } from "vue";
+import FilterSearch from "../../widgets/filter-search/FilterSearch.vue";
+import FilterModal from "../../features/shop/shop-list/FilterModal.vue";
 
 const headers = reactive([
   {title: "Магазин", key: "name"},
@@ -47,6 +49,12 @@ const tableData = reactive([
   {id: 3, moderator: "Алина А.", status: {name: "Проверен", color: "green"}, name: "Моби-маркет", date: "03.03.24"},
   {id: 4, moderator: "Не назначен", status: {name: "Отклонен", color: "rose"}, name: "Софтек", date: "04.04.24"}
 ]);
+
+const filterModal = ref(null);
+
+const openModal = () => {
+  filterModal.value.toggleModal();
+};
 
 const onChangePage = (page) => {
   console.log(page);
