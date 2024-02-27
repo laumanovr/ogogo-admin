@@ -50,7 +50,7 @@ import {
 } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
 import PropertyTable from "../../features/property/property-list/PropertyTable.vue";
-import GroupPropertyTable from "../../features/property/property-list/GroupPropertyTable.vue";
+import {GroupPropertyTable} from "../../features/property/property-list/group-property";
 import EmptyData from "../../features/EmptyData.vue";
 import FilterModal from "../../features/property/property-list/FilterModal.vue";
 
