@@ -70,8 +70,6 @@ const onSaveSubCategory = () => {};
 </script>
 
 <style lang="scss" scoped>
-// @import "../app/style/colors.scss";
-
 .left-side-bar-container {
   width: auto;
   height: 100vh;
