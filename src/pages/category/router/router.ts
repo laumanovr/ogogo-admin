@@ -1,11 +1,11 @@
 import { findComponent } from "@/shared/lib/utils/findComponent";
-import CategoryEmpty from "@/pages/category/CategoryEmpty.vue";
+import CategoryEmpty from "@/pages/category/ui/CategoryEmpty.vue";
 
 const route = [
   {
     path: "/category",
     name: "category",
-    component: findComponent("category", "Index"),
+    component: findComponent("category", "Category"),
   },
   {
     path: "/category/empty",

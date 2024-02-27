@@ -9,27 +9,33 @@
       >
         <img
           v-if="!getImgUrl"
-          src="../../../shared/ui/assets/gallery-slash.png"
+          src="../../../../shared/ui/assets/gallery-slash.png"
           class=""
         />
         <img v-if="getImgUrl" :src="getImgUrl" class="image-under-container" />
       </div>
     </div>
     <p class="mb-28">{{ $t("lang-f311a0ea-a62e-4875-817c-a342d01d6181") }}</p>
-    <SButton color="violet" class="save-button">{{
+    <SButton color="violet" class="save-button" @click="onSaveSettings">{{
       $t("lang-b819743e-e6d9-4b27-9dd0-4604271a2395")
     }}</SButton>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { computed, watch, ref } from "vue";
+import { computed } from "vue";
 import { SButton } from "@tumarsoft/ogogo-ui";
-import { useSaveCategorySettingsStore } from "./save-category-settings-store";
+import { useSaveCategorySettingsStore } from "../store/save-category-settings-store";
 
 const store = useSaveCategorySettingsStore();
 
 const getImgUrl = computed(() => store.getImgUrl);
+
+const emit = defineEmits(["saveSettings"]);
+
+const onSaveSettings = () => {
+  emit("saveSettings", true);
+};
 
 // const localImgUrl = ref(null);
 

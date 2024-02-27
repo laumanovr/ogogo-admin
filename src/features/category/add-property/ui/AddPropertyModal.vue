@@ -14,13 +14,13 @@
         {{ $t("lang-030b4140-be2c-482a-ba23-45c62ada7613") }}
       </SCheckbox>
       <SSelect :label="$t('lang-d5ed16f8-b6af-4c0a-ba0a-820cf3ce91ba')" />
-      <SSwitch id="1" labelPosition="left" class="switch-container">{{
+      <SSwitch labelPosition="left" class="switch-container">{{
         $t("lang-98b7ffed-5818-4f3e-b552-aa10e70616ee")
       }}</SSwitch>
-      <SSwitch id="2" labelPosition="left" class="switch-container">{{
+      <SSwitch labelPosition="left" class="switch-container">{{
         $t("lang-1e1a6bdb-c17e-4089-ab17-e6d8c040203f")
       }}</SSwitch>
-      <SSwitch id="3" labelPosition="left" class="switch-container">{{
+      <SSwitch labelPosition="left" class="switch-container">{{
         $t("lang-4ae87450-36ee-4e92-a2a1-071898911d00")
       }}</SSwitch>
       <div class="buttons-container">

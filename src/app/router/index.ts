@@ -3,7 +3,7 @@ import { AccessRequestMiddleware } from "@/app/router/middlware/access-request";
 import Chain from "./middlware/chain";
 import { flattenRoutes, transformToRouter } from "@/shared/lib/utils/route";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import categoryRoute from "@/pages/category/router";
+import categoryRoute from "@/pages/category/router/router";
 import propertyRoutes from "@/pages/property/router";
 import loginRoutes from "@/pages/login/router";
 import shopRoutes from "@/pages/shop/router";

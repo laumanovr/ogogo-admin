@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { useSaveCategorySettingsStore } from "../save-category-settings/save-category-settings-store";
+import { useSaveCategorySettingsStore } from "../../save-category-settings/store/save-category-settings-store";
 
 export const useImagesAndIconStore = defineStore("images-and-icon-store", {
   state: (): ISaveCategorySettingsState => {
