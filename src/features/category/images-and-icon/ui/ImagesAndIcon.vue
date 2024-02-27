@@ -59,8 +59,8 @@
 import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
 import ImageRecomendationModal from "./ImageRecomendationModal.vue";
-import { useImagesAndIconStore } from "../images-and-icon-store";
-import { useSaveCategorySettingsStore } from "../../save-category-settings/save-category-settings-store";
+import { useImagesAndIconStore } from "../store/images-and-icon-store";
+import { useSaveCategorySettingsStore } from "../../save-category-settings//store/save-category-settings-store";
 
 let imageUrl = ref(null);
 let iconUrl = ref(null);
@@ -292,3 +292,5 @@ const onClose = () => {
   right: 15px;
 }
 </style>
+../store/images-and-icon-store
+../../save-category-settings/store/save-category-settings-store

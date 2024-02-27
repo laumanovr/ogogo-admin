@@ -5,10 +5,12 @@ import {
   AuthLoginResultInterface,
 } from "@/shared/api/auth/types";
 
-export const login = (credentials: AuthLoginPayloadInterface): Promise<AuthLoginResultInterface> => {
+export const login = (
+  credentials: AuthLoginPayloadInterface
+): Promise<AuthLoginResultInterface> => {
   return axios({
     method: "POST",
-    url: "/api/Clients/Login",
+    url: "Clients/Login",
     data: credentials,
   }).then((response) => response.data.result);
 };
@@ -16,14 +18,14 @@ export const login = (credentials: AuthLoginPayloadInterface): Promise<AuthLogin
 export const getCurrentUser = (): Promise<AuthGetProfileResultInterface> => {
   return axios({
     method: "GET",
-    url: `/api/auth/getProfile`,
+    url: `auth/getProfile`,
   }).then((response) => response.data.result);
 };
 
 export const logout = (): Promise<boolean> => {
   return axios({
     method: "POST",
-    url: "/api/auth/logout",
+    url: "auth/logout",
   }).then((response) => response.data.ok);
 };
 
@@ -31,20 +33,18 @@ export const updatePassword = (payload: {
   newPassword?: string;
 }): Promise<boolean> => {
   return axios
-    .post("/api/Auth/UpdateUserPassword", payload)
+    .post("Auth/UpdateUserPassword", payload)
     .then((res) => res.data.ok);
 };
 
 export const forgotPassword = (payload?: {
   login: string;
 }): Promise<boolean> => {
-  return axios
-    .post("/api/Auth/ForgotPassword", payload)
-    .then((res) => res.data.ok);
+  return axios.post("Auth/ForgotPassword", payload).then((res) => res.data.ok);
 };
 
 export const getSipAccount = (): Promise<{ login: string; password: string }> =>
-  axios.get("/api/Auth/GetSipAccount").then((res) => res.data.result);
+  axios.get("Auth/GetSipAccount").then((res) => res.data.result);
 
 export default {
   login,
