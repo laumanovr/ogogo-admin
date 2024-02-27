@@ -14,7 +14,7 @@
       <tbody>
       <tr v-for="(item, i) in currentGroupProperties" :key="i" class="table-row">
         <td></td>
-        <td><input type="text" v-model.number="item.sequenceNumber"/></td>
+        <td><input type="text" readonly v-model.number="item.sequenceNumber"/></td>
         <td><input type="text" v-model="item.name"/></td>
         <td><input type="text" v-model="item.nameKy"/></td>
         <td><input type="text" v-model="item.nameEn"/></td>
@@ -46,6 +46,7 @@ import lodash from "lodash";
 
 const groupPropertyStore = useGroupPropertyStore();
 let currentGroupProperties = ref([]);
+let groupProperties = ref([]);
 
 
 onMounted(() => {
@@ -72,8 +73,6 @@ const onSelectFile = async (e, item) => {
   }
 };
 
-let groupProperties = ref([]);
-
 watch(() => groupPropertyStore.groupPropertyList, (newValue: any) => {
   if (newValue) {
     groupProperties.value = newValue.reverse();
@@ -88,7 +87,7 @@ const getGroupPropertyList = () => {
 const addGroupProperty = () => {
   currentGroupProperties.value.unshift({
     recent: true,
-    sequenceNumber: 0,
+    sequenceNumber: currentGroupProperties.value.length + 1,
     name: null,
     nameKy: null,
     nameEn: null,
