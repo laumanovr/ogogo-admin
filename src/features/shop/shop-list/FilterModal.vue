@@ -64,7 +64,7 @@ const maxHeight = ref(0);
 const toggleModal = () => {
   isShow.value = !isShow.value;
   nextTick(() => {
-    const rect = modalContent.value.getBoundingClientRect();
+    const rect = modalContent?.value?.getBoundingClientRect();
     maxHeight.value = (rect.height / 2);
   });
 };
