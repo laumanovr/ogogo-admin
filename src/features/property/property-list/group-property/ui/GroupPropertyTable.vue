@@ -83,7 +83,7 @@ watch(() => groupPropertyStore.groupPropertyList, (newValue: any) => {
 });
 
 const getGroupPropertyList = () => {
-  groupPropertyStore.fetchGroupPropertyList({pageSize: 100});
+  groupPropertyStore.fetchGroupPropertyList({pageSize: 500});
 };
 
 const addGroupProperty = () => {

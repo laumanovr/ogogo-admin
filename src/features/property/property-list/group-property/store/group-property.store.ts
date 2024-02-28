@@ -48,7 +48,7 @@ export const useGroupPropertyStore = defineStore("group-property-store", {
             try {
                 loaderStore.setLoaderState(true);
                 await updateGroupProperties(payload);
-                await this.fetchGroupPropertyList({pageSize: 100});
+                await this.fetchGroupPropertyList({pageSize: 500});
                 loaderStore.setLoaderState(false);
                 alertStore.showSuccess("Успешно обновлено!");
             } catch (err) {
