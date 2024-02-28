@@ -5,16 +5,16 @@
         <SIconRender name="ArrowIcon" direction="left"/>
         {{$t('lang-943d7231-c402-4b11-929c-b26a3ee10276')}}
       </SButton>
-      <div class="shop-title"><img src="../../app/assets/img/shop-logo.png" alt="" class="sm-img mr-8">Мой телефон</div>
+      <div class="shop-title"><img src="../../../app/assets/img/shop-logo.png" alt="" class="sm-img mr-8">Мой телефон</div>
     </div>
     <h2 class="head-title md">{{ $t('lang-2c57a873-df1a-437e-a38b-2a0772342fc4') }}</h2>
     <div class="shop-logo-block">
       <div class="d-flex items-center">
-        <img src="../../app/assets/img/shop-logo.png" alt="logo" class="logo mr-24">
+        <img src="../../../app/assets/img/shop-logo.png" alt="logo" class="logo mr-24">
         <div class="logo-title">Мой телефон</div>
       </div>
       <div class="d-flex mt-24">
-        <img src="../../app/assets/img/ava.png" alt="img" class="mr-12">
+        <img src="../../../app/assets/img/ava.png" alt="img" class="mr-12">
         <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
       </div>
     </div>
@@ -23,7 +23,7 @@
         <SInput :label="$t('lang-83ea23b9-0c12-4c48-a823-39cbc73f7219')" width="100%"/>
       </div>
       <div class="d-flex mt-24">
-        <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
+        <img src="../../../app/assets/img/ava.png" alt="" class="mr-12">
         <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
       </div>
     </div>
@@ -32,7 +32,7 @@
         <STextArea :label="$t('lang-b1c420fe-8beb-4452-bf7c-165f69e8eabf')" width="100%" height="150px"/>
       </div>
       <div class="d-flex mt-24">
-        <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
+        <img src="../../../app/assets/img/ava.png" alt="" class="mr-12">
         <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
       </div>
     </div>

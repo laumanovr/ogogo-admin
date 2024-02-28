@@ -6,7 +6,7 @@
         {{ $t('lang-943d7231-c402-4b11-929c-b26a3ee10276') }}
       </SButton>
       <div class="d-flex items-center ml-24 mr-24">
-        <img src="../../app/assets/img/shop-logo.png" alt="" class="sm-img mr-8">
+        <img src="../../../app/assets/img/shop-logo.png" alt="" class="sm-img mr-8">
         Мой телефон
       </div>
       <BreadCrumbs/>
@@ -17,14 +17,14 @@
         <div>
           <SInput :label="$t('lang-cb1dea14-fb31-4e97-9364-9e33b4227c3a')" width="100%"/>
           <div class="d-flex mt-24">
-            <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
+            <img src="../../../app/assets/img/ava.png" alt="" class="mr-12">
             <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
         <div class="mt-24 description">
           <STextArea :label="$t('lang-240d2d7a-5a93-4647-a066-22a368702e04')" width="100%"/>
           <div class="d-flex mt-24">
-            <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
+            <img src="../../../app/assets/img/ava.png" alt="" class="mr-12">
             <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
@@ -36,7 +36,7 @@
             <SInput :label="$t('lang-5eb99c46-ed5f-4a24-85ad-d551ad812256')" width="100%"/>
           </div>
           <div class="d-flex mt-24">
-            <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
+            <img src="../../../app/assets/img/ava.png" alt="" class="mr-12">
             <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
@@ -44,7 +44,7 @@
           <div class="head-title md">{{ $t('lang-a6dc23d1-d5cc-4c0a-8412-32f6ff24a2dd') }}</div>
           <SInput :label="$t('lang-3a76c0f0-6ebc-413e-8455-9363f5436da1')" width="100%"/>
           <div class="d-flex mt-24">
-            <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
+            <img src="../../../app/assets/img/ava.png" alt="" class="mr-12">
             <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
@@ -52,10 +52,10 @@
           <div class="head-title md">{{ $t('lang-d820a72f-7c7f-4ac0-b993-8d57d1904dde') }}</div>
           <p class="hint mb-24">{{ $t('lang-7c1a3ecf-841c-4ea1-951b-a5d27099a805') }}</p>
           <div class="d-flex flex-wrap">
-            <img src="../../app/assets/img/iphone.jpg" alt="image" class="photo mr-8 mb-8" v-for="i in 5">
+            <img src="../../../app/assets/img/iphone.jpg" alt="image" class="photo mr-8 mb-8" v-for="i in 5">
           </div>
           <div class="d-flex mt-24">
-            <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
+            <img src="../../../app/assets/img/ava.png" alt="" class="mr-12">
             <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
@@ -63,10 +63,10 @@
           <div class="head-title md">{{ $t('lang-65a33216-17a3-4f12-9e78-ef1b73efcdf0') }}</div>
           <p class="hint mb-24">{{ $t('lang-9fc0c45e-0828-49af-a325-a11dbc4a9829') }}</p>
           <div class="d-flex flex-wrap">
-            <img src="../../app/assets/img/iphone.jpg" alt="image" class="video mr-8">
+            <img src="../../../app/assets/img/iphone.jpg" alt="image" class="video mr-8">
           </div>
           <div class="d-flex mt-24">
-            <img src="../../app/assets/img/ava.png" alt="" class="mr-12">
+            <img src="../../../app/assets/img/ava.png" alt="" class="mr-12">
             <SInput :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')" width="100%"/>
           </div>
         </div>
@@ -112,7 +112,7 @@
 
 <script lang="ts" setup>
 import { SInput, SButton, STextArea, SSelect, SIconRender } from "@tumarsoft/ogogo-ui";
-import BreadCrumbs from "../../features/Breadcrumbs.vue";
+import BreadCrumbs from "../../../features/Breadcrumbs.vue";
 import { ref, reactive, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 
@@ -171,7 +171,7 @@ const handleScroll = () => {
 </script>
 
 <style lang="scss" scoped>
-@import "../../app/style/colors.scss";
+@import "../../../app/style/colors";
 
 .product-detail-container {
   .content-block {

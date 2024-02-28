@@ -26,8 +26,8 @@
 <script lang="ts" setup>
 import { SInput, SButton, SIconRender, STable, SBadge } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
-import FilterSearch from "../../widgets/filter-search/FilterSearch.vue";
-import FilterModal from "../../features/product/product-list/FilterModal.vue";
+import FilterSearch from "../../../widgets/filter-search/FilterSearch.vue";
+import FilterModal from "../../../features/product/product-list/FilterModal.vue";
 
 const filterModal = ref(null);
 

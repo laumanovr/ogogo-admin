@@ -49,10 +49,10 @@ import {
   SInput,
 } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
-import PropertyTable from "../../features/property/property-list/PropertyTable.vue";
-import {GroupPropertyTable} from "../../features/property/property-list/group-property";
-import EmptyData from "../../features/EmptyData.vue";
-import FilterModal from "../../features/property/property-list/FilterModal.vue";
+import PropertyTable from "../../../features/property/property-list/PropertyTable.vue";
+import {GroupPropertyTable} from "../../../features/property/property-list/group-property/index";
+import EmptyData from "../../../features/EmptyData.vue";
+import FilterModal from "../../../features/property/property-list/FilterModal.vue";
 
 const tab = ref("one");
 const filterModal = ref(null);
@@ -82,7 +82,7 @@ const onSubmit = () => {
 </script>
 
 <style lang="scss">
-@import "../../app/style/colors";
+@import "../../../app/style/colors";
 
 .property-container {
   .filter-container {
