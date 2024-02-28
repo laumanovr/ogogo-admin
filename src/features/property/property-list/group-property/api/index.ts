@@ -3,7 +3,7 @@ import axios from "axios";
 export const getGroupProperties = (data={}) => {
     return axios({
         method: "POST",
-        url: "/api/Marketplace/GetMarketplacePropertyGroupPagedList",
+        url: "/Marketplace/GetMarketplacePropertyGroupPagedList",
         data: data,
     }).then((response) => response.data.result).catch((err) => Promise.reject(err));
 };
@@ -11,7 +11,7 @@ export const getGroupProperties = (data={}) => {
 export const createGroupProperties = (data: object) => {
     return axios({
         method: "POST",
-        url: "/api/Marketplace/CreateMarketplacePropertyGroupList",
+        url: "/Marketplace/CreateMarketplacePropertyGroupList",
         data: data,
     }).then((response) => response.data.result).catch((err) => Promise.reject(err));
 };
@@ -19,7 +19,7 @@ export const createGroupProperties = (data: object) => {
 export const updateGroupProperties = (data: object) => {
     return axios({
         method: "PUT",
-        url: "/api/Marketplace/UpdateMarketplacePropertyGroupList",
+        url: "/Marketplace/UpdateMarketplacePropertyGroupList",
         data: data,
     }).then((response) => response.data.result).catch((err) => Promise.reject(err));
 }

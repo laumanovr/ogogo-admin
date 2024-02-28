@@ -42,9 +42,11 @@
 import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { ref, computed, onMounted, watch } from "vue";
 import { useGroupPropertyStore } from "../store/group-property.store";
+import { useAlertStore } from "@/shared/store/alert";
 import lodash from "lodash";
 
 const groupPropertyStore = useGroupPropertyStore();
+const alertStore = useAlertStore();
 let currentGroupProperties = ref([]);
 let groupProperties = ref([]);
 
@@ -99,22 +101,31 @@ const submitGroupProperty = async () => {
   const newItems = currentGroupProperties.value.filter((item) => item.recent);
   const updatedItems = lodash.differenceWith(currentGroupProperties.value.filter((item) => !item.recent), groupProperties.value, lodash.isEqual);
   if (!newItems.length && !updatedItems.length) {
+    alertStore.showInfo("Вы ничего не добавили!");
     return;
   }
-  await onCreate(newItems);
-  await onUpdate(updatedItems);
+  if (newItems.length) {
+    await onCreate(newItems);
+  }
+  if (updatedItems.length) {
+    await onUpdate(updatedItems);
+  }
 };
 
 const onCreate = (newItems) => {
-  if (newItems.length) {
-    groupPropertyStore.createGroupProperty(newItems);
+  if (!newItems.every((item) => item.name)) {
+    alertStore.showInfo("Заполните поля");
+    return;
   }
+  groupPropertyStore.createGroupProperty(newItems);
 };
 
 const onUpdate = (updatedItems) => {
-  if (updatedItems.length) {
-    groupPropertyStore.updateGroupProperty(updatedItems);
+  if (!updatedItems.every((item) => item.name)) {
+    alertStore.showInfo("Заполните поля");
+    return;
   }
+  groupPropertyStore.updateGroupProperty(updatedItems);
 };
 
 defineExpose({
