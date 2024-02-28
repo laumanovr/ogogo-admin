@@ -1,12 +1,13 @@
 <template>
   <div class="left-side-bar-container">
     <div class="item"></div>
-    <div v-for="(item, i) in categories" :key="i">
+    <div v-for="(item, i) in props.categories" :key="i">
       <CategoryMenuItem
         :title="item.title"
         :index="i"
         :item="item"
         :depth="depth"
+        @save-sub-category="onSaveSubCategory"
       />
     </div>
     <div class="add-category-container" @click="addCategory">
@@ -22,13 +23,24 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, computed, PropType } from "vue";
 import CategoryMenuItem from "@/widgets/category/left-side-bar/ui/CategoryMenuItem.vue";
-import AddCategoryConfirmationModal from "@/features/category/save-category-settings/AddCategoryConfirmationModal.vue";
+import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
+import { ICategory } from "@/pages/category/store/category-page-store.types";
 
-let categories = ref([
-  { title: "lang-b14d63cd-580a-4645-8c82-860175a3830f", children: [] },
-]);
+let props = defineProps({
+  categories: {
+    type: Array as PropType<ICategory[]>,
+    default: [],
+  },
+});
+
+// let categories = computed(() => );
+
+// props.item.children.push({
+//   title: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
+//   childMarketplaceCategoryIdList: [],
+// });
 
 let addCategoryConfirmationModalValue = ref(false);
 
@@ -41,19 +53,23 @@ const onClose = () => {
   addCategoryConfirmationModalValue.value = false;
 };
 
+const emit = defineEmits(["save"]);
+
 const onSave = () => {
+  emit("save", true);
+
   addCategory();
-  categories.value.push({
-    title: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
-    children: [],
-  });
+  // categories.value.push({
+  //   title: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
+  //   children: [],
+  // });
   onClose();
 };
+
+const onSaveSubCategory = () => {};
 </script>
 
 <style lang="scss" scoped>
-// @import "../app/style/colors.scss";
-
 .left-side-bar-container {
   width: auto;
   height: 100vh;

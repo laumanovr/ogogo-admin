@@ -16,7 +16,7 @@
 <script lang="ts" setup>
 import { SButton } from "@tumarsoft/ogogo-ui";
 import AddPropertyModal from "@/features/category/add-property/ui/AddPropertyModal.vue";
-import PropertyCardList from "@/entities/category/property-card-list/PropertyCardList.vue";
+import { PropertyCardList } from "@/entities/category/property-card-list";
 import { ref } from "vue";
 
 let modalValue = ref(false);

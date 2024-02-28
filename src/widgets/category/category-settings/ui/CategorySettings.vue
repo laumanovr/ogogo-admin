@@ -7,14 +7,21 @@
     </div>
   </div>
   <div class="save-block">
-    <SaveCategorySettings />
+    <SaveCategorySettings @saveSettings="onSaveSettings" />
   </div>
 </template>
 <script lang="ts" setup>
-import ImagesAndIcon from "@/features/category/images-and-icon/ui/ImagesAndIcon.vue";
-import PropertyNamingFields from "@/features/property-naming-fields/ui/PropertyNamingFields.vue";
+import { ImagesAndIcon } from "@/features/category/images-and-icon";
+import PropertyNamingFields from "@/features/category/property-naming-fields/ui/PropertyNamingFields.vue";
 import AddProperty from "@/features/category/add-property/ui/AddProperty.vue";
-import SaveCategorySettings from "@/features/category/save-category-settings/SaveCategorySettings.vue";
+import { SaveCategorySettings } from "@/features/category/save-category-settings";
+import { useCategoryStore } from "@/widgets/category/category-settings";
+
+const categoryStore = useCategoryStore();
+
+const onSaveSettings = () => {
+  categoryStore.saveCategorySettings();
+};
 </script>
 <style scoped lang="scss">
 .main-wrapper {
@@ -63,3 +70,4 @@ import SaveCategorySettings from "@/features/category/save-category-settings/Sav
   }
 }
 </style>
+@/widgets/category/category-settings/store/category-store

@@ -8,27 +8,29 @@
       <SIconRender
         name="ArrowIcon"
         size="small"
-        :direction="item.children.length > 0 ? 'bottom' : 'right'"
+        :direction="
+          item.childMarketplaceCategoryIdList.length > 0 ? 'bottom' : 'right'
+        "
       />
       <img src="../../../../shared/ui/assets/fileIcon.png" />
       <span>{{ $t(`${props.title}`) }}</span>
     </div>
     <img
       v-if="isHovering"
-      width="10px"
-      height="10px"
+      width="13px"
+      height="13px"
       @click="addSubCategory"
       src="../../../../shared/ui/assets/plus-icon.png"
     />
   </div>
   <div
-    v-if="item.children.length > 0"
+    v-if="item.childMarketplaceCategoryIdList.length > 0"
     :style="{
       marginLeft: `${depth + 15}px`,
     }"
   >
     <CategoryMenuItem
-      v-for="child in item.children"
+      v-for="child in item.childMarketplaceCategoryIdList"
       :item="child"
       :depth="depth + 1"
       :title="child.title"
@@ -46,7 +48,7 @@
 <script lang="ts" setup>
 import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
-import AddCategoryConfirmationModal from "@/features/category/save-category-settings/AddCategoryConfirmationModal.vue";
+import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
 
 const props = defineProps({
   title: {
@@ -60,6 +62,8 @@ const props = defineProps({
   depth: { type: Number, default: null },
   index: { type: Number, default: null },
 });
+
+const emit = defineEmits(["saveSubCategory"]);
 
 const isHovering = ref(false);
 
@@ -75,10 +79,11 @@ const onClose = () => {
 
 const onSave = () => {
   addSubCategory();
-  props.item.children.push({
-    title: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
-    children: [],
-  });
+  emit("saveSubCategory", true);
+  // props.item.children.push({
+  //   title: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
+  //   childMarketplaceCategoryIdList: [],
+  // });
   onClose();
 };
 </script>
