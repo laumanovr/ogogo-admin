@@ -8,32 +8,34 @@
         :label="$t('lang-bfee2c24-b7a6-41e9-8f4c-2620064b8a91')"
         :width="'100%'"
         class="name-field mb-16"
-        @change="onChange($event, 'ru')"
+        :value="categorySharedStore.getRu"
+        @update:model-value="onChange($event, 'ru')"
       />
       <SInput
         :label="$t('lang-cd2180a0-855c-4f07-8f94-0a0a14c4eaf0')"
         :width="'100%'"
         class="name-field mb-16"
-        @change="onChange($event, 'ky')"
+        :modelValue="categorySharedStore.getKy"
+        @update:model-value="onChange($event, 'ky')"
       />
       <SInput
         :label="$t('lang-d4de3868-af08-41e4-8807-11676c8fdf5d')"
         :width="'100%'"
         class="name-field mb-16"
-        @change="onChange($event, 'en')"
+        :modelValue="categorySharedStore.getEn"
+        @update:model-value="onChange($event, 'en')"
       />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
 import { SInput } from "@tumarsoft/ogogo-ui";
-import { usePropertyNamingFieldsStore } from "../store/property-naming-fields-store";
+import { useCategorySharedStore } from "@/shared/store/category";
 
-const propertyNamingFieldsStore = usePropertyNamingFieldsStore();
+const categorySharedStore = useCategorySharedStore();
 
-const onChange = (event: Event, key: string) => {
-  const value = (event.target as HTMLInputElement).value;
-  propertyNamingFieldsStore.setTranslation(value, key);
+const onChange = (value: string, key: string) => {
+  categorySharedStore.setTranslation(value, key);
 };
 </script>
 <style scoped lang="scss">
@@ -49,4 +51,3 @@ const onChange = (event: Event, key: string) => {
   }
 }
 </style>
-../store/property-naming-fields-store

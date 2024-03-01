@@ -61,12 +61,15 @@ import { ref } from "vue";
 import ImageRecomendationModal from "./ImageRecomendationModal.vue";
 import { useImagesAndIconStore } from "../store/images-and-icon-store";
 import { useSaveCategorySettingsStore } from "../../save-category-settings//store/save-category-settings-store";
+import { useCategorySharedStore } from "@/shared/store/category";
 
 let imageUrl = ref(null);
 let iconUrl = ref(null);
 
 const store = useImagesAndIconStore();
 const saveCategorySettingsStore = useSaveCategorySettingsStore();
+
+const categorySharedStore = useCategorySharedStore();
 
 function handleImageUpload(event: any) {
   const file = event.target.files[0];
@@ -126,9 +129,6 @@ function resizeImage(file: File) {
         }
       }
 
-      console.log(width);
-      console.log(height);
-
       canvas.width = width;
       canvas.height = height;
 
@@ -142,8 +142,9 @@ function resizeImage(file: File) {
       imageUrl.value = resizedImageUrl;
     };
     img.src = event.target.result as string;
-    store.setImgUrl(event.target.result);
+    store.setImgUrl(event.target.result as string);
   };
+
   reader.readAsDataURL(file);
 }
 
@@ -186,6 +187,7 @@ function resizeIcon(file: any) {
       iconUrl.value = resizedImageUrl;
     };
     img.src = event.target.result as string;
+    categorySharedStore.setCategoryIcon(event.target.result as string);
   };
   reader.readAsDataURL(file);
 }
@@ -196,6 +198,7 @@ const closeImage = () => {
 };
 const closeIcon = () => {
   iconUrl.value = null;
+  categorySharedStore.setCategoryIcon(null);
 };
 
 let imageRecomendationModalValue = ref(false);

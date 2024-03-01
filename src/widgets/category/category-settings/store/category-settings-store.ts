@@ -5,7 +5,10 @@ import { saveCategorySettings } from "../api/category-settings-api";
 import { useLoaderStore } from "@/shared/store/loader";
 import { useAlertStore } from "@/shared/store/alert";
 import i18n from "@/shared/lib/plugins/i18n";
-import { useI18n } from "vue-i18n";
+import { useCategorySharedStore } from "@/shared/store/category";
+
+import { findObjectInMultidimensionalArray } from "../utils/findObjectInMultidimensionalArray";
+import { ICategorySettings } from "@/shared/api/category/index.types";
 
 export const useCategoryStore = defineStore("category-store", {
   state: (): ICategory => {
@@ -57,17 +60,23 @@ export const useCategoryStore = defineStore("category-store", {
 
       let { t } = i18n.global;
 
-      const propertyNamingFieldsStore = usePropertyNamingFieldsStore();
+      const categorySharedStore = useCategorySharedStore();
+
+      const foundCategory = findObjectInMultidimensionalArray(
+        categorySharedStore.getCategories,
+        "parentId"
+      );
 
       const payload = {
-        categoryName: propertyNamingFieldsStore.getRu,
+        parentId: foundCategory?.parentId,
+        categoryName: categorySharedStore.getRu,
         translations: {
-          en: propertyNamingFieldsStore.getEn,
-          ky: propertyNamingFieldsStore.getKy,
+          en: categorySharedStore.getEn,
+          ky: categorySharedStore.getKy,
         },
       };
 
-      return new Promise<any>((resolve, reject) => {
+      return new Promise<ICategorySettings>((resolve, reject) => {
         loaderStore.setLoaderState(true);
         saveCategorySettings(payload)
           .then((res) => {
@@ -75,6 +84,7 @@ export const useCategoryStore = defineStore("category-store", {
               t("lang-5fa5d291-8d85-49f0-bebe-0dae2f7e1858")
             );
             loaderStore.setLoaderState(false);
+            categorySharedStore.setId(res.id);
             resolve(res);
           })
           .catch((err) => {

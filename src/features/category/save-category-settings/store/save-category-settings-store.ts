@@ -10,7 +10,7 @@ export const useSaveCategorySettingsStore = defineStore(
       };
     },
     getters: {
-      getImgUrl(): string {
+      getImgUrl(): string | ArrayBuffer {
         return this.imgUrl;
       },
       getFile(): File {
@@ -18,7 +18,7 @@ export const useSaveCategorySettingsStore = defineStore(
       },
     },
     actions: {
-      setImgUrl(value: string) {
+      setImgUrl(value: string | ArrayBuffer) {
         this.imgUrl = value;
       },
       setFile(file: File) {

@@ -9,7 +9,7 @@ export const useImagesAndIconStore = defineStore("images-and-icon-store", {
     };
   },
   getters: {
-    getAreas(): string {
+    getAreas(): string | ArrayBuffer {
       return this.imgUrl;
     },
   },
