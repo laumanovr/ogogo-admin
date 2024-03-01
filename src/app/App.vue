@@ -14,6 +14,9 @@ import { computed, ref, watch } from "vue";
 import { SToaster } from "@tumarsoft/ogogo-ui";
 import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
+import axios from "axios";
+import { useAuthStore } from "@/shared/store/auth";
+import { useRouter } from "vue-router";
 
 const alertStore = useAlertStore();
 const loaderStore = useLoaderStore();

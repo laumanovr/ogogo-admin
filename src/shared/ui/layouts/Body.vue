@@ -15,17 +15,11 @@
 import { ILogin } from "@/shared/store/auth/index.types";
 import { reactive } from "vue";
 import { v4 as uuid } from "uuid";
-import { getItem, setItem } from "@/shared/utils/persistanceStorage";
+import { getItem, setItem } from "@/shared/lib/utils/persistanceStorage";
 import { AuthLoginPayloadInterface } from "@/shared/api/auth/types";
 import { useRouter } from "vue-router";
 import { useAuthStore } from "@/shared/store/auth";
 import { getGeneralParameters } from "@/shared/api/common";
-// import config from "../../../node_modules/ogogo-ui/uno.config";
-// import { onMounted } from "vue";
-
-// onMounted(() => {
-// console.log(config);
-// });
 
 const router = useRouter();
 
@@ -35,10 +29,6 @@ const cred: ILogin = reactive({
   login: "",
   password: "",
 });
-
-function getList() {
-  getGeneralParameters();
-}
 
 function onSubmit(): void {
   let phoneNumber = cred.login;

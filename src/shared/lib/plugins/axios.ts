@@ -1,18 +1,13 @@
+import { useI18n } from "vue-i18n";
 import axios from "axios";
-// import store from "@/store";
-// import { actionTypes } from "@/store/auth/types";
-// import { actionTypes as notificationActionTypes } from "@/store/notification";
-// import { getItem } from "@/utils/persistanceStorage";
-import i18n from "@/shared/lib/plugins/i18n";
+
 import { getItem } from "../utils/persistanceStorage";
 import { INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES } from "@/app/router/index.type";
-// import getCustomErrorMessage from '@/utils/error-dictionary'
-// import { INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES } from '@/utils/consts'
+import { useAuthStore } from "@/shared/store/auth";
+
+import router from "@/app/router/";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_SERVER;
-
-// console.log(axios.defaults.baseURL);
-// console.log(import.meta.env.VITE_API_SERVER);
 
 function runWhen(error) {
   const errorCode = error?.response?.data?.error?.errorCode;
@@ -70,20 +65,24 @@ export default function setup() {
         return Promise.reject(error);
       } else {
         let showError = true;
-        switch (
-          error?.response?.status
-          // case 401:
-          //   showError = false;
-          //   await store.dispatch(actionTypes.logout);
-          //   break;
-          // case 403:
-          //   showError = false;
-          //   await store.dispatch(actionTypes.logout);
-          //   break;
-          // case 500:
-          //   alert(i18n.t("label-5a8130e9-116a-4c54-8be2-166380fae5d1"));
-          // break;
-        ) {
+        const authStore = useAuthStore();
+
+        switch (error?.response?.status) {
+          case 401:
+            showError = false;
+
+            router.push("/");
+            break;
+          case 403:
+            showError = false;
+            await authStore.logout;
+            router.push("/");
+            break;
+          case 500:
+            const { t } = useI18n();
+
+            alert(t("label-5a8130e9-116a-4c54-8be2-166380fae5d1"));
+            break;
         }
         if (showError) {
           // store.dispatch(notificationActionTypes.addErrorNotification, error);
