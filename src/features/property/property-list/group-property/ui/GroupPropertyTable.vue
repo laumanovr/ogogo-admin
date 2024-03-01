@@ -20,13 +20,13 @@
         <td><input type="text" v-model="item.nameEn"/></td>
         <td>
           <span v-if="item.icoBase64" class="d-flex items-center justify-between">
-            <img :src="item.icoBase64" alt="icon" class="selected-image">
+            <img :src="item.icoBase64" alt="icon" class="selected-image ml-10">
             <SIconRender name="CloseRoundIcon" color="black" @click="item.icoBase64=null"/>
           </span>
           <label for="file" class="label-container" v-else>
             <div class="tooltip-info">280 x 280 пиксель для формата PNG; 24 x 24 пиксель для формата SVG.</div>
             <span class="d-flex items-center font-size-15 cursor-pointer">
-              <img src="../../../../../shared/ui/assets/attach.svg" class="mr-12">
+              <img src="../../../../../shared/ui/assets/attach.svg" class="mr-12 ml-10">
               Загрузить
             </span>
             <input type="file" id="file" @change="onSelectFile($event, item)">
