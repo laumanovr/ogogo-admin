@@ -1,7 +1,7 @@
-import axios from "axios";
+import { API } from "@/shared/lib/plugins/axios";
 
 export const getGroupProperties = (data={}) => {
-    return axios({
+    return API({
         method: "POST",
         url: "/Marketplace/GetMarketplacePropertyGroupPagedList",
         data: data,
@@ -9,7 +9,7 @@ export const getGroupProperties = (data={}) => {
 };
 
 export const createGroupProperties = (data: object) => {
-    return axios({
+    return API({
         method: "POST",
         url: "/Marketplace/CreateMarketplacePropertyGroupList",
         data: data,
@@ -17,7 +17,7 @@ export const createGroupProperties = (data: object) => {
 };
 
 export const updateGroupProperties = (data: object) => {
-    return axios({
+    return API({
         method: "PUT",
         url: "/Marketplace/UpdateMarketplacePropertyGroupList",
         data: data,
