@@ -1,6 +1,6 @@
-import { AuthMiddleware } from "@/app/router/middlware/auth";
-import { AccessRequestMiddleware } from "@/app/router/middlware/access-request";
-import Chain from "./middlware/chain";
+import { AuthMiddleware } from "@/app/router/middleware/auth";
+import { AccessRequestMiddleware } from "@/app/router/middleware/access-request";
+import Chain from "./middleware/chain";
 import { flattenRoutes, transformToRouter } from "@/shared/lib/utils/route";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import categoryRoute from "@/pages/category/router/router";

@@ -1,7 +1,7 @@
 import type { RouteLocationNormalized } from "vue-router";
 import { useAuthStore } from "@/shared/store/auth/index";
-import { BaseHandler } from "@/app/router/middlware/auth.type";
-import type { IRoute } from "@/app/router/middlware/auth.type";
+import { BaseHandler } from "@/app/router/middleware/auth.type";
+import type { IRoute } from "@/app/router/middleware/auth.type";
 import { useAlert } from "@/shared/lib/utils/alert";
 import i18n from "@/shared/lib/plugins/i18n";
 
