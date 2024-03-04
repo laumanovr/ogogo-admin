@@ -1,6 +1,6 @@
 // import type { IRoute } from "@/utils/interfaces/route.types";
 
-import { IRoute } from "@/app/router/middlware/auth.type";
+import { IRoute } from "@/app/router/middleware/auth.type";
 
 export function modularize(routes: IRoute[], modulename: string[]): IRoute[] {
   const _modulename = modulename.filter((e) => e.length > 0);
