@@ -115,6 +115,8 @@ function deletePropertyFromMultidimensionalArray(
 const onSave = () => {
   emit("saveSubCategory", true);
 
+  console.log(props.item);
+
   deletePropertyFromMultidimensionalArray(
     props.item.childMarketplaceCategoryIdList,
     "active"

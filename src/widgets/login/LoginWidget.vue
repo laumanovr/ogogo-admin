@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="login-block">
       <div class="login-logo">
-        <img src="../../shared/ui/assets/Ogogo-logo.png" alt="img"/>
+        <img src="../../shared/ui/assets/Ogogo-logo.png" alt="img" />
       </div>
       <SForm class="form-block" ref="loginForm">
         <div class="form-title">
@@ -10,19 +10,19 @@
         </div>
         <div>
           <SInput
-              :label="$t('lang-5b5360db-a6ff-43a7-a8d4-f35517b9c4a8')"
-              width="100%"
-              :rules="requiredField"
-              v-model="loginObj.pin"
+            :label="$t('lang-5b5360db-a6ff-43a7-a8d4-f35517b9c4a8')"
+            width="100%"
+            :rules="requiredField"
+            v-model="loginObj.pin"
           />
         </div>
         <div class="input-password">
           <SInput
-              type="password"
-              :label="$t('lang-ad3a8ec6-bcb6-4dce-9ff6-a3ccc17c1e8d')"
-              width="100%"
-              :rules="requiredField"
-              v-model="loginObj.password"
+            type="password"
+            :label="$t('lang-ad3a8ec6-bcb6-4dce-9ff6-a3ccc17c1e8d')"
+            width="100%"
+            :rules="requiredField"
+            v-model="loginObj.password"
           />
         </div>
         <SButton size="large" color="violet" @click="onSubmitLogin">
@@ -47,19 +47,22 @@ const alertStore = useAlertStore();
 const loaderStore = useLoaderStore();
 const router = useRouter();
 
-const loginObj = reactive({pin: "", password: ""});
+const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
 
 const onSubmitLogin = () => {
   if (loginForm.value.validateForm()) {
     loaderStore.setLoaderState(true);
-    authStore.login(loginObj).then(() => {
-      loaderStore.setLoaderState(false);
-      router.push("/property");
-    }).catch((err: any) => {
-      loaderStore.setLoaderState(false);
-      alertStore.showError(err?.error?.errorMessage);
-    });
+    authStore
+      .login(loginObj)
+      .then(() => {
+        loaderStore.setLoaderState(false);
+        router.push("/property");
+      })
+      .catch((err: any) => {
+        loaderStore.setLoaderState(false);
+        alertStore.showError(err?.error?.errorMessage);
+      });
   }
 };
 </script>
