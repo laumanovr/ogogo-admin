@@ -13,7 +13,7 @@
         </STabs>
         <div class="filter-actions">
           <div class="search-input">
-            <SInput isSearchable/>
+            <SInput isSearchable @input="onSearch"/>
           </div>
           <div class="icon-border" @click="openFilterModal">
             <SIconRender name="SettingsIcon"/>
@@ -48,17 +48,25 @@ import {
   SIconRender,
   SInput,
 } from "@tumarsoft/ogogo-ui";
-import { ref } from "vue";
-import PropertyTable from "../../../features/property/property-list/PropertyTable.vue";
-import {GroupPropertyTable} from "../../../features/property/property-list/group-property/index";
+import { ref, onMounted } from "vue";
+import { PropertyTable } from "../../../features/property/property-list/property";
+import { GroupPropertyTable } from "../../../features/property/property-list/group-property";
 import EmptyData from "../../../features/EmptyData.vue";
 import FilterModal from "../../../features/property/property-list/FilterModal.vue";
+import {usePropertyStore} from "@/features/property/property-list/property/store/property.store";
 
+const propertyStore = usePropertyStore();
 const tab = ref("one");
 const filterModal = ref(null);
 const propertyTable = ref(null);
 const groupPropertyTable = ref(null);
 const hasData = ref(false);
+const searchTimer = ref({});
+
+onMounted(async () => {
+  await propertyStore.fetchPropertyList();
+  hasData.value = propertyStore.propertyList.length;
+});
 
 const handleTabChange = (newTab) => {
   tab.value = newTab;
@@ -66,10 +74,21 @@ const handleTabChange = (newTab) => {
 
 const addData = () => {
   hasData.value = true;
-}
+};
 
 const openFilterModal = () => {
   filterModal.value.toggleFilterModal();
+};
+
+const onSearch = (e) => {
+  clearTimeout(searchTimer.value);
+  searchTimer.value = setTimeout(() => {
+    if (tab.value === "one") {
+      propertyTable.value.searchProperty(e.target.value);
+    } else {
+      groupPropertyTable.value.searchGroupProperty(e.target.value);
+    }
+  }, 1500);
 };
 
 const onSubmit = () => {
