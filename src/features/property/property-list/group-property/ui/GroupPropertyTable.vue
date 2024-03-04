@@ -128,13 +128,13 @@ const onUpdate = (updatedItems) => {
   groupPropertyStore.updateGroupProperty(updatedItems);
 };
 
-const searchProperty = (value) => {
+const searchGroupProperty = (value) => {
   groupPropertyStore.fetchGroupPropertyList({pageSize: 500, search: value});
 }
 
 defineExpose({
   submitGroupProperty,
-  searchProperty
+  searchGroupProperty
 });
 </script>
 
