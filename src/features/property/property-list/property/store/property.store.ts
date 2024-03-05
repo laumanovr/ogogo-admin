@@ -54,6 +54,7 @@ export const usePropertyStore = defineStore("propertyStore", {
                 const newItems = response.map((item) => item.result);
                 this.propertyList = [...this.propertyList, ...newItems];
                 loaderStore.setLoaderState(false);
+                alertStore.showSuccess("Успешно добавлено!");
             } catch (err) {
                 loaderStore.setLoaderState(false);
                 alertStore.showError(err.message);
@@ -64,6 +65,7 @@ export const usePropertyStore = defineStore("propertyStore", {
                 loaderStore.setLoaderState(true);
                 await updateProperties(payload);
                 loaderStore.setLoaderState(false);
+                alertStore.showSuccess("Успешно обновлено!");
             } catch (err) {
                 loaderStore.setLoaderState(false);
                 alertStore.showError(err.message);
