@@ -1,30 +1,36 @@
 <template>
   <div
-    class="empty-category-container"
+    :class="
+      item.active
+        ? 'empty-category-container-active'
+        : 'empty-category-container'
+    "
     @mouseenter="isHovering = true"
     @mouseleave="isHovering = false"
+    @click.stop="onChangeActive"
   >
     <div class="category-item-content">
       <SIconRender
         name="ArrowIcon"
         size="small"
         :direction="
-          item.childMarketplaceCategoryIdList.length > 0 ? 'bottom' : 'right'
+          item.childMarketplaceCategoryIdList?.length > 0 ? 'bottom' : 'right'
         "
       />
-      <img src="../../../../shared/ui/assets/fileIcon.png" />
-      <span>{{ $t(`${props.title}`) }}</span>
+      <img v-if="item.icon" :src="item.icon" class="w-20 h-20 rounded" />
+      <img v-else src="../../../../shared/ui/assets/fileIcon.png" />
+      <span>{{ $t(`${props.categoryName}`) }}</span>
     </div>
     <img
       v-if="isHovering"
       width="13px"
       height="13px"
-      @click="addSubCategory"
+      @click.stop="addSubCategory"
       src="../../../../shared/ui/assets/plus-icon.png"
     />
   </div>
   <div
-    v-if="item.childMarketplaceCategoryIdList.length > 0"
+    v-if="item.childMarketplaceCategoryIdList?.length > 0"
     :style="{
       marginLeft: `${depth + 15}px`,
     }"
@@ -33,7 +39,7 @@
       v-for="child in item.childMarketplaceCategoryIdList"
       :item="child"
       :depth="depth + 1"
-      :title="child.title"
+      :categoryName="child.categoryName"
       @add-sub-category="addSubCategory"
     />
   </div>
@@ -49,9 +55,10 @@
 import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
 import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
+import { useCategorySharedStore } from "@/shared/store/category";
 
 const props = defineProps({
-  title: {
+  categoryName: {
     type: String,
     default: "",
   },
@@ -63,13 +70,19 @@ const props = defineProps({
   index: { type: Number, default: null },
 });
 
-const emit = defineEmits(["saveSubCategory"]);
+const emit = defineEmits(["saveSubCategory", "addSubCategory"]);
 
 const isHovering = ref(false);
 
 const addCategoryConfirmationModalValue = ref(false);
 
+const categoryShareStore = useCategorySharedStore();
+
 function addSubCategory() {
+  deletePropertyFromMultidimensionalArray(
+    categoryShareStore.getCategories,
+    "active"
+  );
   addCategoryConfirmationModalValue.value = true;
 }
 
@@ -77,19 +90,65 @@ const onClose = () => {
   addCategoryConfirmationModalValue.value = false;
 };
 
+function deletePropertyFromMultidimensionalArray(
+  array: any,
+  propertyToDelete: any
+) {
+  array.forEach((obj: any) => {
+    // Delete the property from the current object
+    delete obj[propertyToDelete];
+
+    // If the current object has childMarketplaceCategoryIdList property and it's an array,
+    // recursively call the function to process its elements
+    if (
+      obj.childMarketplaceCategoryIdList &&
+      Array.isArray(obj.childMarketplaceCategoryIdList)
+    ) {
+      deletePropertyFromMultidimensionalArray(
+        obj.childMarketplaceCategoryIdList,
+        propertyToDelete
+      );
+    }
+  });
+}
+
 const onSave = () => {
-  addSubCategory();
   emit("saveSubCategory", true);
-  // props.item.children.push({
-  //   title: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
-  //   childMarketplaceCategoryIdList: [],
-  // });
+
+  console.log(props.item);
+
+  deletePropertyFromMultidimensionalArray(
+    props.item.childMarketplaceCategoryIdList,
+    "active"
+  );
+
+  props.item.childMarketplaceCategoryIdList.push({
+    categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
+    childMarketplaceCategoryIdList: [],
+    active: true,
+    icon: null,
+    id: null,
+    parentId: props.item.id,
+  });
+
   onClose();
+};
+
+const onChangeActive = () => {
+  deletePropertyFromMultidimensionalArray(
+    categoryShareStore.getCategories,
+    "active"
+  );
+  categoryShareStore.fetchCategoryById(props.item.id);
+
+  categoryShareStore.setCategoryHasChanged(true);
+  props.item.active = true;
 };
 </script>
 
 <style>
-.empty-category-container {
+.empty-category-container,
+.empty-category-container-active {
   width: 334px;
   cursor: pointer;
   display: flex;
@@ -108,5 +167,9 @@ const onSave = () => {
     align-items: center;
     gap: 7.5px;
   }
+}
+
+.empty-category-container-active {
+  background-color: #f5f3ff;
 }
 </style>

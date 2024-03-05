@@ -1,4 +1,4 @@
 interface ISaveCategorySettingsState {
-  imgUrl: string;
+  imgUrl: string | ArrayBuffer;
   file: File;
 }

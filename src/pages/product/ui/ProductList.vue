@@ -1,30 +1,38 @@
 <template>
   <div class="product-list-container">
-    <h2 class="head-title">{{ $t('lang-9839245b-e40e-4ae1-92e9-0421dc97a154') }}</h2>
-    <FilterSearch @onClick="showFilterModal"/>
+    <h2 class="head-title">
+      {{ $t("lang-9839245b-e40e-4ae1-92e9-0421dc97a154") }}
+    </h2>
+    <FilterSearch @onClick="showFilterModal" />
     <STable
-        :headers="headers"
-        :data="tableData"
-        totalItems="50"
-        itemsPerPage="5"
-        paginateRange="2"
-        @onSelectPage="onChangePage"
+      :headers="headers"
+      :data="tableData"
+      totalItems="50"
+      itemsPerPage="5"
+      paginateRange="2"
+      @onSelectPage="onChangePage"
     >
-      <template v-slot:status="{item}">
-        <SBadge :content="item.status.name" :color="item.status.color"/>
+      <template v-slot:status="{ item }">
+        <SBadge :content="item.status.name" :color="item.status.color" />
       </template>
-      <template v-slot:action="{item}">
-        <router-link :to="{name: 'productDetail', params: {id: item.id}}">
-          {{ $t('lang-23981bea-cba2-425d-a435-41ae4a591794') }}
+      <template v-slot:action="{ item }">
+        <router-link :to="{ name: 'productDetail', params: { id: item.id } }">
+          {{ $t("lang-23981bea-cba2-425d-a435-41ae4a591794") }}
         </router-link>
       </template>
     </STable>
-    <FilterModal ref="filterModal"/>
+    <FilterModal ref="filterModal" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { SInput, SButton, SIconRender, STable, SBadge } from "@tumarsoft/ogogo-ui";
+import {
+  SInput,
+  SButton,
+  SIconRender,
+  STable,
+  SBadge,
+} from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
 import FilterSearch from "../../../widgets/filter-search/FilterSearch.vue";
 import FilterModal from "../../../features/product/product-list/FilterModal.vue";
@@ -32,53 +40,49 @@ import FilterModal from "../../../features/product/product-list/FilterModal.vue"
 const filterModal = ref(null);
 
 const headers = reactive([
-  {title: "Товар", key: "product"},
-  {title: "Продавец", key: "name"},
-  {title: "Статус", key: "status"},
-  {title: "Дата", key: "date"},
-  {title: "Действия", key: "action"}
+  { title: "Товар", key: "product" },
+  { title: "Продавец", key: "name" },
+  { title: "Статус", key: "status" },
+  { title: "Дата", key: "date" },
+  { title: "Действия", key: "action" },
 ]);
 
 const tableData = reactive([
   {
     id: 1,
     product: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM HK/CN",
-    status: {name: "На проверке", color: "orange"},
+    status: { name: "На проверке", color: "orange" },
     name: "Планета электроники",
-    date: "01.01.24"
+    date: "01.01.24",
   },
   {
     id: 2,
     product: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM HK/CN",
-    status: {name: "Модерируется", color: "blue"},
+    status: { name: "Модерируется", color: "blue" },
     name: "Gadget.kg",
-    date: "02.02.24"
+    date: "02.02.24",
   },
   {
     id: 3,
     product: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM HK/CN",
-    status: {name: "Проверен", color: "green"},
+    status: { name: "Проверен", color: "green" },
     name: "Моби-маркет",
-    date: "03.03.24"
+    date: "03.03.24",
   },
   {
     id: 4,
     product: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM HK/CN",
-    status: {name: "Отклонен", color: "rose"},
+    status: { name: "Отклонен", color: "rose" },
     name: "Софтек",
-    date: "04.04.24"
-  }
+    date: "04.04.24",
+  },
 ]);
 
-const onChangePage = (page) => {
-  console.log(page);
-};
+const onChangePage = (page) => {};
 
 const showFilterModal = () => {
   filterModal.value.toggleModal();
 };
 </script>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
