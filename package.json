@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "build:test": "vue-tsc && vite build --mode=test",
+    "build:prod": "vue-tsc && vite build --mode=prod",
+    "build:pretest": "vue-tsc && vite build --mode=pretest",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs,.ts,.tsx,.cts,.mts --fix --ignore-path .gitignore",
     "format": "prettier .  --write",
     "serve": "vue-cli-service serve"
