@@ -31,6 +31,7 @@ export const usePropertyStore = defineStore("propertyStore", {
                 loaderStore.setLoaderState(true);
                 this.groupPropertyList = await getSubGroupProperties(data);
                 loaderStore.setLoaderState(false);
+                return true;
             } catch (err) {
                 loaderStore.setLoaderState(false);
                 alertStore.showError(err.message);

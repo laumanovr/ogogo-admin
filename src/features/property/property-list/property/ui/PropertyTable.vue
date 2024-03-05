@@ -1,5 +1,5 @@
 <template>
-  <div class="table-data" :key="key">
+  <div class="table-data" :key="key" v-if="isShowTable">
     <table class="table">
       <thead>
       <tr>
@@ -101,14 +101,15 @@ const propertyValueTypes = reactive([
 ]);
 
 onMounted(async () => {
-  await getGroupPropertyList();
   await getPropertyList();
+  await getGroupPropertyList();
 });
 
 const groupProperties = computed(() => propertyStore.groupProperties);
 const propertyList = ref([]);
 const currentProperties = ref([]);
 const key = ref(0);
+const isShowTable = ref(false);
 
 watch(() => propertyStore.propertyList, (newValue: any) => {
   if (newValue) {
@@ -157,7 +158,9 @@ const getPropertyList = () => {
 };
 
 const getGroupPropertyList = () => {
-  propertyStore.fetchGroupProperties();
+  propertyStore.fetchGroupProperties().then(() => {
+    isShowTable.value = true;
+  });
 };
 
 const addProperty = () => {
