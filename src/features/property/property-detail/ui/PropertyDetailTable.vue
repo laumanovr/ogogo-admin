@@ -3,35 +3,56 @@
     <div class="table-data group">
       <table class="table">
         <thead>
-        <tr>
-          <th @click="addValue"><span>+</span></th>
-          <th>Значение ru <span>*</span></th>
-          <th>Название kg <span>*</span></th>
-          <th>Название en <span>*</span></th>
-          <th>Иконка</th>
-        </tr>
+          <tr>
+            <th @click="addValue"><span>+</span></th>
+            <th>Значение ru <span>*</span></th>
+            <th>Название kg <span>*</span></th>
+            <th>Название en <span>*</span></th>
+            <th>Иконка</th>
+          </tr>
         </thead>
         <tbody>
-        <tr v-for="(item, i) in currentValues" :key="i" class="table-row">
-          <td></td>
-          <td><input type="text" v-model="item.value"/></td>
-          <td><input type="text" v-model="item.valueEn"/></td>
-          <td><input type="text" v-model="item.valueKy"/></td>
-          <td>
-            <span v-if="item.icoBase64" class="d-flex items-center justify-between">
-            <img :src="item.icoBase64" alt="icon" class="selected-image ml-10">
-            <SIconRender name="CloseRoundIcon" color="black" @click="item.icoBase64=null"/>
-          </span>
-            <label for="file" class="label-container" v-else>
-              <div class="tooltip-info">280 x 280 пиксель для формата PNG; 24 x 24 пиксель для формата SVG.</div>
-              <span class="d-flex items-center font-size-15 cursor-pointer">
-              <img src="../../../../shared/ui/assets/attach.svg" class="mr-12 ml-10">
-              Загрузить
-            </span>
-              <input type="file" id="file" @change="onSelectFile($event, item)">
-            </label>
-          </td>
-        </tr>
+          <tr v-for="(item, i) in currentValues" :key="i" class="table-row">
+            <td></td>
+            <td><input type="text" v-model="item.value" /></td>
+            <td><input type="text" v-model="item.valueEn" /></td>
+            <td><input type="text" v-model="item.valueKy" /></td>
+            <td>
+              <span
+                v-if="item.icoBase64"
+                class="d-flex items-center justify-between"
+              >
+                <img
+                  :src="item.icoBase64"
+                  alt="icon"
+                  class="selected-image ml-10"
+                />
+                <SIconRender
+                  name="CloseRoundIcon"
+                  color="black"
+                  @click="item.icoBase64 = null"
+                />
+              </span>
+              <label for="file" class="label-container" v-else>
+                <div class="tooltip-info">
+                  280 x 280 пиксель для формата PNG; 24 x 24 пиксель для формата
+                  SVG.
+                </div>
+                <span class="d-flex items-center font-size-15 cursor-pointer">
+                  <img
+                    src="../../../../shared/ui/assets/attach.svg"
+                    class="mr-12 ml-10"
+                  />
+                  Загрузить
+                </span>
+                <input
+                  type="file"
+                  id="file"
+                  @change="onSelectFile($event, item)"
+                />
+              </label>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
@@ -56,9 +77,8 @@ onMounted(() => {
   getPropertyValueList();
 });
 
-
-const convertToBase64 = (file) => {
-  return new Promise(((resolve, reject) => {
+const convertToBase64 = (file: any) => {
+  return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
     fileReader.onload = () => {
@@ -67,25 +87,31 @@ const convertToBase64 = (file) => {
     fileReader.onerror = (error) => {
       reject(error);
     };
-  }));
+  });
 };
 
-const onSelectFile = async (e, item) => {
+const onSelectFile = async (e: any, item: any) => {
   const file = e.target.files[0];
   if (file) {
     item.icoBase64 = await convertToBase64(file);
   }
 };
 
-watch(() => propertyDetailStore.propertyValueList, (newValue: any) => {
-  if (newValue) {
-    propertyValues.value = newValue.reverse();
-    currentValues.value = JSON.parse(JSON.stringify(propertyValues.value));
+watch(
+  () => propertyDetailStore.propertyValueList,
+  (newValue: any) => {
+    if (newValue) {
+      propertyValues.value = newValue.reverse();
+      currentValues.value = JSON.parse(JSON.stringify(propertyValues.value));
+    }
   }
-});
+);
 
 const getPropertyValueList = () => {
-  propertyDetailStore.fetchPropertyValueList({pageSize: 500, queryParams: {propertyId: route.params.id}});
+  propertyDetailStore.fetchPropertyValueList({
+    pageSize: 500,
+    queryParams: { propertyId: route.params.id },
+  });
 };
 
 const addValue = () => {
@@ -95,13 +121,19 @@ const addValue = () => {
     value: null,
     valueEn: null,
     valueKy: null,
-    icoBase64: null
+    icoBase64: null,
   });
 };
 
 const submitPropertyValues = () => {
-  const newValues = currentValues.value.filter((item: { recent: any; }) => item.recent);
-  const updatedValues = lodash.differenceWith(currentValues.value.filter((item) => !item.recent), propertyValues.value, lodash.isEqual);
+  const newValues = currentValues.value.filter(
+    (item: { recent: any }) => item.recent
+  );
+  const updatedValues = lodash.differenceWith(
+    currentValues.value.filter((item) => !item.recent),
+    propertyValues.value,
+    lodash.isEqual
+  );
   if (!newValues.length && !updatedValues.length) {
     alertStore.showInfo("Вы ничего не добавили!");
   }
@@ -113,29 +145,33 @@ const submitPropertyValues = () => {
   }
 };
 
-const onCreate = (newValues) => {
-  if (!newValues.every((item) => item.value && item.icoBase64)) {
+const onCreate = (newValues: any) => {
+  if (!newValues.every((item: any) => item.value && item.icoBase64)) {
     alertStore.showInfo("Заполните поля и иконку");
     return;
   }
   propertyDetailStore.createPropertyValue(newValues);
 };
 
-const onUpdate = (updatedValues) => {
-  if (!updatedValues.every((item) => item.value  && item.icoBase64)) {
+const onUpdate = (updatedValues: any) => {
+  if (!updatedValues.every((item: any) => item.value && item.icoBase64)) {
     alertStore.showInfo("Заполните поля и иконку");
     return;
   }
   propertyDetailStore.updatePropertyValue(updatedValues);
 };
 
-const searchPropertyValue = (value) => {
-  propertyDetailStore.fetchPropertyValueList({pageSize: 500, search: value, queryParams: {propertyId: route.params.id}});
-}
+const searchPropertyValue = (value: any) => {
+  propertyDetailStore.fetchPropertyValueList({
+    pageSize: 500,
+    search: value,
+    queryParams: { propertyId: route.params.id },
+  });
+};
 
 defineExpose({
   submitPropertyValues,
-  searchPropertyValue
+  searchPropertyValue,
 });
 </script>
 

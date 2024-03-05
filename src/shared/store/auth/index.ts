@@ -1,11 +1,8 @@
-import { API } from "@/shared/lib/plugins/axios";
 import { defineStore } from "pinia";
 import {
   AuthGetProfileResultInterface,
   AuthState,
   ILogin,
-  ILoginResultFail,
-  ILoginResultSuccess,
 } from "./index.types";
 import { useAlertStore } from "@/shared/store/alert";
 import { AuthApi } from "@/shared/api/auth";
@@ -14,8 +11,9 @@ import {
   AuthorizationChannelEvent,
   BroadcastChannelName,
 } from "@/shared/lib/utils/consts";
+import { isAxiosError } from "axios";
 
-const authApi = new AuthApi()
+const authApi = new AuthApi();
 
 export const useAuthStore = defineStore("auth", {
   state: (): AuthState => {
@@ -59,11 +57,11 @@ export const useAuthStore = defineStore("auth", {
     },
   },
   actions: {
-    login(payload: ILogin): Promise<ILoginResultSuccess | ILoginResultFail> {
+    login(payload: ILogin): Promise<any> {
       return new Promise((resolve, reject) => {
-        authApi.login(payload)
+        authApi
+          .login(payload)
           .then((result) => {
-
             const needChangePassword = result?.needChangePassword ?? false;
             setItem("needChangePassword", needChangePassword);
             this.needChangePassword = needChangePassword as boolean;
@@ -89,10 +87,12 @@ export const useAuthStore = defineStore("auth", {
                 }
 
                 setItem("active-session", true);
-                resolve(user)
-              }).catch(reject);
-          }).catch((err) => {
-            if (API.isAxiosError(err)) {
+                resolve(user);
+              })
+              .catch(reject);
+          })
+          .catch((err) => {
+            if (isAxiosError(err)) {
               reject(err?.response?.data);
             } else {
               reject(err);
@@ -105,7 +105,8 @@ export const useAuthStore = defineStore("auth", {
     },
     getCurrentUser(): Promise<AuthGetProfileResultInterface> {
       return new Promise<AuthGetProfileResultInterface>((resolve, reject) => {
-        authApi.getCurrentUser()
+        authApi
+          .getCurrentUser()
           .then((user) => {
             // const lastUserId = getItem("last-user-id");
             // setItem("last-user-id", this.currentUser.id);
@@ -115,7 +116,7 @@ export const useAuthStore = defineStore("auth", {
             //   (lastUserId && lastUserId !== this.currentUser.id)
             // ) {
             // }
-            resolve(user)
+            resolve(user);
           })
           .catch((error) => {
             reject(error);

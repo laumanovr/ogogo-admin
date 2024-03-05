@@ -1,15 +1,15 @@
-import {defineStore} from "pinia";
-import type {ILoader} from "@/shared/store/loader/index.types";
+import { defineStore } from "pinia";
+import type { ILoader } from "@/shared/store/loader/index.types";
 
 export const useLoaderStore = defineStore("loader", {
-    state: ():ILoader => ({
-        isLoading: false
-    }),
-    actions: {
-        setLoaderState(status) {
-            this.isLoading = status;
-        }
-    }
-})
+  state: (): ILoader => ({
+    isLoading: false,
+  }),
+  actions: {
+    setLoaderState(status: boolean) {
+      this.isLoading = status;
+    },
+  },
+});
 
 // Из кода выше непонятно за что отвечает данный лоудер

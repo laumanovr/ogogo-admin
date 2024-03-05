@@ -1,14 +1,16 @@
 <template>
   <SModal
-      :isModalOpen="isShow"
-      class="filter-modal"
-      width="420px"
-      height="100%"
-      position="right"
-      @onClose="toggleModal"
+    :isModalOpen="isShow"
+    class="filter-modal"
+    width="420px"
+    height="100%"
+    position="right"
+    @onClose="toggleModal"
   >
     <div class="modal-content" ref="modalContent">
-      <div class="filter-title">{{ $t('lang-7de4a879-828e-48b2-997c-310f0d6e0d75') }}</div>
+      <div class="filter-title">
+        {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
+      </div>
 
       <div class="section">
         <div class="section-title">Статусы</div>
@@ -38,17 +40,21 @@
 
       <div class="section">
         <div class="section-title">Магазины</div>
-        <SInput isSearchable width="100%"/>
-        <div class="property-items" :style="{'max-height': maxHeight+'px'}">
-          <div v-for="item in 30">
+        <SInput isSearchable width="100%" />
+        <div class="property-items" :style="{ 'max-height': maxHeight + 'px' }">
+          <div v-for="item in 30" :key="item">
             <SCheckbox>Mobi Market</SCheckbox>
           </div>
         </div>
       </div>
     </div>
     <div class="filter-actions">
-      <SButton size="large" color="gray">{{ $t('lang-7967cf86-49d6-41c2-bdd7-23c6f8e5e8ea') }}</SButton>
-      <SButton size="large" color="violet">{{ $t('lang-bdc9ab1e-91af-43ea-8bb9-e23c8ea98755') }}</SButton>
+      <SButton size="large" color="gray">{{
+        $t("lang-7967cf86-49d6-41c2-bdd7-23c6f8e5e8ea")
+      }}</SButton>
+      <SButton size="large" color="violet">{{
+        $t("lang-bdc9ab1e-91af-43ea-8bb9-e23c8ea98755")
+      }}</SButton>
     </div>
   </SModal>
 </template>
@@ -65,14 +71,13 @@ const toggleModal = () => {
   isShow.value = !isShow.value;
   nextTick(() => {
     const rect = modalContent?.value?.getBoundingClientRect();
-    maxHeight.value = (rect.height / 2);
+    maxHeight.value = rect.height / 2;
   });
 };
 
 defineExpose({
-  toggleModal
+  toggleModal,
 });
-
 </script>
 
 <style lang="scss" scoped>

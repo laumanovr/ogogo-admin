@@ -1,40 +1,45 @@
 <template>
   <div class="property-container">
-    <h2 class="head-title">{{ $t('lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2') }}</h2>
+    <h2 class="head-title">
+      {{ $t("lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2") }}
+    </h2>
     <template v-if="hasData">
       <div class="filter-container">
         <STabs :tab-mode="'filter-tabs'">
           <STabItem value="one" :active-tab="tab" @changeTab="handleTabChange">
-            {{ $t('lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2') }}
+            {{ $t("lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2") }}
           </STabItem>
           <STabItem value="two" :active-tab="tab" @changeTab="handleTabChange">
-            {{ $t('lang-62162f8a-3945-4c7f-b4ef-6121d5db1a6b') }}
+            {{ $t("lang-62162f8a-3945-4c7f-b4ef-6121d5db1a6b") }}
           </STabItem>
         </STabs>
         <div class="filter-actions">
           <div class="search-input">
-            <SInput isSearchable @input="onSearch"/>
+            <SInput isSearchable @input="onSearch" />
           </div>
           <div class="icon-border" @click="openFilterModal">
-            <SIconRender name="SettingsIcon"/>
+            <SIconRender name="SettingsIcon" />
           </div>
           <SButton size="medium" color="violet" @click="onSubmit">
-            {{ $t('lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf') }}
+            {{ $t("lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf") }}
           </SButton>
         </div>
       </div>
       <div class="table-container">
         <STabWindow value="one" :active-tab="tab">
-          <PropertyTable ref="propertyTable"/>
+          <PropertyTable ref="propertyTable" />
         </STabWindow>
         <STabWindow value="two" :active-tab="tab">
-          <GroupPropertyTable ref="groupPropertyTable"/>
+          <GroupPropertyTable ref="groupPropertyTable" />
         </STabWindow>
       </div>
-      <FilterModal ref="filterModal"/>
+      <FilterModal ref="filterModal" />
     </template>
     <template v-else>
-      <EmptyData :buttonTitle="$t('lang-1d55fd08-eaa6-4b4b-84b9-225f2d0dc1ad')" @onClick="addData"/>
+      <EmptyData
+        :buttonTitle="$t('lang-1d55fd08-eaa6-4b4b-84b9-225f2d0dc1ad')"
+        @onClick="addData"
+      />
     </template>
   </div>
 </template>
@@ -53,7 +58,7 @@ import { PropertyTable } from "../../../features/property/property-list/property
 import { GroupPropertyTable } from "../../../features/property/property-list/group-property";
 import EmptyData from "../../../features/EmptyData.vue";
 import FilterModal from "../../../features/property/property-list/FilterModal.vue";
-import {usePropertyStore} from "@/features/property/property-list/property/store/property.store";
+import { usePropertyStore } from "@/features/property/property-list/property/store/property.store";
 
 const propertyStore = usePropertyStore();
 const tab = ref("one");
@@ -61,14 +66,14 @@ const filterModal = ref(null);
 const propertyTable = ref(null);
 const groupPropertyTable = ref(null);
 const hasData = ref(false);
-const searchTimer = ref({});
+const searchTimer = ref<number>(null);
 
 onMounted(async () => {
   await propertyStore.fetchPropertyList();
-  hasData.value = propertyStore.propertyList.length;
+  hasData.value = propertyStore.propertyList.length > 0;
 });
 
-const handleTabChange = (newTab) => {
+const handleTabChange = (newTab: string) => {
   tab.value = newTab;
 };
 
@@ -80,13 +85,14 @@ const openFilterModal = () => {
   filterModal.value.toggleFilterModal();
 };
 
-const onSearch = (e) => {
+const onSearch = (e: Event) => {
   clearTimeout(searchTimer.value);
-  searchTimer.value = setTimeout(() => {
+  const target = e.target as HTMLInputElement;
+  searchTimer.value = window.setTimeout(() => {
     if (tab.value === "one") {
-      propertyTable.value.searchProperty(e.target.value);
+      propertyTable.value.searchProperty(target.value);
     } else {
-      groupPropertyTable.value.searchGroupProperty(e.target.value);
+      groupPropertyTable.value.searchGroupProperty(target.value);
     }
   }, 1500);
 };
@@ -119,10 +125,6 @@ const onSubmit = () => {
       border-radius: 8px;
       padding: 10px 11px 8px;
       margin: 0 12px;
-    }
-
-    .search-input {
-
     }
   }
 }

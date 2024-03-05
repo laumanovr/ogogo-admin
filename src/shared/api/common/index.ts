@@ -1,8 +1,6 @@
 import { API } from "@/shared/lib/plugins/axios";
 import {
   AuthGetProfileResultInterface,
-  AuthLoginPayloadInterface,
-  AuthLoginResultInterface,
 } from "@/shared/api/auth/types";
 
 // export const login = (
