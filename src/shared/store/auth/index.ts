@@ -1,4 +1,4 @@
-import axios from "axios";
+import { API } from "@/shared/lib/plugins/axios";
 import { defineStore } from "pinia";
 import {
   AuthGetProfileResultInterface,
@@ -8,12 +8,14 @@ import {
   ILoginResultSuccess,
 } from "./index.types";
 import { useAlertStore } from "@/shared/store/alert";
-import { getCurrentUser, login } from "@/shared/api/auth";
+import { AuthApi } from "@/shared/api/auth";
 import { getItem, setItem } from "@/shared/lib/utils/persistanceStorage";
 import {
   AuthorizationChannelEvent,
   BroadcastChannelName,
 } from "@/shared/lib/utils/consts";
+
+const authApi = new AuthApi()
 
 export const useAuthStore = defineStore("auth", {
   state: (): AuthState => {
@@ -59,7 +61,7 @@ export const useAuthStore = defineStore("auth", {
   actions: {
     login(payload: ILogin): Promise<ILoginResultSuccess | ILoginResultFail> {
       return new Promise((resolve, reject) => {
-        login(payload)
+        authApi.login(payload)
           .then((result) => {
 
             const needChangePassword = result?.needChangePassword ?? false;
@@ -90,7 +92,7 @@ export const useAuthStore = defineStore("auth", {
                 resolve(user)
               }).catch(reject);
           }).catch((err) => {
-            if (axios.isAxiosError(err)) {
+            if (API.isAxiosError(err)) {
               reject(err?.response?.data);
             } else {
               reject(err);
@@ -103,7 +105,7 @@ export const useAuthStore = defineStore("auth", {
     },
     getCurrentUser(): Promise<AuthGetProfileResultInterface> {
       return new Promise<AuthGetProfileResultInterface>((resolve, reject) => {
-        getCurrentUser()
+        authApi.getCurrentUser()
           .then((user) => {
             // const lastUserId = getItem("last-user-id");
             // setItem("last-user-id", this.currentUser.id);

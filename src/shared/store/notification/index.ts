@@ -7,7 +7,7 @@ import {
   ResultError,
 } from "./types";
 
-import axios from "axios";
+import { API } from "@/shared/lib/plugins/axios";
 import { i18n } from "@/shared/plugins/i18n";
 import { isResultError, isValidationErrors } from "./guards";
 
@@ -56,7 +56,7 @@ export default {
     ) {
       let errorMessage;
 
-      if (axios.isAxiosError(payload)) {
+      if (API.isAxiosError(payload)) {
         const responseData: ResultError | ValidationErrors =
           payload?.response?.data;
         if (isResultError(responseData)) {

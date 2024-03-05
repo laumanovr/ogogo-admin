@@ -1,4 +1,4 @@
-import axios from "axios";
+import { API } from "@/shared/lib/plugins/axios";
 import {
   AuthGetProfileResultInterface,
   AuthLoginPayloadInterface,
@@ -24,7 +24,7 @@ import {
 
 export const getGeneralParameters =
   (): Promise<AuthGetProfileResultInterface> => {
-    return axios({
+    return API({
       method: "GET",
       url: `/api/Common/GetGeneralParameters`,
     }).then((response) => response.data.result);
