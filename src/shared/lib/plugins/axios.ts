@@ -5,7 +5,7 @@ import { getItem } from "../utils/persistanceStorage";
 import { INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES } from "@/app/router/index.type";
 import { useAuthStore } from "@/shared/store/auth";
 
-import router from "@/app/router/";
+import router from "@/app/router";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_SERVER;
 
