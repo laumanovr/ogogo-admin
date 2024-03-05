@@ -27,9 +27,6 @@
 
 <script lang="ts" setup>
 import {
-  SInput,
-  SButton,
-  SIconRender,
   STable,
   SBadge,
 } from "@tumarsoft/ogogo-ui";
@@ -78,7 +75,7 @@ const tableData = reactive([
   },
 ]);
 
-const onChangePage = (page) => {};
+const onChangePage = () => {};
 
 const showFilterModal = () => {
   filterModal.value.toggleModal();

@@ -10,7 +10,6 @@
       totalItems="50"
       itemsPerPage="5"
       paginateRange="2"
-      @onSelectPage="onChangePage"
     >
       <template v-slot:status="{ item }">
         <SBadge :content="item.status.name" :color="item.status.color" />
@@ -27,9 +26,6 @@
 
 <script lang="ts" setup>
 import {
-  SInput,
-  SButton,
-  SIconRender,
   STable,
   SBadge,
 } from "@tumarsoft/ogogo-ui";
@@ -81,8 +77,6 @@ const filterModal = ref(null);
 const openModal = () => {
   filterModal.value.toggleModal();
 };
-
-const onChangePage = (page) => {};
 </script>
 
 <style lang="scss"></style>

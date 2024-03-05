@@ -10,4 +10,6 @@ export interface IProperty {
     propertySubGroupId: string
     localization: boolean
     validationRules: object
+    propertyList: IProperty[],
+    groupPropertyList: any[],
 }

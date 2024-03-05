@@ -55,7 +55,7 @@
         <div class="section-title">Группа свойств</div>
         <SInput isSearchable width="100%"/>
         <div class="property-items" :style="{'max-height': maxHeight+'px'}">
-          <div v-for="item in 50">
+          <div v-for="item in 50" :key="item">
             <SCheckbox>Характеристики</SCheckbox>
           </div>
         </div>
