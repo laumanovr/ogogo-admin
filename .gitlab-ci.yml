@@ -20,7 +20,7 @@ build_test-admin:
       - .npm/
       - node_modules/
   only: 
-    - main
+    - test
 
 deploy_test-admin:
   image: ringcentral/sshpass:latest
@@ -41,7 +41,7 @@ deploy_test-admin:
     - echo "$cinotify" >cinotify.sh
     - sh cinotify.sh
   only:
-   - main
+   - test
 
 
 build_pretest-admin:
@@ -59,7 +59,7 @@ build_pretest-admin:
       - .npm/
       - node_modules/
   only: 
-    - dev
+    - pretest
 
 deploy_pretest-admin:
   image: ringcentral/sshpass:latest
@@ -80,7 +80,7 @@ deploy_pretest-admin:
     - echo "$cinotify" >cinotify.sh
     - sh cinotify.sh
   only:
-   - dev
+   - pretest
 
 notify_error:
   stage: notify
