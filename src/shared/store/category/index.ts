@@ -3,8 +3,9 @@ import { ICategory, ICategorySharedState } from "./index.types";
 import { findObjectInMultidimensionalArray } from "@/shared/lib/utils/category/findObjectInMultidimensionalArray";
 import { CategoryApi } from "@/shared/api/category";
 import { ICategorySettings } from "@/shared/api/category/index.types";
+import { container } from "tsyringe";
 
-const categoryApi = new CategoryApi()
+const categoryApiService = container.resolve(CategoryApi)
 
 export const useCategorySharedStore = defineStore("category-shared-store", {
   state: (): ICategorySharedState => {
@@ -88,7 +89,7 @@ export const useCategorySharedStore = defineStore("category-shared-store", {
     },
     fetchCategoryById(id: string) {
       return new Promise((resolve, reject) => {
-        categoryApi.getCategoryById(id)
+        categoryApiService.getCategoryById(id)
           .then((res) => {
             this.setTranslation(res.categoryName, "ru");
             this.setTranslation(res.translations.additionalProp1, "ky");

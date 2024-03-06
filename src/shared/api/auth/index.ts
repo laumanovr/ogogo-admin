@@ -4,7 +4,9 @@ import {
   AuthLoginPayloadInterface,
   AuthLoginResultInterface,
 } from "@/shared/api/auth/types";
+import { singleton } from "tsyringe";
 
+@singleton()
 export class AuthApi {
   login = (
     credentials: AuthLoginPayloadInterface
