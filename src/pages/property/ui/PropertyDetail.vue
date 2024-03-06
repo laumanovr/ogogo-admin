@@ -2,16 +2,20 @@
   <div class="property-value-container">
     <div class="title-container">
       <SButton color="white" @click="goBack">
-        <SIconRender name="ArrowIcon" direction="left"/>
-        {{ $t('lang-943d7231-c402-4b11-929c-b26a3ee10276') }}
+        <SIconRender name="ArrowIcon" direction="left" />
+        {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
-      <h2 class="head-title">Свойства/{{ propertyDetailStore.selectedProperty?.name }}</h2>
+      <h2 class="head-title">
+        Свойства/{{ propertyDetailStore.selectedProperty?.name }}
+      </h2>
     </div>
     <div class="actions">
-      <SInput isSearchable width="100%" @input="onSearch"/>
-      <SButton color="violet" @click="onSave">{{ $t('lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf') }}</SButton>
+      <SInput isSearchable width="100%" @input="onSearch" />
+      <SButton color="violet" @click="onSave">{{
+        $t("lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf")
+      }}</SButton>
     </div>
-    <PropertyDetailTable ref="propertyDetailTable"/>
+    <PropertyDetailTable ref="propertyDetailTable" />
   </div>
 </template>
 
@@ -27,10 +31,12 @@ const router = useRouter();
 const route = useRoute();
 const propertyDetailStore = usePropertyDetailStore();
 const propertyDetailTable = ref(null);
-const searchTimer = ref({});
+const searchTimer = ref<number>(null);
 
 onMounted(() => {
-  propertyDetailStore.fetchPropertyById(route.params.id);
+  if (route.params && route.params.id && typeof route.params.id === "string") {
+    propertyDetailStore.fetchPropertyById(route.params.id);
+  }
 });
 
 const goBack = () => {
@@ -41,12 +47,13 @@ const onSave = () => {
   propertyDetailTable.value.submitPropertyValues();
 };
 
-const onSearch = (e) => {
-  clearTimeout(searchTimer.value);
-  searchTimer.value = setTimeout(() => {
-    propertyDetailTable.value.searchPropertyValue(e.target.value)
+const onSearch = (e: Event) => {
+  window.clearTimeout(searchTimer.value);
+  const target = e.target as HTMLInputElement;
+  searchTimer.value = window.setTimeout(() => {
+    propertyDetailTable.value.searchPropertyValue(target.value);
   }, 1500);
-}
+};
 </script>
 
 <style lang="scss">

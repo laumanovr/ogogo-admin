@@ -22,12 +22,12 @@ export class BaseHandler implements IHandler {
   nextHandler: IHandler = null;
 
   handle(
-    to: RouteLocationNormalized,
-    from: RouteLocationNormalized,
-    next: Function,
-    routes: IRoute[] = []
+    // to: RouteLocationNormalized,
+    // from: RouteLocationNormalized,
+    // next: Function,
+    // routes: IRoute[] = []
   ): void {
-    next();
+    // next();
   }
 
   setNext(h: IHandler): void {
@@ -35,14 +35,14 @@ export class BaseHandler implements IHandler {
   }
 
   handleLast(
-    to: RouteLocationNormalized,
-    from: RouteLocationNormalized,
-    next: Function,
-    routes: IRoute[] = []
+    // to: RouteLocationNormalized,
+    // from: RouteLocationNormalized,
+    // next: Function,
+    // routes: IRoute[] = []
   ) {
-    if (this.nextHandler === null) {
-      next();
-    }
+    // if (this.nextHandler === null) {
+    //   next();
+    // }
   }
 }
 

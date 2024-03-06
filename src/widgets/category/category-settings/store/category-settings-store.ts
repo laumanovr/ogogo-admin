@@ -1,4 +1,3 @@
-import { usePropertyNamingFieldsStore } from "../../../../features/category/property-naming-fields/store/property-naming-fields-store";
 import { defineStore } from "pinia";
 import { ICategory } from "./category-settings-store.types";
 import { saveCategorySettings } from "../api/category-settings-api";

@@ -77,7 +77,7 @@ onMounted(() => {
   getPropertyValueList();
 });
 
-const convertToBase64 = (file) => {
+const convertToBase64 = (file: any) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -90,7 +90,7 @@ const convertToBase64 = (file) => {
   });
 };
 
-const onSelectFile = async (e, item) => {
+const onSelectFile = async (e: any, item: any) => {
   const file = e.target.files[0];
   if (file) {
     item.icoBase64 = await convertToBase64(file);
@@ -99,7 +99,7 @@ const onSelectFile = async (e, item) => {
 
 watch(
   () => propertyDetailStore.propertyValueList,
-  (newValue) => {
+  (newValue: any) => {
     if (newValue) {
       propertyValues.value = newValue.reverse();
       currentValues.value = JSON.parse(JSON.stringify(propertyValues.value));
@@ -145,23 +145,23 @@ const submitPropertyValues = () => {
   }
 };
 
-const onCreate = (newValues) => {
-  if (!newValues.every((item) => item.value && item.icoBase64)) {
+const onCreate = (newValues: any) => {
+  if (!newValues.every((item: any) => item.value && item.icoBase64)) {
     alertStore.showInfo("Заполните поля и иконку");
     return;
   }
   propertyDetailStore.createPropertyValue(newValues);
 };
 
-const onUpdate = (updatedValues) => {
-  if (!updatedValues.every((item) => item.value && item.icoBase64)) {
+const onUpdate = (updatedValues: any) => {
+  if (!updatedValues.every((item: any) => item.value && item.icoBase64)) {
     alertStore.showInfo("Заполните поля и иконку");
     return;
   }
   propertyDetailStore.updatePropertyValue(updatedValues);
 };
 
-const searchPropertyValue = (value) => {
+const searchPropertyValue = (value: any) => {
   propertyDetailStore.fetchPropertyValueList({
     pageSize: 500,
     search: value,

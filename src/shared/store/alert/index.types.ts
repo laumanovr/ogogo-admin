@@ -37,6 +37,7 @@ export interface IAlert {
   badgeOptions: Partial<IBadgeOptions>;
   // v-progress-circular
   circularProgressOptions: Partial<ICircularProgressOptions>;
+  [key: string]: any;
 }
 
 export interface IAlertAction {
