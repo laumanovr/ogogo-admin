@@ -1,7 +1,4 @@
-import { IGroupPropertyApi } from "../../group-property/api/group-property-api.types";
-import { IPropertyApi } from "../api/property-api.types";
-
-export interface IProperty {
+export interface IPropertyApi {
   key: string;
   name: string;
   nameKy: string;
@@ -13,11 +10,13 @@ export interface IProperty {
   propertySubGroupId: string;
   localization: boolean;
   validationRules: object;
-  propertyList: IPropertyApi[];
-  groupPropertyList: IGroupPropertyApi[];
 }
 
 export interface IGetPropertyList {
   pageSize: number;
   search: string;
+}
+
+export interface IPropertyWithWholeObject extends IPropertyApi {
+  result: object;
 }
