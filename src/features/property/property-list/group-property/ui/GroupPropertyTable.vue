@@ -103,7 +103,7 @@ const onSelectFile = async (e: any, item: any) => {
 
 watch(
   () => groupPropertyStore.groupPropertyList,
-  (newValue: any) => {
+  (newValue: any[]) => {
     if (newValue) {
       groupProperties.value = newValue.reverse();
       currentGroupProperties.value = JSON.parse(

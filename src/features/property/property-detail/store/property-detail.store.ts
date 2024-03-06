@@ -1,7 +1,7 @@
 import {
   IPropertyDetailApi,
   IPropertyDetailApiWithWholeObject,
-} from "./../api/property-detail.types";
+} from "../api/property-detail-api.types";
 import { defineStore } from "pinia";
 import { IPropertyValue, IGetPropertyList } from "./property-detail.types";
 import {
@@ -18,7 +18,7 @@ const alertStore = useAlertStore();
 
 export const usePropertyDetailStore = defineStore("property-detail-store", {
   state: (): Partial<IPropertyValue> => ({
-    propertyValueList: null,
+    propertyValueList: [],
     selectedProperty: null,
   }),
   getters: {

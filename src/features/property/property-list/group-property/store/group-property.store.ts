@@ -1,10 +1,14 @@
 import { defineStore } from "pinia";
-import { IGroupProperty } from "./group-property.types";
+import { IGroupProperty, IGetGroupPropertyList } from "./group-property.types";
+import {
+  IGroupPropertyApi,
+  IGroupPropertyWithWholeObject,
+} from "../api/group-property-api.types.ts";
 import {
   createGroupProperties,
   getGroupProperties,
   updateGroupProperties,
-} from "../api/index.ts";
+} from "../api/group-property.api.ts";
 import { useLoaderStore } from "@/shared/store/loader";
 import { useAlertStore } from "@/shared/store/alert";
 
@@ -16,12 +20,12 @@ export const useGroupPropertyStore = defineStore("group-property-store", {
     groupPropertyList: [],
   }),
   getters: {
-    groupProperties(): IGroupProperty[] {
+    groupProperties(): IGroupPropertyApi[] {
       return this.groupPropertyList;
     },
   },
   actions: {
-    async fetchGroupPropertyList(payload: any) {
+    async fetchGroupPropertyList(payload: IGetGroupPropertyList) {
       try {
         loaderStore.setLoaderState(true);
         const response = await getGroupProperties(payload);
@@ -39,7 +43,9 @@ export const useGroupPropertyStore = defineStore("group-property-store", {
       try {
         loaderStore.setLoaderState(true);
         const response = await createGroupProperties(payload);
-        const items = response.map((item: any) => item.result);
+        const items = response.map(
+          (item: IGroupPropertyWithWholeObject) => item.result
+        );
         const currentItems = this.groupPropertyList.reverse();
         this.groupPropertyList = [...currentItems, ...items];
         loaderStore.setLoaderState(false);

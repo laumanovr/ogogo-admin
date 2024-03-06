@@ -1,4 +1,4 @@
-import { IPropertyDetailApi } from "../api/property-detail.types";
+import { IPropertyDetailApi } from "../api/property-detail-api.types";
 
 export interface IPropertyValue {
   propertyId: string;

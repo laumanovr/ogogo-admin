@@ -3,7 +3,7 @@ import {
   IPropertyDetailApi,
   IGetPropertyList,
   IPropertyDetailApiWithWholeObject,
-} from "./property-detail.types";
+} from "./property-detail-api.types";
 import { IItemList } from "@/shared/types/index.types";
 
 export const getPropertyValues = (
