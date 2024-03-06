@@ -1,6 +1,3 @@
-// import type { ITheme } from "@/utils/interfaces";
-// import type { ILanguage } from "../reference/language.types";
-
 export interface IUser {
   token: string;
   roleName: string;
@@ -21,7 +18,7 @@ export interface ILoginResultFail {
 }
 
 export interface ILogin {
-  login: string;
+  pin: string;
   password: string;
 }
 

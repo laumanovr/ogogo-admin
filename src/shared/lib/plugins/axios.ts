@@ -5,13 +5,13 @@ import { getItem } from "../utils/persistanceStorage";
 import { INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES } from "@/app/router/index.type";
 import { useAuthStore } from "@/shared/store/auth";
 
-import router from "@/app/router/";
+import router from "@/app/router";
 
 export const API = axios.create({
   baseURL: import.meta.env.VITE_API_SERVER,
 });
 
-function runWhen(error) {
+function runWhen(error: any) {
   const errorCode = error?.response?.data?.error?.errorCode;
   if (errorCode && INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES.includes(errorCode))
     return false;
@@ -44,7 +44,7 @@ API.interceptors.response.use(
   async function (error) {
     if (!runWhen(error)) return Promise.reject(error);
 
-    const errorCode = error?.response?.data?.error?.errorCode;
+    // const errorCode = error?.response?.data?.error?.errorCode;
 
     // const customMessage = getCustomErrorMessage(errorCode);
     const certificatePing = error?.response?.request?.responseURL?.includes(

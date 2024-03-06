@@ -2,64 +2,58 @@
   <div class="property-value-container">
     <div class="title-container">
       <SButton color="white" @click="goBack">
-        <SIconRender name="ArrowIcon" direction="left"/>
-        {{$t('lang-943d7231-c402-4b11-929c-b26a3ee10276')}}
+        <SIconRender name="ArrowIcon" direction="left" />
+        {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
-      <h2 class="head-title">Свойства/Значение</h2>
+      <h2 class="head-title">
+        Свойства/{{ propertyDetailStore.selectedProperty?.name }}
+      </h2>
     </div>
     <div class="actions">
-      <SInput isSearchable isClearable width="100%"/>
-      <SButton color="violet" :disabled="isDisabled">{{$t('lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf')}}</SButton>
+      <SInput isSearchable width="100%" @input="onSearch" />
+      <SButton color="violet" @click="onSave">{{
+        $t("lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf")
+      }}</SButton>
     </div>
-    <div class="table-container">
-      <div class="table-data group">
-        <table class="table">
-          <thead>
-          <tr>
-            <th @click="addValue"><span>+</span></th>
-            <th>Значение ru <span>*</span></th>
-            <th>Название kg <span>*</span></th>
-            <th>Название en <span>*</span></th>
-            <th>Иконка</th>
-          </tr>
-          </thead>
-          <tbody>
-          <tr v-for="(item, i) in currentValues" :key="i" class="table-row">
-            <td></td>
-            <td><input type="text"/></td>
-            <td><input type="text"/></td>
-            <td><input type="text"/></td>
-            <td></td>
-          </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
+    <PropertyDetailTable ref="propertyDetailTable" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import {SButton, SIconRender, SInput} from "@tumarsoft/ogogo-ui";
-import {ref, reactive, computed} from "vue";
-import {useRouter} from 'vue-router';
+import { ref, onMounted } from "vue";
+import { SButton, SIconRender, SInput } from "@tumarsoft/ogogo-ui";
+import { PropertyDetailTable } from "../../../features/property/property-detail";
+import { usePropertyDetailStore } from "@/features/property/property-detail/store/property-detail.store";
+import { useRouter } from "vue-router";
+import { useRoute } from "vue-router";
 
 const router = useRouter();
+const route = useRoute();
+const propertyDetailStore = usePropertyDetailStore();
+const propertyDetailTable = ref(null);
+const searchTimer = ref<number>(null);
 
-const currentValues = reactive([]);
-
-const isDisabled = computed(() => currentValues.every((item: { recent: any; }) => !item.recent));
+onMounted(() => {
+  if (route.params && route.params.id && typeof route.params.id === "string") {
+    propertyDetailStore.fetchPropertyById(route.params.id);
+  }
+});
 
 const goBack = () => {
-  router.push('/property');
-}
-
-const addValue = () => {
-  currentValues.push({recent: true});
-}
+  router.push("/property");
+};
 
 const onSave = () => {
-  const newValues = currentValues.filter((item: { recent: any; }) => item.recent);
-}
+  propertyDetailTable.value.submitPropertyValues();
+};
+
+const onSearch = (e: Event) => {
+  window.clearTimeout(searchTimer.value);
+  const target = e.target as HTMLInputElement;
+  searchTimer.value = window.setTimeout(() => {
+    propertyDetailTable.value.searchPropertyValue(target.value);
+  }, 1500);
+};
 </script>
 
 <style lang="scss">

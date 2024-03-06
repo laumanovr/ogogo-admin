@@ -9,7 +9,7 @@ import {
 } from "@/shared/store/auth/index.types";
 
 export interface AuthLoginPayloadInterface {
-  login: string;
+  pin: string;
   password: string;
   deviceKey?: string;
   file?: string;
