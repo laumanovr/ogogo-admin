@@ -81,7 +81,7 @@ onMounted(() => {
   getGroupPropertyList();
 });
 
-const convertToBase64 = (file: any) => {
+const convertToBase64 = (file: File) => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);

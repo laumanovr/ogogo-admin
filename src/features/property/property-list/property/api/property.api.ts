@@ -8,7 +8,7 @@ import {
 
 export const getSubGroupProperties = (
   data: IGetGroupPropertyList
-): Promise<IItemList<IGroupPropertyApi>> => {
+): Promise<IGroupPropertyApi[]> => {
   return axios({
     method: "POST",
     url: "/Marketplace/GetMarketplacePropertyGroupAutocomplete",

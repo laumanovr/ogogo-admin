@@ -206,7 +206,7 @@ const getPropertyList = () => {
 };
 
 const getGroupPropertyList = () => {
-  propertyStore.fetchGroupProperties().then(() => {
+  propertyStore.fetchGroupProperties({ pageSize: 500 }).then(() => {
     isShowTable.value = true;
   });
 };

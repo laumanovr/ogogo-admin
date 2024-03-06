@@ -18,6 +18,6 @@ export interface IProperty {
 }
 
 export interface IGetPropertyList {
-  pageSize: number;
-  search: string;
+  pageSize?: number;
+  search?: string;
 }
