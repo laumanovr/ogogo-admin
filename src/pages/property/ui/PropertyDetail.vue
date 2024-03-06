@@ -6,7 +6,8 @@
         {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
       <h2 class="head-title">
-        Свойства/{{ propertyDetailStore.selectedProperty?.name }}
+        {{ $t("lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2") }} /
+        {{ propertyDetailStore.selectedProperty?.name }}
       </h2>
     </div>
     <div class="actions">

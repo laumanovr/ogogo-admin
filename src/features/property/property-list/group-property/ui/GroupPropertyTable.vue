@@ -4,11 +4,19 @@
       <thead>
         <tr>
           <th @click="addGroupProperty"><span>+</span></th>
-          <th>Порядковый номер <span>*</span></th>
-          <th>Название ru <span>*</span></th>
-          <th>Название kg <span>*</span></th>
-          <th>Название en <span>*</span></th>
-          <th>Иконка</th>
+          <th>
+            {{ $t("lang-5f681a3c-8aa8-4dc0-a500-3750e1f8fea6") }} <span>*</span>
+          </th>
+          <th>
+            {{ $t("lang-2f392c31-664a-4308-8678-694690cac96f") }} <span>*</span>
+          </th>
+          <th>
+            {{ $t("lang-f4f37dde-e947-49bc-b821-0d88dfc13cb8") }} <span>*</span>
+          </th>
+          <th>
+            {{ $t("lang-4ea09cca-d60f-4edb-bbc5-445fa26c84dd") }} <span>*</span>
+          </th>
+          <th>{{ $t("lang-e8c1b3cf-9ced-4644-bbb7-7a9f3b58dee1") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -42,15 +50,14 @@
             </span>
             <label for="file" class="label-container" v-else>
               <div class="tooltip-info">
-                280 x 280 пиксель для формата PNG; 24 x 24 пиксель для формата
-                SVG.
+                {{ $t("lang-4ae6eb0a-a362-49ab-824e-4ee51c97542b") }}
               </div>
               <span class="d-flex items-center font-size-15 cursor-pointer">
                 <img
                   src="../../../../../shared/ui/assets/attach.svg"
                   class="mr-12 ml-10"
                 />
-                Загрузить
+                {{ $t("lang-c1d4974f-d48f-4107-99d8-d6a188b31129") }}
               </span>
               <input
                 type="file"

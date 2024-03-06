@@ -4,17 +4,25 @@
       <thead>
         <tr>
           <th @click="addProperty"><span>+</span></th>
-          <th>Ключ <span>*</span></th>
-          <th>Название ru <span>*</span></th>
-          <th>Название kg</th>
-          <th>Название en</th>
-          <th>Тип свойства <span>*</span></th>
-          <th>Тип данных <span>*</span></th>
-          <th>Валидация</th>
-          <th>Локализация значения</th>
-          <th>Группа свойств</th>
-          <th>Подгруппа свойств</th>
-          <th>Значения</th>
+          <th>
+            {{ $t("lang-7a193c83-40e4-4059-99e8-069b5cd9ff17") }} <span>*</span>
+          </th>
+          <th>
+            {{ $t("lang-f4f37dde-e947-49bc-b821-0d88dfc13cb8") }} <span>*</span>
+          </th>
+          <th>{{ $t("lang-f4f37dde-e947-49bc-b821-0d88dfc13cb8") }}</th>
+          <th>{{ $t("lang-4ea09cca-d60f-4edb-bbc5-445fa26c84dd") }}</th>
+          <th>
+            {{ $t("lang-9c86a33a-af41-4a30-a4a4-f92b212341ec") }} <span>*</span>
+          </th>
+          <th>
+            {{ $t("lang-75023d2b-bdc4-487f-8669-4aaa17aa5ac3") }} <span>*</span>
+          </th>
+          <th>{{ $t("lang-9ab1a9cb-2e91-4f2e-82c9-f428b2f27482") }}</th>
+          <th>{{ $t("lang-7840e0f8-edde-410b-a545-109b9b8b1e4c") }}</th>
+          <th>{{ $t("lang-a1011c48-9e0b-4f4a-904b-095e38e83d80") }}</th>
+          <th>{{ $t("lang-1d4b9820-36c2-44fc-ad50-c9a7c2d5be2a") }}</th>
+          <th>{{ $t("lang-b499eecd-5ecf-4aab-a5d4-01df61cf8934") }}</th>
         </tr>
       </thead>
       <tbody>
@@ -89,7 +97,8 @@
             <template v-if="!item.recent">
               <router-link
                 :to="{ name: 'propertyDetail', params: { id: item.id } }"
-                >Значений:
+              >
+                {{ $t("lang-3e41be22-9488-4617-838b-fd7b4987c42f") }}
                 {{ item.countOfPropertyValues }}
               </router-link>
             </template>
