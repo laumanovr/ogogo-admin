@@ -1,10 +1,18 @@
+import { IPropertyDetailApi } from "../api/property-detail.types";
+
 export interface IPropertyValue {
   propertyId: string;
   value: string;
   valueEn: string;
   valueKy: string;
   icoBase64: string;
-  propertyValueList: IPropertyValue[];
+  propertyValueList: IPropertyDetailApi[];
   name?: string;
-  selectedProperty: IPropertyValue;
+  selectedProperty: IPropertyDetailApi[];
+}
+
+export interface IGetPropertyList {
+  pageSize: number;
+  search?: string;
+  queryParams: { propertyId: string | string[] };
 }

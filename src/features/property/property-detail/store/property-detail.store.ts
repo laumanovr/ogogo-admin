@@ -1,5 +1,9 @@
+import {
+  IPropertyDetailApi,
+  IPropertyDetailApiWithWholeObject,
+} from "./../api/property-detail.types";
 import { defineStore } from "pinia";
-import { IPropertyValue } from "./property-detail.types";
+import { IPropertyValue, IGetPropertyList } from "./property-detail.types";
 import {
   createPropertyValues,
   updatePropertyValues,
@@ -14,16 +18,16 @@ const alertStore = useAlertStore();
 
 export const usePropertyDetailStore = defineStore("property-detail-store", {
   state: (): Partial<IPropertyValue> => ({
-    propertyValueList: [],
+    propertyValueList: null,
     selectedProperty: null,
   }),
   getters: {
-    propertyValues(): IPropertyValue[] {
+    propertyValues(): IPropertyDetailApi[] {
       return this.propertyValueList;
     },
   },
   actions: {
-    async fetchPropertyValueList(payload: any) {
+    async fetchPropertyValueList(payload: IGetPropertyList) {
       try {
         loaderStore.setLoaderState(true);
         const response = await getPropertyValues(payload);
@@ -40,7 +44,9 @@ export const usePropertyDetailStore = defineStore("property-detail-store", {
       try {
         loaderStore.setLoaderState(true);
         const response = await createPropertyValues(payload);
-        const items = response.map((item: any) => item.result);
+        const items = response.map(
+          (item: IPropertyDetailApiWithWholeObject) => item.result
+        );
         const currentItems = this.propertyValueList.reverse();
         this.propertyValueList = [...currentItems, ...items];
         loaderStore.setLoaderState(false);
