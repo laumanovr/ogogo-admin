@@ -1,3 +1,4 @@
+import { IPropertyApi } from "./../../property-list/property/api/property-api.types";
 import { IPropertyDetailApi } from "../api/property-detail-api.types";
 
 export interface IPropertyValue {
@@ -8,7 +9,7 @@ export interface IPropertyValue {
   icoBase64: string;
   propertyValueList: IPropertyDetailApi[];
   name?: string;
-  selectedProperty: IPropertyDetailApi[];
+  selectedProperty: IPropertyApi;
 }
 
 export interface IGetPropertyList {

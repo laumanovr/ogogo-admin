@@ -69,7 +69,7 @@ const hasData = ref(false);
 const searchTimer = ref<number>(null);
 
 onMounted(async () => {
-  await propertyStore.fetchPropertyList();
+  await propertyStore.fetchPropertyList({ pageSize: 500 });
   hasData.value = propertyStore.propertyList.length > 0;
 });
 

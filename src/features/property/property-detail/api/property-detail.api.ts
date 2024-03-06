@@ -5,6 +5,7 @@ import {
   IPropertyDetailApiWithWholeObject,
 } from "./property-detail-api.types";
 import { IItemList } from "@/shared/types/index.types";
+import { IPropertyApi } from "../../property-list/property/api/property-api.types";
 
 export const getPropertyValues = (
   data: IGetPropertyList
@@ -42,7 +43,7 @@ export const updatePropertyValues = (
     .catch((err) => Promise.reject(err));
 };
 
-export const getPropertyById = (id: string): Promise<IPropertyDetailApi[]> => {
+export const getPropertyById = (id: string): Promise<IPropertyApi> => {
   return axios({
     method: "GET",
     url: `/Marketplace/GetMarketplaceProperty?id=${id}`,
