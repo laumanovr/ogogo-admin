@@ -5,6 +5,6 @@ export interface IPropertyValue {
   valueKy: string;
   icoBase64: string;
   propertyValueList: IPropertyValue[];
-  name?: string
-  selectedProperty: IPropertyValue
+  name?: string;
+  selectedProperty: IPropertyValue;
 }
