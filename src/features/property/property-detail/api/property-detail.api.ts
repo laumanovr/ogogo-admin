@@ -1,4 +1,3 @@
-import axios from "axios";
 import {
   IPropertyDetailApi,
   IGetPropertyList,
@@ -6,11 +5,12 @@ import {
 } from "./property-detail-api.types";
 import { IItemList } from "@/shared/types/index.types";
 import { IPropertyApi } from "../../property-list/property/api/property-api.types";
+import { API } from "@/shared/lib/plugins/axios";
 
 export const getPropertyValues = (
   data: IGetPropertyList
 ): Promise<IItemList<IPropertyDetailApi>> => {
-  return axios({
+  return API({
     method: "POST",
     url: "/Marketplace/GetMarketplacePropertyValuePagedList",
     data: data,
@@ -22,7 +22,7 @@ export const getPropertyValues = (
 export const createPropertyValues = (
   data: IPropertyDetailApi
 ): Promise<IPropertyDetailApiWithWholeObject[]> => {
-  return axios({
+  return API({
     method: "POST",
     url: "/Marketplace/CreateMarketplacePropertyValueList",
     data: data,
@@ -34,7 +34,7 @@ export const createPropertyValues = (
 export const updatePropertyValues = (
   data: IPropertyDetailApi
 ): Promise<IPropertyDetailApi[]> => {
-  return axios({
+  return API({
     method: "PUT",
     url: "/Marketplace/UpdateMarketplacePropertyValueList",
     data: data,
@@ -44,7 +44,7 @@ export const updatePropertyValues = (
 };
 
 export const getPropertyById = (id: string): Promise<IPropertyApi> => {
-  return axios({
+  return API({
     method: "GET",
     url: `/Marketplace/GetMarketplaceProperty?id=${id}`,
   })
