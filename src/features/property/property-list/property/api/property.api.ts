@@ -1,4 +1,3 @@
-import axios from "axios";
 import { IGetPropertyList, IPropertyApi } from "./property-api.types";
 import { IItemList } from "@/shared/types/index.types";
 import {
@@ -6,50 +5,52 @@ import {
   IGroupPropertyApi,
 } from "../../group-property/api/group-property-api.types";
 
-export const getSubGroupProperties = (
-  data: IGetGroupPropertyList
-): Promise<IGroupPropertyApi[]> => {
-  return axios({
-    method: "POST",
-    url: "/Marketplace/GetMarketplacePropertyGroupAutocomplete",
-    data: data,
-  })
-    .then((response) => response.data.result)
-    .catch((err) => Promise.reject(err));
-};
+import { singleton } from "tsyringe";
+import { API } from "@/shared/lib/plugins/axios";
 
-export const getProperties = (
-  data: IGetPropertyList
-): Promise<IItemList<IPropertyApi>> => {
-  return axios({
-    method: "POST",
-    url: "/Marketplace/GetMarketplacePropertyPagedList",
-    data: data,
-  })
-    .then((response: any) => response.data.result)
-    .catch((err) => Promise.reject(err));
-};
+@singleton()
+export class PropertyApi {
+  getSubGroupProperties = (
+    data: IGetGroupPropertyList
+  ): Promise<IGroupPropertyApi[]> => {
+    return API({
+      method: "POST",
+      url: "/Marketplace/GetMarketplacePropertyGroupAutocomplete",
+      data: data,
+    })
+      .then((response) => response.data.result)
+      .catch((err) => Promise.reject(err));
+  };
 
-export const createProperties = (
-  data: IPropertyApi
-): Promise<IPropertyApi[]> => {
-  return axios({
-    method: "POST",
-    url: "/Marketplace/CreateMarketplacePropertyList",
-    data: data,
-  })
-    .then((response) => response.data.result)
-    .catch((err) => Promise.reject(err));
-};
+  getProperties = (
+    data: IGetPropertyList
+  ): Promise<IItemList<IPropertyApi>> => {
+    return API({
+      method: "POST",
+      url: "/Marketplace/GetMarketplacePropertyPagedList",
+      data: data,
+    })
+      .then((response: any) => response.data.result)
+      .catch((err) => Promise.reject(err));
+  };
 
-export const updateProperties = (
-  data: IPropertyApi
-): Promise<IPropertyApi[]> => {
-  return axios({
-    method: "PUT",
-    url: "/Marketplace/UpdateMarketplacePropertyList",
-    data: data,
-  })
-    .then((response) => response.data.result)
-    .catch((err) => Promise.reject(err));
-};
+  createProperties = (data: IPropertyApi): Promise<IPropertyApi[]> => {
+    return API({
+      method: "POST",
+      url: "/Marketplace/CreateMarketplacePropertyList",
+      data: data,
+    })
+      .then((response) => response.data.result)
+      .catch((err) => Promise.reject(err));
+  };
+
+  updateProperties = (data: IPropertyApi): Promise<IPropertyApi[]> => {
+    return API({
+      method: "PUT",
+      url: "/Marketplace/UpdateMarketplacePropertyList",
+      data: data,
+    })
+      .then((response) => response.data.result)
+      .catch((err) => Promise.reject(err));
+  };
+}
