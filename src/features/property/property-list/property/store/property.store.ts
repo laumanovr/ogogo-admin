@@ -1,12 +1,7 @@
 import { IGetGroupPropertyList } from "./../../group-property/store/group-property.types";
 import { IGetPropertyList } from "./../../../property-list/property/store/property.types";
 import { defineStore } from "pinia";
-import {
-  getSubGroupProperties,
-  createProperties,
-  getProperties,
-  updateProperties,
-} from "@/features/property/property-list/property/api/property.api";
+import { PropertyApi } from "@/features/property/property-list/property/api/property.api";
 import { IProperty } from "@/features/property/property-list/property/store/property.types";
 import { useLoaderStore } from "@/shared/store/loader";
 import { useAlertStore } from "@/shared/store/alert";
@@ -15,9 +10,12 @@ import {
   IPropertyWithWholeObject,
 } from "../api/property-api.types";
 import { IGroupPropertyApi } from "../../group-property/api/group-property-api.types";
+import { container } from "tsyringe";
 
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
+
+const propertyApiService = container.resolve(PropertyApi);
 
 export const usePropertyStore = defineStore("propertyStore", {
   state: (): Partial<IProperty> => {
@@ -38,7 +36,8 @@ export const usePropertyStore = defineStore("propertyStore", {
     async fetchGroupProperties(data: IGetGroupPropertyList) {
       try {
         loaderStore.setLoaderState(true);
-        this.groupPropertyList = await getSubGroupProperties(data);
+        this.groupPropertyList =
+          await propertyApiService.getSubGroupProperties(data);
         loaderStore.setLoaderState(false);
         return true;
       } catch (err) {
@@ -51,7 +50,7 @@ export const usePropertyStore = defineStore("propertyStore", {
     async fetchPropertyList(payload: IGetPropertyList) {
       try {
         loaderStore.setLoaderState(true);
-        const response = await getProperties(payload);
+        const response = await propertyApiService.getProperties(payload);
         this.propertyList = response.items;
         loaderStore.setLoaderState(false);
       } catch (err) {
@@ -64,7 +63,7 @@ export const usePropertyStore = defineStore("propertyStore", {
     async createPropertyList(payload: IPropertyApi) {
       try {
         loaderStore.setLoaderState(true);
-        const response = await createProperties(payload);
+        const response = await propertyApiService.createProperties(payload);
         const newItems = response.map(
           (item: IPropertyWithWholeObject) => item.result
         );
@@ -81,7 +80,7 @@ export const usePropertyStore = defineStore("propertyStore", {
     async updatePropertyList(payload: IPropertyApi) {
       try {
         loaderStore.setLoaderState(true);
-        await updateProperties(payload);
+        await propertyApiService.updateProperties(payload);
         loaderStore.setLoaderState(false);
         alertStore.showSuccess("Успешно обновлено!");
       } catch (err) {
