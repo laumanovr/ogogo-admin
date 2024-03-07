@@ -20,6 +20,7 @@ export default function setup() {
   axios.interceptors.request.use(
     function (config) {
       const isActiveSession = getItem("active-session");
+      console.log(config.url);
       if (
         (config.url === "/api/common/Ping" && isActiveSession) ||
         config.url !== "/api/common/Ping"

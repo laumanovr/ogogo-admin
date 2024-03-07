@@ -56,6 +56,7 @@ import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
 import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
 import { useCategorySharedStore } from "@/shared/store/category";
+import { ICategory } from "../api/index.types";
 
 const props = defineProps({
   categoryName: {
@@ -91,25 +92,31 @@ const onClose = () => {
 };
 
 function deletePropertyFromMultidimensionalArray(
-  array: any,
-  propertyToDelete: any
+  array: ICategory[],
+  propertyToDelete: string
 ) {
-  array.forEach((obj: any) => {
-    // Delete the property from the current object
-    delete obj[propertyToDelete];
+  array.forEach(
+    (
+      obj: ICategory & {
+        [key: string]: any;
+      }
+    ) => {
+      // Delete the property from the current object
+      delete obj[propertyToDelete];
 
-    // If the current object has childMarketplaceCategoryIdList property and it's an array,
-    // recursively call the function to process its elements
-    if (
-      obj.childMarketplaceCategoryIdList &&
-      Array.isArray(obj.childMarketplaceCategoryIdList)
-    ) {
-      deletePropertyFromMultidimensionalArray(
-        obj.childMarketplaceCategoryIdList,
-        propertyToDelete
-      );
+      // If the current object has childMarketplaceCategoryIdList property and it's an array,
+      // recursively call the function to process its elements
+      if (
+        obj.childMarketplaceCategoryIdList &&
+        Array.isArray(obj.childMarketplaceCategoryIdList)
+      ) {
+        deletePropertyFromMultidimensionalArray(
+          obj.childMarketplaceCategoryIdList,
+          propertyToDelete
+        );
+      }
     }
-  });
+  );
 }
 
 const onSave = () => {

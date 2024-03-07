@@ -1,40 +1,43 @@
 <template>
   <div class="d-flex flex-row justify-between padding-16-40 h-80">
-    <img src="../../ui/assets/Ogogo-logo.png" class="ogogo-img"/>
+    <img src="../../ui/assets/Ogogo-logo.png" class="ogogo-img" />
 
     <div class="header-navigation">
       <div
-          @click="onMenuItemChange(MenuItems.Products)"
-          class="cursor-pointer d-flex flex-col items-center"
+        @click="onMenuItemChange(MenuItems.Products)"
+        class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender :color="isProductsActive.substr(6)" :name="'BoxIcon'"/>
+        <SIconRender :color="isProductsActive.substr(6)" :name="'BoxIcon'" />
         <p :class="`${isProductsActive} font-size-12`">
           {{ $t("lang-9839245b-e40e-4ae1-92e9-0421dc97a154") }}
         </p>
       </div>
       <div
-          @click="onMenuItemChange(MenuItems.Stores)"
-          class="cursor-pointer d-flex flex-col items-center"
+        @click="onMenuItemChange(MenuItems.Stores)"
+        class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender :color="isStoresActive.substr(6)" :name="'ShopIcon'"/>
+        <SIconRender :color="isStoresActive.substr(6)" :name="'ShopIcon'" />
         <p :class="`${isStoresActive} font-size-12`">
           {{ $t("lang-425a5a16-bf0a-4ded-a7bc-cbe7490b659a") }}
         </p>
       </div>
       <div
-          @click="onMenuItemChange(MenuItems.Category)"
-          class="cursor-pointer d-flex flex-col items-center"
+        @click="onMenuItemChange(MenuItems.Category)"
+        class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender :color="isCategoryActive.substr(6)" :name="'GridIcon'"/>
+        <SIconRender :color="isCategoryActive.substr(6)" :name="'GridIcon'" />
         <p :class="`${isCategoryActive} font-size-12`">
           {{ $t("lang-75805fdb-eac2-4c87-b481-563e318789b5") }}
         </p>
       </div>
       <div
-          @click="onMenuItemChange(MenuItems.Properties)"
-          class="cursor-pointer d-flex flex-col items-center"
+        @click="onMenuItemChange(MenuItems.Properties)"
+        class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender :color="isPropertyActive.substr(6)" :name="'PropertyIcon'"/>
+        <SIconRender
+          :color="isPropertyActive.substr(6)"
+          :name="'PropertyIcon'"
+        />
         <p :class="`${isPropertyActive} font-size-12`">
           {{ $t("lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2") }}
         </p>
@@ -44,7 +47,12 @@
           <div class="profile-name">Админ</div>
           <div class="profile-number color-gray-500">+996777446688</div>
         </div>
-        <img src="../../ui/assets/logout.svg" alt="logout" class="ml-20 cursor-pointer" @click="logOut">
+        <img
+          src="../../ui/assets/logout.svg"
+          alt="logout"
+          class="ml-20 cursor-pointer"
+          @click="logOut"
+        />
       </div>
     </div>
   </div>
@@ -55,6 +63,7 @@ import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { MenuItems } from "@/shared/lib/utils/enums";
 import { computed, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
+import { useAuthStore } from "@/shared/store/auth";
 
 const route = useRoute();
 const router = useRouter();
@@ -68,16 +77,24 @@ Object.values(MenuItems).forEach((item: any) => {
 });
 
 const isProductsActive = computed(() => {
-  return activeButton.value === MenuItems.Products ? "color-violet-700" : "gray-400";
+  return activeButton.value === MenuItems.Products
+    ? "color-violet-700"
+    : "gray-400";
 });
 const isStoresActive = computed(() => {
-  return activeButton.value === MenuItems.Stores ? "color-violet-700" : "gray-400";
+  return activeButton.value === MenuItems.Stores
+    ? "color-violet-700"
+    : "gray-400";
 });
 const isCategoryActive = computed(() => {
-  return activeButton.value === MenuItems.Category ? "color-violet-700" : "gray-400";
+  return activeButton.value === MenuItems.Category
+    ? "color-violet-700"
+    : "gray-400";
 });
 const isPropertyActive = computed(() => {
-  return activeButton.value === MenuItems.Properties ? "color-violet-700" : "gray-400";
+  return activeButton.value === MenuItems.Properties
+    ? "color-violet-700"
+    : "gray-400";
 });
 
 function onMenuItemChange(value: MenuItems) {
@@ -90,9 +107,14 @@ function onMenuItemChange(value: MenuItems) {
   activeButton.value = value;
 }
 
+const authStore = useAuthStore();
+
 const logOut = () => {
-  router.push("/");
-}
+  authStore.logout().then(() => {
+    console.log("eee");
+    router.push("/");
+  });
+};
 </script>
 
 <style lang="scss" scoped>
