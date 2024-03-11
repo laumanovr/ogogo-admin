@@ -3,6 +3,7 @@ import { defineStore } from "pinia";
 
 import { ILeftSideBarState } from "./left-side-bar-store.types";
 import { getMarketlace } from "../api";
+import { ICategory } from "../api/index.types";
 
 export const useLeftSideBarStore = defineStore("left-side-bar-store", {
   state: (): ILeftSideBarState => {
@@ -20,8 +21,8 @@ export const useLeftSideBarStore = defineStore("left-side-bar-store", {
           .then((res) => {
             const categorySharedStore = useCategorySharedStore();
 
-            const multidimensionalArray = (array: any) => {
-              return array.map((obj: any) => {
+            const multidimensionalArray = (array: ICategory[]): ICategory[] => {
+              return array.map((obj: ICategory) => {
                 // Delete the property from the current object
 
                 obj.childMarketplaceCategoryIdList =

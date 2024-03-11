@@ -6,6 +6,40 @@ import pinia from "@/app/store/index";
 import "./app/style/main.scss";
 import "virtual:uno.css";
 import i18n from "@/shared/lib/plugins/i18n";
+import { RouteLocationNormalized } from "vue-router";
+import { getItem } from "./shared/lib/utils/persistanceStorage";
+
+router.beforeEach(
+  (
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized,
+    next: Function
+  ) => {
+    const isAuthenticated = Boolean(getItem("sessionId")),
+      requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
+    // roleScreensObj = getItem("auth")?.roleScreensObj ?? null,
+    // currentMenu = getItem("auth")?.uiElements ?? [];
+
+    // console.log(to);
+
+    console.log(to);
+
+    if (!isAuthenticated) {
+      console.log("emir");
+      if (requiresAuth) {
+        console.log("emir2");
+        return next("/");
+      }
+      next();
+    } else if (to.path === "/" && isAuthenticated) {
+      next("/property");
+    } else {
+      next();
+
+      console.log("errorr");
+    }
+  }
+);
 
 const app = createApp(App);
 

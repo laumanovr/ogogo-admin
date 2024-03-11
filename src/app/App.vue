@@ -14,19 +14,28 @@ import { computed, ref, watch } from "vue";
 import { SToaster } from "@tumarsoft/ogogo-ui";
 import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
+import { useRoute } from "vue-router";
+import { getItem } from "@/shared/lib/utils/persistanceStorage";
 
 const alertStore = useAlertStore();
 const loaderStore = useLoaderStore();
 const toaster = ref(null);
-const isLoggedIn = true;
+// const isLoggedIn = true;
 
-const currentComponent = computed(() => {
-  if (isLoggedIn) {
-    return Layout;
-  } else {
-    return Empty;
+const currentComponent = ref(Empty);
+
+const route = useRoute();
+
+watch(
+  () => route.path,
+  () => {
+    if (Boolean(getItem("sessionId"))) {
+      currentComponent.value = Layout;
+    } else {
+      currentComponent.value = Empty;
+    }
   }
-});
+);
 
 watch(
   () => alertStore.successMessage,

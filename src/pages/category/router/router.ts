@@ -6,11 +6,13 @@ const route = [
     path: "/category",
     name: "category",
     component: findComponent("category", "Category"),
+    meta: { requiresAuth: true },
   },
   {
     path: "/category/empty",
     name: "category-empty",
     component: CategoryEmpty,
+    meta: { requiresAuth: true },
   },
 ];
 

@@ -1,5 +1,5 @@
 <template>
-  <Header v-if="route.path !== '/'" />
+  <Header />
 
   <div class="wrapper-layout">
     <slot></slot>
@@ -8,8 +8,6 @@
 
 <script lang="ts" setup>
 import Header from "@/shared/ui/layouts/Header.vue";
-import { useRoute } from "vue-router";
-const route = useRoute();
 </script>
 
 <style>
