@@ -8,6 +8,7 @@ import "virtual:uno.css";
 import i18n from "@/shared/lib/plugins/i18n";
 import { RouteLocationNormalized } from "vue-router";
 import { getItem } from "./shared/lib/utils/persistanceStorage";
+import { vMaska } from "maska";
 
 router.beforeEach(
   (
@@ -46,3 +47,5 @@ const app = createApp(App);
 app.use(router).use(pinia).use(i18n);
 
 app.mount("#app");
+
+app.directive("maska", vMaska);
