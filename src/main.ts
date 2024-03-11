@@ -26,10 +26,12 @@ router.beforeEach(
         return next("/");
       }
       next();
-    } else if (to.path === "/" && isAuthenticated) {
-      next("/property");
     } else {
-      next();
+      if (to.path === "/" && !isAuthenticated) {
+        next();
+      } else {
+        next();
+      }
     }
   }
 );

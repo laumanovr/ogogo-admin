@@ -71,6 +71,7 @@ API.interceptors.response.use(
       switch (error?.response?.status) {
         case 401:
           showError = false;
+          await authStore.logout;
 
           router.push("/");
           break;
