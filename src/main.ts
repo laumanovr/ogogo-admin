@@ -21,14 +21,8 @@ router.beforeEach(
     // roleScreensObj = getItem("auth")?.roleScreensObj ?? null,
     // currentMenu = getItem("auth")?.uiElements ?? [];
 
-    // console.log(to);
-
-    console.log(to);
-
     if (!isAuthenticated) {
-      console.log("emir");
       if (requiresAuth) {
-        console.log("emir2");
         return next("/");
       }
       next();
@@ -36,8 +30,6 @@ router.beforeEach(
       next("/property");
     } else {
       next();
-
-      console.log("errorr");
     }
   }
 );

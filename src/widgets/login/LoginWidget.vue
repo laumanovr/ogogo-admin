@@ -57,6 +57,10 @@ const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
 
 const onSubmitLogin = () => {
+  const removedDashesAndBrackets = loginObj.pin.replace(/\D/g, "");
+
+  loginObj.pin = removedDashesAndBrackets;
+
   if (loginForm.value.validateForm()) {
     loaderStore.setLoaderState(true);
     authStore
