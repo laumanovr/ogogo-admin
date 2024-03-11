@@ -1,0 +1,132 @@
+image: node:lts-alpine
+
+stages:
+  - build
+  - deploy
+  - notify
+
+build_test-admin:
+  image: node:lts-alpine
+  stage: build
+  script:
+    - npm install --registry http://192.168.111.141:8081/repository/npm-proxy/ --cache .npm --prefer-offline
+    - npm run build:test --registry http://192.168.111.141:8081/repository/npm-proxy/ --cache .npm --prefer-offline
+  artifacts:
+    expire_in: 2 week
+    paths:
+      - dist
+  cache:
+    paths:
+      - .npm/
+      - node_modules/
+  only: 
+    - test
+
+deploy_test-admin:
+  image: ringcentral/sshpass:latest
+  stage: deploy
+  before_script:
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - touch ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config'
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+  script:
+    - cd dist/
+    - ssh gitlab-runner@192.168.111.100 " rm /var/www/test-admin.ogogo.kg/* -R || true"
+    - scp -r * gitlab-runner@192.168.111.100:/var/www/test-admin.ogogo.kg/
+    - apk add --update curl
+    - echo "$cinotify" >cinotify.sh
+    - sh cinotify.sh
+  only:
+   - test
+
+
+build_pretest-admin:
+  image: node:lts-alpine
+  stage: build
+  script:
+    - npm install --registry http://192.168.111.141:8081/repository/npm-proxy/ --cache .npm --prefer-offline
+    - npm run build:pretest --registry http://192.168.111.141:8081/repository/npm-proxy/ --cache .npm --prefer-offline
+  artifacts:
+    expire_in: 2 week
+    paths:
+      - dist
+  cache:
+    paths:
+      - .npm/
+      - node_modules/
+  only: 
+    - pretest
+
+deploy_pretest-admin:
+  image: ringcentral/sshpass:latest
+  stage: deploy
+  before_script:
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - touch ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config'
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+  script:
+    - cd dist/
+    - ssh gitlab-runner@192.168.111.100 " rm /var/www/pretest-admin.ogogo.kg/* -R || true"
+    - scp -r * gitlab-runner@192.168.111.100:/var/www/pretest-admin.ogogo.kg/
+    - apk add --update curl
+    - echo "$cinotify" >cinotify.sh
+    - sh cinotify.sh
+  only:
+   - pretest
+
+build_prod-admin:
+  image: node:lts-alpine
+  stage: build
+  script:
+    - npm install --registry http://192.168.111.141:8081/repository/npm-proxy/ --cache .npm --prefer-offline
+    - npm run build:prod --registry http://192.168.111.141:8081/repository/npm-proxy/ --cache .npm --prefer-offline
+  artifacts:
+    expire_in: 2 week
+    paths:
+      - dist
+  cache:
+    paths:
+      - .npm/
+      - node_modules/
+  only: 
+    - prod
+
+deploy_prod-admin:
+  image: ringcentral/sshpass:latest
+  stage: deploy
+  before_script:
+    - eval $(ssh-agent -s)
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - touch ~/.ssh/id_rsa
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" >> ~/.ssh/config'
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - chmod 600 ~/.ssh/id_rsa
+  script:
+    - cd dist/
+    - ssh gitlab-runner@192.168.111.100 " rm /var/www/admin.ogogo.kg/* -R || true"
+    - scp -r * gitlab-runner@192.168.111.100:/var/www/admin.ogogo.kg/
+    - apk add --update curl
+    - echo "$cinotify" >cinotify.sh
+    - sh cinotify.sh
+  only:
+   - prod   
+
+
+
+
+notify_error:
+  stage: notify
+  script:
+    - apk add --update curl
+    - echo "$cinotifyerr" >cinotify.sh
+    - sh cinotify.sh 
+  when: on_failure

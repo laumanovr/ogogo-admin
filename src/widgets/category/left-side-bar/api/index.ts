@@ -1,7 +1,7 @@
-import axios from "axios";
+import { API } from "@/shared/lib/plugins/axios";
 import { ICategory } from "./index.types";
 
 export const getMarketlace = (): Promise<ICategory[]> =>
-  axios
-    .get(`Marketplace/GetMarketplaceCategories`)
-    .then((res) => res.data.result);
+  API.get(`Marketplace/GetMarketplaceCategories`).then(
+    (res) => res.data.result
+  );

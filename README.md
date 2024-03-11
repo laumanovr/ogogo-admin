@@ -1,12 +1,21 @@
 # ogogo-admin-front
 
-
-
 ## Getting started
 
-To make it easy for you to get started with GitLab, here's a list of recommended next steps.
+By default, `.env` file is used to store the environment variables when running in the development mode. You can create a `.env.local` file to override the default values.
 
-Already a pro? Just edit this README.md and make it your own. Want to make it easy? [Use the template at the bottom](#editing-this-readme)!
+```bash
+nvm use
+npm install
+npm run dev
+```
+
+## Branch defaults
+
+- `prod` - production: https://admin.ogogo.kg
+- `test` - test release stage: https://test-admin.ogogo.kg
+- `pretest` - pretest release stage: https://pretest-admin.ogogo.kg
+- `dev` (default branch) - development to collect all changes
 
 ## Add your files
 
@@ -35,12 +44,6 @@ git push -uf origin main
 ## Test and Deploy
 
 Use the built-in continuous integration in GitLab.
-
-- [ ] [Get started with GitLab CI/CD](https://docs.gitlab.com/ee/ci/quick_start/index.html)
-- [ ] [Analyze your code for known vulnerabilities with Static Application Security Testing (SAST)](https://docs.gitlab.com/ee/user/application_security/sast/)
-- [ ] [Deploy to Kubernetes, Amazon EC2, or Amazon ECS using Auto Deploy](https://docs.gitlab.com/ee/topics/autodevops/requirements.html)
-- [ ] [Use pull-based deployments for improved Kubernetes management](https://docs.gitlab.com/ee/user/clusters/agent/)
-- [ ] [Set up protected environments](https://docs.gitlab.com/ee/ci/environments/protected_environments.html)
 
 ***
 

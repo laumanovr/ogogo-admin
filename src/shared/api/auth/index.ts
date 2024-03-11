@@ -1,56 +1,47 @@
-import axios from "axios";
+import { API } from "@/shared/lib/plugins/axios";
 import {
   AuthGetProfileResultInterface,
   AuthLoginPayloadInterface,
   AuthLoginResultInterface,
 } from "@/shared/api/auth/types";
+import { singleton } from "tsyringe";
 
-export const login = (
-  credentials: AuthLoginPayloadInterface
-): Promise<AuthLoginResultInterface> => {
-  return axios({
-    method: "POST",
-    url: "Clients/Login",
-    data: credentials,
-  }).then((response) => response.data.result);
-};
+@singleton()
+export class AuthApi {
+  login = (
+    credentials: AuthLoginPayloadInterface
+  ): Promise<AuthLoginResultInterface> => {
+    return API({
+      method: "POST",
+      url: "Clients/Login",
+      data: credentials,
+    }).then((response) => response.data.result);
+  };
 
-export const getCurrentUser = (): Promise<AuthGetProfileResultInterface> => {
-  return axios({
-    method: "GET",
-    url: `auth/getProfile`,
-  }).then((response) => response.data.result);
-};
+  getCurrentUser = (): Promise<AuthGetProfileResultInterface> => {
+    return API({
+      method: "GET",
+      url: `auth/getProfile`,
+    }).then((response) => response.data.result);
+  };
 
-export const logout = (): Promise<boolean> => {
-  return axios({
-    method: "POST",
-    url: "auth/logout",
-  }).then((response) => response.data.ok);
-};
+  logout = (): Promise<boolean> => {
+    return API({
+      method: "POST",
+      url: "auth/logout",
+    }).then((response) => response.data.ok);
+  };
 
-export const updatePassword = (payload: {
-  newPassword?: string;
-}): Promise<boolean> => {
-  return axios
-    .post("Auth/UpdateUserPassword", payload)
-    .then((res) => res.data.ok);
-};
+  updatePassword = (payload: { newPassword?: string }): Promise<boolean> => {
+    return API.post("Auth/UpdateUserPassword", payload).then(
+      (res) => res.data.ok
+    );
+  };
 
-export const forgotPassword = (payload?: {
-  login: string;
-}): Promise<boolean> => {
-  return axios.post("Auth/ForgotPassword", payload).then((res) => res.data.ok);
-};
+  forgotPassword = (payload?: { login: string }): Promise<boolean> => {
+    return API.post("Auth/ForgotPassword", payload).then((res) => res.data.ok);
+  };
 
-export const getSipAccount = (): Promise<{ login: string; password: string }> =>
-  axios.get("Auth/GetSipAccount").then((res) => res.data.result);
-
-export default {
-  login,
-  getCurrentUser,
-  logout,
-  updatePassword,
-  forgotPassword,
-  getSipAccount,
-};
+  getSipAccount = (): Promise<{ login: string; password: string }> =>
+    API.get("Auth/GetSipAccount").then((res) => res.data.result);
+}

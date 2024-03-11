@@ -40,10 +40,20 @@ export const useLeftSideBarStore = defineStore("left-side-bar-store", {
               });
             };
 
-              delete res.childMarketplaceCategories;
+            const payload = multidimensionalArray(res);
 
-              return res;
-            });
+            // const payload = multidimensionalArray(res);
+
+            // const payload = res.map((e) => {
+            //   const res = {
+            //     ...e,
+            //     childMarketplaceCategoryIdList: e.childMarketplaceCategories,
+            //   };
+
+            //   delete res.childMarketplaceCategories;
+
+            //   return res;
+            // });
             categorySharedStore.setCategories(payload);
             resolve(res);
           })

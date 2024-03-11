@@ -1,19 +1,20 @@
-import axios from "axios";
 import { defineStore } from "pinia";
 import {
   AuthGetProfileResultInterface,
   AuthState,
   ILogin,
-  ILoginResultFail,
-  ILoginResultSuccess,
 } from "./index.types";
 import { useAlertStore } from "@/shared/store/alert";
-import { getCurrentUser, login } from "@/shared/api/auth";
+import { container } from "tsyringe";
 import { getItem, setItem } from "@/shared/lib/utils/persistanceStorage";
 import {
   AuthorizationChannelEvent,
   BroadcastChannelName,
 } from "@/shared/lib/utils/consts";
+import { AuthApi } from "@/shared/api/auth/index.ts";
+import { isAxiosError } from "axios";
+
+const authApiService = container.resolve(AuthApi);
 
 export const useAuthStore = defineStore("auth", {
   state: (): AuthState => {
@@ -57,9 +58,10 @@ export const useAuthStore = defineStore("auth", {
     },
   },
   actions: {
-    login(payload: ILogin): Promise<ILoginResultSuccess | ILoginResultFail> {
+    login(payload: ILogin): Promise<any> {
       return new Promise((resolve, reject) => {
-        login(payload)
+        authApiService
+          .login(payload)
           .then((result) => {
             const needChangePassword = result?.needChangePassword ?? false;
             setItem("needChangePassword", needChangePassword);
@@ -91,7 +93,7 @@ export const useAuthStore = defineStore("auth", {
               .catch(reject);
           })
           .catch((err) => {
-            if (axios.isAxiosError(err)) {
+            if (isAxiosError(err)) {
               reject(err?.response?.data);
             } else {
               reject(err);
@@ -104,7 +106,8 @@ export const useAuthStore = defineStore("auth", {
     },
     getCurrentUser(): Promise<AuthGetProfileResultInterface> {
       return new Promise<AuthGetProfileResultInterface>((resolve, reject) => {
-        getCurrentUser()
+        authApiService
+          .getCurrentUser()
           .then((user) => {
             // const lastUserId = getItem("last-user-id");
             // setItem("last-user-id", this.currentUser.id);

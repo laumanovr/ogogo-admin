@@ -9,11 +9,17 @@
       <p class="font-bold">
         {{ $t("lang-13910017-20f7-43fd-a9a8-7dbcd2b474f0") }}
       </p>
-      <SSelect :label="$t('lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2')" />
-      <SCheckbox id="0">
+      <SSelect
+        :label="$t('lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2')"
+        class="w-p100"
+      />
+      <SCheckbox id="0" class="w-p100">
         {{ $t("lang-030b4140-be2c-482a-ba23-45c62ada7613") }}
       </SCheckbox>
-      <SSelect :label="$t('lang-d5ed16f8-b6af-4c0a-ba0a-820cf3ce91ba')" />
+      <SSelect
+        :label="$t('lang-d5ed16f8-b6af-4c0a-ba0a-820cf3ce91ba')"
+        class="w-p100"
+      />
       <SSwitch labelPosition="left" class="switch-container">{{
         $t("lang-98b7ffed-5818-4f3e-b552-aa10e70616ee")
       }}</SSwitch>

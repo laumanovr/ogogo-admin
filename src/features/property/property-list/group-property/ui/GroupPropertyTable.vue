@@ -2,37 +2,71 @@
   <div class="table-data group">
     <table class="table">
       <thead>
-      <tr>
-        <th @click="addGroupProperty"><span>+</span></th>
-        <th>Порядковый номер <span>*</span></th>
-        <th>Название ru <span>*</span></th>
-        <th>Название kg <span>*</span></th>
-        <th>Название en <span>*</span></th>
-        <th>Иконка</th>
-      </tr>
+        <tr>
+          <th @click="addGroupProperty"><span>+</span></th>
+          <th>
+            {{ $t("lang-5f681a3c-8aa8-4dc0-a500-3750e1f8fea6") }} <span>*</span>
+          </th>
+          <th>
+            {{ $t("lang-2f392c31-664a-4308-8678-694690cac96f") }} <span>*</span>
+          </th>
+          <th>
+            {{ $t("lang-f4f37dde-e947-49bc-b821-0d88dfc13cb8") }} <span>*</span>
+          </th>
+          <th>
+            {{ $t("lang-4ea09cca-d60f-4edb-bbc5-445fa26c84dd") }} <span>*</span>
+          </th>
+          <th>{{ $t("lang-e8c1b3cf-9ced-4644-bbb7-7a9f3b58dee1") }}</th>
+        </tr>
       </thead>
       <tbody>
-      <tr v-for="(item, i) in currentGroupProperties" :key="i" class="table-row">
-        <td></td>
-        <td><input type="text" readonly v-model.number="item.sequenceNumber"/></td>
-        <td><input type="text" v-model="item.name"/></td>
-        <td><input type="text" v-model="item.nameKy"/></td>
-        <td><input type="text" v-model="item.nameEn"/></td>
-        <td>
-          <span v-if="item.icoBase64" class="d-flex items-center justify-between">
-            <img :src="item.icoBase64" alt="icon" class="selected-image">
-            <SIconRender name="CloseRoundIcon" color="black" @click="item.icoBase64=null"/>
-          </span>
-          <label for="file" class="label-container" v-else>
-            <div class="tooltip-info">280 x 280 пиксель для формата PNG; 24 x 24 пиксель для формата SVG.</div>
-            <span class="d-flex items-center font-size-15 cursor-pointer">
-              <img src="../../../../../shared/ui/assets/attach.svg" class="mr-12">
-              Загрузить
+        <tr
+          v-for="(item, i) in currentGroupProperties"
+          :key="i"
+          class="table-row"
+        >
+          <td></td>
+          <td>
+            <input type="text" readonly v-model.number="item.sequenceNumber" />
+          </td>
+          <td><input type="text" v-model="item.name" /></td>
+          <td><input type="text" v-model="item.nameKy" /></td>
+          <td><input type="text" v-model="item.nameEn" /></td>
+          <td>
+            <span
+              v-if="item.icoBase64"
+              class="d-flex items-center justify-between"
+            >
+              <img
+                :src="item.icoBase64"
+                alt="icon"
+                class="selected-image ml-10"
+              />
+              <SIconRender
+                name="CloseRoundIcon"
+                color="black"
+                @click="item.icoBase64 = null"
+              />
             </span>
-            <input type="file" id="file" @change="onSelectFile($event, item)">
-          </label>
-        </td>
-      </tr>
+            <label for="file" class="label-container" v-else>
+              <div class="tooltip-info">
+                {{ $t("lang-4ae6eb0a-a362-49ab-824e-4ee51c97542b") }}
+              </div>
+              <span class="d-flex items-center font-size-15 cursor-pointer">
+                <img
+                  src="../../../../../shared/ui/assets/attach.svg"
+                  class="mr-12 ml-10"
+                />
+                {{ $t("lang-c1d4974f-d48f-4107-99d8-d6a188b31129") }}
+              </span>
+              <input
+                type="file"
+                id="file"
+                @change="onSelectFile($event, item)"
+              />
+            </label>
+          </td>
+        </tr>
       </tbody>
     </table>
   </div>
@@ -40,7 +74,7 @@
 
 <script lang="ts" setup>
 import { SIconRender } from "@tumarsoft/ogogo-ui";
-import { ref, computed, onMounted, watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 import { useGroupPropertyStore } from "../store/group-property.store";
 import { useAlertStore } from "@/shared/store/alert";
 import lodash from "lodash";
@@ -50,13 +84,12 @@ const alertStore = useAlertStore();
 let currentGroupProperties = ref([]);
 let groupProperties = ref([]);
 
-
 onMounted(() => {
   getGroupPropertyList();
 });
 
-const convertToBase64 = (file) => {
-  return new Promise(((resolve, reject) => {
+const convertToBase64 = (file: File) => {
+  return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
     fileReader.onload = () => {
@@ -65,25 +98,30 @@ const convertToBase64 = (file) => {
     fileReader.onerror = (error) => {
       reject(error);
     };
-  }));
+  });
 };
 
-const onSelectFile = async (e, item) => {
+const onSelectFile = async (e: any, item: any) => {
   const file = e.target.files[0];
   if (file) {
     item.icoBase64 = await convertToBase64(file);
   }
 };
 
-watch(() => groupPropertyStore.groupPropertyList, (newValue: any) => {
-  if (newValue) {
-    groupProperties.value = newValue.reverse();
-    currentGroupProperties.value = JSON.parse(JSON.stringify(groupProperties.value));
+watch(
+  () => groupPropertyStore.groupPropertyList,
+  (newValue: any[]) => {
+    if (newValue) {
+      groupProperties.value = newValue.reverse();
+      currentGroupProperties.value = JSON.parse(
+        JSON.stringify(groupProperties.value)
+      );
+    }
   }
-});
+);
 
 const getGroupPropertyList = () => {
-  groupPropertyStore.fetchGroupPropertyList({pageSize: 500});
+  groupPropertyStore.fetchGroupPropertyList({ pageSize: 500 });
 };
 
 const addGroupProperty = () => {
@@ -93,13 +131,17 @@ const addGroupProperty = () => {
     name: null,
     nameKy: null,
     nameEn: null,
-    icoBase64: null
+    icoBase64: null,
   });
 };
 
 const submitGroupProperty = async () => {
   const newItems = currentGroupProperties.value.filter((item) => item.recent);
-  const updatedItems = lodash.differenceWith(currentGroupProperties.value.filter((item) => !item.recent), groupProperties.value, lodash.isEqual);
+  const updatedItems = lodash.differenceWith(
+    currentGroupProperties.value.filter((item) => !item.recent),
+    groupProperties.value,
+    lodash.isEqual
+  );
   if (!newItems.length && !updatedItems.length) {
     alertStore.showInfo("Вы ничего не добавили!");
     return;
@@ -112,29 +154,29 @@ const submitGroupProperty = async () => {
   }
 };
 
-const onCreate = (newItems) => {
-  if (!newItems.every((item) => item.name)) {
+const onCreate = (newItems: any) => {
+  if (!newItems.every((item: any) => item.name)) {
     alertStore.showInfo("Заполните поля");
     return;
   }
   groupPropertyStore.createGroupProperty(newItems);
 };
 
-const onUpdate = (updatedItems) => {
-  if (!updatedItems.every((item) => item.name)) {
+const onUpdate = (updatedItems: any) => {
+  if (!updatedItems.every((item: any) => item.name)) {
     alertStore.showInfo("Заполните поля");
     return;
   }
   groupPropertyStore.updateGroupProperty(updatedItems);
 };
 
-const searchProperty = (value) => {
-  groupPropertyStore.fetchGroupPropertyList({pageSize: 500, search: value});
-}
+const searchGroupProperty = (value: any) => {
+  groupPropertyStore.fetchGroupPropertyList({ pageSize: 500, search: value });
+};
 
 defineExpose({
   submitGroupProperty,
-  searchProperty
+  searchGroupProperty,
 });
 </script>
 

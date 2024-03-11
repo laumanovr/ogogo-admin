@@ -1,15 +1,13 @@
+import "reflect-metadata";
 import { createApp } from "vue";
 import App from "@/app/App.vue";
 import router from "./app/router";
 import pinia from "@/app/store/index";
 import "./app/style/main.scss";
-import interceptors from "@/shared/lib/plugins/axios";
 import "virtual:uno.css";
 import i18n from "@/shared/lib/plugins/i18n";
 import { RouteLocationNormalized } from "vue-router";
 import { getItem } from "./shared/lib/utils/persistanceStorage";
-
-interceptors();
 
 router.beforeEach(
   (
