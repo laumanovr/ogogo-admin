@@ -13,6 +13,7 @@
             :label="$t('lang-5b5360db-a6ff-43a7-a8d4-f35517b9c4a8')"
             width="100%"
             :rules="requiredField"
+            v-maska:[options]
             v-model="loginObj.pin"
           />
         </div>
