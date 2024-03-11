@@ -10,7 +10,7 @@
 import Layout from "@/shared/ui/layouts/Layout.vue";
 import Empty from "@/shared/ui/layouts/Empty.vue";
 import Loader from "@/entities/Loader.vue";
-import { computed, ref, watch } from "vue";
+import { shallowRef, ref, watch } from "vue";
 import { SToaster } from "@tumarsoft/ogogo-ui";
 import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
@@ -22,14 +22,14 @@ const loaderStore = useLoaderStore();
 const toaster = ref(null);
 // const isLoggedIn = true;
 
-const currentComponent = ref(Empty);
+const currentComponent = shallowRef(Empty);
 
 const route = useRoute();
 
 watch(
   () => route.path,
   () => {
-    if (Boolean(getItem("sessionId"))) {
+    if (Boolean(getItem("sessionId") && route.path !== "/")) {
       currentComponent.value = Layout;
     } else {
       currentComponent.value = Empty;
