@@ -42,6 +42,11 @@ import { useAuthStore } from "@/shared/store/auth";
 import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 
+const options = reactive({
+  mask: "996-(###)-##-##-##",
+  eager: true,
+});
+
 const authStore = useAuthStore();
 const alertStore = useAlertStore();
 const loaderStore = useLoaderStore();
