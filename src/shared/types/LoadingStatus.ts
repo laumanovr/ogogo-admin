@@ -1,8 +1,0 @@
-export const enum LoadingStatusEnum {
-  VIRGIN = 'VIRGIN',
-  INITIAL_LOADING = 'INITIAL_LOADING',
-  SENDING = 'SENDING',
-  LOADING = 'LOADING',
-  SUCCESS = 'SUCCESS',
-  ERROR = 'ERROR'
-}

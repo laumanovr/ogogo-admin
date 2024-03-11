@@ -48,17 +48,28 @@ export const usePropertyStore = defineStore("propertyStore", {
       }
     },
     async fetchPropertyList(payload: IGetPropertyList) {
-      try {
+      // try {
+      //   loaderStore.setLoaderState(true);
+      //   const response = await propertyApiService.getProperties(payload);
+      //   this.propertyList = response.items;
+      //   loaderStore.setLoaderState(false);
+      // } catch (err) {
+      //   loaderStore.setLoaderState(false);
+      //   if (err instanceof Error) {
+      //     alertStore.showError(err.message);
+      //   }
+      // }
+      return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
-        const response = await propertyApiService.getProperties(payload);
-        this.propertyList = response.items;
-        loaderStore.setLoaderState(false);
-      } catch (err) {
-        loaderStore.setLoaderState(false);
-        if (err instanceof Error) {
-          alertStore.showError(err.message);
-        }
-      }
+        propertyApiService
+          .getProperties(payload)
+          .then((response) => {
+            this.propertyList = response.items;
+            loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => reject(err));
+      });
     },
     async createPropertyList(payload: IPropertyApi) {
       try {

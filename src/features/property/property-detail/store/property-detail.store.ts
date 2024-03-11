@@ -4,17 +4,14 @@ import {
 } from "../api/property-detail-api.types";
 import { defineStore } from "pinia";
 import { IPropertyValue, IGetPropertyList } from "./property-detail.types";
-import {
-  createPropertyValues,
-  updatePropertyValues,
-  getPropertyValues,
-  getPropertyById,
-} from "@/features/property/property-detail/api/property-detail.api";
+import { PropertyDetailApi } from "@/features/property/property-detail/api/property-detail.api";
 import { useLoaderStore } from "@/shared/store/loader";
 import { useAlertStore } from "@/shared/store/alert";
+import { container } from "tsyringe";
 
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
+const propertyDetailApiService = container.resolve(PropertyDetailApi);
 
 export const usePropertyDetailStore = defineStore("property-detail-store", {
   state: (): Partial<IPropertyValue> => ({
@@ -30,7 +27,7 @@ export const usePropertyDetailStore = defineStore("property-detail-store", {
     async fetchPropertyValueList(payload: IGetPropertyList) {
       try {
         loaderStore.setLoaderState(true);
-        const response = await getPropertyValues(payload);
+        const response = await propertyDetailApiService.getPropertyValues(payload);
         this.propertyValueList = response.items;
         loaderStore.setLoaderState(false);
       } catch (err) {
@@ -43,7 +40,7 @@ export const usePropertyDetailStore = defineStore("property-detail-store", {
     async createPropertyValue(payload: IPropertyValue) {
       try {
         loaderStore.setLoaderState(true);
-        const response = await createPropertyValues(payload);
+        const response = await propertyDetailApiService.createPropertyValues(payload);
         const items = response.map(
           (item: IPropertyDetailApiWithWholeObject) => item.result
         );
@@ -61,7 +58,7 @@ export const usePropertyDetailStore = defineStore("property-detail-store", {
     async updatePropertyValue(payload: IPropertyValue) {
       try {
         loaderStore.setLoaderState(true);
-        await updatePropertyValues(payload);
+        await propertyDetailApiService.updatePropertyValues(payload);
         loaderStore.setLoaderState(false);
         alertStore.showSuccess("Успешно обновлено!");
       } catch (err) {
@@ -75,7 +72,7 @@ export const usePropertyDetailStore = defineStore("property-detail-store", {
     async fetchPropertyById(id: string) {
       try {
         loaderStore.setLoaderState(true);
-        this.selectedProperty = await getPropertyById(id);
+        this.selectedProperty = await propertyDetailApiService.getPropertyById(id);
         loaderStore.setLoaderState(false);
       } catch (err) {
         if (err instanceof Error) {

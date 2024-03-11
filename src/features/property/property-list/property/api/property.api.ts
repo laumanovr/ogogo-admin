@@ -1,5 +1,5 @@
 import { IGetPropertyList, IPropertyApi } from "./property-api.types";
-import { IItemList } from "@/shared/types/index.types";
+import { WithPagination } from "@/shared/api/api.types";
 import {
   IGetGroupPropertyList,
   IGroupPropertyApi,
@@ -24,7 +24,7 @@ export class PropertyApi {
 
   getProperties = (
     data: IGetPropertyList
-  ): Promise<IItemList<IPropertyApi>> => {
+  ): Promise<WithPagination<IPropertyApi>> => {
     return API({
       method: "POST",
       url: "/Marketplace/GetMarketplacePropertyPagedList",

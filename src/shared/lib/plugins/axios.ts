@@ -1,38 +1,37 @@
-import { useI18n } from "vue-i18n";
+import i18n from "@/shared/lib/plugins/i18n";
 import axios from "axios";
 
 import { getItem } from "../utils/persistanceStorage";
-import { INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES } from "@/app/router/index.type";
+import {
+  HttpCodes,
+  INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES,
+  TOKEN_KEY,
+} from "@/shared/api/api.types";
 import { useAuthStore } from "@/shared/store/auth";
 
-import router from "@/app/router";
+import router from "@/shared/router";
+import { Routes } from "@/shared/router/index.type";
 
 export const API = axios.create({
   baseURL: import.meta.env.VITE_API_SERVER,
 });
 
-function runWhen(error: any) {
+function isExcludedErrorCode(error: unknown) {
+  if (!axios.isAxiosError(error)) throw new Error("Error is not axios error");
   const errorCode = error?.response?.data?.error?.errorCode;
   if (errorCode && INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES.includes(errorCode))
-    return false;
-  return true;
+    return true;
+  return false;
 }
 
 API.interceptors.request.use(
   function (config) {
-    const isActiveSession = getItem("active-session");
-    if (
-      (config.url === "/api/common/Ping" && isActiveSession) ||
-      config.url !== "/api/common/Ping"
-    ) {
-      const token = getItem("sessionId");
-      config.headers.Authorization = token ? `Bearer ${token}` : "";
-    }
+    const token = getItem(TOKEN_KEY);
+    config.headers.Authorization = token ? `Bearer ${token}` : "";
 
     return config;
   },
   function (error) {
-    // Do something with request error
     return Promise.reject(error);
   }
 );
@@ -42,52 +41,37 @@ API.interceptors.response.use(
     return response;
   },
   async function (error) {
-    if (!runWhen(error)) return Promise.reject(error);
+    if (isExcludedErrorCode(error)) return Promise.reject(error);
 
-    // const errorCode = error?.response?.data?.error?.errorCode;
-
-    // const customMessage = getCustomErrorMessage(errorCode);
     const certificatePing = error?.response?.request?.responseURL?.includes(
       "certificate-ping.txt"
     );
-    // if (customMessage) {
-    //   store.dispatch(
-    //     notificationActionTypes.addErrorNotification,
-    //     customMessage
-    //   );
-    //   return Promise.reject(error);
-    // } else
+    const { t } = i18n.global;
+    const authStore = useAuthStore();
 
     if (certificatePing) {
-      // store.dispatch(
-      //   notificationActionTypes.addErrorNotification,
-      //   i18n.t("validations.noConnectionCerficatePing")
-      // );
       return Promise.reject(error);
     } else {
       let showError = true;
-      const authStore = useAuthStore();
 
       switch (error?.response?.status) {
-        case 401:
+        case HttpCodes.BAD_REQUEST:
           showError = false;
           await authStore.logout;
 
-          router.push("/");
+          await router.push(Routes.login);
           break;
-        case 403:
+        case HttpCodes.UNAUTHORIZED:
           showError = false;
-          await authStore.logout;
-          router.push("/");
+          await authStore.logout();
+          await router.push(Routes.login);
           break;
-        case 500:
-          const { t } = useI18n();
-
+        case HttpCodes.FORBIDDEN:
+          alert(t("lang-cd753f43-d3f9-44c8-8ad6-c383e6281497"));
+          break;
+        case HttpCodes.INTERNAL_SERVER_ERROR:
           alert(t("label-5a8130e9-116a-4c54-8be2-166380fae5d1"));
           break;
-      }
-      if (showError) {
-        // store.dispatch(notificationActionTypes.addErrorNotification, error);
       }
       return Promise.reject(error);
     }

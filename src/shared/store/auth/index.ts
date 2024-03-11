@@ -13,6 +13,7 @@ import {
 } from "@/shared/lib/utils/consts";
 import { AuthApi } from "@/shared/api/auth/index.ts";
 import { isAxiosError } from "axios";
+import { TOKEN_KEY } from "@/shared/api/api.types";
 
 const authApiService = container.resolve(AuthApi);
 
@@ -25,7 +26,6 @@ export const useAuthStore = defineStore("auth", {
       availableLanguages: null,
       currentUser: null,
       isLoading: false,
-      isLoggedIn: false,
       needChangePassword: false,
       roleScreensObj: {},
       sipAccount: {
@@ -35,9 +35,6 @@ export const useAuthStore = defineStore("auth", {
     };
   },
   getters: {
-    isLoggedIn(): boolean {
-      return this.isLoggedIn;
-    },
     getFullName(): string {
       return this.user?.fullName ?? "";
     },
@@ -67,9 +64,9 @@ export const useAuthStore = defineStore("auth", {
             setItem("needChangePassword", needChangePassword);
             this.needChangePassword = needChangePassword as boolean;
 
-            const oldSessionId = getItem("sessionId");
+            const oldSessionId = getItem(TOKEN_KEY);
 
-            setItem("sessionId", result?.sessionId);
+            setItem(TOKEN_KEY, result?.sessionId);
             return this.getCurrentUser()
               .then((user) => {
                 // send event of updating profile and redirecting to route path to other tabs
@@ -126,17 +123,25 @@ export const useAuthStore = defineStore("auth", {
     },
 
     logout(): Promise<boolean> {
-      this.user = null;
-      // this.isLoggedIn = false;
-      this.accessRequestIds = {};
+      return new Promise((resolve, reject) => {
+        authApiService
+          .logout()
+          .then((res) => {
+            this.user = null;
+            this.accessRequestIds = {};
 
-      setItem("active-session", false);
-      setItem("sessionId", null);
+            setItem("active-session", false);
+            setItem(TOKEN_KEY, "");
 
-      const alertStore = useAlertStore();
-      alertStore.clearAlerts();
+            const alertStore = useAlertStore();
+            alertStore.clearAlerts();
 
-      return Promise.resolve(true);
+            resolve(res);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
     },
     setLang(payload: string) {
       this.user.language = payload;
