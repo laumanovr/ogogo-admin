@@ -2,8 +2,6 @@ import {
   createRouter,
   createWebHistory,
   NavigationGuard,
-  NavigationGuardNext,
-  RouteLocationNormalized,
   RouteRecordRaw,
 } from "vue-router";
 import categoryRoute from "@/pages/category/router/router";
@@ -11,9 +9,8 @@ import propertyRoutes from "@/pages/property/router";
 import loginRoutes from "@/pages/login/router";
 import shopRoutes from "@/pages/shop/router";
 import productRoutes from "@/pages/product/router";
-import { getItem } from "@/shared/lib/utils/persistanceStorage";
-import { TOKEN_KEY } from "@/shared/api/api.types";
 import { Routes } from "./index.type";
+import { useAuthStore } from "../store/auth";
 
 const routes: RouteRecordRaw[] = [
   ...categoryRoute,
@@ -28,10 +25,9 @@ const router = createRouter({
   routes,
 });
 
-const GUEST_ROUTES = [Routes.login];
-
-const guestMiddleware: NavigationGuard = (_to, _from, next) => {
-  const token = getItem(TOKEN_KEY);
+export const guestMiddleware: NavigationGuard = (_to, _from, next) => {
+  const authStore = useAuthStore();
+  const token = authStore.getSessionId;
   if (token) {
     next({ name: "property" });
   } else {
@@ -39,27 +35,14 @@ const guestMiddleware: NavigationGuard = (_to, _from, next) => {
   }
 };
 
-const authMiddleware: NavigationGuard = (_to, _from, next) => {
-  const token = getItem(TOKEN_KEY);
+export const authMiddleware: NavigationGuard = (_to, _from, next) => {
+  const authStore = useAuthStore();
+  const token = authStore.getSessionId;
   if (!token) {
     next({ path: Routes.login });
   } else {
     next();
   }
 };
-
-router.beforeEach(
-  (
-    to: RouteLocationNormalized,
-    from: RouteLocationNormalized,
-    next: NavigationGuardNext
-  ) => {
-    if (GUEST_ROUTES.includes(to.path as Routes)) {
-      guestMiddleware(to, from, next);
-    } else {
-      authMiddleware(to, from, next);
-    }
-  }
-);
 
 export default router;

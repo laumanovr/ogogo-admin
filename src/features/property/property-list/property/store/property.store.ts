@@ -68,7 +68,10 @@ export const usePropertyStore = defineStore("propertyStore", {
             loaderStore.setLoaderState(false);
             resolve(response);
           })
-          .catch((err) => reject(err));
+          .catch((err) => reject(err))
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
       });
     },
     async createPropertyList(payload: IPropertyApi) {

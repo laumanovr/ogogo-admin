@@ -6,14 +6,12 @@ import {
 } from "./index.types";
 import { useAlertStore } from "@/shared/store/alert";
 import { container } from "tsyringe";
-import { getItem, setItem } from "@/shared/lib/utils/persistanceStorage";
 import {
   AuthorizationChannelEvent,
   BroadcastChannelName,
 } from "@/shared/lib/utils/consts";
 import { AuthApi } from "@/shared/api/auth/index.ts";
 import { isAxiosError } from "axios";
-import { TOKEN_KEY } from "@/shared/api/api.types";
 
 const authApiService = container.resolve(AuthApi);
 
@@ -32,6 +30,9 @@ export const useAuthStore = defineStore("auth", {
         login: null,
         password: null,
       },
+      sessionId: null,
+      isActiveSession: false,
+      tabId: null,
     };
   },
   getters: {
@@ -53,6 +54,15 @@ export const useAuthStore = defineStore("auth", {
     getRoleName(): string {
       return this.user.roleName;
     },
+    getSessionId(): string {
+      return this.sessionId;
+    },
+    getIsActiveSession(): boolean {
+      return this.isActiveSession;
+    },
+    getTabId(): string {
+      return this.tabId;
+    },
   },
   actions: {
     login(payload: ILogin): Promise<any> {
@@ -61,17 +71,16 @@ export const useAuthStore = defineStore("auth", {
           .login(payload)
           .then((result) => {
             const needChangePassword = result?.needChangePassword ?? false;
-            setItem("needChangePassword", needChangePassword);
             this.needChangePassword = needChangePassword as boolean;
 
-            const oldSessionId = getItem(TOKEN_KEY);
+            const oldSessionId = this.sessionId;
 
-            setItem(TOKEN_KEY, result?.sessionId);
+            this.sessionId = result?.sessionId;
             return this.getCurrentUser()
               .then((user) => {
                 // send event of updating profile and redirecting to route path to other tabs
                 if (BroadcastChannel) {
-                  const tabId = sessionStorage.getItem("tabId");
+                  const tabId = this.tabId;
 
                   const bc = new BroadcastChannel(
                     BroadcastChannelName.AuthorizationChannel
@@ -84,7 +93,7 @@ export const useAuthStore = defineStore("auth", {
                   }
                 }
 
-                setItem("active-session", true);
+                this.isActiveSession = true;
                 resolve(user);
               })
               .catch(reject);
@@ -130,8 +139,8 @@ export const useAuthStore = defineStore("auth", {
             this.user = null;
             this.accessRequestIds = {};
 
-            setItem("active-session", false);
-            setItem(TOKEN_KEY, "");
+            this.sessionId = null;
+            this.isActiveSession = false;
 
             const alertStore = useAlertStore();
             alertStore.clearAlerts();

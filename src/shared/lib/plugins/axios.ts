@@ -1,11 +1,9 @@
 import i18n from "@/shared/lib/plugins/i18n";
 import axios from "axios";
 
-import { getItem } from "../utils/persistanceStorage";
 import {
   HttpCodes,
   INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES,
-  TOKEN_KEY,
 } from "@/shared/api/api.types";
 import { useAuthStore } from "@/shared/store/auth";
 
@@ -26,7 +24,8 @@ function isExcludedErrorCode(error: unknown) {
 
 API.interceptors.request.use(
   function (config) {
-    const token = getItem(TOKEN_KEY);
+    const authStore = useAuthStore();
+    const token = authStore.getSessionId;
     config.headers.Authorization = token ? `Bearer ${token}` : "";
 
     return config;
@@ -57,7 +56,7 @@ API.interceptors.response.use(
       switch (error?.response?.status) {
         case HttpCodes.BAD_REQUEST:
           showError = false;
-          await authStore.logout;
+          await authStore.logout();
 
           await router.push(Routes.login);
           break;

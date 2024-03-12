@@ -1,17 +1,25 @@
-import { findComponent } from "@/shared/lib/utils/findComponent";
+import { authMiddleware } from "@/shared/router";
+import { compose } from "ramda";
+import { RouteRecordRaw } from "vue-router";
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: "/shops",
     name: "shops",
-    component: findComponent("shop", "ShopList"),
+    component: () => import("./ui/ShopList.vue"),
     meta: { requiresAuth: true },
+    beforeEnter: (to, from, next) => {
+      compose(authMiddleware)(to, from, next);
+    },
   },
   {
     path: "/shops/:id",
     name: "shopDetail",
-    component: findComponent("shop", "ShopDetail"),
+    component: () => import("./ui/ShopDetail.vue"),
     meta: { requiresAuth: true },
+    beforeEnter: (to, from, next) => {
+      compose(authMiddleware)(to, from, next);
+    },
   },
 ];
 

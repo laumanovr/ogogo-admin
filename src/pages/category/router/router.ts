@@ -1,19 +1,27 @@
-import { findComponent } from "@/shared/lib/utils/findComponent";
 import CategoryEmpty from "@/pages/category/ui/CategoryEmpty.vue";
+import { RouteRecordRaw } from "vue-router";
+import { authMiddleware } from "@/shared/router";
+import { compose } from "ramda";
 
-const route = [
+const routes: RouteRecordRaw[] = [
   {
     path: "/category",
     name: "category",
-    component: findComponent("category", "Category"),
+    component: () => import("../ui/Category.vue"),
     meta: { requiresAuth: true },
+    beforeEnter(to, from, next) {
+      compose(authMiddleware)(to, from, next);
+    },
   },
   {
     path: "/category/empty",
     name: "category-empty",
     component: CategoryEmpty,
     meta: { requiresAuth: true },
+    beforeEnter(to, from, next) {
+      compose(authMiddleware)(to, from, next);
+    },
   },
 ];
 
-export default route;
+export default routes;

@@ -41,6 +41,9 @@ export interface AuthState {
     login: string;
     password: string;
   };
+  sessionId: string;
+  isActiveSession: boolean;
+  tabId: string;
 }
 export interface makeAssertionOptionsType {
   challenge: any;
