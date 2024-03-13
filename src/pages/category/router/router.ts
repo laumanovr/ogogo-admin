@@ -1,11 +1,11 @@
-import { findComponent } from "@/shared/lib/utils/findComponent";
 import CategoryEmpty from "@/pages/category/ui/CategoryEmpty.vue";
+import { RouteRecordRaw } from "vue-router";
 
-const route = [
+const routes: RouteRecordRaw[] = [
   {
     path: "/category",
     name: "category",
-    component: findComponent("category", "Category"),
+    component: () => import("../ui/Category.vue"),
     meta: { requiresAuth: true },
   },
   {
@@ -16,4 +16,4 @@ const route = [
   },
 ];
 
-export default route;
+export default routes;

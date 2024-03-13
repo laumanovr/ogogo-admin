@@ -1,16 +1,16 @@
-import { findComponent } from "@/shared/lib/utils/findComponent";
+import { RouteRecordRaw } from "vue-router";
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
     path: "/products",
     name: "products",
-    component: findComponent("product", "ProductList"),
+    component: () => import("./ui/ProductList.vue"),
     meta: { requiresAuth: true },
   },
   {
     path: "/products/:id",
     name: "productDetail",
-    component: findComponent("product", "ProductDetail"),
+    component: () => import("./ui/ProductDetail.vue"),
     meta: { requiresAuth: true },
   },
 ];

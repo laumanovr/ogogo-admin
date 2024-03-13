@@ -1,3 +1,5 @@
+import { Nullable } from "@/shared/lib/utils/nullable";
+
 export interface IUser {
   token: string;
   roleName: string;
@@ -23,10 +25,9 @@ export interface ILogin {
 }
 
 export interface AuthState {
-  user: IUser | null;
+  user: Nullable<IUser>;
 
   isLoading: boolean;
-  isLoggedIn: boolean;
   fidoAuth: boolean;
   theme?: any;
   accessRequestIds: {
@@ -40,6 +41,9 @@ export interface AuthState {
     login: string;
     password: string;
   };
+  sessionId: string;
+  isActiveSession: boolean;
+  tabId: string;
 }
 export interface makeAssertionOptionsType {
   challenge: any;

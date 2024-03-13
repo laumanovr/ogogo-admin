@@ -6,7 +6,6 @@ import {
 } from "./index.types";
 import { useAlertStore } from "@/shared/store/alert";
 import { container } from "tsyringe";
-import { getItem, setItem } from "@/shared/lib/utils/persistanceStorage";
 import {
   AuthorizationChannelEvent,
   BroadcastChannelName,
@@ -25,19 +24,18 @@ export const useAuthStore = defineStore("auth", {
       availableLanguages: null,
       currentUser: null,
       isLoading: false,
-      isLoggedIn: false,
       needChangePassword: false,
       roleScreensObj: {},
       sipAccount: {
         login: null,
         password: null,
       },
+      sessionId: null,
+      isActiveSession: false,
+      tabId: null,
     };
   },
   getters: {
-    isLoggedIn(): boolean {
-      return this.isLoggedIn;
-    },
     getFullName(): string {
       return this.user?.fullName ?? "";
     },
@@ -56,6 +54,15 @@ export const useAuthStore = defineStore("auth", {
     getRoleName(): string {
       return this.user.roleName;
     },
+    getSessionId(): string {
+      return this.sessionId;
+    },
+    getIsActiveSession(): boolean {
+      return this.isActiveSession;
+    },
+    getTabId(): string {
+      return this.tabId;
+    },
   },
   actions: {
     login(payload: ILogin): Promise<any> {
@@ -64,17 +71,16 @@ export const useAuthStore = defineStore("auth", {
           .login(payload)
           .then((result) => {
             const needChangePassword = result?.needChangePassword ?? false;
-            setItem("needChangePassword", needChangePassword);
             this.needChangePassword = needChangePassword as boolean;
 
-            const oldSessionId = getItem("sessionId");
+            const oldSessionId = this.sessionId;
 
-            setItem("sessionId", result?.sessionId);
+            this.sessionId = result?.sessionId;
             return this.getCurrentUser()
               .then((user) => {
                 // send event of updating profile and redirecting to route path to other tabs
                 if (BroadcastChannel) {
-                  const tabId = sessionStorage.getItem("tabId");
+                  const tabId = this.tabId;
 
                   const bc = new BroadcastChannel(
                     BroadcastChannelName.AuthorizationChannel
@@ -87,7 +93,7 @@ export const useAuthStore = defineStore("auth", {
                   }
                 }
 
-                setItem("active-session", true);
+                this.isActiveSession = true;
                 resolve(user);
               })
               .catch(reject);
@@ -126,17 +132,25 @@ export const useAuthStore = defineStore("auth", {
     },
 
     logout(): Promise<boolean> {
-      this.user = null;
-      // this.isLoggedIn = false;
-      this.accessRequestIds = {};
+      return new Promise((resolve, reject) => {
+        authApiService
+          .logout()
+          .then((res) => {
+            this.user = null;
+            this.accessRequestIds = {};
 
-      setItem("active-session", false);
-      setItem("sessionId", null);
+            this.sessionId = null;
+            this.isActiveSession = false;
 
-      const alertStore = useAlertStore();
-      alertStore.clearAlerts();
+            const alertStore = useAlertStore();
+            alertStore.clearAlerts();
 
-      return Promise.resolve(true);
+            resolve(res);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
     },
     setLang(payload: string) {
       this.user.language = payload;

@@ -74,6 +74,8 @@ import { usePropertyDetailStore } from "@/features/property/property-detail/stor
 import { useAlertStore } from "@/shared/store/alert";
 import { useRoute } from "vue-router";
 import lodash from "lodash";
+import { Nullable } from "@/shared/lib/utils/nullable";
+import { IGroupPropertyApi } from "../../property-list/group-property/api/group-property-api.types";
 
 const propertyDetailStore = usePropertyDetailStore();
 const alertStore = useAlertStore();
@@ -85,7 +87,9 @@ onMounted(() => {
   getPropertyValueList();
 });
 
-const convertToBase64 = (file: File) => {
+const convertToBase64 = (
+  file: File
+): Promise<Nullable<string | ArrayBuffer>> => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -98,8 +102,9 @@ const convertToBase64 = (file: File) => {
   });
 };
 
-const onSelectFile = async (e: any, item: any) => {
-  const file = e.target.files[0];
+const onSelectFile = async (e: Event, item: IGroupPropertyApi) => {
+  const target = e.target as HTMLInputElement;
+  const file = target.files[0];
   if (file) {
     item.icoBase64 = await convertToBase64(file);
   }

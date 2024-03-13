@@ -1,6 +1,6 @@
 // import type { RouteLocationNormalized } from "vue-router";
 // import { useAuthStore } from "@/shared/store/auth/index";
-import { BaseHandler } from "@/app/router/middleware/auth.type";
+import { BaseHandler } from "@/shared/router/middleware/auth.type";
 // import type { IRoute } from "@/app/router/middleware/auth.type";
 
 export class AuthMiddleware extends BaseHandler {

@@ -1,10 +1,11 @@
-import { findComponent } from "@/shared/lib/utils/findComponent";
+import { Routes } from "@/shared/router/index.type";
+import { RouteRecordRaw } from "vue-router";
 
-const routes = [
+const routes: RouteRecordRaw[] = [
   {
-    path: "/",
+    path: Routes.login,
     name: "login",
-    component: findComponent("login", "Login"),
+    component: () => import(`../login/ui/Login.vue`),
   },
 ];
 

@@ -11,5 +11,3 @@ export const useLoaderStore = defineStore("loader", {
     },
   },
 });
-
-// Из кода выше непонятно за что отвечает данный лоудер

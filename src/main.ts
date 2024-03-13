@@ -1,7 +1,7 @@
 import "reflect-metadata";
 import { createApp } from "vue";
 import App from "@/app/App.vue";
-import router from "./app/router";
+import router from "@/shared/router";
 import pinia from "@/app/store/index";
 import "./app/style/main.scss";
 import "virtual:uno.css";

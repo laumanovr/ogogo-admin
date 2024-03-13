@@ -4,17 +4,16 @@ import {
 } from "../api/property-detail-api.types";
 import { defineStore } from "pinia";
 import { IPropertyValue, IGetPropertyList } from "./property-detail.types";
-import {
-  createPropertyValues,
-  updatePropertyValues,
-  getPropertyValues,
-  getPropertyById,
-} from "@/features/property/property-detail/api/property-detail.api";
+import { PropertyDetailApi } from "@/features/property/property-detail/api/property-detail.api";
 import { useLoaderStore } from "@/shared/store/loader";
 import { useAlertStore } from "@/shared/store/alert";
+import { container } from "tsyringe";
+import { WithPagination } from "@/shared/api/api.types";
+import { IPropertyApi } from "../../property-list/property/api/property-api.types";
 
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
+const propertyDetailApiService = container.resolve(PropertyDetailApi);
 
 export const usePropertyDetailStore = defineStore("property-detail-store", {
   state: (): Partial<IPropertyValue> => ({
@@ -27,62 +26,90 @@ export const usePropertyDetailStore = defineStore("property-detail-store", {
     },
   },
   actions: {
-    async fetchPropertyValueList(payload: IGetPropertyList) {
-      try {
+    fetchPropertyValueList(
+      payload: IGetPropertyList
+    ): Promise<WithPagination<IPropertyDetailApi>> {
+      return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
-        const response = await getPropertyValues(payload);
-        this.propertyValueList = response.items;
-        loaderStore.setLoaderState(false);
-      } catch (err) {
-        if (err instanceof Error) {
-          alertStore.showError(err.message);
-        }
-        loaderStore.setLoaderState(false);
-      }
+        propertyDetailApiService
+          .getPropertyValues(payload)
+          .then((response) => {
+            this.propertyValueList = response.items;
+            loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
     },
-    async createPropertyValue(payload: IPropertyValue) {
-      try {
+    createPropertyValue(
+      payload: IPropertyValue
+    ): Promise<IPropertyDetailApiWithWholeObject[]> {
+      return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
-        const response = await createPropertyValues(payload);
-        const items = response.map(
-          (item: IPropertyDetailApiWithWholeObject) => item.result
-        );
-        const currentItems = this.propertyValueList.reverse();
-        this.propertyValueList = [...currentItems, ...items];
-        loaderStore.setLoaderState(false);
-        alertStore.showSuccess("Успешно добавлено!");
-      } catch (err) {
-        if (err instanceof Error) {
-          alertStore.showError(err.message);
-        }
-        loaderStore.setLoaderState(false);
-      }
+        propertyDetailApiService
+          .createPropertyValues(payload)
+          .then((response) => {
+            const items = response.map(
+              (item: IPropertyDetailApiWithWholeObject) => item.result
+            );
+            const currentItems = this.propertyValueList.reverse();
+            this.propertyValueList = [...currentItems, ...items];
+            loaderStore.setLoaderState(false);
+            alertStore.showSuccess("Успешно добавлено!");
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
     },
-    async updatePropertyValue(payload: IPropertyValue) {
-      try {
+    updatePropertyValue(
+      payload: IPropertyValue
+    ): Promise<IPropertyDetailApi[]> {
+      return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
-        await updatePropertyValues(payload);
-        loaderStore.setLoaderState(false);
-        alertStore.showSuccess("Успешно обновлено!");
-      } catch (err) {
-        if (err instanceof Error) {
-          alertStore.showError(err.message);
-        }
-        loaderStore.setLoaderState(false);
-      }
+        propertyDetailApiService
+          .updatePropertyValues(payload)
+          .then((response) => {
+            alertStore.showSuccess("Успешно обновлено!");
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
     },
-
-    async fetchPropertyById(id: string) {
-      try {
+    fetchPropertyById(id: string): Promise<IPropertyApi> {
+      return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
-        this.selectedProperty = await getPropertyById(id);
-        loaderStore.setLoaderState(false);
-      } catch (err) {
-        if (err instanceof Error) {
-          alertStore.showError(err.message);
-        }
-        loaderStore.setLoaderState(false);
-      }
+        propertyDetailApiService
+          .getPropertyById(id)
+          .then((response) => {
+            this.selectedProperty = response;
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
     },
   },
 });

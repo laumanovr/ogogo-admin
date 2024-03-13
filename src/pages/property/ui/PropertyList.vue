@@ -68,9 +68,10 @@ const groupPropertyTable = ref(null);
 const hasData = ref(false);
 const searchTimer = ref<number>(null);
 
-onMounted(async () => {
-  await propertyStore.fetchPropertyList({ pageSize: 500 });
-  hasData.value = propertyStore.propertyList.length > 0;
+onMounted(() => {
+  propertyStore.fetchPropertyList({ pageSize: 500 }).then(() => {
+    hasData.value = propertyStore.propertyList.length > 0;
+  });
 });
 
 const handleTabChange = (newTab: string) => {

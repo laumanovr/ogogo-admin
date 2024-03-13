@@ -11,6 +11,7 @@ import {
 } from "../api/group-property.api.ts";
 import { useLoaderStore } from "@/shared/store/loader";
 import { useAlertStore } from "@/shared/store/alert";
+import { WithPagination } from "@/shared/api/api.types.ts";
 
 const loaderStore = useLoaderStore();
 const alertStore = useAlertStore();
@@ -25,52 +26,69 @@ export const useGroupPropertyStore = defineStore("group-property-store", {
     },
   },
   actions: {
-    async fetchGroupPropertyList(payload: IGetGroupPropertyList) {
-      try {
+    fetchGroupPropertyList(
+      payload: IGetGroupPropertyList
+    ): Promise<WithPagination<IGroupPropertyApi>> {
+      return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
-        const response = await getGroupProperties(payload);
-        this.groupPropertyList = response?.items;
-        loaderStore.setLoaderState(false);
-      } catch (err) {
-        if (err instanceof Error) {
-          alertStore.showError(err.message);
-        }
-        loaderStore.setLoaderState(false);
-      }
+        getGroupProperties(payload)
+          .then((response) => {
+            this.groupPropertyList = response?.items;
+            loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
     },
-
-    async createGroupProperty(payload: IGroupProperty) {
-      try {
+    createGroupProperty(
+      payload: IGroupProperty
+    ): Promise<IGroupPropertyWithWholeObject[]> {
+      return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
-        const response = await createGroupProperties(payload);
-        const items = response.map(
-          (item: IGroupPropertyWithWholeObject) => item.result
-        );
-        const currentItems = this.groupPropertyList.reverse();
-        this.groupPropertyList = [...currentItems, ...items];
-        loaderStore.setLoaderState(false);
-        alertStore.showSuccess("Успешно добавлено!");
-      } catch (err) {
-        if (err instanceof Error) {
-          alertStore.showError(err.message);
-        }
-        loaderStore.setLoaderState(false);
-      }
+        createGroupProperties(payload)
+          .then((response) => {
+            const items = response.map(
+              (item: IGroupPropertyWithWholeObject) => item.result
+            );
+            const currentItems = this.groupPropertyList.reverse();
+            this.groupPropertyList = [...currentItems, ...items];
+            loaderStore.setLoaderState(false);
+            alertStore.showSuccess("Успешно добавлено!");
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
     },
-
-    async updateGroupProperty(payload: IGroupProperty) {
-      try {
+    updateGroupProperty(payload: IGroupProperty): Promise<IGroupPropertyApi[]> {
+      return new Promise((resolve, reject) => {
         loaderStore.setLoaderState(true);
-        await updateGroupProperties(payload);
-        await this.fetchGroupPropertyList({ pageSize: 500 });
-        loaderStore.setLoaderState(false);
-        alertStore.showSuccess("Успешно обновлено!");
-      } catch (err) {
-        if (err instanceof Error) {
-          alertStore.showError(err.message);
-        }
-        loaderStore.setLoaderState(false);
-      }
+        updateGroupProperties(payload)
+          .then((response) => {
+            this.fetchGroupPropertyList({ pageSize: 500 });
+            loaderStore.setLoaderState(false);
+            alertStore.showSuccess("Успешно обновлено!");
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
     },
   },
 });

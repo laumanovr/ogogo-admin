@@ -4,11 +4,11 @@ import {
   IGroupPropertyApi,
   IGroupPropertyWithWholeObject,
 } from "./group-property-api.types";
-import { IItemList } from "@/shared/types/index.types";
+import { WithPagination } from "@/shared/api/api.types";
 
 export const getGroupProperties = (
   data: IGetGroupPropertyList
-): Promise<IItemList<IGroupPropertyApi>> => {
+): Promise<WithPagination<IGroupPropertyApi>> => {
   return API({
     method: "POST",
     url: "/Marketplace/GetMarketplacePropertyGroupPagedList",

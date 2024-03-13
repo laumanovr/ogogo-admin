@@ -64,6 +64,7 @@ import { MenuItems } from "@/shared/lib/utils/enums";
 import { computed, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useAuthStore } from "@/shared/store/auth";
+import { Routes } from "@/shared/router/index.type";
 
 const route = useRoute();
 const router = useRouter();
@@ -111,8 +112,7 @@ const authStore = useAuthStore();
 
 const logOut = () => {
   authStore.logout().then(() => {
-    console.log("eee");
-    router.push("/");
+    router.push(Routes.login);
   });
 };
 </script>
