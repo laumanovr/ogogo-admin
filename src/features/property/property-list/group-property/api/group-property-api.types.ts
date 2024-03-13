@@ -8,7 +8,7 @@ export interface IGroupPropertyApi {
   nameEn: string;
   nameKy: string;
   sequenceNumber: string;
-  icoBase64: string;
+  icoBase64: string | ArrayBuffer;
 }
 
 export interface Error {

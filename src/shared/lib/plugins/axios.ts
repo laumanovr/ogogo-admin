@@ -56,14 +56,15 @@ API.interceptors.response.use(
       switch (error?.response?.status) {
         case HttpCodes.BAD_REQUEST:
           showError = false;
-          await authStore.logout();
-
-          await router.push(Routes.login);
+          authStore.logout().then(() => {
+            router.push(Routes.login);
+          });
           break;
         case HttpCodes.UNAUTHORIZED:
           showError = false;
-          await authStore.logout();
-          await router.push(Routes.login);
+          authStore.logout().then(() => {
+            router.push(Routes.login);
+          });
           break;
         case HttpCodes.FORBIDDEN:
           alert(t("lang-cd753f43-d3f9-44c8-8ad6-c383e6281497"));

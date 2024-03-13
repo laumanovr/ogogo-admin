@@ -30,3 +30,9 @@ export const enum LoadingStatusEnum {
   SUCCESS = "SUCCESS",
   ERROR = "ERROR",
 }
+
+export type Autocomplete = {
+  id: string;
+  value: string;
+  description: string;
+};

@@ -78,6 +78,8 @@ import { ref, onMounted, watch } from "vue";
 import { useGroupPropertyStore } from "../store/group-property.store";
 import { useAlertStore } from "@/shared/store/alert";
 import lodash from "lodash";
+import { Nullable } from "@/shared/lib/utils/nullable";
+import { IGroupPropertyApi } from "../api/group-property-api.types";
 
 const groupPropertyStore = useGroupPropertyStore();
 const alertStore = useAlertStore();
@@ -88,7 +90,9 @@ onMounted(() => {
   getGroupPropertyList();
 });
 
-const convertToBase64 = (file: File) => {
+const convertToBase64 = (
+  file: File
+): Promise<Nullable<string | ArrayBuffer>> => {
   return new Promise((resolve, reject) => {
     const fileReader = new FileReader();
     fileReader.readAsDataURL(file);
@@ -101,8 +105,9 @@ const convertToBase64 = (file: File) => {
   });
 };
 
-const onSelectFile = async (e: any, item: any) => {
-  const file = e.target.files[0];
+const onSelectFile = async (e: Event, item: IGroupPropertyApi) => {
+  const target = e.target as HTMLInputElement;
+  const file = target.files[0];
   if (file) {
     item.icoBase64 = await convertToBase64(file);
   }
@@ -135,7 +140,7 @@ const addGroupProperty = () => {
   });
 };
 
-const submitGroupProperty = async () => {
+const submitGroupProperty = () => {
   const newItems = currentGroupProperties.value.filter((item) => item.recent);
   const updatedItems = lodash.differenceWith(
     currentGroupProperties.value.filter((item) => !item.recent),
@@ -147,10 +152,10 @@ const submitGroupProperty = async () => {
     return;
   }
   if (newItems.length) {
-    await onCreate(newItems);
+    onCreate(newItems);
   }
   if (updatedItems.length) {
-    await onUpdate(updatedItems);
+    onUpdate(updatedItems);
   }
 };
 

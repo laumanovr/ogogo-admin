@@ -2,6 +2,8 @@ import {
   createRouter,
   createWebHistory,
   NavigationGuard,
+  NavigationGuardNext,
+  RouteLocationNormalized,
   RouteRecordRaw,
 } from "vue-router";
 import categoryRoute from "@/pages/category/router/router";
@@ -11,6 +13,7 @@ import shopRoutes from "@/pages/shop/router";
 import productRoutes from "@/pages/product/router";
 import { Routes } from "./index.type";
 import { useAuthStore } from "../store/auth";
+import { compose } from "ramda";
 
 const routes: RouteRecordRaw[] = [
   ...categoryRoute,
@@ -25,24 +28,27 @@ const router = createRouter({
   routes,
 });
 
-export const guestMiddleware: NavigationGuard = (_to, _from, next) => {
+export const authMiddleware: NavigationGuard = (to, _from, next) => {
   const authStore = useAuthStore();
   const token = authStore.getSessionId;
-  if (token) {
+
+  if (!token && to.path !== Routes.login) {
+    next({ path: Routes.login });
+  } else if (token && to.path === Routes.login) {
     next({ name: "property" });
   } else {
     next();
   }
 };
 
-export const authMiddleware: NavigationGuard = (_to, _from, next) => {
-  const authStore = useAuthStore();
-  const token = authStore.getSessionId;
-  if (!token) {
-    next({ path: Routes.login });
-  } else {
-    next();
+router.beforeEach(
+  (
+    to: RouteLocationNormalized,
+    from: RouteLocationNormalized,
+    next: NavigationGuardNext
+  ) => {
+    compose(authMiddleware)(to, from, next);
   }
-};
+);
 
 export default router;

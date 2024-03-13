@@ -144,9 +144,8 @@ const propertyValueTypes = reactive([
   { name: "Дробные числа", id: 14103 },
 ]);
 
-onMounted(async () => {
-  await getPropertyList();
-  await getGroupPropertyList();
+onMounted(() => {
+  Promise.all([getPropertyList(), getGroupPropertyList()]);
 });
 
 const groupProperties = computed(() => propertyStore.groupProperties);
@@ -256,7 +255,7 @@ const submitProperty = () => {
   }
 };
 
-const onCreate = async (newProperties: any) => {
+const onCreate = (newProperties: any) => {
   if (
     !newProperties.every(
       (item: any) =>
@@ -276,10 +275,10 @@ const onCreate = async (newProperties: any) => {
     }
     return item;
   });
-  await propertyStore.createPropertyList(preparedData);
+  propertyStore.createPropertyList(preparedData);
 };
 
-const onUpdate = async (updatedProperties: any) => {
+const onUpdate = (updatedProperties: any) => {
   if (
     !updatedProperties.every(
       (item: any) =>
@@ -301,7 +300,7 @@ const onUpdate = async (updatedProperties: any) => {
     }
     return item;
   });
-  await propertyStore.updatePropertyList(preparedData);
+  propertyStore.updatePropertyList(preparedData);
 };
 
 const searchProperty = (value: any) => {
