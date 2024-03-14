@@ -1,9 +1,9 @@
 <template>
   <div class="filter-search">
-    <SInput isSearchable width="100%"/>
+    <SInput isSearchable width="90%" />
     <SButton color="white" @click="onClick">
-      <SIconRender name="SettingsIcon"/>
-      {{ $t('lang-7de4a879-828e-48b2-997c-310f0d6e0d75') }}
+      <SIconRender name="SettingsIcon" />
+      {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
     </SButton>
   </div>
 </template>
@@ -15,7 +15,7 @@ const emit = defineEmits(["onClick"]);
 
 const onClick = () => {
   emit("onClick");
-}
+};
 </script>
 
 <style lang="scss">
