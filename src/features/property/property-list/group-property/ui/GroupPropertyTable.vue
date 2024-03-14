@@ -44,7 +44,7 @@
               />
               <SIconRender
                 name="CloseRoundIcon"
-                color="black"
+                color="gray"
                 @click="item.icoBase64 = null"
               />
             </span>
