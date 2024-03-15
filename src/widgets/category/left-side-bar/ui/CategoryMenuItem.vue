@@ -18,7 +18,7 @@
         "
       />
       <img v-if="item.icon" :src="item.icon" class="w-20 h-20 rounded" />
-      <img v-else src="../../../../shared/ui/assets/fileIcon.png" />
+      <img v-else src="/icons/fileIcon.png" />
       <span>{{ $t(`${props.categoryName}`) }}</span>
     </div>
     <img
@@ -26,7 +26,7 @@
       width="13px"
       height="13px"
       @click.stop="addSubCategory"
-      src="../../../../shared/ui/assets/plus-icon.png"
+      src="/icons/plus-icon.png"
     />
   </div>
   <div
@@ -153,7 +153,7 @@ const onChangeActive = () => {
 };
 </script>
 
-<style>
+<style scoped>
 .empty-category-container,
 .empty-category-container-active {
   width: 334px;

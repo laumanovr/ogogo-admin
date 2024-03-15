@@ -18,7 +18,7 @@ const onClick = () => {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .filter-search {
   display: flex;
   margin-bottom: 25px;

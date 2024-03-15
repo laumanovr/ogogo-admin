@@ -4,12 +4,11 @@
   </div>
 </template>
 
-<style lang="scss">
-@import "../app/style/colors.scss";
+<style lang="scss" scoped>
 .loader-container {
   position: fixed;
   z-index: 999;
-  background: rgba($gray-900, 0.6);
+  background: rgba(var(--gray-900), 0.6);
   width: 100%;
   height: 100%;
   top: 0;
@@ -18,9 +17,9 @@
   justify-content: center;
   align-items: center;
   .loader {
-    border: 3px solid $gray-50;
+    border: 3px solid var(--gray-50);
     border-radius: 50%;
-    border-top-color: $violet-500;
+    border-top-color: var(--violet-500);
     width: 50px;
     height: 50px;
     -webkit-animation: spin 1.5s linear infinite;
@@ -29,12 +28,20 @@
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+  0% {
+    -webkit-transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
+  }
 }
 </style>

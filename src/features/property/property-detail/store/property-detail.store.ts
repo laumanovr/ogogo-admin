@@ -11,8 +11,6 @@ import { container } from "tsyringe";
 import { WithPagination } from "@/shared/api/api.types";
 import { IPropertyApi } from "../../property-list/property/api/property-api.types";
 
-const loaderStore = useLoaderStore();
-const alertStore = useAlertStore();
 const propertyDetailApiService = container.resolve(PropertyDetailApi);
 
 export const usePropertyDetailStore = defineStore("property-detail-store", {
@@ -30,6 +28,8 @@ export const usePropertyDetailStore = defineStore("property-detail-store", {
       payload: IGetPropertyList
     ): Promise<WithPagination<IPropertyDetailApi>> {
       return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
         loaderStore.setLoaderState(true);
         propertyDetailApiService
           .getPropertyValues(payload)
@@ -51,6 +51,8 @@ export const usePropertyDetailStore = defineStore("property-detail-store", {
       payload: IPropertyValue
     ): Promise<IPropertyDetailApiWithWholeObject[]> {
       return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
         loaderStore.setLoaderState(true);
         propertyDetailApiService
           .createPropertyValues(payload)
@@ -77,6 +79,8 @@ export const usePropertyDetailStore = defineStore("property-detail-store", {
       payload: IPropertyValue
     ): Promise<IPropertyDetailApi[]> {
       return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
         loaderStore.setLoaderState(true);
         propertyDetailApiService
           .updatePropertyValues(payload)
@@ -95,6 +99,8 @@ export const usePropertyDetailStore = defineStore("property-detail-store", {
     },
     fetchPropertyById(id: string): Promise<IPropertyApi> {
       return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
         loaderStore.setLoaderState(true);
         propertyDetailApiService
           .getPropertyById(id)

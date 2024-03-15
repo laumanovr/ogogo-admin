@@ -19,7 +19,7 @@
         type="file"
         @change="handleImageUpload"
       />
-      <img src="../../../../shared/ui/assets/plus-icon.png" />
+      <img src="/icons/plus-icon.png" />
     </label>
     <div v-if="imageUrl" class="preview-selected-big-image">
       <img :src="imageUrl" alt="Preview" class="big-image-under-container" />
@@ -37,7 +37,7 @@
         type="file"
         @change="handleIconUpload"
       />
-      <img src="../../../../shared/ui/assets/plus-icon.png" />
+      <img src="/icons/plus-icon.png" />
     </label>
     <div v-if="iconUrl" class="preview-selected-small-image">
       <img :src="iconUrl" alt="Preview" class="small-image-under-container" />
@@ -295,5 +295,3 @@ const onClose = () => {
   right: 15px;
 }
 </style>
-../store/images-and-icon-store
-../../save-category-settings/store/save-category-settings-store

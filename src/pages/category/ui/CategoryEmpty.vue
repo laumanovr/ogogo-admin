@@ -9,7 +9,7 @@
 </template>
 
 <script lang="ts" setup>
-import EmptyData from "@/features/EmptyData.vue";
+import { EmptyData } from "@/shared/ui";
 import { useRouter } from "vue-router";
 
 const router = useRouter();
@@ -18,5 +18,3 @@ const onCategoryClick = () => {
   router.push("/category");
 };
 </script>
-
-<style scoped></style>

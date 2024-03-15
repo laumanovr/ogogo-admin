@@ -11,7 +11,7 @@
       />
     </div>
     <div class="add-category-container" @click="addCategory">
-      <img src="../../../../shared/ui/assets/plus-icon.png" />
+      <img src="/icons/plus-icon.png" />
       <span>{{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</span>
     </div>
     <AddCategoryConfirmationModal

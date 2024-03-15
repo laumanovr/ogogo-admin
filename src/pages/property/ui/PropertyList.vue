@@ -54,10 +54,10 @@ import {
   SInput,
 } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted } from "vue";
-import { PropertyTable } from "../../../features/property/property-list/property";
-import { GroupPropertyTable } from "../../../features/property/property-list/group-property";
-import EmptyData from "../../../features/EmptyData.vue";
-import FilterModal from "../../../features/property/property-list/FilterModal.vue";
+import { PropertyTable } from "@/features/property/property-list/property";
+import { GroupPropertyTable } from "@/features/property/property-list/group-property";
+import { EmptyData } from "@/shared/ui";
+import { FilterModal } from "@/shared/ui";
 import { usePropertyStore } from "@/features/property/property-list/property/store/property.store";
 
 const propertyStore = usePropertyStore();
@@ -107,9 +107,7 @@ const onSubmit = () => {
 };
 </script>
 
-<style lang="scss">
-@import "../../../app/style/colors";
-
+<style scoped lang="scss">
 .property-container {
   .filter-container {
     display: flex;
@@ -122,7 +120,7 @@ const onSubmit = () => {
     }
 
     .icon-border {
-      border: 1px solid $gray-200;
+      border: 1px solid var(--gray-200);
       border-radius: 8px;
       padding: 10px 11px 8px;
       margin: 0 12px;

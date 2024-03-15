@@ -13,7 +13,7 @@
 <script lang="ts" setup>
 import { ImagesAndIcon } from "@/features/category/images-and-icon";
 import PropertyNamingFields from "@/features/category/property-naming-fields/ui/PropertyNamingFields.vue";
-import AddProperty from "@/features/category/add-property/ui/AddProperty.vue";
+import { AddProperty } from "@/features/category/add-property";
 import { SaveCategorySettings } from "@/features/category/save-category-settings";
 import { useCategoryStore } from "@/widgets/category/category-settings";
 
@@ -70,4 +70,3 @@ const onSaveSettings = () => {
   }
 }
 </style>
-@/widgets/category/category-settings/store/category-store

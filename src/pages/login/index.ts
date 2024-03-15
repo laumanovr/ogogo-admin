@@ -1,2 +1,5 @@
-export { default as Login } from "./ui/Login.vue";
-export { default as loginRoutes } from "./router";
+import Login from "./ui/Login.vue";
+import routes from "./router/router";
+
+export { Login };
+export { routes as loginRoutes };

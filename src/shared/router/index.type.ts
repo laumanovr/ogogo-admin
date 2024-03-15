@@ -17,6 +17,6 @@ export const enum Routes {
   category = "/category",
   property = "/property",
   login = "/",
-  shop = "/shop",
-  product = "/product",
+  shops = "/shops",
+  products = "/products",
 }
