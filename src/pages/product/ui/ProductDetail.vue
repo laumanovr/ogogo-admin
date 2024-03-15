@@ -9,7 +9,7 @@
         <img src="/icons/shop-logo.png" alt="" class="sm-img mr-8" />
         Мой телефон
       </div>
-      <BreadCrumbs />
+      <Breadcrumbs />
     </div>
     <h2 class="head-title md" id="main">
       {{ $t("lang-3c525f10-24ab-44fa-9eda-8a503e97b2e9") }}
@@ -184,7 +184,7 @@ import {
   SSelect,
   SIconRender,
 } from "@tumarsoft/ogogo-ui";
-import BreadCrumbs from "@/features/Breadcrumbs.vue";
+import { Breadcrumbs } from "@/shared/ui";
 import { ref, reactive, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 

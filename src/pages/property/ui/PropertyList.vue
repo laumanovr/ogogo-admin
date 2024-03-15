@@ -54,10 +54,10 @@ import {
   SInput,
 } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted } from "vue";
-import { PropertyTable } from "../../../features/property/property-list/property";
-import { GroupPropertyTable } from "../../../features/property/property-list/group-property";
-import EmptyData from "../../../features/EmptyData.vue";
-import FilterModal from "../../../features/property/property-list/FilterModal.vue";
+import { PropertyTable } from "@/features/property/property-list/property";
+import { GroupPropertyTable } from "@/features/property/property-list/group-property";
+import { EmptyData } from "@/shared/ui";
+import { FilterModal } from "@/shared/ui";
 import { usePropertyStore } from "@/features/property/property-list/property/store/property.store";
 
 const propertyStore = usePropertyStore();

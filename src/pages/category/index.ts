@@ -1,4 +1,7 @@
-export { default as Category } from "./ui/Category.vue";
-export { default as CategoryEmpty } from "./ui/CategoryEmpty.vue";
+import Category from "./ui/Category.vue";
+import CategoryEmpty from "./ui/CategoryEmpty.vue";
+import routes from "./router/router";
+
+export { Category, CategoryEmpty };
 export { useCategoryPageStore } from "./store/category-page-store";
-export { default as сategoryRoutes } from "./router/router";
+export { routes as сategoryRoutes };

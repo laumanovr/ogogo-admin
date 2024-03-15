@@ -28,7 +28,7 @@
 import { STable, SBadge } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
 import FilterSearch from "../../../widgets/filter-search/FilterSearch.vue";
-import FilterModal from "../../../features/shop/shop-list/FilterModal.vue";
+import { FilterModal } from "@/shared/ui";
 
 const headers = reactive([
   { title: "Магазин", key: "name" },

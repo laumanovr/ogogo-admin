@@ -13,9 +13,6 @@ import { IGroupPropertyApi } from "../../group-property/api/group-property-api.t
 import { container } from "tsyringe";
 import { WithPagination } from "@/shared/api/api.types";
 
-const loaderStore = useLoaderStore();
-const alertStore = useAlertStore();
-
 const propertyApiService = container.resolve(PropertyApi);
 
 export const usePropertyStore = defineStore("propertyStore", {
@@ -38,6 +35,8 @@ export const usePropertyStore = defineStore("propertyStore", {
       data: IGetGroupPropertyList
     ): Promise<IGroupPropertyApi[]> {
       return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
         loaderStore.setLoaderState(true);
         propertyApiService
           .getSubGroupProperties(data)
@@ -59,6 +58,7 @@ export const usePropertyStore = defineStore("propertyStore", {
       payload: IGetPropertyList
     ): Promise<WithPagination<IPropertyApi>> {
       return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
         loaderStore.setLoaderState(true);
         propertyApiService
           .getProperties(payload)
@@ -75,6 +75,8 @@ export const usePropertyStore = defineStore("propertyStore", {
     },
     createPropertyList(payload: IPropertyApi) {
       return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
         loaderStore.setLoaderState(true);
         propertyApiService
           .createProperties(payload)
@@ -98,6 +100,8 @@ export const usePropertyStore = defineStore("propertyStore", {
     },
     updatePropertyList(payload: IPropertyApi) {
       return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
         loaderStore.setLoaderState(true);
         propertyApiService
           .updateProperties(payload)

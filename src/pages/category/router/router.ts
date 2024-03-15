@@ -1,15 +1,16 @@
 import CategoryEmpty from "@/pages/category/ui/CategoryEmpty.vue";
 import { RouteRecordRaw } from "vue-router";
+import { Routes } from "@/shared/router/index.type";
 
 const routes: RouteRecordRaw[] = [
   {
-    path: "/category",
+    path: Routes.category,
     name: "category",
     component: () => import("../ui/Category.vue"),
     meta: { requiresAuth: true },
   },
   {
-    path: "/category/empty",
+    path: `${Routes.category}/empty`,
     name: "category-empty",
     component: CategoryEmpty,
     meta: { requiresAuth: true },

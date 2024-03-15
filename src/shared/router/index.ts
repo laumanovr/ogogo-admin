@@ -6,14 +6,14 @@ import {
   RouteLocationNormalized,
   RouteRecordRaw,
 } from "vue-router";
-import propertyRoutes from "@/pages/property/router";
-import loginRoutes from "@/pages/login/router";
-import shopRoutes from "@/pages/shop/router";
-import productRoutes from "@/pages/product/router";
+import { compose } from "ramda";
+import { propertyRoutes } from "@/pages/property";
+import { сategoryRoutes } from "@/pages/category";
+import { shopRoutes } from "@/pages/shop";
+import { loginRoutes } from "@/pages/login";
+import { productRoutes } from "@/pages/product";
 import { Routes } from "./index.type";
 import { useAuthStore } from "../store/auth";
-import { compose } from "ramda";
-import { сategoryRoutes } from "@/pages/category";
 
 const routes: RouteRecordRaw[] = [
   ...сategoryRoutes,
