@@ -13,15 +13,15 @@
     </p>
 
     <div class="d-flex flex-row items-center gap-24 mb-16">
-      <img src="../../../../shared/ui/assets/tv-accessories.jpg" />
+      <img src="/icons/tv-accessories.jpg" />
       <p>{{ $t("lang-15510906-cb70-48cd-ba5c-3df148431e05") }}</p>
     </div>
     <div class="d-flex flex-row items-center gap-24 mb-16">
-      <img src="../../../../shared/ui/assets/camera.jpg" />
+      <img src="/icons/camera.jpg" />
       <p>{{ $t("lang-15d1a7b6-ec2c-4dfd-82ee-f40c10f2093f") }}</p>
     </div>
     <div class="d-flex flex-row items-center gap-24 mb-16">
-      <img src="../../../../shared/ui/assets/mobile-phones.jpg" />
+      <img src="/icons/mobile-phones.jpg" />
       <p>{{ $t("lang-741d2a8f-2aeb-49f6-a428-8cc016804910") }}</p>
     </div>
   </SModal>
@@ -42,5 +42,3 @@ const onClose = () => {
   emit("close", false);
 };
 </script>
-
-<style lang="scss" scoped></style>

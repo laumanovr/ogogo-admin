@@ -18,5 +18,3 @@ const onCategoryClick = () => {
   router.push("/category");
 };
 </script>
-
-<style scoped></style>

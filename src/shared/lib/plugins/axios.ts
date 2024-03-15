@@ -51,6 +51,7 @@ API.interceptors.response.use(
     if (certificatePing) {
       return Promise.reject(error);
     } else {
+      // @ts-ignore
       let showError = true;
 
       switch (error?.response?.status) {

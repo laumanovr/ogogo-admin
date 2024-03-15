@@ -97,6 +97,7 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 body * {
   font-family: "Montserrat", sans-serif;
 }
@@ -109,6 +110,7 @@ body {
   font-weight: 700;
   font-size: 36px;
   margin: 25px 0;
+
   &.md {
     font-size: 20px;
   }
@@ -123,7 +125,7 @@ body {
   .table-data {
     overflow-x: auto;
     border-radius: 6px;
-    border: 1px solid $gray-200;
+    border: 1px solid --$gray-200;
     padding-bottom: 8px;
 
     &.group {
@@ -143,26 +145,26 @@ body {
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: $gray-300;
+      background-color: --$gray-300;
       border-radius: 6px;
     }
 
     table {
       width: 100%;
       border-spacing: 0;
-      border-bottom: 1px solid $gray-200;
+      border-bottom: 1px solid --$gray-200;
     }
 
     th {
       padding: 16px;
       font-weight: 500;
       font-size: 16px;
-      color: $gray-500;
-      border-bottom: 1px solid $gray-200;
+      color: --$gray-500;
+      border-bottom: 1px solid --$gray-200;
       white-space: nowrap;
 
       span {
-        color: $red-500;
+        color: --$red-500;
       }
 
       &:first-child {
@@ -173,14 +175,14 @@ body {
         }
 
         span {
-          color: $gray-500;
+          color: --$gray-500;
           display: inline-block;
           transform: scale(2);
         }
       }
 
       &:not(:last-child) {
-        border-right: 1px solid $gray-200;
+        border-right: 1px solid --$gray-200;
       }
     }
 
@@ -189,12 +191,13 @@ body {
       font-size: 16px;
       max-width: 200px;
       white-space: nowrap;
+
       &:last-child {
         padding: 0 16px;
       }
 
       &:not(:last-child) {
-        border-right: 1px solid $gray-200;
+        border-right: 1px solid --$gray-200;
       }
 
       &:focus {
@@ -206,6 +209,7 @@ body {
         border: 0;
         outline: none;
       }
+
       .select {
         input {
           padding-right: 30px;
@@ -215,7 +219,7 @@ body {
 
     .table-row:not(:last-child) {
       td {
-        border-bottom: 1px solid $gray-200;
+        border-bottom: 1px solid --$gray-200;
       }
     }
   }
@@ -224,12 +228,14 @@ body {
 .button {
   display: flex;
   align-items: center;
+
   svg {
     margin-right: 8px;
   }
 }
 
 input {
+
   &::-webkit-inner-spin-button,
   &::-webkit-outer-spin-button {
     -webkit-appearance: none;

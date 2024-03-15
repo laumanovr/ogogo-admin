@@ -3,7 +3,7 @@ import { createApp } from "vue";
 import App from "@/app/App.vue";
 import router from "@/shared/router";
 import pinia from "@/app/store/index";
-import "./app/style/main.scss";
+import "./app/styles/main.scss";
 import "virtual:uno.css";
 import i18n from "@/shared/lib/plugins/i18n";
 import { RouteLocationNormalized } from "vue-router";
@@ -13,7 +13,7 @@ import { vMaska } from "maska";
 router.beforeEach(
   (
     to: RouteLocationNormalized,
-    from: RouteLocationNormalized,
+    _from: RouteLocationNormalized,
     next: Function
   ) => {
     const isAuthenticated = Boolean(getItem("sessionId")),

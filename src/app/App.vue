@@ -7,9 +7,8 @@
 </template>
 
 <script lang="ts" setup>
-import Layout from "@/shared/ui/layouts/Layout.vue";
-import Empty from "@/shared/ui/layouts/Empty.vue";
-import Loader from "@/entities/Loader.vue";
+import { Layout, Empty } from "@/shared/layouts";
+import { Loader } from "@/shared/ui/index";
 import { shallowRef, ref, watch } from "vue";
 import { SToaster } from "@tumarsoft/ogogo-ui";
 import { useAlertStore } from "@/shared/store/alert";

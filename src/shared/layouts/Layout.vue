@@ -7,10 +7,10 @@
 </template>
 
 <script lang="ts" setup>
-import Header from "@/shared/ui/layouts/Header.vue";
+import { Header } from "@/widgets/header/index";
 </script>
 
-<style>
+<style scoped>
 .wrapper-layout {
   max-width: 1440px;
   margin: 0 auto;

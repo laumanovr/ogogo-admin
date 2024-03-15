@@ -25,10 +25,7 @@
 </template>
 
 <script lang="ts" setup>
-import {
-  STable,
-  SBadge,
-} from "@tumarsoft/ogogo-ui";
+import { STable, SBadge } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
 import FilterSearch from "../../../widgets/filter-search/FilterSearch.vue";
 import FilterModal from "../../../features/shop/shop-list/FilterModal.vue";
@@ -78,5 +75,3 @@ const openModal = () => {
   filterModal.value.toggleModal();
 };
 </script>
-
-<style lang="scss"></style>

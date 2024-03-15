@@ -107,9 +107,7 @@ const onSubmit = () => {
 };
 </script>
 
-<style lang="scss">
-@import "../../../app/style/colors";
-
+<style scoped lang="scss">
 .property-container {
   .filter-container {
     display: flex;
@@ -122,7 +120,7 @@ const onSubmit = () => {
     }
 
     .icon-border {
-      border: 1px solid $gray-200;
+      border: 1px solid var(--gray-200);
       border-radius: 8px;
       padding: 10px 11px 8px;
       margin: 0 12px;

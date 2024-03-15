@@ -1,35 +1,34 @@
 <template>
   <div class="breadcrumbs-container">
     <div class="breadcrumb-item" v-for="(item, i) in items" :key="i">
-      <router-link :to="item.link">{{item.name}}</router-link>
-      <span v-show="i !== (items.length - 1)">/</span>
+      <router-link :to="item.link">{{ item.name }}</router-link>
+      <span v-show="i !== items.length - 1">/</span>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-import {reactive, PropType} from "vue";
+import { reactive, PropType } from "vue";
 
 const props = defineProps({
   items: {
     type: Array as PropType<any[]>,
-    default: () => []
-  }
+    default: () => [],
+  },
 });
 
 let items = reactive(props.items);
 
 //TODO: Delete later
 items = [
-  {name: "Электроника", link: "#"},
-  {name: "Смартфоны и гаджеты", link: "#"},
-  {name: "Apple", link: "#"},
-  {name: "Iphone 15 pro", link: "#"}
-]
-
+  { name: "Электроника", link: "#" },
+  { name: "Смартфоны и гаджеты", link: "#" },
+  { name: "Apple", link: "#" },
+  { name: "Iphone 15 pro", link: "#" },
+];
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .breadcrumbs-container {
   display: flex;
   .breadcrumb-item {

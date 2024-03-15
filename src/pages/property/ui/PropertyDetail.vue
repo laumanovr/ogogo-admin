@@ -57,7 +57,7 @@ const onSearch = (e: Event) => {
 };
 </script>
 
-<style lang="scss">
+<style scoped lang="scss">
 .property-value-container {
   .title-container {
     display: flex;

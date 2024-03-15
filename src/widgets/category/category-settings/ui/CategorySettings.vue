@@ -70,4 +70,3 @@ const onSaveSettings = () => {
   }
 }
 </style>
-@/widgets/category/category-settings/store/category-store

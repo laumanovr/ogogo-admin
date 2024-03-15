@@ -6,11 +6,7 @@
         {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
       <div class="d-flex items-center ml-24 mr-24">
-        <img
-          src="../../../app/assets/img/shop-logo.png"
-          alt=""
-          class="sm-img mr-8"
-        />
+        <img src="/icons/shop-logo.png" alt="" class="sm-img mr-8" />
         Мой телефон
       </div>
       <BreadCrumbs />
@@ -26,7 +22,7 @@
             width="100%"
           />
           <div class="d-flex mt-24">
-            <img src="../../../app/assets/img/ava.png" alt="" class="mr-12" />
+            <img src="/icons/ava.png" alt="" class="mr-12" />
             <SInput
               :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
               width="100%"
@@ -39,7 +35,7 @@
             width="100%"
           />
           <div class="d-flex mt-24">
-            <img src="../../../app/assets/img/ava.png" alt="" class="mr-12" />
+            <img src="/icons/ava.png" alt="" class="mr-12" />
             <SInput
               :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
               width="100%"
@@ -67,7 +63,7 @@
             />
           </div>
           <div class="d-flex mt-24">
-            <img src="../../../app/assets/img/ava.png" alt="" class="mr-12" />
+            <img src="/icons/ava.png" alt="" class="mr-12" />
             <SInput
               :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
               width="100%"
@@ -83,7 +79,7 @@
             width="100%"
           />
           <div class="d-flex mt-24">
-            <img src="../../../app/assets/img/ava.png" alt="" class="mr-12" />
+            <img src="/icons/ava.png" alt="" class="mr-12" />
             <SInput
               :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
               width="100%"
@@ -100,14 +96,14 @@
           <div class="d-flex flex-wrap">
             <img
               v-for="i in 5"
-              src="../../../app/assets/img/iphone.jpg"
+              src="/icons/iphone.jpg"
               alt="image"
               class="photo mr-8 mb-8"
               :key="i"
             />
           </div>
           <div class="d-flex mt-24">
-            <img src="../../../app/assets/img/ava.png" alt="" class="mr-12" />
+            <img src="/icons/ava.png" alt="" class="mr-12" />
             <SInput
               :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
               width="100%"
@@ -122,14 +118,10 @@
             {{ $t("lang-9fc0c45e-0828-49af-a325-a11dbc4a9829") }}
           </p>
           <div class="d-flex flex-wrap">
-            <img
-              src="../../../app/assets/img/iphone.jpg"
-              alt="image"
-              class="video mr-8"
-            />
+            <img src="/icons/iphone.jpg" alt="image" class="video mr-8" />
           </div>
           <div class="d-flex mt-24">
-            <img src="../../../app/assets/img/ava.png" alt="" class="mr-12" />
+            <img src="/icons/ava.png" alt="" class="mr-12" />
             <SInput
               :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
               width="100%"
@@ -192,7 +184,7 @@ import {
   SSelect,
   SIconRender,
 } from "@tumarsoft/ogogo-ui";
-import BreadCrumbs from "../../../features/Breadcrumbs.vue";
+import BreadCrumbs from "@/features/Breadcrumbs.vue";
 import { ref, reactive, onMounted, onUnmounted } from "vue";
 import { useRouter } from "vue-router";
 
@@ -259,8 +251,6 @@ const handleScroll = () => {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../app/style/colors";
-
 .product-detail-container {
   .content-block {
     max-width: 812px;
@@ -315,11 +305,11 @@ const handleScroll = () => {
       padding-left: 14px;
       cursor: pointer;
       text-decoration: none;
-      color: $black;
+      color: var(--black);
       border-left: 3px solid transparent;
 
       &.active {
-        border-left-color: $violet-600;
+        border-left-color: var(--violet-600);
       }
     }
   }

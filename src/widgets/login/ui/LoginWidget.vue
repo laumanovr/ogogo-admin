@@ -2,7 +2,7 @@
   <div class="login-container">
     <div class="login-block">
       <div class="login-logo">
-        <img src="../../shared/ui/assets/Ogogo-logo.png" alt="img" />
+        <img src="/icons/Ogogo-logo.png" alt="ogogo-logo" />
       </div>
       <SForm class="form-block" ref="loginForm">
         <div class="form-title">

@@ -53,10 +53,7 @@
                 {{ $t("lang-4ae6eb0a-a362-49ab-824e-4ee51c97542b") }}
               </div>
               <span class="d-flex items-center font-size-15 cursor-pointer">
-                <img
-                  src="../../../../../shared/ui/assets/attach.svg"
-                  class="mr-12 ml-10"
-                />
+                <img src="/icons/attach.svg" class="mr-12 ml-10" />
                 {{ $t("lang-c1d4974f-d48f-4107-99d8-d6a188b31129") }}
               </span>
               <input
@@ -186,8 +183,6 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-@import "../../../../../app/style/colors.scss";
-
 .label-container {
   position: relative;
 
@@ -202,12 +197,12 @@ defineExpose({
     position: absolute;
     top: -45px;
     left: -28px;
-    background: $gray-800;
+    background: var(--gray-800);
     border-radius: 8px;
     padding: 8px;
     font-size: 10px;
     font-weight: 500;
-    color: $white;
+    color: var(--white);
     width: 208px;
     z-index: 999;
     white-space: pre-wrap;

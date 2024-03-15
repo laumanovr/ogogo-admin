@@ -6,7 +6,6 @@ import {
   RouteLocationNormalized,
   RouteRecordRaw,
 } from "vue-router";
-import categoryRoute from "@/pages/category/router/router";
 import propertyRoutes from "@/pages/property/router";
 import loginRoutes from "@/pages/login/router";
 import shopRoutes from "@/pages/shop/router";
@@ -14,9 +13,10 @@ import productRoutes from "@/pages/product/router";
 import { Routes } from "./index.type";
 import { useAuthStore } from "../store/auth";
 import { compose } from "ramda";
+import { сategoryRoutes } from "@/pages/category";
 
 const routes: RouteRecordRaw[] = [
-  ...categoryRoute,
+  ...сategoryRoutes,
   ...propertyRoutes,
   ...loginRoutes,
   ...shopRoutes,

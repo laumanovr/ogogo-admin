@@ -1,6 +1,6 @@
 <template>
   <div class="d-flex flex-row justify-between padding-16-40 h-80">
-    <img src="../../ui/assets/Ogogo-logo.png" class="ogogo-img" />
+    <img src="/icons/Ogogo-logo.png" alt="ogogo-logo" class="ogogo-img" />
 
     <div class="header-navigation">
       <div
@@ -48,7 +48,7 @@
           <div class="profile-number color-gray-500">+996777446688</div>
         </div>
         <img
-          src="../../ui/assets/logout.svg"
+          src=/icons/logout.svg
           alt="logout"
           class="ml-20 cursor-pointer"
           @click="logOut"
@@ -118,7 +118,6 @@ const logOut = () => {
 </script>
 
 <style lang="scss" scoped>
-@import "../../../app/style/colors.scss";
 .header {
   height: 80px;
   display: flex;
@@ -138,7 +137,7 @@ const logOut = () => {
   align-items: center;
   gap: 30px;
   .header-profile {
-    background: $gray-150;
+    background: var(--gray-150);
     padding: 4px 12px;
     border-radius: 8px;
     .profile-name {

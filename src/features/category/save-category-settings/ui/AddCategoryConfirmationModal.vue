@@ -44,5 +44,3 @@ const onSave = () => {
   emit("save", true);
 };
 </script>
-
-<style></style>

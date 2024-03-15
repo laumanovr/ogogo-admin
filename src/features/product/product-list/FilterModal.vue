@@ -81,8 +81,6 @@ defineExpose({
 </script>
 
 <style lang="scss" scoped>
-@import "../../../app/style/colors.scss";
-
 .filter-modal {
   .modal-content {
     height: calc(100% - 75px);
@@ -93,7 +91,7 @@ defineExpose({
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: $gray-300;
+      background-color: var(--gray-300);
       border-radius: 4px;
     }
   }
@@ -134,7 +132,7 @@ defineExpose({
     }
 
     &::-webkit-scrollbar-thumb {
-      background-color: $gray-300;
+      background-color: var(--gray-300);
       border-radius: 4px;
     }
   }

@@ -31,7 +31,7 @@ export const enum LoadingStatusEnum {
   ERROR = "ERROR",
 }
 
-export type Autocomplete = {
+export type LocalAutocomplete = {
   id: string;
   value: string;
   description: string;
