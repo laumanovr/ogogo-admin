@@ -13,7 +13,9 @@
       </div>
 
       <div class="section">
-        <div class="section-title">Статусы</div>
+        <div class="section-title">
+          {{ $t("lang-0dbca1e1-64c6-4393-b5ac-893d88799263") }}
+        </div>
         <div>
           <SCheckbox>Требуется модерация</SCheckbox>
         </div>
@@ -26,7 +28,9 @@
       </div>
 
       <div class="section">
-        <div class="section-title">Изменения</div>
+        <div class="section-title">
+          {{ $t("lang-2d3a6b38-a84c-4879-8c50-a6983ea5ba6d") }}
+        </div>
         <div>
           <SCheckbox>Название</SCheckbox>
         </div>
@@ -39,7 +43,9 @@
       </div>
 
       <div class="section">
-        <div class="section-title">Магазины</div>
+        <div class="section-title">
+          {{ $t("lang-425a5a16-bf0a-4ded-a7bc-cbe7490b659a") }}
+        </div>
         <SInput isSearchable width="100%" />
         <div class="property-items" :style="{ 'max-height': maxHeight + 'px' }">
           <div v-for="item in 30" :key="item">
