@@ -6,35 +6,7 @@ import pinia from "@/app/store/index";
 import "./app/styles/main.scss";
 import "virtual:uno.css";
 import i18n from "@/shared/lib/plugins/i18n";
-import { RouteLocationNormalized } from "vue-router";
-import { getItem } from "./shared/lib/utils/persistanceStorage";
 import { vMaska } from "maska";
-
-router.beforeEach(
-  (
-    to: RouteLocationNormalized,
-    _from: RouteLocationNormalized,
-    next: Function
-  ) => {
-    const isAuthenticated = Boolean(getItem("sessionId")),
-      requiresAuth = to.matched.some((record) => record.meta.requiresAuth);
-    // roleScreensObj = getItem("auth")?.roleScreensObj ?? null,
-    // currentMenu = getItem("auth")?.uiElements ?? [];
-
-    if (!isAuthenticated) {
-      if (requiresAuth) {
-        return next("/");
-      }
-      next();
-    } else {
-      if (to.path === "/" && !isAuthenticated) {
-        next();
-      } else {
-        next();
-      }
-    }
-  }
-);
 
 const app = createApp(App);
 

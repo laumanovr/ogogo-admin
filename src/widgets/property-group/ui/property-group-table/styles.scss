@@ -1,0 +1,35 @@
+.label-container {
+  position: relative;
+
+  &:hover {
+    .tooltip-info {
+      display: inline-block;
+    }
+  }
+
+  .tooltip-info {
+    display: none;
+    position: absolute;
+    top: -45px;
+    left: -28px;
+    background: var(--gray-800);
+    border-radius: 8px;
+    padding: 8px;
+    font-size: 10px;
+    font-weight: 500;
+    color: var(--white);
+    width: 208px;
+    z-index: 999;
+    white-space: pre-wrap;
+  }
+
+  input {
+    display: none;
+  }
+}
+
+.selected-image {
+  width: 24px;
+  height: 24px;
+  object-fit: cover;
+}

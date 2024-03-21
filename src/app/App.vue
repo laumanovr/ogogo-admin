@@ -8,33 +8,35 @@
 
 <script lang="ts" setup>
 import { Layout, Empty } from "@/shared/layouts";
-import { Loader } from "@/shared/ui/index";
-import { shallowRef, ref, watch } from "vue";
+import { Loader } from "@/shared/ui";
+import { ref, watch, computed } from "vue";
 import { SToaster } from "@tumarsoft/ogogo-ui";
 import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { useRoute } from "vue-router";
-import { getItem } from "@/shared/lib/utils/persistanceStorage";
+import { Routes } from "@/shared/router/index.type";
+import { useAuthStore } from "@/shared/store/auth";
+import { Nullable } from "@/shared/lib/utils/nullable";
+
+type Toaster = {
+  showSuccess: (message: string) => void;
+  showError: (message: string) => void;
+  showInfo: (message: string) => void;
+};
 
 const alertStore = useAlertStore();
 const loaderStore = useLoaderStore();
-const toaster = ref(null);
-// const isLoggedIn = true;
-
-const currentComponent = shallowRef(Empty);
-
+const authStore = useAuthStore();
 const route = useRoute();
+const toaster = ref<Nullable<Toaster>>(null);
 
-watch(
-  () => route.path,
-  () => {
-    if (Boolean(getItem("sessionId") && route.path !== "/")) {
-      currentComponent.value = Layout;
-    } else {
-      currentComponent.value = Empty;
-    }
+const currentComponent = computed(() => {
+  if (route.path !== Routes.login && Boolean(authStore.getSessionId)) {
+    return Layout;
+  } else {
+    return Empty;
   }
-);
+});
 
 watch(
   () => alertStore.successMessage,

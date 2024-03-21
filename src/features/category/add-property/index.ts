@@ -1,4 +1,5 @@
-import AddProperty from "./ui/AddProperty.vue";
-import AddPropertyModal from "./ui/AddPropertyModal.vue";
+import AddProperty from "./ui/add-property/AddProperty.vue";
+import AddPropertyModal from "./ui/add-property-modal/AddPropertyModal.vue";
 
 export { AddProperty, AddPropertyModal };
+export { useAddPropertyStore } from "./store/add-property.store";

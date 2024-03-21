@@ -1,0 +1,19 @@
+.property-container {
+  .filter-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+
+    .filter-actions {
+      display: flex;
+      align-items: center;
+    }
+
+    .icon-border {
+      border: 1px solid var(--gray-200);
+      border-radius: 8px;
+      padding: 10px 11px 8px;
+      margin: 0 12px;
+    }
+  }
+}

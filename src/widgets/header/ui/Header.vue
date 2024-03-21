@@ -45,7 +45,7 @@
       <div class="header-profile d-flex justify-between items-center">
         <div class="profile-block">
           <div class="profile-name">Админ</div>
-          <div class="profile-number color-gray-500">+996777446688</div>
+          <div class="profile-number color-gray-500">{{ userPhone }}</div>
         </div>
         <img
           src=/icons/logout.svg
@@ -109,6 +109,8 @@ function onMenuItemChange(value: MenuItems) {
 }
 
 const authStore = useAuthStore();
+
+const userPhone = computed(() => authStore.getUserProfile.phone);
 
 const logOut = () => {
   authStore.logout().then(() => {
