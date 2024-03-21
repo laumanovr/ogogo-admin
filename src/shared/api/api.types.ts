@@ -31,8 +31,38 @@ export const enum LoadingStatusEnum {
   ERROR = "ERROR",
 }
 
+export const enum SortDirectionEnum {
+  ASCENDING = 0,
+  DESCENDING = 1,
+}
+
 export type LocalAutocomplete = {
   id: string;
   value: string;
   description: string;
 };
+
+export type AutocompleteEntity = {
+  id: string;
+  value: string;
+  description: string;
+};
+
+export interface ResultError {
+  errorMessage: string;
+  errorCode: string;
+  additionalInfo: string;
+  applicationStatus: string;
+  number: string;
+}
+
+export interface PostResultWrapper<T> {
+  ok: boolean;
+  error: ResultError;
+  result: T;
+}
+
+export interface BasePageParams {
+  pageIndex: number;
+  pageSize: number;
+}

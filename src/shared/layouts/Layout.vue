@@ -7,7 +7,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Header } from "@/widgets/header/index";
+import { Header } from "@/widgets/header";
 </script>
 
 <style scoped>

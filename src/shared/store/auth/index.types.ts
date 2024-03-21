@@ -26,6 +26,7 @@ export interface ILogin {
 
 export interface AuthState {
   user: Nullable<IUser>;
+  userProfile: Nullable<AuthGetProfileResultInterface>;
 
   isLoading: boolean;
   fidoAuth: boolean;
@@ -42,7 +43,6 @@ export interface AuthState {
     password: string;
   };
   sessionId: string;
-  isActiveSession: boolean;
   tabId: string;
 }
 export interface makeAssertionOptionsType {

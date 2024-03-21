@@ -6,10 +6,6 @@ import {
 } from "./index.types";
 import { useAlertStore } from "@/shared/store/alert";
 import { container } from "tsyringe";
-import {
-  AuthorizationChannelEvent,
-  BroadcastChannelName,
-} from "@/shared/lib/utils/consts";
 import { AuthApi } from "@/shared/api/auth/index.ts";
 import { isAxiosError } from "axios";
 
@@ -19,6 +15,7 @@ export const useAuthStore = defineStore("auth", {
   state: (): AuthState => {
     return {
       user: null,
+      userProfile: null,
       accessRequestIds: {},
       fidoAuth: false,
       availableLanguages: null,
@@ -31,7 +28,6 @@ export const useAuthStore = defineStore("auth", {
         password: null,
       },
       sessionId: null,
-      isActiveSession: false,
       tabId: null,
     };
   },
@@ -57,11 +53,11 @@ export const useAuthStore = defineStore("auth", {
     getSessionId(): string {
       return this.sessionId;
     },
-    getIsActiveSession(): boolean {
-      return this.isActiveSession;
-    },
     getTabId(): string {
       return this.tabId;
+    },
+    getUserProfile(): AuthGetProfileResultInterface {
+      return this.userProfile;
     },
   },
   actions: {
@@ -73,27 +69,9 @@ export const useAuthStore = defineStore("auth", {
             const needChangePassword = result?.needChangePassword ?? false;
             this.needChangePassword = needChangePassword as boolean;
 
-            const oldSessionId = this.sessionId;
-
             this.sessionId = result?.sessionId;
             return this.getCurrentUser()
               .then((user) => {
-                // send event of updating profile and redirecting to route path to other tabs
-                if (BroadcastChannel) {
-                  const tabId = this.tabId;
-
-                  const bc = new BroadcastChannel(
-                    BroadcastChannelName.AuthorizationChannel
-                  );
-                  if (oldSessionId && oldSessionId !== result?.sessionId) {
-                    bc.postMessage({
-                      event: AuthorizationChannelEvent.LoggingIn,
-                      tabId,
-                    });
-                  }
-                }
-
-                this.isActiveSession = true;
                 resolve(user);
               })
               .catch(reject);
@@ -114,16 +92,9 @@ export const useAuthStore = defineStore("auth", {
       return new Promise<AuthGetProfileResultInterface>((resolve, reject) => {
         authApiService
           .getCurrentUser()
-          .then((user) => {
-            // const lastUserId = getItem("last-user-id");
-            // setItem("last-user-id", this.currentUser.id);
-            // if (
-            //   lastUserId === undefined ||
-            //   lastUserId === "" ||
-            //   (lastUserId && lastUserId !== this.currentUser.id)
-            // ) {
-            // }
-            resolve(user);
+          .then((userProfile) => {
+            this.userProfile = userProfile;
+            resolve(userProfile);
           })
           .catch((error) => {
             reject(error);
@@ -140,7 +111,6 @@ export const useAuthStore = defineStore("auth", {
             this.accessRequestIds = {};
 
             this.sessionId = null;
-            this.isActiveSession = false;
 
             const alertStore = useAlertStore();
             alertStore.clearAlerts();
@@ -151,9 +121,6 @@ export const useAuthStore = defineStore("auth", {
             reject(err);
           });
       });
-    },
-    setLang(payload: string) {
-      this.user.language = payload;
     },
   },
   persist: true,

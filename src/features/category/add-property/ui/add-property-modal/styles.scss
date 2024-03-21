@@ -1,0 +1,37 @@
+.add-property-modal-main-wrapper {
+  width: auto;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+}
+
+.buttons-container {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.switch-container {
+  width: 100%;
+}
+
+// .add-button {
+//   width: 100%;
+//   height: 52px;
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   gap: 10px;
+// }
+.button {
+  width: 49%;
+}
+
+.text {
+  color: #7c3aed;
+}

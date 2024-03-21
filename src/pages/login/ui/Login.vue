@@ -3,5 +3,5 @@
 </template>
 
 <script lang="ts" setup>
-import { LoginWidget } from "@/widgets/login/index";
+import { LoginWidget } from "@/widgets/login";
 </script>
