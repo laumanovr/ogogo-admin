@@ -4,7 +4,7 @@
 
     <div class="header-navigation">
       <div
-        @click="onMenuItemChange(MenuItems.Products)"
+        @click="onMenuItemChange(MENU_ITEMS.Products)"
         class="cursor-pointer d-flex flex-col items-center"
       >
         <SIconRender :color="isProductsActive.substr(6)" :name="'BoxIcon'" />
@@ -13,7 +13,7 @@
         </p>
       </div>
       <div
-        @click="onMenuItemChange(MenuItems.Stores)"
+        @click="onMenuItemChange(MENU_ITEMS.Stores)"
         class="cursor-pointer d-flex flex-col items-center"
       >
         <SIconRender :color="isStoresActive.substr(6)" :name="'ShopIcon'" />
@@ -22,7 +22,7 @@
         </p>
       </div>
       <div
-        @click="onMenuItemChange(MenuItems.Category)"
+        @click="onMenuItemChange(MENU_ITEMS.Category)"
         class="cursor-pointer d-flex flex-col items-center"
       >
         <SIconRender :color="isCategoryActive.substr(6)" :name="'GridIcon'" />
@@ -31,7 +31,7 @@
         </p>
       </div>
       <div
-        @click="onMenuItemChange(MenuItems.Properties)"
+        @click="onMenuItemChange(MENU_ITEMS.Properties)"
         class="cursor-pointer d-flex flex-col items-center"
       >
         <SIconRender
@@ -60,46 +60,46 @@
 
 <script lang="ts" setup>
 import { SIconRender } from "@tumarsoft/ogogo-ui";
-import { MenuItems } from "@/shared/lib/utils/enums";
+import { MENU_ITEMS } from "@/shared/lib/utils/enums";
 import { computed, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useAuthStore } from "@/shared/store/auth";
-import { Routes } from "@/shared/router/index.type";
+import { ROUTES } from "@/shared/router/index.type";
 
 const route = useRoute();
 const router = useRouter();
 
 const activeButton = ref("");
 
-Object.values(MenuItems).forEach((item: any) => {
+Object.values(MENU_ITEMS).forEach((item: any) => {
   if (route.path.includes(item)) {
     activeButton.value = item;
   }
 });
 
 const isProductsActive = computed(() => {
-  return activeButton.value === MenuItems.Products
+  return activeButton.value === MENU_ITEMS.Products
     ? "color-violet-700"
     : "gray-400";
 });
 const isStoresActive = computed(() => {
-  return activeButton.value === MenuItems.Stores
+  return activeButton.value === MENU_ITEMS.Stores
     ? "color-violet-700"
     : "gray-400";
 });
 const isCategoryActive = computed(() => {
-  return activeButton.value === MenuItems.Category
+  return activeButton.value === MENU_ITEMS.Category
     ? "color-violet-700"
     : "gray-400";
 });
 const isPropertyActive = computed(() => {
-  return activeButton.value === MenuItems.Properties
+  return activeButton.value === MENU_ITEMS.Properties
     ? "color-violet-700"
     : "gray-400";
 });
 
-function onMenuItemChange(value: MenuItems) {
-  if (value === MenuItems.Category) {
+function onMenuItemChange(value: MENU_ITEMS) {
+  if (value === MENU_ITEMS.Category) {
     router.push("/" + value + "/" + "empty");
   } else {
     router.push("/" + value);
@@ -114,43 +114,11 @@ const userPhone = computed(() => authStore.getUserProfile.phone);
 
 const logOut = () => {
   authStore.logout().then(() => {
-    router.push(Routes.login);
+    router.push(ROUTES.login);
   });
 };
 </script>
 
 <style lang="scss" scoped>
-.header {
-  height: 80px;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  padding: 16px 40px;
-}
-
-.ogogo-img {
-  width: 180px;
-  height: 48px;
-}
-
-.header-navigation {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 30px;
-  .header-profile {
-    background: var(--gray-150);
-    padding: 4px 12px;
-    border-radius: 8px;
-    .profile-name {
-      font-weight: 600;
-      font-size: 14px;
-      margin-bottom: 3px;
-    }
-    .profile-number {
-      font-weight: 500;
-      font-size: 14px;
-    }
-  }
-}
+@import "styles.scss";
 </style>

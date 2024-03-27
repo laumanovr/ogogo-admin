@@ -14,7 +14,7 @@ export const enum ErrorCodeEnum {}
 
 export const INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES: ErrorCodeEnum[] = [];
 
-export const enum HttpCodes {
+export const enum HTTP_CODES {
   BAD_REQUEST = 400,
   UNAUTHORIZED = 401,
   FORBIDDEN = 403,
