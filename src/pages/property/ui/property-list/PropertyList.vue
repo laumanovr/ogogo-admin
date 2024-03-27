@@ -54,11 +54,12 @@ import {
   SInput,
 } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted } from "vue";
-import { PropertyTable, usePropertyStore } from "@/widgets/property";
-import { PropertyGroupTable } from "@/widgets/property-group";
+import { PropertyTable } from "@/widgets/property-table";
+import { usePropertyStore } from "@/entities/property";
+import { PropertyGroupTable } from "@/widgets/property-group-table";
 import { EmptyData } from "@/shared/ui";
 import { FilterModal } from "@/shared/ui";
-import { SortDirectionEnum } from "@/shared/api/api.types";
+import { SORT_DIRECTION_ENUM } from "@/shared/api/api.types";
 
 const propertyStore = usePropertyStore();
 const tab = ref("one");
@@ -72,7 +73,7 @@ onMounted(() => {
   propertyStore
     .fetchPropertyList({
       pageSize: 500,
-      sortDirection: SortDirectionEnum.ASCENDING,
+      sortDirection: SORT_DIRECTION_ENUM.ASCENDING,
       pageIndex: 0,
     })
     .then(() => {

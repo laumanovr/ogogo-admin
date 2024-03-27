@@ -1,7 +1,6 @@
 import {
   createRouter,
   createWebHistory,
-  NavigationGuard,
   NavigationGuardNext,
   RouteLocationNormalized,
   RouteRecordRaw,
@@ -12,8 +11,7 @@ import { сategoryRoutes } from "@/pages/category";
 import { shopRoutes } from "@/pages/shop";
 import { loginRoutes } from "@/pages/login";
 import { productRoutes } from "@/pages/product";
-import { Routes } from "./index.type";
-import { useAuthStore } from "../store/auth";
+import { authMiddleware } from "./middleware/authMiddleware";
 
 const routes: RouteRecordRaw[] = [
   ...сategoryRoutes,
@@ -27,19 +25,6 @@ const router = createRouter({
   history: createWebHistory(),
   routes,
 });
-
-export const authMiddleware: NavigationGuard = (to, _from, next) => {
-  const authStore = useAuthStore();
-  const token = authStore.getSessionId;
-
-  if (!token && to.path !== Routes.login) {
-    next({ path: Routes.login });
-  } else if (token && to.path === Routes.login) {
-    next({ name: "property" });
-  } else {
-    next();
-  }
-};
 
 router.beforeEach(
   (

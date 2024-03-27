@@ -1,2 +1,4 @@
 export * from "./model/types";
-export { PropertyValueApi } from "./api/property-value.api";
+export * from "./api/types";
+export { PropertyValueApi } from "./api/PropertyValueApi";
+export { usePropertyValueStore } from "./store/store";

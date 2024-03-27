@@ -1,17 +1,17 @@
 import { RouteRecordRaw } from "vue-router";
-import { Routes } from "@/shared/router/index.type";
+import { ROUTES } from "@/shared/router/index.type";
 
 const routes: RouteRecordRaw[] = [
   {
-    path: Routes.shops,
+    path: ROUTES.shops,
     name: "shops",
-    component: () => import("../ui/ShopList.vue"),
+    component: () => import("../ui/shop-list/ShopList.vue"),
     meta: { requiresAuth: true },
   },
   {
-    path: `${Routes.shops}/:id`,
+    path: `${ROUTES.shops}/:id`,
     name: "shopDetail",
-    component: () => import("../ui/ShopDetail.vue"),
+    component: () => import("../ui/shop-detail/ShopDetail.vue"),
     meta: { requiresAuth: true },
   },
 ];
