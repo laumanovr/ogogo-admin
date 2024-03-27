@@ -63,7 +63,7 @@ import {
   useImagesAndIconStore,
 } from "@/features/category/images-and-icon";
 import { useSaveCategorySettingsStore } from "@/features/category/save-category-settings";
-import { useCategorySharedStore } from "@/shared/store/category";
+import { useCategoryStore } from "@/entities/category";
 
 let imageUrl = ref(null);
 let iconUrl = ref(null);
@@ -71,7 +71,7 @@ let iconUrl = ref(null);
 const store = useImagesAndIconStore();
 const saveCategorySettingsStore = useSaveCategorySettingsStore();
 
-const categorySharedStore = useCategorySharedStore();
+const categoryStore = useCategoryStore();
 
 function handleImageUpload(event: any) {
   const file = event.target.files[0];
@@ -189,7 +189,7 @@ function resizeIcon(file: any) {
       iconUrl.value = resizedImageUrl;
     };
     img.src = event.target.result as string;
-    categorySharedStore.setCategoryIcon(event.target.result as string);
+    categoryStore.setCategoryIcon(event.target.result as string);
   };
   reader.readAsDataURL(file);
 }
@@ -200,7 +200,7 @@ const closeImage = () => {
 };
 const closeIcon = () => {
   iconUrl.value = null;
-  categorySharedStore.setCategoryIcon(null);
+  categoryStore.setCategoryIcon(null);
 };
 
 let imageRecomendationModalValue = ref(false);

@@ -1,4 +1,4 @@
-import Login from "./ui/Login.vue";
+import Login from "./ui/login/Login.vue";
 import routes from "./router/router";
 
 export { Login };

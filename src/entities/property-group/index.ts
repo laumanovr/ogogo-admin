@@ -1,2 +1,4 @@
 export * from "./model/types";
-export { PropertyGroupApi } from "./api/property-group.api";
+export * from "./api/types";
+export { PropertyGroupApi } from "./api/PropertyGroupApi";
+export { usePropertyGroupStore } from "./store/store";

@@ -8,21 +8,21 @@
         :label="$t('lang-bfee2c24-b7a6-41e9-8f4c-2620064b8a91')"
         :width="'100%'"
         class="name-field mb-16"
-        :value="categorySharedStore.getRu"
+        :value="categoryStore.getRu"
         @update:model-value="onChange($event, 'ru')"
       />
       <SInput
         :label="$t('lang-cd2180a0-855c-4f07-8f94-0a0a14c4eaf0')"
         :width="'100%'"
         class="name-field mb-16"
-        :modelValue="categorySharedStore.getKy"
+        :modelValue="categoryStore.getKy"
         @update:model-value="onChange($event, 'ky')"
       />
       <SInput
         :label="$t('lang-d4de3868-af08-41e4-8807-11676c8fdf5d')"
         :width="'100%'"
         class="name-field mb-16"
-        :modelValue="categorySharedStore.getEn"
+        :modelValue="categoryStore.getEn"
         @update:model-value="onChange($event, 'en')"
       />
     </div>
@@ -30,12 +30,12 @@
 </template>
 <script lang="ts" setup>
 import { SInput } from "@tumarsoft/ogogo-ui";
-import { useCategorySharedStore } from "@/shared/store/category";
+import { useCategoryStore } from "@/entities/category";
 
-const categorySharedStore = useCategorySharedStore();
+const categoryStore = useCategoryStore();
 
 const onChange = (value: string, key: string) => {
-  categorySharedStore.setTranslation(value, key);
+  categoryStore.setTranslation(value, key);
 };
 </script>
 <style scoped lang="scss">

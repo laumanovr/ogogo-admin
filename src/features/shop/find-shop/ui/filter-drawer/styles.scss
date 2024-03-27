@@ -1,0 +1,73 @@
+.filter-modal {
+  .modal-content {
+    height: calc(100% - 75px);
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--gray-300);
+      border-radius: 4px;
+    }
+  }
+
+  .filter-title {
+    font-size: 24px;
+    font-weight: 700;
+    margin-bottom: 35px;
+  }
+
+  .section {
+    &:not(:last-child) {
+      margin-bottom: 30px;
+    }
+
+    &-title {
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+  }
+
+  .checkbox-title {
+    font-size: 14px;
+    font-weight: 500;
+  }
+
+  .checkbox-container {
+    margin-bottom: 8px;
+  }
+
+  .property-items {
+    overflow-y: auto;
+    margin-top: 15px;
+
+    &::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: var(--gray-300);
+      border-radius: 4px;
+    }
+  }
+
+  .input-container {
+    width: calc(100% - 10px);
+  }
+
+  .filter-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 24px 0 24px;
+    position: absolute;
+    bottom: 0;
+    width: calc(100% - 56px);
+
+    .button {
+      width: calc(50% - 4px);
+    }
+  }
+}

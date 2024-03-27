@@ -1,3 +1,5 @@
+import { Nullable } from "../lib/utils/nullable";
+
 export interface Pagination {
   pageIndex: number;
   pageSize: number;
@@ -22,7 +24,7 @@ export const enum HttpCodes {
 
 export const TOKEN_KEY = "sessionId";
 
-export const enum LoadingStatusEnum {
+export const enum LOADING_STATUS_ENUM {
   VIRGIN = "VIRGIN",
   INITIAL_LOADING = "INITIAL_LOADING",
   SENDING = "SENDING",
@@ -31,7 +33,7 @@ export const enum LoadingStatusEnum {
   ERROR = "ERROR",
 }
 
-export const enum SortDirectionEnum {
+export const enum SORT_DIRECTION_ENUM {
   ASCENDING = 0,
   DESCENDING = 1,
 }
@@ -56,7 +58,7 @@ export interface ResultError {
   number: string;
 }
 
-export interface PostResultWrapper<T> {
+export interface ResponseWithStatus<T> {
   ok: boolean;
   error: ResultError;
   result: T;
@@ -65,4 +67,11 @@ export interface PostResultWrapper<T> {
 export interface BasePageParams {
   pageIndex: number;
   pageSize: number;
+}
+
+export interface BaseCreateAndUpdateData {
+  createdAt: string;
+  createdBy: Nullable<number>;
+  updatedAt: Nullable<string>;
+  updatedBy: Nullable<number>;
 }

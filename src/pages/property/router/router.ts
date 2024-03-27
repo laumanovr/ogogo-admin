@@ -9,8 +9,8 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: `${Routes.property}/:id`,
-    name: "propertyDetail",
-    component: () => import(`../ui/property-detail/PropertyDetail.vue`),
+    name: "propertyValue",
+    component: () => import(`../ui/property-value/PropertyValue.vue`),
   },
 ];
 
