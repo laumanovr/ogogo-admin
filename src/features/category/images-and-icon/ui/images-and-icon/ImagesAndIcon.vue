@@ -12,7 +12,11 @@
   </div>
 
   <div class="add-image-buttons-container mb-40">
-    <label v-if="!imageUrl" for="big-image" class="add-image-big-button">
+    <label
+      v-if="!imageUrl && !file"
+      for="big-image"
+      class="add-image-big-button"
+    >
       <input
         id="big-image"
         class="file-upload-input"
@@ -21,8 +25,8 @@
       />
       <img src="/icons/plus-icon.png" />
     </label>
-    <div v-if="imageUrl" class="preview-selected-big-image">
-      <img :src="imageUrl" alt="Preview" class="big-image-under-container" />
+    <div v-if="imageUrl || file" class="preview-selected-big-image">
+      <img :src="file" alt="Preview" class="big-image-under-container" />
       <SIconRender
         @click="closeImage"
         name="CloseIcon"
@@ -30,7 +34,11 @@
         class="remove-icon"
       />
     </div>
-    <label v-if="!iconUrl" for="small-image" class="add-image-small-button">
+    <label
+      v-if="!iconUrl && !iconFetched"
+      for="small-image"
+      class="add-image-small-button"
+    >
       <input
         id="small-image"
         class="file-upload-input"
@@ -39,8 +47,12 @@
       />
       <img src="/icons/plus-icon.png" />
     </label>
-    <div v-if="iconUrl" class="preview-selected-small-image">
-      <img :src="iconUrl" alt="Preview" class="small-image-under-container" />
+    <div v-if="iconUrl || iconFetched" class="preview-selected-small-image">
+      <img
+        :src="iconUrl || iconFetched"
+        alt="Preview"
+        class="small-image-under-container"
+      />
       <SIconRender
         @click="closeIcon"
         name="CloseIcon"
@@ -57,24 +69,32 @@
 
 <script lang="ts" setup>
 import { SIconRender } from "@tumarsoft/ogogo-ui";
-import { ref } from "vue";
+import { ref, computed } from "vue";
 import {
   ImageRecomendationModal,
   useImagesAndIconStore,
 } from "@/features/category/images-and-icon";
-import { useSaveCategorySettingsStore } from "@/features/category/save-category-settings";
+// import { useSaveCategorySettingsStore } from "@/features/category/save-category-settings";
 import { useCategorySharedStore } from "@/shared/store/category";
 
 let imageUrl = ref(null);
 let iconUrl = ref(null);
 
 const store = useImagesAndIconStore();
-const saveCategorySettingsStore = useSaveCategorySettingsStore();
+// const saveCategorySettingsStore = useSaveCategorySettingsStore();
 
 const categorySharedStore = useCategorySharedStore();
 
-function handleImageUpload(event: any) {
-  const file = event.target.files[0];
+const iconFetched = computed(() => {
+  return categorySharedStore.getIcoBase64 as string;
+});
+
+const file = computed(() => {
+  return categorySharedStore.getFile;
+});
+
+function handleImageUpload(event: Event) {
+  const file = (event.target as HTMLInputElement).files[0];
   if (!file) return;
 
   // Read the selected image file and generate a data URL
@@ -82,14 +102,13 @@ function handleImageUpload(event: any) {
   // Resize or crop the image
   resizeImage(file);
 
-  // const reader = new FileReader();
-  // reader.onload = () => {
-  //   imageUrl.value = reader.result;
-  // };
-  // reader.readAsDataURL(file);
+  const formData = new FormData();
+  formData.append("File", file);
+
+  store.saveUploadImage(formData);
 }
-function handleIconUpload(event: any) {
-  const file = event.target.files[0];
+function handleIconUpload(event: Event) {
+  const file = (event.target as HTMLInputElement).files[0];
   if (!file) return;
 
   // Read the selected image file and generate a data URL
@@ -97,15 +116,21 @@ function handleIconUpload(event: any) {
   // Resize or crop the image
   resizeIcon(file);
 
-  // const reader = new FileReader();
-  // reader.onload = () => {
-  //   imageUrl.value = reader.result;
-  // };
-  // reader.readAsDataURL(file);
+  const reader = new FileReader();
+
+  let base64String;
+
+  // Set up a callback function to run when the file has been read
+  reader.onload = function (event) {
+    // 'event.target.result' contains the Base64 encoded string
+    base64String = event.target.result;
+    console.log(base64String);
+    categorySharedStore.setIcoBase64(base64String);
+  };
 }
 
 function resizeImage(file: File) {
-  saveCategorySettingsStore.setFile(file);
+  // saveCategorySettingsStore.setFile(file);
   const reader = new FileReader();
   reader.onload = (event) => {
     const img = new Image();

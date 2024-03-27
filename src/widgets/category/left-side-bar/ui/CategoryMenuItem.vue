@@ -54,9 +54,9 @@
 <script lang="ts" setup>
 import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
-import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
 import { useCategorySharedStore } from "@/shared/store/category";
 import { ICategory } from "../api/index.types";
+import AddCategoryConfirmationModal from "./AddCategoryConfirmationModal.vue";
 
 const props = defineProps({
   categoryName: {
@@ -85,6 +85,18 @@ function addSubCategory() {
     "active"
   );
   addCategoryConfirmationModalValue.value = true;
+}
+
+if (props.item.active) {
+  categoryShareStore.fetchCategoryById(props.item.id);
+} else {
+  categoryShareStore.setTranslation(null, "ru");
+  categoryShareStore.setTranslation(null, "ky");
+  categoryShareStore.setTranslation(null, "en");
+  categoryShareStore.setIcoBase64(null);
+  categoryShareStore.setImageId(null);
+  categoryShareStore.setFile(null);
+  categoryShareStore.setCategoryId(null);
 }
 
 const onClose = () => {
@@ -136,6 +148,7 @@ const onSave = () => {
     icon: null,
     id: null,
     parentId: props.item.id,
+    sequenceNumber: props.depth,
   });
 
   onClose();
@@ -146,7 +159,22 @@ const onChangeActive = () => {
     categoryShareStore.getCategories,
     "active"
   );
-  categoryShareStore.fetchCategoryById(props.item.id);
+
+  if (props.item.id) {
+    categoryShareStore.fetchCategoryById(props.item.id).then((data) => {
+      data.properties.forEach((el) => {
+        categoryShareStore.setProperties(el);
+      });
+    });
+  } else {
+    categoryShareStore.setTranslation(null, "ru");
+    categoryShareStore.setTranslation(null, "ky");
+    categoryShareStore.setTranslation(null, "en");
+    categoryShareStore.setIcoBase64(null);
+    categoryShareStore.setImageId(null);
+    categoryShareStore.setFile(null);
+    categoryShareStore.setCategoryId(null);
+  }
 
   categoryShareStore.setCategoryHasChanged(true);
   props.item.active = true;

@@ -1,4 +1,6 @@
 import { ICategorySettings } from "@/shared/api/category/index.types";
+import { Mode } from "@/shared/lib/utils/enums";
+import { Property } from "@/widgets/category/category-settings/store/category-settings-store.types";
 
 export interface ICategorySharedState {
   categories: ICategory[];
@@ -6,6 +8,15 @@ export interface ICategorySharedState {
   categoryHasChanged: boolean;
   categoryById: ICategorySettings;
   namingFields: IPropertyNamingFields;
+  imageId: string;
+  icoBase64: string | ArrayBuffer;
+  file: string | File;
+  contentType: string;
+  fileName: string;
+  mode: Mode;
+  categoryId: string;
+  properties: Property[];
+  sequenceNumber: number;
 }
 
 export interface ICategory {
@@ -15,6 +26,7 @@ export interface ICategory {
   icon?: string;
   parentId?: string;
   id: string;
+  sequenceNumber: number;
 }
 export interface IPropertyNamingFields {
   ru: string;

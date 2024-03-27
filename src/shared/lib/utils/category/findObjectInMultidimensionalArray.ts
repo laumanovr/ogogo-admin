@@ -7,13 +7,12 @@ interface ObjectWithChildren {
 
 export function findObjectInMultidimensionalArray<T extends ObjectWithChildren>(
   array: T[],
-  propName: string,
-  propValue: boolean
+  propName: string
 ): T {
   let result = null;
 
   _.some(array, (obj) => {
-    if (obj[propName] === propValue) {
+    if (Boolean(obj[propName])) {
       result = obj;
       return true; // Exit loop if found
     }
@@ -21,8 +20,7 @@ export function findObjectInMultidimensionalArray<T extends ObjectWithChildren>(
     if (_.isArray(obj.childMarketplaceCategoryIdList)) {
       result = findObjectInMultidimensionalArray(
         obj.childMarketplaceCategoryIdList,
-        propName,
-        propValue
+        propName
       );
       return !!result; // Exit loop if found
     }

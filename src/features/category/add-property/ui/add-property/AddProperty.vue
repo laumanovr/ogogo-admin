@@ -9,7 +9,10 @@
     <img src="/icons/plus-icon.png" />
     <p>{{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</p></SButton
   >
-  <PropertyCardList />
+  <PropertyCardList
+    v-for="propertyItem in categorySharedStore.getProperties"
+    :property="getProperty(propertyItem.propertyId)"
+  />
   <AddPropertyModal :value="modalValue" @close="onClose" />
 </template>
 
@@ -18,8 +21,26 @@ import { SButton } from "@tumarsoft/ogogo-ui";
 import { AddPropertyModal } from "@/features/category/add-property";
 import { PropertyCardList } from "@/entities/category";
 import { ref } from "vue";
+import { useCategorySharedStore } from "@/shared/store/category";
+import { useAddPropertyStore } from "@/features/category/add-property";
 
 let modalValue = ref(false);
+
+const categorySharedStore = useCategorySharedStore();
+
+const addPropertyStore = useAddPropertyStore();
+
+const getProperty = (propertyId: string) => {
+  const foundProperty = addPropertyStore.getPropertiesListAutocomplete.find(
+    (e) => e.id === propertyId
+  );
+
+  return foundProperty;
+};
+
+// const getPopertyName = computed(() => {
+//   categorySharedStore.getProperties;
+// });
 
 const onOpenModal = () => {
   modalValue.value = true;

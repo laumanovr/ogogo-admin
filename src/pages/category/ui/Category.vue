@@ -1,6 +1,6 @@
 <template>
   <div class="category-main-wrapper mt-16">
-    <div class="left-side-bar-container">
+    <div class="left-side-bar-container h-p-100">
       <LeftSideBar />
     </div>
     <CategorySettings />
@@ -17,8 +17,10 @@ import CategorySettings from "@/widgets/category/category-settings/ui/CategorySe
 // });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+@import "../../../app/styles/colors.scss";
 .category-main-wrapper {
+  height: 86vh;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;

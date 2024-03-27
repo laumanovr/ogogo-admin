@@ -1,5 +1,5 @@
 <template>
-  <div class="left-side-bar-container">
+  <div class="left-side-bar-container overflow-y-scroll">
     <div class="item"></div>
     <div v-for="(item, i) in categoriesLocal" :key="i">
       <CategoryMenuItem
@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import CategoryMenuItem from "@/widgets/category/left-side-bar/ui/CategoryMenuItem.vue";
-import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
+import AddCategoryConfirmationModal from "./AddCategoryConfirmationModal.vue";
 import { useCategorySharedStore } from "@/shared/store/category";
 import { useLeftSideBarStore } from "../store/left-side-bar-store";
 
@@ -79,6 +79,7 @@ const onSave = () => {
     active: true,
     icon: null,
     id: null,
+    sequenceNumber: 0,
   });
   onClose();
 };
@@ -92,7 +93,7 @@ const onSaveSubCategory = () => {
 <style lang="scss" scoped>
 .left-side-bar-container {
   width: auto;
-  height: 100vh;
+  height: 100%;
 }
 .empty-category-container,
 .add-category-container {

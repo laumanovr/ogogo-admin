@@ -1,29 +1,12 @@
 import { API } from "@/shared/lib/plugins/axios";
-import {
-  AuthGetProfileResultInterface,
-} from "@/shared/api/auth/types";
+import { singleton } from "tsyringe";
 
-// export const login = (
-//   credentials: AuthLoginPayloadInterface
-// ): Promise<AuthLoginResultInterface> => {
-//   const formData = new FormData();
-//   Object.keys(credentials).forEach((key) => {
-//     formData.append(key, credentials[key]);
-//   });
-//   return axios({
-//     method: "POST",
-//     url: "/api/auth/login",
-//     data: formData,
-//     headers: {
-//       "content-type": "multipart/form-data",
-//     },
-//   }).then((response) => response.data.result);
-// };
-
-export const getGeneralParameters =
-  (): Promise<AuthGetProfileResultInterface> => {
+@singleton()
+export class CommonApi {
+  getGeneralParameters = (): Promise<any> => {
     return API({
       method: "GET",
       url: `/api/Common/GetGeneralParameters`,
     }).then((response) => response.data.result);
   };
+}

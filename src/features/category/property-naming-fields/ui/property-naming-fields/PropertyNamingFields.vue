@@ -6,31 +6,31 @@
     <div class="inputs-container">
       <SInput
         :label="$t('lang-bfee2c24-b7a6-41e9-8f4c-2620064b8a91')"
-        :width="'100%'"
-        class="name-field mb-16"
-        :value="categorySharedStore.getRu"
-        @update:model-value="onChange($event, 'ru')"
+        class="name-field mb-16 w-p-100"
+        :rules="requiredField"
+        :modelValue="categorySharedStore.getRu ?? ''"
+        @update:modelValue="onChange($event, 'ru')"
       />
       <SInput
         :label="$t('lang-cd2180a0-855c-4f07-8f94-0a0a14c4eaf0')"
-        :width="'100%'"
-        class="name-field mb-16"
+        class="name-field mb-16 w-p-100"
         :modelValue="categorySharedStore.getKy"
-        @update:model-value="onChange($event, 'ky')"
+        @update:modelValue="onChange($event, 'ky')"
       />
       <SInput
         :label="$t('lang-d4de3868-af08-41e4-8807-11676c8fdf5d')"
-        :width="'100%'"
-        class="name-field mb-16"
+        class="name-field mb-16 w-p-100"
         :modelValue="categorySharedStore.getEn"
-        @update:model-value="onChange($event, 'en')"
+        @update:modelValue="onChange($event, 'en')"
       />
     </div>
   </div>
 </template>
 <script lang="ts" setup>
+// import { computed, ref } from "vue";
 import { SInput } from "@tumarsoft/ogogo-ui";
 import { useCategorySharedStore } from "@/shared/store/category";
+import { requiredField } from "@/shared/lib/utils/rules";
 
 const categorySharedStore = useCategorySharedStore();
 

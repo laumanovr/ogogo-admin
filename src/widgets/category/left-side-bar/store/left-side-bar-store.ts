@@ -41,19 +41,8 @@ export const useLeftSideBarStore = defineStore("left-side-bar-store", {
             };
 
             const payload = multidimensionalArray(res);
+            payload[0].active = true;
 
-            // const payload = multidimensionalArray(res);
-
-            // const payload = res.map((e) => {
-            //   const res = {
-            //     ...e,
-            //     childMarketplaceCategoryIdList: e.childMarketplaceCategories,
-            //   };
-
-            //   delete res.childMarketplaceCategories;
-
-            //   return res;
-            // });
             categorySharedStore.setCategories(payload);
             resolve(res);
           })

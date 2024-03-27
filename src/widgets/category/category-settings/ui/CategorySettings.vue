@@ -1,29 +1,38 @@
 <template>
-  <div class="main-wrapper">
-    <div class="settings">
+  <SForm class="main-wrapper h-p-100" ref="namingFieldsForm">
+    <div class="settings h-p-100">
       <ImagesAndIcon />
       <PropertyNamingFields />
       <AddProperty />
     </div>
-  </div>
+  </SForm>
   <div class="save-block">
-    <SaveCategorySettings @saveSettings="onSaveSettings" />
+    <SButton color="violet" class="w-213" @click="onSaveSettings">{{
+      $t("lang-b819743e-e6d9-4b27-9dd0-4604271a2395")
+    }}</SButton>
   </div>
 </template>
 <script lang="ts" setup>
 import { ImagesAndIcon } from "@/features/category/images-and-icon";
 import { PropertyNamingFields } from "@/features/category/property-naming-fields";
 import { AddProperty } from "@/features/category/add-property";
-import { SaveCategorySettings } from "@/features/category/save-category-settings";
 import { useCategoryStore } from "@/widgets/category/category-settings";
+import { SButton, SForm } from "@tumarsoft/ogogo-ui";
+import { ref } from "vue";
 
 const categoryStore = useCategoryStore();
 
 const onSaveSettings = () => {
-  categoryStore.saveCategorySettings();
+  if (namingFieldsForm.value.validateForm()) {
+    categoryStore.saveCategorySettings();
+  }
 };
+
+const namingFieldsForm = ref(null);
 </script>
 <style scoped lang="scss">
+@import "../../../../app/styles/colors.scss";
+
 .main-wrapper {
   width: 100%;
   display: flex;
@@ -68,5 +77,8 @@ const onSaveSettings = () => {
       width: 100%;
     }
   }
+}
+.settings {
+  overflow-y: scroll;
 }
 </style>

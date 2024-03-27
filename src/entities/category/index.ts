@@ -1,3 +1,3 @@
-import PropertyCardList from "./ui/property-card-list/PropertyCardList.vue";
+import PropertyCardList from "./property-card-list/ui/PropertyCardList.vue";
 
 export { PropertyCardList };
