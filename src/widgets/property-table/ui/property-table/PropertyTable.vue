@@ -115,7 +115,7 @@ import { SSelect } from "@tumarsoft/ogogo-ui";
 import { usePropertyStore } from "@/entities/property";
 import { useAlertStore } from "@/shared/store/alert";
 import lodash from "lodash";
-import { SORT_DIRECTION_ENUM } from "@/shared/api/api.types";
+import { SORT_DIRECTION } from "@/shared/api/api.types";
 
 const propertyStore = usePropertyStore();
 const alertStore = useAlertStore();
@@ -215,7 +215,7 @@ const onSelectValue = (option: any, item: any) => {
 const getPropertyList = () =>
   propertyStore.fetchPropertyList({
     pageSize: 500,
-    sortDirection: SORT_DIRECTION_ENUM.ASCENDING,
+    sortDirection: SORT_DIRECTION.ASCENDING,
     pageIndex: 0,
   });
 
@@ -223,7 +223,7 @@ const getGroupPropertyList = () =>
   propertyStore
     .fetchPropertyGroupListAutocomplete({
       pageSize: 500,
-      sortDirection: SORT_DIRECTION_ENUM.ASCENDING,
+      sortDirection: SORT_DIRECTION.ASCENDING,
       pageIndex: 0,
     })
     .then(() => {
@@ -318,7 +318,7 @@ const searchProperty = (value: any) => {
   propertyStore.fetchPropertyList({
     pageSize: 500,
     search: value,
-    sortDirection: SORT_DIRECTION_ENUM.ASCENDING,
+    sortDirection: SORT_DIRECTION.ASCENDING,
     queryParams: undefined,
     pageIndex: 0,
   });

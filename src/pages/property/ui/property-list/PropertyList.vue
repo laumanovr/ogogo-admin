@@ -59,7 +59,7 @@ import { usePropertyStore } from "@/entities/property";
 import { PropertyGroupTable } from "@/widgets/property-group-table";
 import { EmptyData } from "@/shared/ui";
 import { FilterModal } from "@/shared/ui";
-import { SORT_DIRECTION_ENUM } from "@/shared/api/api.types";
+import { SORT_DIRECTION } from "@/shared/api/api.types";
 
 const propertyStore = usePropertyStore();
 const tab = ref("one");
@@ -73,7 +73,7 @@ onMounted(() => {
   propertyStore
     .fetchPropertyList({
       pageSize: 500,
-      sortDirection: SORT_DIRECTION_ENUM.ASCENDING,
+      sortDirection: SORT_DIRECTION.ASCENDING,
       pageIndex: 0,
     })
     .then(() => {
