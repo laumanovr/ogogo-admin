@@ -8,6 +8,7 @@ import { useAlertStore } from "@/shared/store/alert";
 import { container } from "tsyringe";
 import { AuthApi } from "@/shared/api/auth/index.ts";
 import { isAxiosError } from "axios";
+import { setItem } from "@/shared/lib/utils/persistanceStorage";
 
 const authApiService = container.resolve(AuthApi);
 
@@ -70,6 +71,9 @@ export const useAuthStore = defineStore("auth", {
             this.needChangePassword = needChangePassword as boolean;
 
             this.sessionId = result?.sessionId;
+
+            setItem("sessionId", result?.sessionId);
+
             return this.getCurrentUser()
               .then((user) => {
                 resolve(user);
