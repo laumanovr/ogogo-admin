@@ -86,9 +86,9 @@ function addSubCategory() {
   addCategoryConfirmationModalValue.value = true;
 }
 
-const onClose = () => {
-  addCategoryConfirmationModalValue.value = false;
-};
+// const onClose = () => {
+//   addCategoryConfirmationModalValue.value = false;
+// };
 
 function deletePropertyFromMultidimensionalArray(
   array: CategoryTreeEntity[],
@@ -118,27 +118,27 @@ function deletePropertyFromMultidimensionalArray(
   );
 }
 
-const onSave = () => {
-  emit("saveSubCategory", true);
+// const onSave = () => {
+//   emit("saveSubCategory", true);
 
-  console.log(props.item);
+//   console.log(props.item);
 
-  deletePropertyFromMultidimensionalArray(
-    props.item.childMarketplaceCategoryIdList,
-    "active"
-  );
+//   deletePropertyFromMultidimensionalArray(
+//     props.item.childMarketplaceCategoryIdList,
+//     "active"
+//   );
 
-  props.item.childMarketplaceCategoryIdList.push({
-    categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
-    childMarketplaceCategoryIdList: [],
-    active: true,
-    icon: null,
-    id: null,
-    parentId: props.item.id,
-  });
+//   props.item.childMarketplaceCategoryIdList.push({
+//     categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
+//     childMarketplaceCategoryIdList: [],
+//     active: true,
+//     icon: null,
+//     id: null,
+//     parentId: props.item.id,
+//   });
 
-  onClose();
-};
+//   onClose();
+// };
 
 const onChangeActive = () => {
   deletePropertyFromMultidimensionalArray(

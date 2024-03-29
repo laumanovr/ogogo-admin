@@ -35,9 +35,9 @@ function addCategory() {
   addCategoryConfirmationModalValue.value = true;
 }
 
-const onClose = () => {
-  addCategoryConfirmationModalValue.value = false;
-};
+// const onClose = () => {
+//   addCategoryConfirmationModalValue.value = false;
+// };
 
 const categoryStore = useCategoryStore();
 
@@ -67,18 +67,18 @@ function deletePropertyFromMultidimensionalArray(
   });
 }
 
-const onSave = () => {
-  deletePropertyFromMultidimensionalArray(categoriesLocal.value, "active");
+// const onSave = () => {
+//   deletePropertyFromMultidimensionalArray(categoriesLocal.value, "active");
 
-  categoryStore.setAddCategory({
-    categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
-    icon: null,
-    id: null,
-    parentId: "",
-    childMarketplaceCategories: [],
-  });
-  onClose();
-};
+//   categoryStore.setAddCategory({
+//     categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
+//     icon: null,
+//     id: null,
+//     parentId: "",
+//     childMarketplaceCategories: [],
+//   });
+//   onClose();
+// };
 
 const onSaveSubCategory = () => {
   deletePropertyFromMultidimensionalArray(categoriesLocal.value, "active");

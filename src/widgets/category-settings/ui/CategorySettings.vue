@@ -16,13 +16,13 @@ import { ImagesAndIcon } from "@/features/category/images-and-icon";
 import { PropertyNamingFields } from "@/features/category/property-naming-fields";
 import { CategoryProperties, PropertyCardList } from "./components";
 // import { SaveCategorySettings } from "@/features/category/save-category-settings";
-import { useCategoryStore } from "@/entities/category";
+// import { useCategoryStore } from "@/entities/category";
 
-const categoryStore = useCategoryStore();
+// const categoryStore = useCategoryStore();
 
-const onSaveSettings = () => {
-  categoryStore.saveCategorySettings();
-};
+// const onSaveSettings = () => {
+//   categoryStore.saveCategorySettings();
+// };
 </script>
 <style scoped lang="scss">
 @import "style.scss";

@@ -234,7 +234,7 @@ const closeImage = () => {
 };
 const closeIcon = () => {
   iconUrl.value = null;
-  categoryStore.setCategoryIcon(null);
+  categorySharedStore.setCategoryIcon(null);
 };
 
 let imageRecomendationModalValue = ref(false);
