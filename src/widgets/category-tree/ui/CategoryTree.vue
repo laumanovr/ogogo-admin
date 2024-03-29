@@ -14,18 +14,18 @@
       <img src="/icons/plus-icon.png" />
       <span>{{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</span>
     </div>
-    <AddCategoryConfirmationModal
+    <!-- <AddCategoryConfirmationModal
       @close="onClose"
       @save="onSave"
       :value="addCategoryConfirmationModalValue"
-    />
+    /> -->
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import { CategoryTreeItem } from "@/widgets/category-tree/ui/components";
-import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
+// import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
 import { useCategoryStore } from "@/entities/category";
 
 let addCategoryConfirmationModalValue = ref(false);
@@ -35,9 +35,9 @@ function addCategory() {
   addCategoryConfirmationModalValue.value = true;
 }
 
-const onClose = () => {
-  addCategoryConfirmationModalValue.value = false;
-};
+// const onClose = () => {
+//   addCategoryConfirmationModalValue.value = false;
+// };
 
 const categoryStore = useCategoryStore();
 
@@ -67,18 +67,18 @@ function deletePropertyFromMultidimensionalArray(
   });
 }
 
-const onSave = () => {
-  deletePropertyFromMultidimensionalArray(categoriesLocal.value, "active");
+// const onSave = () => {
+//   deletePropertyFromMultidimensionalArray(categoriesLocal.value, "active");
 
-  categoryStore.setAddCategory({
-    categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
-    icon: null,
-    id: null,
-    parentId: "",
-    childMarketplaceCategories: [],
-  });
-  onClose();
-};
+//   categoryStore.setAddCategory({
+//     categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
+//     icon: null,
+//     id: null,
+//     parentId: "",
+//     childMarketplaceCategories: [],
+//   });
+//   onClose();
+// };
 
 const onSaveSubCategory = () => {
   deletePropertyFromMultidimensionalArray(categoriesLocal.value, "active");
