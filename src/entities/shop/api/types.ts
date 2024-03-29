@@ -27,6 +27,7 @@ export type UpdateShopResponse = ResponseWithStatus<ShopEntity>;
 
 export type VerifyShopPayload = {
   id: string;
+  version: number;
   moderationResult: VerifyModerationResult;
 };
 

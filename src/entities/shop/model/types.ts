@@ -12,6 +12,7 @@ export type ShopEntity = {
   moderatorName: Nullable<string>;
   moderationDate: Nullable<string | Date>;
   moderationResult: TrademarkModerationResult;
+  version: number;
 };
 
 export const enum PRODUCT_VERIFICATION_STATUS {
@@ -31,6 +32,6 @@ type ValidationDetail = {
   isRejected: boolean;
   verified: boolean;
   userId: Nullable<number>;
-  validateDateTime: Nullable<string | Date>;
+  validateDateTime: Nullable<string>;
   validationComment: Nullable<string>;
 };

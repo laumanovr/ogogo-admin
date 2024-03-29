@@ -58,10 +58,34 @@ export const useShopStore = defineStore(NAME_ID, {
             validationComment: null,
           },
         },
+        version: null,
       },
       verifyInfo: {
         id: null,
-        moderationResult: null,
+        version: null,
+        moderationResult: {
+          name: {
+            isRejected: false,
+            verified: false,
+            userId: null,
+            validateDateTime: null,
+            validationComment: null,
+          },
+          logo: {
+            isRejected: false,
+            verified: false,
+            userId: null,
+            validateDateTime: null,
+            validationComment: null,
+          },
+          description: {
+            isRejected: false,
+            verified: false,
+            userId: null,
+            validateDateTime: null,
+            validationComment: null,
+          },
+        },
       },
     };
   },
@@ -77,6 +101,15 @@ export const useShopStore = defineStore(NAME_ID, {
     },
   },
   actions: {
+    setVerifyInfoLogoComment(value: string) {
+      this.verifyInfo.moderationResult.logo.validationComment = value;
+    },
+    setVerifyInfoNameComment(value: string) {
+      this.verifyInfo.moderationResult.name.validationComment = value;
+    },
+    setVerifyInfoDescriptionComment(value: string) {
+      this.verifyInfo.moderationResult.description.validationComment = value;
+    },
     fetchShopPagedList(
       payload: GetShopPagedListPayload
     ): Promise<WithResultPagination<ShopEntity>> {
@@ -111,9 +144,62 @@ export const useShopStore = defineStore(NAME_ID, {
             this.openedShop = response;
             this.verifyInfo = {
               id: response.id,
-              moderationResult: response.moderationResult,
+              version: response.version,
+              moderationResult: {
+                logo: {
+                  ...this.verifyInfo.moderationResult.logo,
+                  ...response.moderationResult.logo,
+                },
+                name: {
+                  ...this.verifyInfo.moderationResult.name,
+                  ...response.moderationResult.name,
+                },
+                description: {
+                  ...this.verifyInfo.moderationResult.description,
+                  ...response.moderationResult.description,
+                },
+              },
             };
             loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err?.error?.errorMessage);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
+    },
+    verifyShop(): Promise<ShopEntity> {
+      return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
+        loaderStore.setLoaderState(true);
+        shopApiService
+          .verifyShop(this.verifyInfo)
+          .then((response) => {
+            loaderStore.setLoaderState(false);
+            this.openedShop = response;
+            this.verifyInfo = {
+              id: response.id,
+              version: response.version,
+              moderationResult: {
+                logo: {
+                  ...this.verifyInfo.moderationResult.logo,
+                  ...response.moderationResult.logo,
+                },
+                name: {
+                  ...this.verifyInfo.moderationResult.name,
+                  ...response.moderationResult.name,
+                },
+                description: {
+                  ...this.verifyInfo.moderationResult.description,
+                  ...response.moderationResult.description,
+                },
+              },
+            };
             resolve(response);
           })
           .catch((err) => {
