@@ -24,6 +24,11 @@
     .logo-title {
       font-weight: 600;
     }
+
+  }
+
+  .rejected {
+    background: var(--gray-50);
   }
 
   .input-container {
@@ -38,5 +43,10 @@
     .button {
       min-width: 130px;
     }
+  }
+
+  .comment-icon {
+    width: 40px;
+    height: 40px;
   }
 }

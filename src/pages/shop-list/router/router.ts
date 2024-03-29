@@ -5,13 +5,7 @@ const routes: RouteRecordRaw[] = [
   {
     path: ROUTES.shops,
     name: "shops",
-    component: () => import("../ui/shop-list/ShopList.vue"),
-    meta: { requiresAuth: true },
-  },
-  {
-    path: `${ROUTES.shops}/:id`,
-    name: "shopDetail",
-    component: () => import("../ui/shop-detail/ShopDetail.vue"),
+    component: () => import("@/pages/shop-list/ui/ShopList.vue"),
     meta: { requiresAuth: true },
   },
 ];

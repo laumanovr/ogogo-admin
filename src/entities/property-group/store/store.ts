@@ -4,7 +4,7 @@ import { container } from "tsyringe";
 import { useAlertStore } from "@/shared/store/alert";
 import {
   ResponseWithStatus,
-  SORT_DIRECTION_ENUM,
+  SORT_DIRECTION,
   WithPagination,
 } from "@/shared/api/api.types.ts";
 import {
@@ -95,7 +95,7 @@ export const usePropertyGroupStore = defineStore(NAME_ID, {
           .then((response) => {
             this.fetchGroupPropertyList({
               pageSize: 500,
-              sortDirection: SORT_DIRECTION_ENUM.ASCENDING,
+              sortDirection: SORT_DIRECTION.ASCENDING,
               queryParams: null,
               pageIndex: 0,
             });

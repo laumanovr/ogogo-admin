@@ -1,0 +1,12 @@
+.comment-input {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .comment-input-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-start;
+    margin-top: 12px;
+  }
+}
