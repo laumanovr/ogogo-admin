@@ -88,7 +88,7 @@ const propertyObject = reactive({
   propertySelector: null,
   isAddNameToProductName: null,
   renderType: null,
-  allowedValues: null,
+  allowedValues: [],
 });
 
 const addPropertyStore = useAddPropertyStore();
@@ -119,8 +119,6 @@ const renderPropertyTypes = reactive([
 const onClose = () => {
   emit("close", false);
 };
-
-propertyObject;
 
 const onSave = () => {
   categorySharedStore.setProperties(propertyObject);

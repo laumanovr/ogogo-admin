@@ -1,3 +1,5 @@
+import { BasePageParams } from "@/shared/api/api.types";
+
 export interface ICategorySettings {
   id: string;
   categoryName: string;
@@ -28,7 +30,8 @@ export interface ParentPropertyElement {
 
 export interface AllowedValue {
   propertyValueId: string;
-  propertyValueText: string;
+  propertyValueText?: string;
+  propertyValueIco?: string;
 }
 
 export interface ParentPropertyProperty {
@@ -42,4 +45,19 @@ export interface ParentPropertyProperty {
   propertyValueType: number;
   countOfPropertyValues: number;
   localization: boolean;
+}
+
+export interface PropertyValueAutocompletePayload extends BasePageParams {
+  search?: string;
+  sortDirection?: number;
+  queryParams: {
+    propertyId: string;
+  };
+}
+
+export interface PropertyValueAutocomplete {
+  id: string;
+  value: string;
+  description: string;
+  icoBase64: string;
 }

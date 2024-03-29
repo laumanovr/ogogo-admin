@@ -1,5 +1,4 @@
 import { API } from "@/shared/lib/plugins/axios";
-import { File } from "./index.types";
 import { singleton } from "tsyringe";
 
 @singleton()

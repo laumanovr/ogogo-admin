@@ -7,6 +7,6 @@ export interface Translations {
 }
 
 export type ICategoryPayload = Partial<
-  Pick<ICategory, "parentId" | "sequenceNumber" | "propertySetId">
+  Pick<ICategory, "parentId" | "sequenceNumber">
 > &
-  Omit<ICategory, "parentId" | "sequenceNumber" | "propertySetId">;
+  Omit<ICategory, "parentId" | "sequenceNumber">;

@@ -77,26 +77,26 @@ const isHovering = ref(false);
 
 const addCategoryConfirmationModalValue = ref(false);
 
-const categoryShareStore = useCategorySharedStore();
+const categorySharedStore = useCategorySharedStore();
 
 function addSubCategory() {
   deletePropertyFromMultidimensionalArray(
-    categoryShareStore.getCategories,
+    categorySharedStore.getCategories,
     "active"
   );
   addCategoryConfirmationModalValue.value = true;
 }
 
-if (props.item.active) {
-  categoryShareStore.fetchCategoryById(props.item.id);
+if (props.item.active && props.item.id) {
+  categorySharedStore.fetchCategoryById(props.item.id);
 } else {
-  categoryShareStore.setTranslation(null, "ru");
-  categoryShareStore.setTranslation(null, "ky");
-  categoryShareStore.setTranslation(null, "en");
-  categoryShareStore.setIcoBase64(null);
-  categoryShareStore.setImageId(null);
-  categoryShareStore.setFile(null);
-  categoryShareStore.setCategoryId(null);
+  categorySharedStore.setTranslation(null, "ru");
+  categorySharedStore.setTranslation(null, "ky");
+  categorySharedStore.setTranslation(null, "en");
+  categorySharedStore.setIcoBase64(null);
+  categorySharedStore.setImageId(null);
+  categorySharedStore.setFile(null);
+  categorySharedStore.setCategoryId(null);
 }
 
 const onClose = () => {
@@ -134,8 +134,6 @@ function deletePropertyFromMultidimensionalArray(
 const onSave = () => {
   emit("saveSubCategory", true);
 
-  console.log(props.item);
-
   deletePropertyFromMultidimensionalArray(
     props.item.childMarketplaceCategoryIdList,
     "active"
@@ -156,27 +154,23 @@ const onSave = () => {
 
 const onChangeActive = () => {
   deletePropertyFromMultidimensionalArray(
-    categoryShareStore.getCategories,
+    categorySharedStore.getCategories,
     "active"
   );
 
   if (props.item.id) {
-    categoryShareStore.fetchCategoryById(props.item.id).then((data) => {
-      data.properties.forEach((el) => {
-        categoryShareStore.setProperties(el);
-      });
-    });
+    categorySharedStore.fetchCategoryById(props.item.id);
   } else {
-    categoryShareStore.setTranslation(null, "ru");
-    categoryShareStore.setTranslation(null, "ky");
-    categoryShareStore.setTranslation(null, "en");
-    categoryShareStore.setIcoBase64(null);
-    categoryShareStore.setImageId(null);
-    categoryShareStore.setFile(null);
-    categoryShareStore.setCategoryId(null);
+    categorySharedStore.setTranslation(null, "ru");
+    categorySharedStore.setTranslation(null, "ky");
+    categorySharedStore.setTranslation(null, "en");
+    categorySharedStore.setIcoBase64(null);
+    categorySharedStore.setImageId(null);
+    categorySharedStore.setFile(null);
+    categorySharedStore.setCategoryId(null);
   }
 
-  categoryShareStore.setCategoryHasChanged(true);
+  categorySharedStore.setCategoryHasChanged(true);
   props.item.active = true;
 };
 </script>

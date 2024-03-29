@@ -26,7 +26,11 @@
       <img src="/icons/plus-icon.png" />
     </label>
     <div v-if="imageUrl || file" class="preview-selected-big-image">
-      <img :src="file" alt="Preview" class="big-image-under-container" />
+      <img
+        :src="imageUrl || file"
+        alt="Preview"
+        class="big-image-under-container"
+      />
       <SIconRender
         @click="closeImage"
         name="CloseIcon"
@@ -116,17 +120,21 @@ function handleIconUpload(event: Event) {
   // Resize or crop the image
   resizeIcon(file);
 
-  const reader = new FileReader();
+  // const reader = new FileReader();
 
-  let base64String;
+  // let base64String;
 
   // Set up a callback function to run when the file has been read
-  reader.onload = function (event) {
-    // 'event.target.result' contains the Base64 encoded string
-    base64String = event.target.result;
-    console.log(base64String);
-    categorySharedStore.setIcoBase64(base64String);
-  };
+  // reader.onload = function (event) {
+  //   // 'event.target.result' contains the Base64 encoded string
+  //   base64String = event.target.result;
+  //   console.log(event);
+  //   console.log(base64String);
+  //   categorySharedStore.setIcoBase64(base64String);
+
+  //   console.log(categorySharedStore.getIcoBase64);
+  // };
+  // console.log(base64String);
 }
 
 function resizeImage(file: File) {
@@ -215,6 +223,7 @@ function resizeIcon(file: any) {
     };
     img.src = event.target.result as string;
     categorySharedStore.setCategoryIcon(event.target.result as string);
+    categorySharedStore.setIcoBase64(event.target.result as string);
   };
   reader.readAsDataURL(file);
 }

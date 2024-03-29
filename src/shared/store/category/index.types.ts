@@ -1,4 +1,7 @@
-import { ICategorySettings } from "@/shared/api/category/index.types";
+import {
+  ICategorySettings,
+  PropertyValueAutocomplete,
+} from "@/shared/api/category/index.types";
 import { Mode } from "@/shared/lib/utils/enums";
 import { Property } from "@/widgets/category/category-settings/store/category-settings-store.types";
 
@@ -16,6 +19,7 @@ export interface ICategorySharedState {
   mode: Mode;
   categoryId: string;
   properties: Property[];
+  propertyValueAutocomplete: PropertyValueAutocomplete[];
   sequenceNumber: number;
 }
 

@@ -11,11 +11,13 @@
             :direction="!hideBody ? 'top' : 'right'"
             @click="onHideBody"
           />
-          <p>{{ props.property.value }}</p>
+          <p>{{ propertyName }}</p>
         </div>
         <div class="d-flex flex-row items-center gap-10">
           <img class="w-14 h-14" src="/icons/tree-icon.png" alt="tree-icon" />
-          <p>{{ selectedPropertyValues?.length }}</p>
+          <p>
+            {{ "allowedValues" in property && property.allowedValues?.length }}
+          </p>
           <p>{{ $t("lang-afd3cd36-ac2b-4852-bde7-3d2cb4d7842b") }}</p>
           <p>{{ getPropertyValueAutocomplete?.length ?? 0 }}</p>
         </div>
@@ -61,40 +63,18 @@
           {{ $t("lang-614cdebf-5132-4c67-b75c-767d3f711423") }}
         </p>
       </div>
-      <template v-for="propertyValue in getPropertyValueAutocomplete">
-        <div
-          v-if="propertyValue.selected"
-          class="value d-flex flex-row items-center gap-8"
-        >
-          <p>{{ propertyValue.value }}</p>
-          <SIconRender
-            name="CloseRoundIcon"
-            color="grey"
-            @click="onRemovePropertyValue(propertyValue)"
-          />
-        </div>
+      <template v-if="'allowedValues' in property">
+        <template v-for="propertyValue in property.allowedValues">
+          <div class="value d-flex flex-row items-center gap-8">
+            <p>{{ propretyValueName(propertyValue) }}</p>
+            <SIconRender
+              name="CloseRoundIcon"
+              color="grey"
+              @click="onRemovePropertyValue(propertyValue)"
+            />
+          </div>
+        </template>
       </template>
-      <!-- <div class="value d-flex flex-row items-center gap-8">
-        <p>Bosch</p>
-        <SIconRender name="CloseRoundIcon" color="grey" />
-      </div>
-      <div class="value d-flex flex-row items-center gap-8">
-        <p>Electronic</p>
-        <SIconRender name="CloseRoundIcon" color="grey" />
-      </div>
-      <div class="value d-flex flex-row items-center gap-8">
-        <p>Electronic</p>
-        <SIconRender name="CloseRoundIcon" color="grey" />
-      </div>
-      <div class="value d-flex flex-row items-center gap-8">
-        <p>Electronic</p>
-        <SIconRender name="CloseRoundIcon" color="grey" />
-      </div>
-
-      <div class="value d-flex flex-row items-center gap-8">
-        <p>Electronic</p>
-        <SIconRender name="CloseRoundIcon" color="grey" />
-      </div> -->
     </div>
     <SModal
       :isModalOpen="showAddPopertyValueModal"
@@ -105,7 +85,9 @@
       <SInput class="w-p-100" isSearchable />
       <div class="mt-24">
         <div v-for="value in getPropertyValueAutocomplete" class="mb-16">
-          <SCheckbox v-model="value.selected">{{ value.value }}</SCheckbox>
+          <SCheckbox @onChange="onPropertyValueClick(value)">{{
+            value.value
+          }}</SCheckbox>
         </div>
       </div>
       <SButton
@@ -128,13 +110,17 @@ import {
   SButton,
 } from "@tumarsoft/ogogo-ui";
 import { ref, computed, type PropType, onBeforeMount } from "vue";
-import { type IGetMarketplacePropertyAutocomplete } from "@/features/category/add-property/api/add-property.api.types";
-import { usePropertyCardListStore } from "../store/property-card-list.store";
 import { useCategorySharedStore } from "@/shared/store/category";
+import { Property } from "@/widgets/category/category-settings/store/category-settings-store.types";
+import {
+  AllowedValue,
+  PropertyValueAutocomplete,
+} from "@/shared/api/category/index.types";
+import { IGetMarketplacePropertyAutocomplete } from "@/features/category/add-property/api/add-poperty.api.types";
 
 const props = defineProps({
   property: {
-    type: Object as PropType<IGetMarketplacePropertyAutocomplete>,
+    type: Object as PropType<Property | IGetMarketplacePropertyAutocomplete>,
     default: "",
   },
 });
@@ -159,39 +145,33 @@ const onCloseShowAddPopertyValueModal = () => {
   showAddPopertyValueModal.value = false;
 };
 
-const propertyCardListStore = usePropertyCardListStore();
+// const propertyCardListStore = usePropertyCardListStore();
 
 onBeforeMount(async () => {
-  propertyCardListStore
-    .fetchPropertiesListAutocomplete(props.property.id)
-    .then(() => {
-      temp.value = propertyCardListStore.getPropertyValueAutocomplete?.map(
-        (property) => {
-          const res = {
-            ...property,
-            selected: false,
-          };
-
-          return res;
-        }
-      );
-    });
+  categorySharedStore.fetchPropertiesListAutocomplete(props.property.id);
 });
 
-const temp = ref();
+const getPropertyValueAutocomplete = computed(
+  () => categorySharedStore.getPropertyValueAutocomplete
+);
 
-const getPropertyValueAutocomplete = computed({
-  get() {
-    return temp.value;
-  },
-  set(value) {
-    temp.value = value;
-  },
+const propertyName = computed(() => {
+  if ("value" in props.property) {
+    return props.property.value;
+  } else {
+    return props.property.name;
+  }
 });
 
-const selectedPropertyValues = computed(() => {
-  return getPropertyValueAutocomplete.value?.filter((el) => el.selected);
-});
+const propretyValueName = (
+  propertyValue: AllowedValue | PropertyValueAutocomplete
+) => {
+  if ("value" in propertyValue) {
+    return propertyValue.value;
+  } else {
+    return propertyValue.propertyValueText;
+  }
+};
 
 const onShowAddPopertyValue = () => {
   showAddPopertyValueModal.value = true;
@@ -199,26 +179,28 @@ const onShowAddPopertyValue = () => {
 
 const onCloseAddPropertyValueModal = () => {
   showAddPopertyValueModal.value = false;
-
-  const selectedPropertyValues = getPropertyValueAutocomplete.value
-    .filter((el) => el.selected)
-    .map((el) => ({ propertyValueId: el.id }));
-
-  categorySharedStore.setPropertyAllowedValue(
-    selectedPropertyValues,
-    props.property.id
-  );
 };
 
-const onRemovePropertyValue = (obj: Object) => {
-  const res = getPropertyValueAutocomplete.value.map((el) => {
-    if (el.id === obj.id) {
-      el.selected = false;
-    }
-    return el;
-  });
+const onRemovePropertyValue = (
+  obj: AllowedValue | PropertyValueAutocomplete
+) => {
+  if ("propertyId" in props.property) {
+    categorySharedStore.setDeletePropertyAllowedValueObj(
+      obj,
+      props.property.propertyId
+    );
+  }
+};
 
-  getPropertyValueAutocomplete.value = res;
+const onPropertyValueClick = (
+  value: AllowedValue | PropertyValueAutocomplete
+) => {
+  if ("propertyId" in props.property) {
+    categorySharedStore.setPropertyAllowedValueObj(
+      value,
+      props.property.propertyId
+    );
+  }
 };
 </script>
 <style scoped lang="scss">

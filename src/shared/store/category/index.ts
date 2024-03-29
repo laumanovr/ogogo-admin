@@ -2,9 +2,11 @@ import { defineStore } from "pinia";
 import { ICategory, ICategorySharedState } from "./index.types";
 import { findObjectInMultidimensionalArray } from "@/shared/lib/utils/category/findObjectInMultidimensionalArray";
 import { CategoryApi } from "@/shared/api/category";
-import { ICategorySettings } from "@/shared/api/category/index.types";
+import {
+  ICategorySettings,
+  PropertyValueAutocomplete,
+} from "@/shared/api/category/index.types";
 import { container } from "tsyringe";
-import { getItem } from "@/shared/lib/utils/persistanceStorage";
 import { FileApi } from "@/shared/api/file";
 import { Mode } from "@/shared/lib/utils/enums";
 import { useAuthStore } from "../auth";
@@ -48,6 +50,7 @@ export const useCategorySharedStore = defineStore("category-shared-store", {
         ky: null,
       },
       properties: [],
+      propertyValueAutocomplete: [],
       mode: null,
 
       sequenceNumber: null,
@@ -76,7 +79,6 @@ export const useCategorySharedStore = defineStore("category-shared-store", {
       return this.imageId;
     },
     getIcoBase64(): string | ArrayBuffer {
-      console.log(this.icoBase64);
       return this.icoBase64;
     },
 
@@ -95,6 +97,9 @@ export const useCategorySharedStore = defineStore("category-shared-store", {
     },
     getSequenceNumber(): number {
       return this.sequenceNumber;
+    },
+    getPropertyValueAutocomplete(): PropertyValueAutocomplete[] {
+      return this.propertyValueAutocomplete;
     },
   },
   actions: {
@@ -158,15 +163,44 @@ export const useCategorySharedStore = defineStore("category-shared-store", {
     },
 
     setPropertyAllowedValue(
-      obj: { propertyValueId: string }[],
+      arr: { propertyValueId: string }[],
       propertyId: string
     ) {
       const foundProperty = this.getProperties.find((el) => {
         return el.propertyId === propertyId;
       });
 
-      foundProperty.allowedValues = obj;
+      foundProperty.allowedValues = arr;
     },
+    setPropertyAllowedValueObj(
+      obj: { propertyValueId: string } | PropertyValueAutocomplete,
+      propertyId: string
+    ) {
+      const foundProperty = this.getProperties.find((el) => {
+        return el.propertyId === propertyId;
+      });
+
+      foundProperty.allowedValues.push(obj);
+    },
+
+    setDeletePropertyAllowedValueObj(
+      obj: { propertyValueId: string } | PropertyValueAutocomplete,
+      propertyId: string
+    ) {
+      const foundProperty = this.getProperties.find((el) => {
+        return el.propertyId === propertyId;
+      });
+      foundProperty.allowedValues = foundProperty.allowedValues.filter((el) => {
+        if ("id" in el && "id" in obj) {
+          return el.id !== obj.id;
+        }
+      });
+    },
+
+    setPropertyValueAutocomplete(value: PropertyValueAutocomplete[]) {
+      this.propertyValueAutocomplete = value;
+    },
+
     fetchFileById(id: string): Promise<any> {
       return new Promise((resolve, reject) => {
         const authStore = useAuthStore();
@@ -179,6 +213,7 @@ export const useCategorySharedStore = defineStore("category-shared-store", {
             const imageUrl = URL.createObjectURL(result);
 
             this.file = imageUrl;
+            resolve(result);
           })
           .catch((err) => {
             reject(err);
@@ -186,6 +221,27 @@ export const useCategorySharedStore = defineStore("category-shared-store", {
           .finally(() => {});
       });
     },
+
+    fetchPropertiesListAutocomplete(propertyId: string) {
+      return new Promise((resolve, reject) => {
+        categoryApiService
+          .getPropertyValueAutocomplete({
+            pageIndex: 0,
+            pageSize: 10000,
+            queryParams: {
+              propertyId: propertyId,
+            },
+          })
+          .then((data) => {
+            this.propertyValueAutocomplete = data;
+            resolve(data);
+          })
+          .catch((err) => {
+            reject(err);
+          });
+      });
+    },
+
     fetchCategoryById(id: string): Promise<ICategorySettings> {
       return new Promise((resolve, reject) => {
         categoryApiService
@@ -198,6 +254,9 @@ export const useCategorySharedStore = defineStore("category-shared-store", {
             this.setImageId(res.imageId);
 
             this.setCategoryId(res.id);
+
+            this.properties = res.properties;
+
             if (res.imageId) {
               // set image to show in category image preview
               this.fetchFileById(res.imageId);

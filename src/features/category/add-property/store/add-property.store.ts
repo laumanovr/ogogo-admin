@@ -26,8 +26,11 @@ export const useAddPropertyStore = defineStore("add-property", {
             pageSize: 10000,
           })
           .then((data) => {
-            console.log(data);
             this.propertiesListAutocomplete = data;
+            resolve(data);
+          })
+          .catch((err) => {
+            reject(err);
           });
       });
     },

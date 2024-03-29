@@ -21,17 +21,15 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from "vue";
+import { ref } from "vue";
 import { SButton, SIconRender, SInput } from "@tumarsoft/ogogo-ui";
 import {
   PropertyValueTable,
   usePropertyValueStore,
 } from "@/widgets/property-value";
 import { useRouter } from "vue-router";
-import { useRoute } from "vue-router";
 
 const router = useRouter();
-const route = useRoute();
 const propertyValueStore = usePropertyValueStore();
 const propertyValueTable = ref(null);
 const searchTimer = ref<number>(null);

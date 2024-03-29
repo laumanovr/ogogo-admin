@@ -11,7 +11,7 @@
   >
   <PropertyCardList
     v-for="propertyItem in categorySharedStore.getProperties"
-    :property="getProperty(propertyItem.propertyId)"
+    :property="propertyItem"
   />
   <AddPropertyModal :value="modalValue" @close="onClose" />
 </template>
@@ -22,21 +22,9 @@ import { AddPropertyModal } from "@/features/category/add-property";
 import { PropertyCardList } from "@/entities/category";
 import { ref } from "vue";
 import { useCategorySharedStore } from "@/shared/store/category";
-import { useAddPropertyStore } from "@/features/category/add-property";
-
 let modalValue = ref(false);
 
 const categorySharedStore = useCategorySharedStore();
-
-const addPropertyStore = useAddPropertyStore();
-
-const getProperty = (propertyId: string) => {
-  const foundProperty = addPropertyStore.getPropertiesListAutocomplete.find(
-    (e) => e.id === propertyId
-  );
-
-  return foundProperty;
-};
 
 // const getPopertyName = computed(() => {
 //   categorySharedStore.getProperties;

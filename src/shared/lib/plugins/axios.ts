@@ -9,6 +9,7 @@ import { useAuthStore } from "@/shared/store/auth";
 
 import router from "@/shared/router";
 import { Routes } from "@/shared/router/index.type";
+import { useAlertStore } from "@/shared/store/alert";
 
 export const API = axios.create({
   baseURL: import.meta.env.VITE_API_SERVER,
@@ -54,12 +55,12 @@ API.interceptors.response.use(
       // @ts-ignore
       let showError = true;
 
+      const alertStore = useAlertStore();
+
       switch (error?.response?.status) {
         case HttpCodes.BAD_REQUEST:
           showError = false;
-          authStore.logout().then(() => {
-            router.push(Routes.login);
-          });
+          alertStore.showError(error.response.data.error.errorMessage);
           break;
         case HttpCodes.UNAUTHORIZED:
           showError = false;
@@ -71,7 +72,8 @@ API.interceptors.response.use(
           alert(t("lang-cd753f43-d3f9-44c8-8ad6-c383e6281497"));
           break;
         case HttpCodes.INTERNAL_SERVER_ERROR:
-          alert(t("label-5a8130e9-116a-4c54-8be2-166380fae5d1"));
+          alertStore.showError("Ошибка");
+          showError = false;
           break;
       }
       return Promise.reject(error);

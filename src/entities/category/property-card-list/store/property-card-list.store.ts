@@ -1,6 +1,4 @@
 import { defineStore } from "pinia";
-import { IAddPropertyState } from "./add-property.store.types";
-import { IGetMarketplacePropertyAutocomplete } from "../api/add-poperty.api.types";
 import { container } from "tsyringe";
 import { IPropertyCardListState } from "./property-card-list.store.types";
 import { PropertyCardListApi } from "../api/property-card-list.api";
@@ -31,7 +29,6 @@ export const usePropertyCardListStore = defineStore("property-card-list", {
             },
           })
           .then((data) => {
-            console.log(data);
             this.propertyValueAutocomplete = data;
             resolve(data);
           })

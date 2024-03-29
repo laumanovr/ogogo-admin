@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { ICategory } from "./category-settings-store.types";
+import { ICategoryState } from "./category-settings-store.types";
 // import { saveCategorySettings } from "../api/category-settings-api";
 import { useLoaderStore } from "@/shared/store/loader";
 import { useAlertStore } from "@/shared/store/alert";
@@ -15,7 +15,7 @@ import { useLeftSideBarStore } from "../../left-side-bar/store/left-side-bar-sto
 const categorySettingsApi = container.resolve(CategorySettingsApi);
 
 export const useCategoryStore = defineStore("category-store", {
-  state: (): ICategory => {
+  state: (): ICategoryState => {
     return {
       categoryName: null,
       categoryNameKy: null,
@@ -63,6 +63,20 @@ export const useCategoryStore = defineStore("category-store", {
         "parentId"
       );
 
+      const popertiesModified = [...categorySharedStore.getProperties];
+
+      popertiesModified.forEach((el, i) => {
+        el.allowedValues.forEach((el2, i2) => {
+          if ("propertyValueId" in el2) {
+          } else {
+            popertiesModified[i].allowedValues[i2] = {
+              propertyValueId: el2.id,
+              propertyValueText: el2.value,
+            };
+          }
+        });
+      });
+
       const payload = {
         parentId: foundCategory?.parentId,
         categoryName: categorySharedStore.getRu ?? "",
@@ -70,7 +84,7 @@ export const useCategoryStore = defineStore("category-store", {
         categoryNameEn: categorySharedStore.getKy,
         imageId: categorySharedStore.getImageId,
         icoBase64: categorySharedStore.getIcoBase64,
-        properties: categorySharedStore.getProperties,
+        properties: popertiesModified,
         sequenceNumber: foundCategory?.sequenceNumber ?? 0,
       };
 
@@ -108,7 +122,6 @@ export const useCategoryStore = defineStore("category-store", {
               );
               loaderStore.setLoaderState(false);
               leftSideBarStore.fetchGetMarketlace();
-              // categorySharedStore.setId(res.id);
               resolve(res);
             })
             .catch((err) => {
