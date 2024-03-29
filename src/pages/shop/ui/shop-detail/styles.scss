@@ -1,0 +1,42 @@
+.shop-detail-container {
+  margin-top: 10px;
+
+  .top-block {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
+
+    .shop-title {
+      margin-left: 24px;
+      font-weight: 600;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  .shop-logo-block {
+    .logo {
+      width: 96px;
+      height: 96px;
+    }
+
+    .logo-title {
+      font-weight: 600;
+    }
+  }
+
+  .input-container {
+    width: 100%;
+  }
+
+  .textarea-container {
+    width: 100%;
+  }
+
+  .actions {
+    .button {
+      min-width: 130px;
+    }
+  }
+}

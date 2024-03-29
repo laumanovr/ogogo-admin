@@ -2,13 +2,13 @@ import i18n from "@/shared/lib/plugins/i18n";
 import axios from "axios";
 
 import {
-  HttpCodes,
+  HTTP_CODES,
   INTERCEPTOR_EXCLUDE_LIST_ERROR_CODES,
 } from "@/shared/api/api.types";
 import { useAuthStore } from "@/shared/store/auth";
 
 import router from "@/shared/router";
-import { Routes } from "@/shared/router/index.type";
+import { ROUTES } from "@/shared/router/index.type";
 import { useAlertStore } from "@/shared/store/alert";
 
 export const API = axios.create({
@@ -58,22 +58,21 @@ API.interceptors.response.use(
       const alertStore = useAlertStore();
 
       switch (error?.response?.status) {
-        case HttpCodes.BAD_REQUEST:
+        case HTTP_CODES.BAD_REQUEST:
           showError = false;
           alertStore.showError(error.response.data.error.errorMessage);
           break;
-        case HttpCodes.UNAUTHORIZED:
+        case HTTP_CODES.UNAUTHORIZED:
           showError = false;
           authStore.logout().then(() => {
-            router.push(Routes.login);
+            router.push(ROUTES.login);
           });
           break;
-        case HttpCodes.FORBIDDEN:
+        case HTTP_CODES.FORBIDDEN:
           alert(t("lang-cd753f43-d3f9-44c8-8ad6-c383e6281497"));
           break;
-        case HttpCodes.INTERNAL_SERVER_ERROR:
+        case HTTP_CODES.INTERNAL_SERVER_ERROR:
           alertStore.showError("Ошибка");
-          showError = false;
           break;
       }
       return Promise.reject(error);

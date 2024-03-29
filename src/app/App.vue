@@ -14,7 +14,7 @@ import { SToaster } from "@tumarsoft/ogogo-ui";
 import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 import { useRoute } from "vue-router";
-import { Routes } from "@/shared/router/index.type";
+import { ROUTES } from "@/shared/router/index.type";
 import { useAuthStore } from "@/shared/store/auth";
 import { Nullable } from "@/shared/lib/utils/nullable";
 
@@ -31,7 +31,7 @@ const route = useRoute();
 const toaster = ref<Nullable<Toaster>>(null);
 
 const currentComponent = computed(() => {
-  if (route.path !== Routes.login && Boolean(authStore.getSessionId)) {
+  if (route.path !== ROUTES.login && Boolean(authStore.getSessionId)) {
     return Layout;
   } else {
     return Empty;

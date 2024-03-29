@@ -4,7 +4,7 @@ const { t } = i18n.global;
 
 const errorCodeKeys = Object.keys(t("selects.error-codes"));
 
-export enum ErrorCodeEnum {
+export enum ERROR_CODE {
   UserNotFound = "UserNotFound",
   InvalidDateIssueOfFinancing = "InvalidDateIssueOfFinancing",
   KnoxError = "KnoxError",
@@ -15,7 +15,7 @@ export enum ErrorCodeEnum {
   FaceImageNotUploaded = "FaceImageNotUploaded",
 }
 
-export default function getCustomErrorMessage(errorCode: ErrorCodeEnum) {
+export default function getCustomErrorMessage(errorCode: ERROR_CODE) {
   if (errorCodeKeys.includes(errorCode)) {
     return t(`selects.error-codes.${errorCode}`);
   }

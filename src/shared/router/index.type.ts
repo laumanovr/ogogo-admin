@@ -13,7 +13,7 @@ export interface Route {
   meta?: RouteMeta;
 }
 
-export const enum Routes {
+export const enum ROUTES {
   category = "/category",
   property = "/property",
   login = "/",

@@ -1,0 +1,27 @@
+.empty-category-container,
+.empty-category-container-active {
+  width: 334px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 17px;
+  background-color: transparent;
+  border-radius: 12px;
+
+  &:hover {
+    background-color: #f5f3ff;
+  }
+
+  .category-item-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 7.5px;
+  }
+}
+
+.empty-category-container-active {
+  background-color: #f5f3ff;
+}
