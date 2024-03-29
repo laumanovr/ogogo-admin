@@ -44,17 +44,17 @@
     />
   </div>
 
-  <AddCategoryConfirmationModal
+  <!-- <AddCategoryConfirmationModal
     @close="onClose"
     @save="onSave"
     :value="addCategoryConfirmationModalValue"
-  />
+  /> -->
 </template>
 
 <script lang="ts" setup>
 import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
-import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
+// import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
 import { CategoryTreeEntity, useCategoryStore } from "@/entities/category";
 
 const props = defineProps({

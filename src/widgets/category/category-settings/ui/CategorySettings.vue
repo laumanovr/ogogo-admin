@@ -1,6 +1,6 @@
 <template>
   <SForm class="main-wrapper h-p-100" ref="namingFieldsForm">
-    <div class="settings h-p-100">
+    <div class="settings h-p-100 w-p-100">
       <ImagesAndIcon />
       <PropertyNamingFields />
       <AddProperty />

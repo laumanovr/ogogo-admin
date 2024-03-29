@@ -15,6 +15,7 @@ import { SButton } from "@tumarsoft/ogogo-ui";
 import { AddPropertyModal } from "@/features/category/add-property";
 import { ref } from "vue";
 import { useCategorySharedStore } from "@/shared/store/category";
+import { PropertyCardList } from "@/entities/category";
 let modalValue = ref(false);
 
 const categorySharedStore = useCategorySharedStore();

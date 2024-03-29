@@ -1,6 +1,5 @@
 import { defineStore } from "pinia";
 import { ICategory, ICategorySharedState } from "./index.types";
-import { findObjectInMultidimensionalArray } from "@/shared/lib/utils/category/findObjectInMultidimensionalArray";
 import { CategoryApi } from "@/shared/api/category";
 import {
   ICategorySettings,
@@ -11,6 +10,7 @@ import { FileApi } from "@/shared/api/file";
 import { Mode } from "@/shared/lib/utils/enums";
 import { useAuthStore } from "../auth";
 import { Property } from "@/widgets/category/category-settings/store/category-settings-store.types";
+import { findObjectInMultidimensionalArray } from "@/entities/category/utils/findObjectInMultidimensionalArray";
 
 const categoryApiService = container.resolve(CategoryApi);
 

@@ -14,18 +14,18 @@
       <img src="/icons/plus-icon.png" />
       <span>{{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</span>
     </div>
-    <AddCategoryConfirmationModal
+    <!-- <AddCategoryConfirmationModal
       @close="onClose"
       @save="onSave"
       :value="addCategoryConfirmationModalValue"
-    />
+    /> -->
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import { CategoryTreeItem } from "@/widgets/category-tree/ui/components";
-import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
+// import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
 import { useCategoryStore } from "@/entities/category";
 
 let addCategoryConfirmationModalValue = ref(false);

@@ -72,7 +72,7 @@ import {
 import { PropertyRenderType } from "@/shared/lib/utils/enums";
 import i18n from "@/shared/lib/plugins/i18n";
 import { useCategorySharedStore } from "@/shared/store/category";
-import { useAddPropertyStore } from "@/features/category/add-property";
+import { useAddPropertyStore } from "@/features/category/add-property/store/add-property.store";
 
 const props = defineProps({
   value: {
