@@ -24,7 +24,7 @@ export const enum HTTP_CODES {
 
 export const TOKEN_KEY = "sessionId";
 
-export const enum LOADING_STATUS_ENUM {
+export const enum LOADING_STATUS {
   VIRGIN = "VIRGIN",
   INITIAL_LOADING = "INITIAL_LOADING",
   SENDING = "SENDING",
@@ -33,7 +33,7 @@ export const enum LOADING_STATUS_ENUM {
   ERROR = "ERROR",
 }
 
-export const enum SORT_DIRECTION_ENUM {
+export const enum SORT_DIRECTION {
   ASCENDING = 0,
   DESCENDING = 1,
 }
@@ -75,3 +75,9 @@ export interface BaseCreateAndUpdateData {
   updatedAt: Nullable<string>;
   updatedBy: Nullable<number>;
 }
+
+export type WithResultPagination<T> = WithPagination<T> & {
+  indexFrom: number;
+  hasPreviousPage: boolean;
+  hasNextPage: boolean;
+};

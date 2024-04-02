@@ -76,7 +76,7 @@ import { usePropertyGroupStore } from "@/entities/property-group";
 import { useAlertStore } from "@/shared/store/alert";
 import lodash from "lodash";
 import { Nullable } from "@/shared/lib/utils/nullable";
-import { SORT_DIRECTION_ENUM } from "@/shared/api/api.types";
+import { SORT_DIRECTION } from "@/shared/api/api.types";
 import { PropertyGroupEntity } from "@/entities/property-group";
 
 const propertyGroupStore = usePropertyGroupStore();
@@ -126,7 +126,7 @@ watch(
 const getGroupPropertyList = () => {
   propertyGroupStore.fetchGroupPropertyList({
     pageSize: 500,
-    sortDirection: SORT_DIRECTION_ENUM.ASCENDING,
+    sortDirection: SORT_DIRECTION.ASCENDING,
     queryParams: undefined,
     pageIndex: 0,
   });
@@ -182,7 +182,7 @@ const searchGroupProperty = (value: any) => {
   propertyGroupStore.fetchGroupPropertyList({
     pageSize: 500,
     search: value,
-    sortDirection: SORT_DIRECTION_ENUM.ASCENDING,
+    sortDirection: SORT_DIRECTION.ASCENDING,
     queryParams: null,
     pageIndex: 0,
   });

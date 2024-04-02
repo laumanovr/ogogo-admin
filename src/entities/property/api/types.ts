@@ -2,7 +2,7 @@ import {
   AutocompleteEntity,
   BasePageParams,
   ResponseWithStatus,
-  SORT_DIRECTION_ENUM,
+  SORT_DIRECTION,
   WithPagination,
 } from "@/shared/api/api.types";
 import {
@@ -13,7 +13,7 @@ import {
 
 export type GetSubGroupPropertiesPayload = BasePageParams & {
   search?: string;
-  sortDirection: SORT_DIRECTION_ENUM;
+  sortDirection: SORT_DIRECTION;
   queryParams?: any; // TODO: change when backend done
 };
 
@@ -23,7 +23,7 @@ export type GetSubGroupPropertiesResponse = ResponseWithStatus<
 
 export interface GetPropertyPagedListPayload extends BasePageParams {
   search?: string;
-  sortDirection: SORT_DIRECTION_ENUM;
+  sortDirection: SORT_DIRECTION;
   queryParams?: any; // TODO: change when backend done
 }
 
