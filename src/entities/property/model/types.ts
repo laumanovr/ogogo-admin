@@ -1,9 +1,4 @@
-import {
-  BasePageParams,
-  PostResultWrapper,
-  SortDirectionEnum,
-  WithPagination,
-} from "@/shared/api/api.types";
+import { BasePageParams, WithPagination } from "@/shared/api/api.types";
 
 // export abstract class BaseProperty {
 //   name: string;
@@ -16,6 +11,11 @@ export interface PropertyPageParams extends BasePageParams {
   search?: string;
   sortDirection: SortDirectionEnum;
   queryParams?: any; // TODO: change when backend done
+}
+
+export const enum SortDirectionEnum {
+  zero = "0",
+  one = "1",
 }
 
 export const enum PropertyType {
@@ -54,11 +54,9 @@ export interface PropertyEntity {
 
 export type CreatePropertyEntity = Omit<PropertyEntity, "id">;
 
-export type PropertyEntityBaseResult = PostResultWrapper<PropertyEntity>;
+export type PropertyEntityBaseResult = PropertyEntity;
 
-export type PropertyEntityPagedListBaseResult = PostResultWrapper<
-  WithPagination<PropertyEntity>
->;
+export type PropertyEntityPagedListBaseResult = WithPagination<PropertyEntity>;
 
 export interface UpdatePropertyEntity {
   id: string;

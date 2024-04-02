@@ -23,11 +23,9 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 import { SButton, SIconRender, SInput } from "@tumarsoft/ogogo-ui";
-import {
-  PropertyValueTable,
-  usePropertyValueStore,
-} from "@/widgets/property-value";
+import { usePropertyValueStore } from "@/entities/property-value";
 import { useRouter } from "vue-router";
+import { PropertyValueTable } from "@/widgets/property-value-table";
 
 const router = useRouter();
 const propertyValueStore = usePropertyValueStore();
