@@ -1,8 +1,15 @@
+// import { useCategorySharedStore } from "@/shared/store/category";
 import { defineStore } from "pinia";
-import { useSaveCategorySettingsStore } from "../../save-category-settings/store/save-category-settings-store";
+// import { useSaveCategorySettingsStore } from "../../save-category-settings/store/save-category-settings-store";
+import { ImagesAndIconApi } from "../api/images-and-icon.api";
+import { container } from "tsyringe";
+import { IImagesAndIconState } from "./images-and-icon-store.types";
+import { useCategoryStore } from "@/entities/category";
+
+const imageAndIconApiService = container.resolve(ImagesAndIconApi);
 
 export const useImagesAndIconStore = defineStore("images-and-icon-store", {
-  state: (): ISaveCategorySettingsState => {
+  state: (): IImagesAndIconState => {
     return {
       imgUrl: null,
       file: null,
@@ -15,12 +22,25 @@ export const useImagesAndIconStore = defineStore("images-and-icon-store", {
   },
   actions: {
     setImgUrl(value: string) {
-      const saveCategorySettingsStore = useSaveCategorySettingsStore();
+      // const saveCategorySettingsStore = useSaveCategorySettingsStore();
 
-      saveCategorySettingsStore.setImgUrl(value);
+      // saveCategorySettingsStore.setImgUrl(value);
+      this.imgUrl = value;
     },
+
     setFile(file: File) {
       this.file = file;
+    },
+    saveUploadImage(file: FormData) {
+      const categorySharedStore = useCategoryStore();
+
+      imageAndIconApiService
+        .uploadImage(file)
+        .then((res) => {
+          categorySharedStore.setImageId(res.fileId);
+        })
+        .catch(() => {})
+        .finally(() => {});
     },
   },
 });

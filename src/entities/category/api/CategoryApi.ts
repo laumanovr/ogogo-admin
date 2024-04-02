@@ -4,6 +4,9 @@ import {
   CategoryEntity,
   CategoryTreeEntity,
   CreateCategoryPayload,
+  PropertyValueAutocomplete,
+  PropertyValueAutocompletePayload,
+  UpdateCategoryPayload,
 } from "@/entities/category";
 
 @singleton()
@@ -18,8 +21,21 @@ export class CategoryApi {
       (res) => res.data.result
     );
 
+  updateCategory = (payload: UpdateCategoryPayload): Promise<CategoryEntity> =>
+    API.put("Marketplace/UpdateMarketplaceCategory", payload).then(
+      (res) => res.data.result
+    );
+
   getCategories = (): Promise<CategoryTreeEntity[]> =>
     API.get("Marketplace/GetMarketplaceCategories").then(
       (res) => res.data.result
     );
+
+  getPropertyValueAutocomplete = (
+    payload: PropertyValueAutocompletePayload
+  ): Promise<PropertyValueAutocomplete[]> =>
+    API.post(
+      `Marketplace/GetMarketplacePropertyValueAutocomplete`,
+      payload
+    ).then((res) => res.data.result);
 }

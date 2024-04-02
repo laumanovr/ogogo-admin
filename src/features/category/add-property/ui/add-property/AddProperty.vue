@@ -3,7 +3,11 @@
     <img src="/icons/plus-icon.png" />
     <p>{{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</p></SButton
   >
-  <AddPropertyModal :value="modalValue" @close="onCloseModal" />
+  <PropertyCardList
+    v-for="propertyItem in categoryStore.getProperties"
+    :property="propertyItem"
+  />
+  <AddPropertyModal :value="modalValue" @close="onClose" />
 </template>
 
 <script lang="ts" setup>
@@ -11,13 +15,21 @@ import { SButton } from "@tumarsoft/ogogo-ui";
 import { AddPropertyModal } from "@/features/category/add-property";
 import { ref } from "vue";
 
-const modalValue = ref(false);
+import { useCategoryStore } from "@/entities/category";
+import { PropertyCardList } from "@/widgets/category-settings/ui/components";
+let modalValue = ref(false);
+
+const categoryStore = useCategoryStore();
+
+// const getPopertyName = computed(() => {
+//   categorySharedStore.getProperties;
+// });
 
 const onOpenModal = () => {
   modalValue.value = true;
 };
 
-const onCloseModal = () => {
+const onClose = () => {
   modalValue.value = false;
 };
 </script>

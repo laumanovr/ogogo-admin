@@ -8,3 +8,7 @@ export type CreateCategoryPayload = {
   icoBase64: string | ArrayBuffer;
   imageId: string;
 };
+
+export type UpdateCategoryPayload = CreateCategoryPayload & {
+  id: string;
+};

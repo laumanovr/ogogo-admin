@@ -1,5 +1,5 @@
 <template>
-  <div class="left-side-bar-container">
+  <div class="left-side-bar-container overflow-y-scroll">
     <div class="item"></div>
     <div v-for="(item, i) in categoriesLocal" :key="i">
       <CategoryTreeItem
@@ -25,7 +25,7 @@
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import { CategoryTreeItem } from "@/widgets/category-tree/ui/components";
-import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
+import { AddCategoryConfirmationModal } from "@/features/category/add-category";
 import { useCategoryStore } from "@/entities/category";
 
 let addCategoryConfirmationModalValue = ref(false);
@@ -38,6 +38,8 @@ function addCategory() {
 const onClose = () => {
   addCategoryConfirmationModalValue.value = false;
 };
+
+// const leftSideBarStore = useLeftSideBarStore();
 
 const categoryStore = useCategoryStore();
 
@@ -72,10 +74,11 @@ const onSave = () => {
 
   categoryStore.setAddCategory({
     categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
+    childMarketplaceCategoryIdList: [],
+    active: true,
     icon: null,
     id: null,
-    parentId: "",
-    childMarketplaceCategories: [],
+    sequenceNumber: 0,
   });
   onClose();
 };
@@ -87,5 +90,34 @@ const onSaveSubCategory = () => {
 </script>
 
 <style lang="scss" scoped>
-@import "styles";
+.left-side-bar-container {
+  width: auto;
+  height: 86vh;
+}
+.empty-category-container,
+.add-category-container {
+  width: auto;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 14px 17px;
+  background-color: transparent;
+  gap: 7.5px;
+  border-radius: 12px;
+  &:hover {
+    background-color: #f5f3ff;
+  }
+}
+.add-category-container {
+  gap: 14px;
+}
+// .add-category-container {
+//   width: auto;
+//   cursor: pointer;
+//   display: flex;
+//   flex-direction: row;
+//   align-items: center;
+//   padding: 14px 17px;
+// }
 </style>

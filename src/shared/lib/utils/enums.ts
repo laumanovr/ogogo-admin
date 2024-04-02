@@ -4,3 +4,13 @@ export enum MENU_ITEMS {
   Products = "products",
   Properties = "property",
 }
+
+export enum PropertyRenderType {
+  Image = 14200,
+  Text = 14201,
+}
+
+export enum Mode {
+  create = "create",
+  update = "update",
+}

@@ -8,7 +8,8 @@ import {
 import { compose } from "ramda";
 import { propertyRoutes } from "@/pages/property";
 import { сategoryRoutes } from "@/pages/category";
-import { shopRoutes } from "@/pages/shop";
+import { shopListRoutes } from "@/pages/shop-list";
+import { shopDetailRoutes } from "@/pages/shop-detail";
 import { loginRoutes } from "@/pages/login";
 import { productRoutes } from "@/pages/product";
 import { authMiddleware } from "./middleware/authMiddleware";
@@ -17,7 +18,8 @@ const routes: RouteRecordRaw[] = [
   ...сategoryRoutes,
   ...propertyRoutes,
   ...loginRoutes,
-  ...shopRoutes,
+  ...shopListRoutes,
+  ...shopDetailRoutes,
   ...productRoutes,
 ];
 
