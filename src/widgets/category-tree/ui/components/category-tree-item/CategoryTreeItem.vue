@@ -17,7 +17,11 @@
           item.childMarketplaceCategoryIdList?.length > 0 ? 'bottom' : 'right'
         "
       />
-      <img v-if="item.icon" :src="item.icon" class="w-20 h-20 rounded" />
+      <img
+        v-if="item.icon || item.icoBase64"
+        :src="item.icon || item.icoBase64"
+        class="w-20 h-20 rounded"
+      />
       <img v-else src="/icons/fileIcon.png" />
       <span>{{ $t(`${props.categoryName}`) }}</span>
     </div>
@@ -44,18 +48,19 @@
     />
   </div>
 
-  <!-- <AddCategoryConfirmationModal
+  <AddCategoryConfirmationModal
     @close="onClose"
     @save="onSave"
     :value="addCategoryConfirmationModalValue"
-  /> -->
+  />
 </template>
 
 <script lang="ts" setup>
 import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
-// import { AddCategoryConfirmationModal } from "@/features/category/save-category-settings";
+import { AddCategoryConfirmationModal } from "@/features/category/add-category";
 import { CategoryTreeEntity, useCategoryStore } from "@/entities/category";
+import { watch } from "vue";
 
 const props = defineProps({
   categoryName: {
@@ -86,9 +91,32 @@ function addSubCategory() {
   addCategoryConfirmationModalValue.value = true;
 }
 
-// const onClose = () => {
-//   addCategoryConfirmationModalValue.value = false;
-// };
+watch(
+  () => props.item,
+  (newValue: any) => {
+    if (newValue) {
+      if (props.item.active) {
+        if (props.item.id) {
+          categoryStore.fetchCategoryById(props.item.id);
+        }
+      } else {
+        console.log("reset");
+        categoryStore.setTranslation(null, "ru");
+        categoryStore.setTranslation(null, "ky");
+        categoryStore.setTranslation(null, "en");
+        categoryStore.setIcoBase64(null);
+        categoryStore.setImageId(null);
+        categoryStore.setFile(null);
+        categoryStore.setCategoryId(null);
+        categoryStore.setPropertiesArray([]);
+      }
+    }
+  }
+);
+
+const onClose = () => {
+  addCategoryConfirmationModalValue.value = false;
+};
 
 function deletePropertyFromMultidimensionalArray(
   array: CategoryTreeEntity[],
@@ -118,40 +146,87 @@ function deletePropertyFromMultidimensionalArray(
   );
 }
 
-// const onSave = () => {
-//   emit("saveSubCategory", true);
+const onSave = () => {
+  emit("saveSubCategory", true);
 
-//   console.log(props.item);
+  deletePropertyFromMultidimensionalArray(
+    props.item.childMarketplaceCategoryIdList,
+    "active"
+  );
 
-//   deletePropertyFromMultidimensionalArray(
-//     props.item.childMarketplaceCategoryIdList,
-//     "active"
-//   );
+  categoryStore.setTranslation(null, "ru");
+  categoryStore.setTranslation(null, "ky");
+  categoryStore.setTranslation(null, "en");
+  categoryStore.setIcoBase64(null);
+  categoryStore.setImageId(null);
+  categoryStore.setFile(null);
+  categoryStore.setCategoryId(null);
+  categoryStore.setPropertiesArray([]);
 
-//   props.item.childMarketplaceCategoryIdList.push({
-//     categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
-//     childMarketplaceCategoryIdList: [],
-//     active: true,
-//     icon: null,
-//     id: null,
-//     parentId: props.item.id,
-//   });
+  props.item.childMarketplaceCategoryIdList.push({
+    categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
+    childMarketplaceCategoryIdList: [],
+    active: true,
+    icon: null,
+    id: null,
+    parentId: props.item.id,
+    sequenceNumber: props.depth,
+  });
 
-//   onClose();
-// };
+  onClose();
+};
 
 const onChangeActive = () => {
+  //remove active flag on other item to show actual active item
   deletePropertyFromMultidimensionalArray(
     categoryStore.getCategories,
     "active"
   );
-  categoryStore.fetchCategoryById(props.item.id);
 
+  if (props.item.id) {
+    categoryStore.fetchCategoryById(props.item.id);
+  } else {
+    // reset settings on other item click
+    categoryStore.setTranslation(null, "ru");
+    categoryStore.setTranslation(null, "ky");
+    categoryStore.setTranslation(null, "en");
+    categoryStore.setIcoBase64(null);
+    categoryStore.setImageId(null);
+    categoryStore.setFile(null);
+    categoryStore.setCategoryId(null);
+    categoryStore.setPropertiesArray([]);
+  }
+
+  // set active flag to clicked item
   categoryStore.setCategoryHasChanged(true);
   props.item.active = true;
 };
 </script>
 
-<style scoped lang="scss">
-@import "styles";
+<style scoped>
+.empty-category-container,
+.empty-category-container-active {
+  width: 334px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 17px;
+  background-color: transparent;
+  border-radius: 12px;
+  &:hover {
+    background-color: #f5f3ff;
+  }
+  .category-item-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 7.5px;
+  }
+}
+
+.empty-category-container-active {
+  background-color: #f5f3ff;
+}
 </style>
