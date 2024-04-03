@@ -1,6 +1,6 @@
 <template>
   <div
-    class="d-flex mt-24"
+    class="comment-block"
     :class="{
       rejected: descriptionStatus === DETAIL_STATUS.READ,
     }"
@@ -53,8 +53,8 @@ const isShowActions = computed(
 
 onBeforeMount(() => {
   if (
-    shop.value.moderationResult.description.validationComment === null ||
-    Boolean(!shop.value.moderationResult.description.validationComment)
+    shop.value.moderationResult?.description.validationComment === null ||
+    Boolean(!shop.value.moderationResult?.description.validationComment)
   ) {
     shopDetailStore.setDescriptionStatus(DETAIL_STATUS.CREATE);
   } else {

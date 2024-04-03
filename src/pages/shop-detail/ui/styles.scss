@@ -27,9 +27,17 @@
 
   }
 
-  .rejected {
-    background: var(--gray-50);
+  .comment-block {
+    display: flex;
+    margin-top: 24px;
+    padding: 12px;
+    border-radius: 8px;
+
+    &.rejected {
+      background: var(--gray-50);
+    }
   }
+
 
   .input-container {
     width: 100%;

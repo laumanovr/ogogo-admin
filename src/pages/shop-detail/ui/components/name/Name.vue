@@ -1,6 +1,6 @@
 <template>
   <div
-    class="d-flex mt-24"
+    class="comment-block"
     :class="{
       rejected: nameStatus === DETAIL_STATUS.READ,
     }"
@@ -53,8 +53,8 @@ const isShowActions = computed(
 
 onBeforeMount(() => {
   if (
-    shop.value.moderationResult.name.validationComment === null ||
-    Boolean(!shop.value.moderationResult.name.validationComment)
+    shop.value.moderationResult?.name.validationComment === null ||
+    Boolean(!shop.value.moderationResult?.name.validationComment)
   ) {
     shopDetailStore.setNameStatus(DETAIL_STATUS.CREATE);
   } else {

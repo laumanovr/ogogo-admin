@@ -17,9 +17,9 @@ export type ShopEntity = {
 
 export const enum PRODUCT_VERIFICATION_STATUS {
   NONE = 0,
-  VERIFIED = 14300,
-  UNVERIFIED = 14301,
-  UNKNOWN = 14302,
+  PENDING = 14300,
+  ACCEPTED = 14301,
+  REJECTED = 14302,
 }
 
 export type TrademarkModerationResult = {

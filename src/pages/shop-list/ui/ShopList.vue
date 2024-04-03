@@ -22,7 +22,8 @@
       </template>
       <template v-slot:date="{ item }">
         {{
-          item.moderationDate ?? $t("lang-f0ce9d5c-5729-43ae-8af0-9e402155a6a9")
+          formatDate(item.moderationDate) ??
+          $t("lang-f0ce9d5c-5729-43ae-8af0-9e402155a6a9")
         }}
       </template>
       <template v-slot:action="{ item }">
@@ -40,9 +41,14 @@ import { STable, SBadge } from "@tumarsoft/ogogo-ui";
 import { ref, reactive, computed, onBeforeMount } from "vue";
 import FilterSearch from "@/widgets/filter-search/FilterSearch.vue";
 import { FilterModal } from "@/shared/ui";
-import { ShopEntity, useShopStore } from "@/entities/shop";
+import {
+  PRODUCT_VERIFICATION_STATUS,
+  ShopEntity,
+  useShopStore,
+} from "@/entities/shop";
 import { SORT_DIRECTION } from "@/shared/api/api.types";
 import { useI18n } from "vue-i18n";
+import moment from "moment";
 
 const shopStore = useShopStore();
 const { t } = useI18n();
@@ -76,17 +82,21 @@ const getColorByStatus = (item: ShopEntity) => {
   switch (item.verificationStatus) {
     case 0:
       return "grey";
-    case 14300:
+    case PRODUCT_VERIFICATION_STATUS.PENDING:
       return "orange";
-    case 14301:
+    case PRODUCT_VERIFICATION_STATUS.ACCEPTED:
       return "green";
-    case 14302:
+    case PRODUCT_VERIFICATION_STATUS.REJECTED:
       return "red";
   }
 };
 
 const currentModeratorNameValue = (value: string) =>
   value ? value : t("lang-dc04a546-3af6-410c-bd94-520236c92e72");
+
+const formatDate = (date: string) => {
+  return moment(date).format("DD.MM.YYYY, HH:mm");
+};
 
 const openModal = () => {
   filterModal.value.toggleModal();
