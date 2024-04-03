@@ -2,7 +2,7 @@
   <div class="container">
     <div class="info">
       <span class="name">{{ props.name }}</span>
-      <span class="date">{{ props.date }}</span>
+      <span class="date">{{ formatDate(props.date) }}</span>
     </div>
     <div class="comment-body">{{ props.comment }}</div>
     <div class="btn-group">
@@ -17,6 +17,8 @@
 </template>
 
 <script lang="ts" setup>
+import moment from "moment";
+
 const props = defineProps({
   comment: {
     type: String,
@@ -31,6 +33,10 @@ const props = defineProps({
     default: "",
   },
 });
+
+const formatDate = (date: string) => {
+  return moment(date).format("D MMMM YYYY HH:mm");
+};
 
 const emit = defineEmits(["edit", "delete"]);
 

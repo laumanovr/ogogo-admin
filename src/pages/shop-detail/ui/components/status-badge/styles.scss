@@ -1,12 +1,24 @@
 .status-badge {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   padding: 12px 16px;
-  border-radius: 16px solid;
+  border-radius: 16px;
   gap: 8px;
 
-  .success {
-    border-color: var(--green300);
+  &.success {
+    background-color: var(--green-50);
+    border: 1px solid var(--green-300);
+  }
+
+  &.rejected {
+    background-color: var(--yellow-50);
+    border: 1px solid var(--yellow-300);
+  }
+
+  .status-text {
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
   }
 }

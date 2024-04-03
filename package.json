@@ -19,6 +19,7 @@
     "axios": "^1.6.5",
     "lodash": "^4.17.21",
     "maska": "^2.1.11",
+    "moment": "^2.30.1",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "ramda": "^0.29.1",

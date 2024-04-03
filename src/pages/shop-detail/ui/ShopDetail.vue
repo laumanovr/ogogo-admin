@@ -11,13 +11,11 @@
       </div>
     </div>
     <StatusBadge
-      v-if="
-        verificationStatus === PRODUCT_VERIFICATION_STATUS.UNVERIFIED ||
-        verificationStatus === PRODUCT_VERIFICATION_STATUS.VERIFIED
-      "
+      v-if="verifiedOrRejectedStatusBadge"
+      :status="verificationStatus"
+      :status-text="activeStatusText"
+      :description="activeDescriptionBadge"
     />
-    <!-- :status="shopStatus"
-    :text="shopStatusText" -->
     <h2 class="head-title md">
       {{ $t("lang-2c57a873-df1a-437e-a38b-2a0772342fc4") }}
     </h2>
@@ -51,13 +49,25 @@
       </div>
       <Description />
     </div>
-    <div class="d-flex mt-40 actions">
-      <SButton @click="verifyShop" size="large" color="violet" class="mr-8">{{
-        $t("lang-12fe79b5-20d2-4f2f-90a4-58ce16506ba3")
-      }}</SButton>
-      <SButton @click="verifyShop" size="large" color="gray">{{
-        $t("lang-4d92287d-f47c-47a1-80c1-3eb9f68352d4")
-      }}</SButton>
+    <div
+      class="d-flex mt-40 actions"
+      v-if="verificationStatus === PRODUCT_VERIFICATION_STATUS.PENDING"
+    >
+      <SButton
+        :disabled="isDisabledAcceptBtn"
+        @click="verifyShop"
+        size="large"
+        color="violet"
+        class="mr-8"
+        >{{ $t("lang-12fe79b5-20d2-4f2f-90a4-58ce16506ba3") }}</SButton
+      >
+      <SButton
+        :disabled="isDisabledRejectBtn"
+        @click="rejectShop"
+        size="large"
+        color="gray"
+        >{{ $t("lang-4d92287d-f47c-47a1-80c1-3eb9f68352d4") }}</SButton
+      >
     </div>
   </div>
 </template>
@@ -65,16 +75,20 @@
 <script lang="ts" setup>
 import { PRODUCT_VERIFICATION_STATUS, useShopStore } from "@/entities/shop";
 import { SButton, SInput, STextArea, SIconRender } from "@tumarsoft/ogogo-ui";
-import { computed, onBeforeMount, watch } from "vue";
+import { computed, onBeforeMount, watch, onBeforeUnmount } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useLoaderStore } from "@/shared/store/loader";
 import { Logo, Name, Description, StatusBadge } from "./components";
 import { ROUTES } from "@/shared/router/index.type";
+import { useI18n } from "vue-i18n";
+import { useShopDetailStore } from "../store/store";
 
 const router = useRouter();
 const route = useRoute();
 const shopStore = useShopStore();
+const shopDetailStore = useShopDetailStore();
 const loaderStore = useLoaderStore();
+const { t } = useI18n();
 
 const stateload = computed(() => loaderStore.isLoading);
 
@@ -85,6 +99,11 @@ const fetchShopById = () => {
 };
 
 onBeforeMount(fetchShopById);
+
+onBeforeUnmount(() => {
+  shopStore.$reset();
+  shopDetailStore.setVerifiedOrRejectedStatusBadge(false);
+});
 
 watch(id, fetchShopById);
 
@@ -97,11 +116,57 @@ const logo = computed(() => shop.value.logoBase64);
 const shopName = computed(() => shop.value.name);
 const description = computed(() => shop.value.description);
 const logoName = computed(() => shop.value.logoFileName);
+const moderationResult = computed(() => shop.value.moderationResult);
 
 const verificationStatus = computed(() => shop.value.verificationStatus);
+
 const verifyShop = () => {
-  shopStore.verifyShop();
+  shopDetailStore.setVerifiedOrRejectedStatusBadge(true);
+  return shopStore.verifyShop();
 };
+
+const rejectShop = () => {
+  shopDetailStore.setVerifiedOrRejectedStatusBadge(true);
+  return shopStore.rejectShop();
+};
+
+const verifiedOrRejectedStatusBadge = computed(
+  () => shopDetailStore.getVerifiedOrRejectedStatusBadge
+);
+
+const activeStatusText = computed(() => {
+  if (verificationStatus.value === PRODUCT_VERIFICATION_STATUS.ACCEPTED) {
+    return t("lang-36f1d867-e30c-411d-b31f-97143d9adf44");
+  } else if (
+    verificationStatus.value === PRODUCT_VERIFICATION_STATUS.REJECTED
+  ) {
+    return t("lang-d77a8c0b-cf4a-488a-a6f0-026716359bd7");
+  }
+});
+
+const activeDescriptionBadge = computed(() => {
+  if (verificationStatus.value === PRODUCT_VERIFICATION_STATUS.REJECTED) {
+    return t("lang-ae2d0a7b-4d85-4fbc-ad1d-50d61a1012b3");
+  } else if (
+    verificationStatus.value === PRODUCT_VERIFICATION_STATUS.ACCEPTED
+  ) {
+    return t("lang-cddb45b5-eff8-43d2-815e-4869a7603c04");
+  }
+});
+
+const isDisabledAcceptBtn = computed(
+  () =>
+    !Object.values(moderationResult.value).every((item) =>
+      Boolean(item.validationComment)
+    )
+);
+
+const isDisabledRejectBtn = computed(
+  () =>
+    !Object.values(moderationResult.value).some((item) =>
+      Boolean(item.validationComment)
+    )
+);
 </script>
 
 <style scoped lang="scss">

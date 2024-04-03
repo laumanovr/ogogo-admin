@@ -1,6 +1,6 @@
 <template>
   <div
-    class="d-flex mt-24"
+    class="comment-block"
     :class="{ rejected: logoStatus === DETAIL_STATUS.READ }"
   >
     <img src="/icons/ava.png" alt="img" class="mr-12 comment-icon" />
@@ -51,8 +51,8 @@ const isShowActions = computed(
 
 onBeforeMount(() => {
   if (
-    shop.value.moderationResult.logo.validationComment === null ||
-    Boolean(!shop.value.moderationResult.logo.validationComment)
+    shop.value.moderationResult?.logo.validationComment === null ||
+    Boolean(!shop.value.moderationResult?.logo.validationComment)
   ) {
     shopDetailStore.setLogoStatus(DETAIL_STATUS.CREATE);
   } else {

@@ -177,6 +177,53 @@ export const useShopStore = defineStore(NAME_ID, {
         const loaderStore = useLoaderStore();
         const alertStore = useAlertStore();
         loaderStore.setLoaderState(true);
+        Object.values(this.verifyInfo.moderationResult).forEach((item) => {
+          item.verified = true;
+          item.isRejected = false;
+        });
+        shopApiService
+          .verifyShop(this.verifyInfo)
+          .then((response) => {
+            loaderStore.setLoaderState(false);
+            this.openedShop = response;
+            this.verifyInfo = {
+              id: response.id,
+              version: response.version,
+              moderationResult: {
+                logo: {
+                  ...this.verifyInfo.moderationResult.logo,
+                  ...response.moderationResult.logo,
+                },
+                name: {
+                  ...this.verifyInfo.moderationResult.name,
+                  ...response.moderationResult.name,
+                },
+                description: {
+                  ...this.verifyInfo.moderationResult.description,
+                  ...response.moderationResult.description,
+                },
+              },
+            };
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err?.error?.errorMessage);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
+    },
+    rejectShop(): Promise<ShopEntity> {
+      return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
+        loaderStore.setLoaderState(true);
+        Object.values(this.verifyInfo.moderationResult).forEach((item) => {
+          item.verified = false;
+          item.isRejected = true;
+        });
         shopApiService
           .verifyShop(this.verifyInfo)
           .then((response) => {

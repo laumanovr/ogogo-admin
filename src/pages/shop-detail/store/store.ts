@@ -9,6 +9,7 @@ export const useShopDetailStore = defineStore(NAME_ID, {
       logoStatus: DETAIL_STATUS.INITIAL,
       nameStatus: DETAIL_STATUS.INITIAL,
       descriptionStatus: DETAIL_STATUS.INITIAL,
+      verifiedOrRejectedStatusBadge: false,
     };
   },
   getters: {
@@ -21,6 +22,9 @@ export const useShopDetailStore = defineStore(NAME_ID, {
     getDescriptionStatus(): DETAIL_STATUS {
       return this.descriptionStatus;
     },
+    getVerifiedOrRejectedStatusBadge(): boolean {
+      return this.verifiedOrRejectedStatusBadge;
+    },
   },
   actions: {
     setLogoStatus(value: DETAIL_STATUS) {
@@ -31,6 +35,9 @@ export const useShopDetailStore = defineStore(NAME_ID, {
     },
     setDescriptionStatus(value: DETAIL_STATUS) {
       this.descriptionStatus = value;
+    },
+    setVerifiedOrRejectedStatusBadge(value: boolean) {
+      this.verifiedOrRejectedStatusBadge = value;
     },
   },
 });
