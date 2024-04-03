@@ -10,9 +10,18 @@ import { useAuthStore } from "@/shared/store/auth";
 import router from "@/shared/router";
 import { ROUTES } from "@/shared/router/index.type";
 import { useAlertStore } from "@/shared/store/alert";
+import { getItem } from "../utils/persistanceStorage";
+import { validate } from "@/shared/lib/utils/rules";
+
+// NOTE: local api address for development
+const localApiAddress = getItem("dev:local-address");
+let baseURL = import.meta.env.VITE_API_SERVER;
+if (localApiAddress && validate.isValidHttpUrl(localApiAddress)) {
+  baseURL = localApiAddress;
+}
 
 export const API = axios.create({
-  baseURL: import.meta.env.VITE_API_SERVER,
+  baseURL,
 });
 
 function isExcludedErrorCode(error: unknown) {
