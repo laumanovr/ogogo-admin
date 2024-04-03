@@ -11,13 +11,15 @@
             :direction="!hideBody ? 'top' : 'right'"
             @click="onHideBody"
           />
-          <p>{{ props.title }}</p>
+          <p>{{ propertyName }}</p>
         </div>
         <div class="d-flex flex-row items-center gap-10">
           <img class="w-14 h-14" src="/icons/tree-icon.png" alt="tree-icon" />
-          <p>169</p>
+          <p>
+            {{ "allowedValues" in property && property.allowedValues?.length }}
+          </p>
           <p>{{ $t("lang-afd3cd36-ac2b-4852-bde7-3d2cb4d7842b") }}</p>
-          <p>169</p>
+          <p>{{ getPropertyValueAutocomplete?.length ?? 0 }}</p>
         </div>
         <div class="d-flex flex-row items-center gap-10">
           <img class="w-17 h-17" src="/icons/star-icon.png" />
@@ -52,51 +54,86 @@
       </div>
     </div>
     <div v-if="!hideBody" class="body d-flex flex-row flex-wrap gap-8">
-      <div class="add-value d-flex flex-row items-center gap-10">
+      <div
+        class="add-value d-flex flex-row items-center gap-10 cursor-pointer hover:-translate-y-0.60 hover:scale-102 duration-300 padding-14-20"
+        @click="onShowAddPopertyValue"
+      >
         <img src="/icons/plus-icon.png" />
-        <p>{{ $t("lang-614cdebf-5132-4c67-b75c-767d3f711423") }}</p>
+        <p class="text-white">
+          {{ $t("lang-614cdebf-5132-4c67-b75c-767d3f711423") }}
+        </p>
       </div>
-      <div class="value d-flex flex-row items-center gap-8">
-        <p>Apple</p>
-        <SIconRender name="CloseRoundIcon" color="grey" />
-      </div>
-      <div class="value d-flex flex-row items-center gap-8">
-        <p>Bosch</p>
-        <SIconRender name="CloseRoundIcon" color="grey" />
-      </div>
-      <div class="value d-flex flex-row items-center gap-8">
-        <p>Electronic</p>
-        <SIconRender name="CloseRoundIcon" color="grey" />
-      </div>
-      <div class="value d-flex flex-row items-center gap-8">
-        <p>Electronic</p>
-        <SIconRender name="CloseRoundIcon" color="grey" />
-      </div>
-      <div class="value d-flex flex-row items-center gap-8">
-        <p>Electronic</p>
-        <SIconRender name="CloseRoundIcon" color="grey" />
-      </div>
-
-      <div class="value d-flex flex-row items-center gap-8">
-        <p>Electronic</p>
-        <SIconRender name="CloseRoundIcon" color="grey" />
-      </div>
+      <template v-if="'allowedValues' in property">
+        <template v-for="propertyValue in property.allowedValues">
+          <div class="value d-flex flex-row items-center gap-8">
+            <p>{{ propretyValueName(propertyValue) }}</p>
+            <SIconRender
+              name="CloseRoundIcon"
+              color="grey"
+              @click="onRemovePropertyValue(propertyValue)"
+            />
+          </div>
+        </template>
+      </template>
     </div>
+    <SModal
+      :isModalOpen="showAddPopertyValueModal"
+      height="auto"
+      @onClose="onCloseShowAddPopertyValueModal"
+      :width="'440px'"
+    >
+      <SInput class="w-p-100" isSearchable />
+      <div class="mt-24">
+        <div v-for="value in getPropertyValueAutocomplete" class="mb-16">
+          <SCheckbox
+            v-model="isCheckedShown"
+            :value="isChecked(value.id)"
+            @onChange="onPropertyValueClick(value)"
+            >{{ value.value }}</SCheckbox
+          >
+        </div>
+      </div>
+      <SButton
+        size="large"
+        color="violet"
+        class="w-p-100"
+        @click="onCloseAddPropertyValueModal"
+        >{{ $t("lang-d0108c3e-9945-4245-a730-b011e5a47c35") }}</SButton
+      >
+    </SModal>
   </div>
 </template>
 
 <script lang="ts" setup>
-import { SIconRender } from "@tumarsoft/ogogo-ui";
-import { ref } from "vue";
+import {
+  SIconRender,
+  SModal,
+  SInput,
+  SCheckbox,
+  SButton,
+} from "@tumarsoft/ogogo-ui";
+import { ref, computed, type PropType, onBeforeMount } from "vue";
+// import { useCategorySharedStore } from "@/shared/store/category";
+// import { Property } from "@/widgets/category/category-settings/store/category-settings-store.types";
+import {
+  AllowedValue,
+  PropertyValueAutocomplete,
+} from "@/shared/api/category/index.types";
+// import { IGetMarketplacePropertyAutocomplete } from "@/features/category/add-property/api/add-poperty.api.types";
+import { CategoryByIdProperty, useCategoryStore } from "@/entities/category";
 
 const props = defineProps({
-  title: {
-    type: String,
+  property: {
+    type: Object as PropType<CategoryByIdProperty>,
     default: "",
   },
 });
 
 let hideBody = ref(false);
+
+const categorySharedStore = useCategoryStore();
+
+const showAddPopertyValueModal = ref(false);
 
 const onHideBody = () => {
   hideBody.value = !hideBody.value;
@@ -107,7 +144,124 @@ let openPropertyToolsDropdown = ref(false);
 const onOpenPropertyToolsDropdown = () => {
   openPropertyToolsDropdown.value = !openPropertyToolsDropdown.value;
 };
+
+const onCloseShowAddPopertyValueModal = () => {
+  showAddPopertyValueModal.value = false;
+};
+
+// const propertyCardListStore = usePropertyCardListStore();
+
+onBeforeMount(async () => {
+  categorySharedStore.fetchPropertiesListAutocomplete(props.property.id);
+});
+
+const getPropertyValueAutocomplete = computed(
+  () => categorySharedStore.getPropertyValueAutocomplete
+);
+
+const propertyName = computed(() => {
+  if ("value" in props.property) {
+    return props.property.value;
+  } else {
+    return props.property.name;
+  }
+});
+
+const propretyValueName = (
+  propertyValue: AllowedValue | PropertyValueAutocomplete
+) => {
+  if ("value" in propertyValue) {
+    return propertyValue.value;
+  } else {
+    return propertyValue.propertyValueText;
+  }
+};
+
+const onShowAddPopertyValue = () => {
+  showAddPopertyValueModal.value = true;
+};
+
+const onCloseAddPropertyValueModal = () => {
+  showAddPopertyValueModal.value = false;
+};
+
+const isCheckedShown = ref(null);
+
+const isChecked = (id: string) => {
+  isCheckedShown.value = props.property.allowedValues.some((el) => {
+    if ("propertyValueId" in el) {
+      return el.propertyValueId === id;
+    }
+  });
+};
+
+const onRemovePropertyValue = (
+  obj: AllowedValue | PropertyValueAutocomplete
+) => {
+  if ("propertyId" in props.property) {
+    categorySharedStore.setDeletePropertyAllowedValueObj(
+      obj,
+      props.property.propertyId
+    );
+  }
+};
+
+const onPropertyValueClick = (
+  value: AllowedValue | PropertyValueAutocomplete
+) => {
+  if ("propertyId" in props.property) {
+    categorySharedStore.setPropertyAllowedValueObj(
+      value,
+      props.property.propertyId
+    );
+  }
+};
 </script>
 <style scoped lang="scss">
-@import "styles";
+.main-wrapper-property {
+  position: relative;
+  border-radius: 16px;
+  border: 1px solid #dfe1e5;
+  margin-top: 24px;
+}
+
+.main-wrapper-property {
+  border-radius: 16px;
+}
+.header-property,
+.header-property-closed {
+  height: 56px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  padding: 26px 18px;
+  border-bottom: 1px solid #dfe1e5;
+}
+.header-property-closed {
+  border-bottom: none;
+}
+.body {
+  padding: 16px;
+}
+.add-value {
+  width: auto;
+  // padding: 14px 20px;
+  border-radius: 384px;
+  background-color: var(--violet-600);
+  color: var(--white);
+}
+.value {
+  width: auto;
+  padding: 14px 20px;
+  border-radius: 384px;
+  background-color: var(--white);
+  border: 1px solid #dfe1e5;
+}
+
+.six-dots {
+  position: absolute;
+  left: -22px;
+  top: 10%;
+}
 </style>

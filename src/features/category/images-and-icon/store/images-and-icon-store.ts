@@ -1,9 +1,10 @@
-import { useCategorySharedStore } from "@/shared/store/category";
+// import { useCategorySharedStore } from "@/shared/store/category";
 import { defineStore } from "pinia";
 // import { useSaveCategorySettingsStore } from "../../save-category-settings/store/save-category-settings-store";
 import { ImagesAndIconApi } from "../api/images-and-icon.api";
 import { container } from "tsyringe";
 import { IImagesAndIconState } from "./images-and-icon-store.types";
+import { useCategoryStore } from "@/entities/category";
 
 const imageAndIconApiService = container.resolve(ImagesAndIconApi);
 
@@ -31,7 +32,7 @@ export const useImagesAndIconStore = defineStore("images-and-icon-store", {
       this.file = file;
     },
     saveUploadImage(file: FormData) {
-      const categorySharedStore = useCategorySharedStore();
+      const categorySharedStore = useCategoryStore();
 
       imageAndIconApiService
         .uploadImage(file)

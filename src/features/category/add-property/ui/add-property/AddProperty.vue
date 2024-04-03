@@ -4,7 +4,7 @@
     <p>{{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</p></SButton
   >
   <PropertyCardList
-    v-for="propertyItem in categorySharedStore.getProperties"
+    v-for="propertyItem in categoryStore.getProperties"
     :property="propertyItem"
   />
   <AddPropertyModal :value="modalValue" @close="onClose" />
@@ -14,11 +14,12 @@
 import { SButton } from "@tumarsoft/ogogo-ui";
 import { AddPropertyModal } from "@/features/category/add-property";
 import { ref } from "vue";
-import { useCategorySharedStore } from "@/shared/store/category";
-import { PropertyCardList } from "@/entities/category";
+
+import { useCategoryStore } from "@/entities/category";
+import { PropertyCardList } from "@/widgets/category-settings/ui/components";
 let modalValue = ref(false);
 
-const categorySharedStore = useCategorySharedStore();
+const categoryStore = useCategoryStore();
 
 // const getPopertyName = computed(() => {
 //   categorySharedStore.getProperties;

@@ -79,7 +79,8 @@ import {
   useImagesAndIconStore,
 } from "@/features/category/images-and-icon";
 // import { useSaveCategorySettingsStore } from "@/features/category/save-category-settings";
-import { useCategorySharedStore } from "@/shared/store/category";
+// import { useCategorySharedStore } from "@/shared/store/category";
+import { useCategoryStore } from "@/entities/category";
 
 let imageUrl = ref(null);
 let iconUrl = ref(null);
@@ -87,14 +88,14 @@ let iconUrl = ref(null);
 const store = useImagesAndIconStore();
 // const saveCategorySettingsStore = useSaveCategorySettingsStore();
 
-const categorySharedStore = useCategorySharedStore();
+const categoryStore = useCategoryStore();
 
 const iconFetched = computed(() => {
-  return categorySharedStore.getIcoBase64 as string;
+  return categoryStore.getIcoBase64 as string;
 });
 
 const file = computed(() => {
-  return categorySharedStore.getFile;
+  return categoryStore.getFile;
 });
 
 function handleImageUpload(event: Event) {
@@ -222,8 +223,8 @@ function resizeIcon(file: any) {
       iconUrl.value = resizedImageUrl;
     };
     img.src = event.target.result as string;
-    categorySharedStore.setCategoryIcon(event.target.result as string);
-    categorySharedStore.setIcoBase64(event.target.result as string);
+    categoryStore.setCategoryIcon(event.target.result as string);
+    categoryStore.setIcoBase64(event.target.result as string);
   };
   reader.readAsDataURL(file);
 }
@@ -234,7 +235,7 @@ const closeImage = () => {
 };
 const closeIcon = () => {
   iconUrl.value = null;
-  categorySharedStore.setCategoryIcon(null);
+  categoryStore.setCategoryIcon(null);
 };
 
 let imageRecomendationModalValue = ref(false);

@@ -71,8 +71,9 @@ import {
 // import { useAddPropertyStore } from "../store/add-property.store";
 import { PropertyRenderType } from "@/shared/lib/utils/enums";
 import i18n from "@/shared/lib/plugins/i18n";
-import { useCategorySharedStore } from "@/shared/store/category";
+// import { useCategorySharedStore } from "@/shared/store/category";
 import { useAddPropertyStore } from "@/features/category/add-property/store/add-property.store";
+import { useCategoryStore } from "@/entities/category";
 
 const props = defineProps({
   value: {
@@ -97,7 +98,7 @@ const getPropertiesListAutocomplete = computed(() => {
   return addPropertyStore.getPropertiesListAutocomplete || [];
 });
 
-const categorySharedStore = useCategorySharedStore();
+const categoryStore = useCategoryStore();
 
 const onFocusPropertiesList = () => {
   addPropertyStore.fetchPropertiesListAutocomplete();
@@ -121,7 +122,7 @@ const onClose = () => {
 };
 
 const onSave = () => {
-  categorySharedStore.setProperties(propertyObject);
+  categoryStore.setProperties(propertyObject);
   onClose();
 };
 </script>
