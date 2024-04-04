@@ -357,6 +357,8 @@ export const useCategoryStore = defineStore(NAME_ID, {
         sequenceNumber: foundCategory?.sequenceNumber ?? 0,
       };
 
+      console.log(payload);
+
       return new Promise<CategoryEntity>((resolve, reject) => {
         loaderStore.setLoaderState(true);
         if (!this.getCategoryId) {

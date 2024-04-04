@@ -5,7 +5,7 @@
     height="auto"
     @onClose="onClose"
   >
-    <p class="font-bold mb-24 text-24">
+    <p class="font-bold mb-24 font-size-24">
       {{ $t("lang-01eb9949-cc57-48b1-8ea3-554e39c1d8d9") }}
     </p>
     <p class="color-violet-600 mb-24">

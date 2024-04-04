@@ -8,6 +8,14 @@
         <div class="form-title">
           {{ $t("lang-29a329cd-0145-44d5-804d-446c68eb158a") }}
         </div>
+
+        <div
+          v-if="showIncorrectLoginAndPassword"
+          class="padding-11-15 mb-16 rounded-lg bg-#FEF2F2 border-1 border-solid border-red-400"
+        >
+          {{ $t("lang-cd89ff76-e757-45a3-8737-03294b4e1345") }}
+        </div>
+
         <div>
           <SInput
             :label="$t('lang-5b5360db-a6ff-43a7-a8d4-f35517b9c4a8')"
@@ -40,7 +48,7 @@ import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { requiredField } from "@/shared/lib/utils/rules";
 import { useAuthStore } from "@/shared/store/auth";
-import { useAlertStore } from "@/shared/store/alert";
+// import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 
 const options = reactive({
@@ -49,12 +57,14 @@ const options = reactive({
 });
 
 const authStore = useAuthStore();
-const alertStore = useAlertStore();
+// const alertStore = useAlertStore();
 const loaderStore = useLoaderStore();
 const router = useRouter();
 
 const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
+
+const showIncorrectLoginAndPassword = ref(false);
 
 const onSubmitLogin = () => {
   const removedDashesAndBrackets = loginObj.pin.replace(/\D/g, "");
@@ -68,10 +78,12 @@ const onSubmitLogin = () => {
       .then(() => {
         loaderStore.setLoaderState(false);
         router.push("/property");
+        showIncorrectLoginAndPassword.value = false;
       })
-      .catch((err: any) => {
+      .catch(() => {
         loaderStore.setLoaderState(false);
-        alertStore.showError(err?.error?.errorMessage);
+        showIncorrectLoginAndPassword.value = true;
+        // alertStore.showError(err?.error?.errorMessage);
       });
   }
 };

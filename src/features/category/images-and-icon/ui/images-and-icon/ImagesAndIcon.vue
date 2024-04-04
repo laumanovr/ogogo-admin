@@ -25,17 +25,16 @@
       />
       <img src="/icons/plus-icon.png" />
     </label>
-    <div v-if="imageUrl || file" class="preview-selected-big-image">
+    <div v-if="imageUrl || file" class="preview-selected-big-image rounded-lg">
       <img
         :src="imageUrl || file"
         alt="Preview"
         class="big-image-under-container"
       />
-      <SIconRender
+      <img
+        src="../../../../../shared/assets/close-rounded-icon.svg"
         @click="closeImage"
-        name="CloseIcon"
-        color="violet"
-        class="remove-icon"
+        class="absolute left-69 bottom-38 cursor-pointer"
       />
     </div>
     <label
@@ -51,17 +50,18 @@
       />
       <img src="/icons/plus-icon.png" />
     </label>
-    <div v-if="iconUrl || iconFetched" class="preview-selected-small-image">
+    <div v-if="iconUrl || iconFetched" class="relative">
+      <div class="preview-selected-small-image rounded-lg">
+        <img
+          :src="iconUrl || iconFetched"
+          alt="Preview"
+          class="small-image-under-container"
+        />
+      </div>
       <img
-        :src="iconUrl || iconFetched"
-        alt="Preview"
-        class="small-image-under-container"
-      />
-      <SIconRender
+        src="../../../../../shared/assets/close-rounded-icon.svg"
         @click="closeIcon"
-        name="CloseIcon"
-        color="violet"
-        class="remove-icon"
+        class="absolute left-14.5 bottom-14.5 cursor-pointer"
       />
     </div>
     <ImageRecomendationModal
@@ -232,10 +232,11 @@ function resizeIcon(file: any) {
 const closeImage = () => {
   imageUrl.value = null;
   store.setImgUrl(null);
+  categoryStore.setFile(null);
 };
 const closeIcon = () => {
   iconUrl.value = null;
-  categoryStore.setCategoryIcon(null);
+  categoryStore.setIcoBase64(null);
 };
 
 let imageRecomendationModalValue = ref(false);
