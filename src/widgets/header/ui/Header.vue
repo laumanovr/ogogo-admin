@@ -98,13 +98,8 @@ const isPropertyActive = computed(() => {
     : "gray-400";
 });
 
-function onMenuItemChange(value: MENU_ITEMS) {
-  if (value === MENU_ITEMS.Category) {
-    router.push("/" + value + "/" + "empty");
-  } else {
-    router.push("/" + value);
-  }
-
+const onMenuItemChange = (value: MENU_ITEMS) => {
+  router.push("/" + value);
   activeButton.value = value;
 }
 
