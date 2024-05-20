@@ -28,6 +28,4 @@ import { CategorySettings } from "@/widgets/category-settings";
   justify-content: flex-start;
   gap: 48px;
 }
-.left-side-bar-container {
-}
 </style>
