@@ -8,7 +8,7 @@
             {{ $t("lang-7a193c83-40e4-4059-99e8-069b5cd9ff17") }} <span>*</span>
           </th>
           <th>
-            {{ $t("lang-f4f37dde-e947-49bc-b821-0d88dfc13cb8") }} <span>*</span>
+            {{ $t("lang-2f392c31-664a-4308-8678-694690cac96f") }} <span>*</span>
           </th>
           <th>{{ $t("lang-f4f37dde-e947-49bc-b821-0d88dfc13cb8") }}</th>
           <th>{{ $t("lang-4ea09cca-d60f-4edb-bbc5-445fa26c84dd") }}</th>
