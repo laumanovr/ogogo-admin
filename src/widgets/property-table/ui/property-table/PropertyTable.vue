@@ -145,10 +145,6 @@ const propertyValueTypes = reactive([
   { name: "Дробные числа", id: 14103 },
 ]);
 
-onMounted(() => {
-  Promise.all([getPropertyList(), getGroupPropertyList()]);
-});
-
 const groupProperties = computed(
   () => propertyStore.getPropertyGroupListAutocomplete
 );
@@ -156,6 +152,10 @@ const propertyList = ref([]);
 const currentProperties = ref([]);
 const key = ref(0);
 const isShowTable = ref(false);
+
+onMounted(() => {
+  Promise.all([getPropertyList(), getGroupPropertyList()]);
+});
 
 watch(
   () => propertyStore.propertyList,
