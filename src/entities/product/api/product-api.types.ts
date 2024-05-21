@@ -7,6 +7,7 @@ import { ProductEntity } from "../model/types";
 
 export interface ProductPayload extends BasePageParams {
   search?: string;
+  productType: number;
 }
 
 export type ProductApiResponse = ResponseWithStatus<
