@@ -6,14 +6,39 @@
     <FilterSearch @onClick="showFilterModal" />
     <STable
       :headers="headers"
-      :data="tableData"
-      totalItems="50"
-      itemsPerPage="5"
+      :data="products"
+      :totalItems="totalItems"
+      itemsPerPage="10"
       paginateRange="2"
       @onSelectPage="onChangePage"
     >
+      <template v-slot:productName="{ item }">
+        <div class="d-flex">
+          <img
+            :src="`data:image/png;base64,${item.iconBase64}`"
+            alt="img"
+            class="product-img"
+            v-if="item.iconBase64"
+          />
+          <span class="ml-8">{{ item.productName }}</span>
+        </div>
+      </template>
+      <template v-slot:shopName="{ item }">
+        <div class="d-flex">
+          <img
+            :src="`data:image/png;base64,${item.shopIconBase64}`"
+            alt="img"
+            class="shop-img"
+            v-if="item.shopIconBase64"
+          />
+          <span class="ml-8">{{ item.shopName }}</span>
+        </div>
+      </template>
       <template v-slot:status="{ item }">
-        <SBadge :content="item.status.name" :color="item.status.color" />
+        <SBadge
+          :content="getStatusInfo(item, 'name')"
+          :color="getStatusInfo(item, 'color')"
+        />
       </template>
       <template v-slot:action="{ item }">
         <router-link :to="{ name: 'productDetail', params: { id: item.id } }">
@@ -27,54 +52,79 @@
 
 <script lang="ts" setup>
 import { STable, SBadge } from "@tumarsoft/ogogo-ui";
-import { ref, reactive } from "vue";
+import { ref, onMounted } from "vue";
 import FilterSearch from "@/widgets/filter-search/FilterSearch.vue";
 import { FilterModal } from "@/shared/ui";
+import { useProductStore } from "@/entities/product/store/product.store";
 
+interface Status {
+  name: string;
+  color: string;
+}
+
+const productStore = useProductStore();
 const filterModal = ref(null);
+const products = ref([]);
+const totalItems = ref(0);
+const params = ref({ pageIndex: 0, productType: 14701 });
 
-const headers = reactive([
-  { title: "Товар", key: "product" },
-  { title: "Продавец", key: "name" },
+const headers = ref([
+  { title: "Товар", key: "productName" },
+  { title: "Продавец", key: "shopName" },
   { title: "Статус", key: "status" },
-  { title: "Дата", key: "date" },
-  { title: "Действия", key: "action" },
+  { title: "Модератор", key: "verifierName" },
+  { title: "", key: "action" },
 ]);
 
-const tableData = reactive([
-  {
-    id: 1,
-    product: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM HK/CN",
-    status: { name: "На проверке", color: "orange" },
-    name: "Планета электроники",
-    date: "01.01.24",
-  },
-  {
-    id: 2,
-    product: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM HK/CN",
-    status: { name: "Модерируется", color: "blue" },
-    name: "Gadget.kg",
-    date: "02.02.24",
-  },
-  {
-    id: 3,
-    product: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM HK/CN",
-    status: { name: "Проверен", color: "green" },
-    name: "Моби-маркет",
-    date: "03.03.24",
-  },
-  {
-    id: 4,
-    product: "Смартфон Apple iPhone 15 Pro 256Gb Natural Titanium 2 SIM HK/CN",
-    status: { name: "Отклонен", color: "rose" },
-    name: "Софтек",
-    date: "04.04.24",
-  },
+const statuses = ref([
+  { id: 0, name: "Все", color: "red" },
+  { id: 14800, name: "Черновик", color: "red" },
+  { id: 14801, name: "Опубликовано", color: "green" },
+  { id: 14802, name: "Ожидает модерации", color: "red" },
+  { id: 14803, name: "Ожидает одобрения", color: "orange" },
+  { id: 14804, name: "Одобрено", color: "green" },
+  { id: 14805, name: "В архиве", color: "red" },
+  { id: 14806, name: "Требует доработки", color: "red" },
+  { id: 14807, name: "Заблокировано", color: "red" },
 ]);
 
-const onChangePage = () => {};
+onMounted(() => {
+  getModerationProducts();
+});
+
+const getModerationProducts = () => {
+  productStore.fetchModerationProducts(params.value).then((response) => {
+    products.value = response.result.items;
+    totalItems.value = response.result.totalCount;
+  });
+};
+
+const getStatusInfo = (item: any, field: keyof Status) => {
+  const foundStatus = statuses.value.find(
+    (status) => status.id === item.status
+  );
+  return foundStatus ? foundStatus[field] : "";
+};
+
+const onChangePage = (selectedPage: number) => {
+  params.value.pageIndex = selectedPage;
+  getModerationProducts();
+};
 
 const showFilterModal = () => {
-  filterModal.value.toggleModal();
+  filterModal.value.toggleFilterModal();
 };
 </script>
+
+<style lang="scss">
+.product-list-container {
+  .product-img {
+    width: 44px;
+    height: 44px;
+  }
+  .shop-img {
+    width: 24px;
+    height: 24px;
+  }
+}
+</style>
