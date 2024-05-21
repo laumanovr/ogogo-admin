@@ -65,8 +65,8 @@ export interface ResponseWithStatus<T> {
 }
 
 export interface BasePageParams {
-  pageIndex: number;
-  pageSize: number;
+  pageIndex?: number;
+  pageSize?: number;
 }
 
 export interface BaseCreateAndUpdateData {
