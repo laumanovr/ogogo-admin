@@ -16,7 +16,6 @@
         <div class="d-flex">
           <img
             :src="`data:image/png;base64,${item.iconBase64}`"
-            alt="img"
             class="product-img"
             v-if="item.iconBase64"
           />
@@ -27,7 +26,6 @@
         <div class="d-flex">
           <img
             :src="`data:image/png;base64,${item.shopIconBase64}`"
-            alt="img"
             class="shop-img"
             v-if="item.shopIconBase64"
           />
