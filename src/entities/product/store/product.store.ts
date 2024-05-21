@@ -5,13 +5,23 @@ import { useAlertStore } from "@/shared/store/alert";
 import { IProductState } from "./product-store.types";
 import { ProductApi } from "../api/product.api";
 import { ProductPayload, ProductApiResponse } from "../api/product-api.types";
+import { ProductEntity } from "../model/types";
 
 const productApi = container.resolve(ProductApi);
 
 export const useProductStore = defineStore("product-store", {
   state: (): IProductState => ({
     moderationProducts: [],
+    totalCount: 0,
   }),
+  getters: {
+    getModerationProductList(): ProductEntity[] {
+      return this.moderationProducts;
+    },
+    getProductTotalCount(): number {
+      return this.totalCount;
+    },
+  },
   actions: {
     fetchModerationProducts(
       payload: ProductPayload
@@ -25,6 +35,7 @@ export const useProductStore = defineStore("product-store", {
           .then((response) => {
             loaderStore.setLoaderState(false);
             this.moderationProducts = response.result.items;
+            this.totalCount = response.result.totalCount;
             resolve(response);
           })
           .catch((err) => {
