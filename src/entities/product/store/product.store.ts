@@ -7,8 +7,6 @@ import { ProductApi } from "../api/product.api";
 import { ProductPayload, ProductApiResponse } from "../api/product-api.types";
 
 const productApi = container.resolve(ProductApi);
-const loaderStore = useLoaderStore();
-const alertStore = useAlertStore();
 
 export const useProductStore = defineStore("product-store", {
   state: (): IProductState => ({
@@ -19,6 +17,8 @@ export const useProductStore = defineStore("product-store", {
       payload: ProductPayload
     ): Promise<ProductApiResponse> {
       return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
         loaderStore.setLoaderState(true);
         productApi
           .getModerationProducts(payload)
