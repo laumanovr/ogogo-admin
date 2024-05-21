@@ -52,7 +52,7 @@
 
 <script lang="ts" setup>
 import { STable, SBadge } from "@tumarsoft/ogogo-ui";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed } from "vue";
 import FilterSearch from "@/widgets/filter-search/FilterSearch.vue";
 import { FilterModal } from "@/shared/ui";
 import { useProductStore } from "@/entities/product/store/product.store";
@@ -64,9 +64,9 @@ interface Status {
 
 const productStore = useProductStore();
 const filterModal = ref(null);
-const products = ref([]);
-const totalItems = ref(0);
 const params = ref({ pageIndex: 0, productType: 14701 });
+const products = computed(() => productStore.getModerationProductList);
+const totalItems = computed(() => productStore.getProductTotalCount);
 
 const headers = ref([
   { title: "Товар", key: "productName" },
@@ -93,10 +93,7 @@ onMounted(() => {
 });
 
 const getModerationProducts = () => {
-  productStore.fetchModerationProducts(params.value).then((response) => {
-    products.value = response.result.items;
-    totalItems.value = response.result.totalCount;
-  });
+  productStore.fetchModerationProducts(params.value);
 };
 
 const getStatusInfo = (item: any, field: keyof Status) => {
