@@ -24,6 +24,7 @@ export const useProductStore = defineStore("product-store", {
           .getModerationProducts(payload)
           .then((response) => {
             loaderStore.setLoaderState(false);
+            this.moderationProducts = response.result.items;
             resolve(response);
           })
           .catch((err) => {
