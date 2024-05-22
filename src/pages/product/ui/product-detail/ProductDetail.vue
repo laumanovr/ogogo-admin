@@ -20,6 +20,7 @@
           <SInput
             :label="$t('lang-cb1dea14-fb31-4e97-9364-9e33b4227c3a')"
             width="100%"
+            v-model="selectedProduct.productName"
           />
           <div class="d-flex mt-24">
             <img src="/icons/ava.png" alt="" class="mr-12" />
@@ -33,6 +34,7 @@
           <STextArea
             :label="$t('lang-240d2d7a-5a93-4647-a066-22a368702e04')"
             width="100%"
+            v-model="selectedProduct.description"
           />
           <div class="d-flex mt-24">
             <img src="/icons/ava.png" alt="" class="mr-12" />
@@ -51,6 +53,7 @@
               :label="$t('lang-333319c2-2df4-4057-a56a-28ddd7a790a1')"
               width="100%"
               class="mr-12"
+              v-model="selectedProduct.price"
             />
             <SInput
               :label="$t('lang-1f6f2dca-070c-48bc-941f-e1300024ffbb')"
@@ -77,6 +80,7 @@
           <SInput
             :label="$t('lang-3a76c0f0-6ebc-413e-8455-9363f5436da1')"
             width="100%"
+            v-model="selectedProduct.countOfProduct"
           />
           <div class="d-flex mt-24">
             <img src="/icons/ava.png" alt="" class="mr-12" />
@@ -95,8 +99,8 @@
           </p>
           <div class="d-flex flex-wrap">
             <img
-              v-for="i in 5"
-              src="/icons/iphone.jpg"
+              v-for="(photo, i) in productPhotos"
+              :src="photo"
               alt="image"
               class="photo mr-8 mb-8"
               :key="i"
@@ -110,7 +114,7 @@
             />
           </div>
         </div>
-        <div class="video-block" id="video">
+        <div class="video-block" id="video" :key="videoKey">
           <div class="head-title md">
             {{ $t("lang-65a33216-17a3-4f12-9e78-ef1b73efcdf0") }}
           </div>
@@ -118,7 +122,9 @@
             {{ $t("lang-9fc0c45e-0828-49af-a325-a11dbc4a9829") }}
           </p>
           <div class="d-flex flex-wrap">
-            <img src="/icons/iphone.jpg" alt="image" class="video mr-8" />
+            <video class="video" controls width="180" height="180">
+              <source :src="videoUrl" type="video/mp4" />
+            </video>
           </div>
           <div class="d-flex mt-24">
             <img src="/icons/ava.png" alt="" class="mr-12" />
@@ -185,18 +191,9 @@ import {
   SIconRender,
 } from "@tumarsoft/ogogo-ui";
 import { Breadcrumbs } from "@/shared/ui";
-import { ref, reactive, onMounted, onUnmounted } from "vue";
-import { useRouter } from "vue-router";
-
-const router = useRouter();
-
-onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
-});
-
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
+import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import { useProductStore } from "@/entities/product/store/product.store";
 
 type IAnchor = { link: string; name: string };
 const anchors = reactive<IAnchor[]>([
@@ -208,8 +205,38 @@ const anchors = reactive<IAnchor[]>([
   { link: "character", name: "lang-c00a03d8-8bb2-4d54-93e7-fc0379b86f51" },
 ]);
 
+const router = useRouter();
+const route = useRoute();
+const productStore = useProductStore();
 const currentAnchor = ref("");
 const isDisableScroll = ref(false);
+const productId = route.params.id as string;
+const productPhotos = ref([]);
+const videoUrl = ref("");
+const videoKey = ref(0);
+const selectedProduct = computed(() => productStore.getSelectedProduct);
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+  const sessionId = JSON.parse(window.localStorage.getItem("sessionId"));
+  const defaultUrl = import.meta.env.VITE_API_SERVER;
+  productStore.fetchProductById(productId).then(() => {
+    console.log(selectedProduct);
+    selectedProduct.value.photos.forEach((photoId) => {
+      const photo = `${defaultUrl}File/FileById?id=${photoId}&sessionId=${sessionId}`;
+      productPhotos.value.push(photo);
+    });
+    if (selectedProduct.value.videos.length) {
+      const videoId = selectedProduct.value.videos[0];
+      videoUrl.value = `${defaultUrl}File/FileById?id=${videoId}&sessionId=${sessionId}`;
+      videoKey.value++;
+    }
+  });
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
 
 const changeAnchor = (anchor: string) => {
   isDisableScroll.value = true;
