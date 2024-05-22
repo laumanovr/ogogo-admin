@@ -39,7 +39,13 @@
         />
       </template>
       <template v-slot:action="{ item }">
-        <router-link :to="{ name: 'productDetail', params: { id: item.id } }">
+        <router-link
+          :to="{
+            name: 'productDetail',
+            params: { id: item.id },
+            query: { shopId: item.shopId },
+          }"
+        >
           {{ $t("lang-23981bea-cba2-425d-a435-41ae4a591794") }}
         </router-link>
       </template>
