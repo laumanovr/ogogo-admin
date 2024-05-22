@@ -5,7 +5,7 @@ import { useAlertStore } from "@/shared/store/alert";
 import { IProductState } from "./product-store.types";
 import { ProductApi } from "../api/product.api";
 import { ProductPayload, ProductApiResponse } from "../api/product-api.types";
-import { ProductEntity } from "../model/types";
+import { ProductEntity, ProductDetailEntity } from "../model/types";
 
 const productApi = container.resolve(ProductApi);
 
@@ -22,7 +22,7 @@ export const useProductStore = defineStore("product-store", {
     getProductTotalCount(): number {
       return this.totalCount;
     },
-    getSelectedProduct(): object {
+    getSelectedProduct(): ProductDetailEntity {
       return this.selectedProduct;
     },
   },
