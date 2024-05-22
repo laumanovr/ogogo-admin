@@ -148,15 +148,15 @@ export const useShopStore = defineStore(NAME_ID, {
               moderationResult: {
                 logo: {
                   ...this.verifyInfo.moderationResult.logo,
-                  ...response.moderationResult.logo,
+                  ...response.moderationResult?.logo,
                 },
                 name: {
                   ...this.verifyInfo.moderationResult.name,
-                  ...response.moderationResult.name,
+                  ...response.moderationResult?.name,
                 },
                 description: {
                   ...this.verifyInfo.moderationResult.description,
-                  ...response.moderationResult.description,
+                  ...response.moderationResult?.description,
                 },
               },
             };
