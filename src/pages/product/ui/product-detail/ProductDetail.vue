@@ -222,7 +222,7 @@ onMounted(() => {
   const defaultUrl = import.meta.env.VITE_API_SERVER;
   productStore.fetchProductById(productId).then(() => {
     console.log(selectedProduct);
-    selectedProduct.value.photos.forEach((photoId) => {
+    selectedProduct.value.photos.forEach((photoId: string) => {
       const photo = `${defaultUrl}File/FileById?id=${photoId}&sessionId=${sessionId}`;
       productPhotos.value.push(photo);
     });
