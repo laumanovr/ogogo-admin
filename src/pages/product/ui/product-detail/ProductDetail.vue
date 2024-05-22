@@ -6,8 +6,8 @@
         {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
       <div class="d-flex items-center ml-24 mr-24">
-        <img src="/icons/shop-logo.png" alt="" class="sm-img mr-8" />
-        Мой телефон
+        <img :src="selectedProductShop.logoBase64" alt="" class="sm-img mr-8" />
+        {{ selectedProductShop.name }}
       </div>
       <Breadcrumbs />
     </div>
@@ -214,14 +214,23 @@ const productId = route.params.id as string;
 const productPhotos = ref([]);
 const videoUrl = ref("");
 const videoKey = ref(0);
+const selectedProductShop = ref({ name: "", logoBase64: "" });
 const selectedProduct = computed(() => productStore.getSelectedProduct);
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
+  getProductById();
+  getShopById();
+});
+
+onUnmounted(() => {
+  window.removeEventListener("scroll", handleScroll);
+});
+
+const getProductById = () => {
   const sessionId = JSON.parse(window.localStorage.getItem("sessionId"));
   const defaultUrl = import.meta.env.VITE_API_SERVER;
   productStore.fetchProductById(productId).then(() => {
-    console.log(selectedProduct);
     selectedProduct.value.photos.forEach((photoId: string) => {
       const photo = `${defaultUrl}File/FileById?id=${photoId}&sessionId=${sessionId}`;
       productPhotos.value.push(photo);
@@ -232,11 +241,15 @@ onMounted(() => {
       videoKey.value++;
     }
   });
-});
+};
 
-onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
+const getShopById = () => {
+  productStore
+    .fetchProductShopById(route.query.shopId as string)
+    .then((response) => {
+      selectedProductShop.value = response;
+    });
+};
 
 const changeAnchor = (anchor: string) => {
   isDisableScroll.value = true;
