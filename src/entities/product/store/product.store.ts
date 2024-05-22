@@ -13,6 +13,7 @@ export const useProductStore = defineStore("product-store", {
   state: (): IProductState => ({
     moderationProducts: [],
     totalCount: 0,
+    selectedProduct: {},
   }),
   getters: {
     getModerationProductList(): ProductEntity[] {
@@ -20,6 +21,9 @@ export const useProductStore = defineStore("product-store", {
     },
     getProductTotalCount(): number {
       return this.totalCount;
+    },
+    getSelectedProduct(): object {
+      return this.selectedProduct;
     },
   },
   actions: {
@@ -36,6 +40,27 @@ export const useProductStore = defineStore("product-store", {
             loaderStore.setLoaderState(false);
             this.moderationProducts = response.result.items;
             this.totalCount = response.result.totalCount;
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err?.error?.errorMessage);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
+    },
+    fetchProductById(id: string) {
+      return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
+        loaderStore.setLoaderState(true);
+        productApi
+          .getProductById(id)
+          .then((response) => {
+            this.selectedProduct = response.result;
+            loaderStore.setLoaderState(false);
             resolve(response);
           })
           .catch((err) => {
