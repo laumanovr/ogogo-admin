@@ -6,6 +6,7 @@ import { IProductState } from "./product-store.types";
 import { ProductApi } from "../api/product.api";
 import { ProductPayload, ProductApiResponse } from "../api/product-api.types";
 import { ProductEntity, ProductDetailEntity } from "../model/types";
+import { useShopStore } from "@/entities/shop";
 
 const productApi = container.resolve(ProductApi);
 
@@ -61,6 +62,27 @@ export const useProductStore = defineStore("product-store", {
           .then((response) => {
             this.selectedProduct = response.result;
             loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err?.error?.errorMessage);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
+    },
+    fetchProductShopById(
+      id: string
+    ): Promise<{ name: string; logoBase64: string }> {
+      return new Promise((resolve, reject) => {
+        const shopStore = useShopStore();
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
+        shopStore
+          .fetchShopById(id)
+          .then((response) => {
             resolve(response);
           })
           .catch((err) => {
