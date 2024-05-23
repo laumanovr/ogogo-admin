@@ -5,7 +5,11 @@ import { useAlertStore } from "@/shared/store/alert";
 import { IProductState } from "./product-store.types";
 import { ProductApi } from "../api/product.api";
 import { ProductPayload, ProductApiResponse } from "../api/product-api.types";
-import { ProductEntity, ProductDetailEntity } from "../model/types";
+import {
+  ProductEntity,
+  ProductDetailEntity,
+  ValidationField,
+} from "../model/types";
 import { useShopStore } from "@/entities/shop";
 
 const productApi = container.resolve(ProductApi);
@@ -15,6 +19,7 @@ export const useProductStore = defineStore("product-store", {
     moderationProducts: [],
     totalCount: 0,
     selectedProduct: {},
+    verificationData: {},
   }),
   getters: {
     getModerationProductList(): ProductEntity[] {
@@ -93,6 +98,11 @@ export const useProductStore = defineStore("product-store", {
             loaderStore.setLoaderState(false);
           });
       });
+    },
+    saveValidationCommentForField(field: keyof ValidationField, value: string) {
+      this.verificationData.validationDetails.fields[field].validationComment =
+        value;
+      // productApi.addValidationComment
     },
   },
 });
