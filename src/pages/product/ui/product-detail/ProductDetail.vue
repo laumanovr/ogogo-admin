@@ -23,11 +23,7 @@
             v-model="selectedProduct.productName"
           />
           <div class="d-flex mt-24">
-            <img src="/icons/ava.png" alt="" class="mr-12" />
-            <SInput
-              :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
-              width="100%"
-            />
+            <Name />
           </div>
         </div>
         <div class="mt-24 description">
@@ -194,6 +190,7 @@ import { Breadcrumbs } from "@/shared/ui";
 import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useProductStore } from "@/entities/product/store/product.store";
+import Name from "../product-detail/components/Name.vue";
 
 type IAnchor = { link: string; name: string };
 const anchors = reactive<IAnchor[]>([
