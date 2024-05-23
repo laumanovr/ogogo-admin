@@ -34,3 +34,10 @@ export interface ProductDetailEntity {
   photos?: string[];
   videos?: string[];
 }
+
+export interface ValidationField {
+  productName: object;
+  description: object;
+  price: object;
+  countOfProduct: object;
+}
