@@ -18,8 +18,39 @@ export const useProductStore = defineStore("product-store", {
   state: (): IProductState => ({
     moderationProducts: [],
     totalCount: 0,
-    selectedProduct: {},
-    verificationData: {},
+    selectedProduct: {
+      validationDetails: {
+        fields: {
+          name: {},
+        },
+      },
+    },
+    verificationData: {
+      id: "",
+      verifierComment: "",
+      validationDetails: {
+        fields: {
+          name: {
+            validationComment: "",
+            verified: false,
+          },
+          description: {
+            validationComment: "",
+            verified: false,
+          },
+          price: {
+            validationComment: "",
+            verified: false,
+          },
+          countOfProduct: {
+            validationComment: "",
+            verified: false,
+          },
+        },
+        files: {},
+        properties: {},
+      },
+    },
   }),
   getters: {
     getModerationProductList(): ProductEntity[] {
@@ -99,10 +130,34 @@ export const useProductStore = defineStore("product-store", {
           });
       });
     },
-    saveValidationCommentForField(field: keyof ValidationField, value: string) {
+    setValidationCommentForField(
+      field: keyof ValidationField,
+      value: string,
+      productId: string
+    ) {
+      this.verificationData.id = productId;
       this.verificationData.validationDetails.fields[field].validationComment =
         value;
-      // productApi.addValidationComment
+      this.verificationData.validationDetails.fields[field].verified = true;
+    },
+    addVerifyComments() {
+      return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
+        productApi
+          .addValidationComments(this.verificationData)
+          .then((response) => {
+            loaderStore.setLoaderState(false);
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err?.error?.errorMessage);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
     },
   },
 });
