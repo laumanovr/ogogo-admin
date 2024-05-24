@@ -5,25 +5,25 @@ export interface IProductState {
   totalCount: number;
   selectedProduct: ProductDetailEntity;
   verificationData: {
-    id?: string;
-    verifierComment?: string;
-    validationDetails?: {
+    id: string;
+    verifierComment: string;
+    validationDetails: {
       fields: {
-        productName: {
+        name: {
           validationComment: string;
-          verified: false;
+          verified: boolean;
         };
         description: {
-          validationComment: "string";
-          verified: false;
+          validationComment: string;
+          verified: boolean;
         };
         price: {
-          validationComment: "string";
-          verified: false;
+          validationComment: string;
+          verified: boolean;
         };
         countOfProduct: {
-          validationComment: "string";
-          verified: false;
+          validationComment: string;
+          verified: boolean;
         };
       };
       files: object;
