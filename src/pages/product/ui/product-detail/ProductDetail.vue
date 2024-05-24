@@ -22,8 +22,8 @@
             width="100%"
             v-model="selectedProduct.productName"
           />
-          <div class="d-flex mt-24">
-            <Name />
+          <div class="d-flex mt-10">
+            <Name v-if="isCommentReady" />
           </div>
         </div>
         <div class="mt-24 description">
@@ -33,7 +33,7 @@
             v-model="selectedProduct.description"
           />
           <div class="d-flex mt-24">
-            <img src="/icons/ava.png" alt="" class="mr-12" />
+            <img src="/icons/ogogo-ava.svg" alt="" class="mr-12" />
             <SInput
               :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
               width="100%"
@@ -62,7 +62,7 @@
             />
           </div>
           <div class="d-flex mt-24">
-            <img src="/icons/ava.png" alt="" class="mr-12" />
+            <img src="/icons/ogogo-ava.svg" alt="" class="mr-12" />
             <SInput
               :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
               width="100%"
@@ -79,7 +79,7 @@
             v-model="selectedProduct.countOfProduct"
           />
           <div class="d-flex mt-24">
-            <img src="/icons/ava.png" alt="" class="mr-12" />
+            <img src="/icons/ogogo-ava.svg" alt="" class="mr-12" />
             <SInput
               :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
               width="100%"
@@ -103,7 +103,7 @@
             />
           </div>
           <div class="d-flex mt-24">
-            <img src="/icons/ava.png" alt="" class="mr-12" />
+            <img src="/icons/ogogo-ava.svg" alt="" class="mr-12" />
             <SInput
               :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
               width="100%"
@@ -123,7 +123,7 @@
             </video>
           </div>
           <div class="d-flex mt-24">
-            <img src="/icons/ava.png" alt="" class="mr-12" />
+            <img src="/icons/ogogo-ava.svg" alt="" class="mr-12" />
             <SInput
               :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
               width="100%"
@@ -213,6 +213,7 @@ const videoUrl = ref("");
 const videoKey = ref(0);
 const selectedProductShop = ref({ name: "", logoBase64: "" });
 const selectedProduct = computed(() => productStore.getSelectedProduct);
+const isCommentReady = ref(false);
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
@@ -237,6 +238,7 @@ const getProductById = () => {
       videoUrl.value = `${defaultUrl}File/FileById?id=${videoId}&sessionId=${sessionId}`;
       videoKey.value++;
     }
+    isCommentReady.value = true;
   });
 };
 
