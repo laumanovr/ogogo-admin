@@ -23,7 +23,7 @@ export class ProductApi {
       .then((response) => response.data)
       .catch((err) => Promise.reject(err));
   };
-  addValidationComment = (payload) => {
+  addValidationComments = (payload) => {
     return API({
       method: "PUT",
       url: "/MarketplaceProduct/VerifyMarketplaceProduct",
