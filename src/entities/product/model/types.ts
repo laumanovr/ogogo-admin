@@ -14,6 +14,7 @@ export interface ProductEntity {
 }
 
 export interface ProductDetailEntity {
+  id?: string;
   articleNumber?: string;
   productName?: string;
   description?: string;
@@ -27,7 +28,7 @@ export interface ProductDetailEntity {
   verifierDate?: string;
   isRejected?: boolean;
   verifierComment?: string;
-  validationDetails?: object;
+  validationDetails?: ValidationObject;
   toArticle?: string;
   priceType?: number;
   countOfProduct?: number;
@@ -35,8 +36,17 @@ export interface ProductDetailEntity {
   videos?: string[];
 }
 
+interface ValidationObject {
+  fields: {
+    name: {
+      validationComment?: string;
+      moderationDate?: string;
+    };
+  };
+}
+
 export interface ValidationField {
-  productName: object;
+  name: object;
   description: object;
   price: object;
   countOfProduct: object;
