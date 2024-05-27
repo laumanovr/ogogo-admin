@@ -32,12 +32,8 @@
             width="100%"
             v-model="selectedProduct.description"
           />
-          <div class="d-flex mt-24">
-            <img src="/icons/ogogo-ava.svg" alt="" class="mr-12" />
-            <SInput
-              :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
-              width="100%"
-            />
+          <div class="d-flex mt-10">
+            <Description v-if="isCommentReady" />
           </div>
         </div>
         <div class="price-block mt-40" id="price">
@@ -168,12 +164,12 @@
       </div>
     </div>
     <div class="d-flex mt-40 actions">
-      <SButton size="large" color="violet" class="mr-12">{{
-        $t("lang-01b61f03-58d8-4b95-880e-a6b75920efad")
-      }}</SButton>
-      <SButton size="large" color="gray">{{
-        $t("lang-c06435a1-c1cb-40b3-a0f0-f4220e0f88ab")
-      }}</SButton>
+      <SButton size="large" color="violet" class="mr-12">
+        {{ $t("lang-01b61f03-58d8-4b95-880e-a6b75920efad") }}
+      </SButton>
+      <SButton size="large" color="gray" @click="rejectProduct">
+        Отправить на доработку
+      </SButton>
     </div>
   </div>
 </template>
@@ -190,7 +186,7 @@ import { Breadcrumbs } from "@/shared/ui";
 import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useProductStore } from "@/entities/product/store/product.store";
-import Name from "../product-detail/components/Name.vue";
+import { Name, Description } from "./components";
 
 type IAnchor = { link: string; name: string };
 const anchors = reactive<IAnchor[]>([
@@ -286,6 +282,10 @@ const handleScroll = () => {
       }
     });
   }
+};
+
+const rejectProduct = () => {
+  productStore.addVerifyComments();
 };
 </script>
 
