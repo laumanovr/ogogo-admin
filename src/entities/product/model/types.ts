@@ -36,7 +36,7 @@ export interface ProductDetailEntity {
   videos?: string[];
 }
 
-interface ValidationObject {
+export interface ValidationObject {
   fields: {
     name: {
       validationComment?: string;
@@ -55,11 +55,26 @@ interface ValidationObject {
       moderationDate?: string;
     };
   };
+  files: {
+    photo: {
+      validationComment?: string;
+      moderationDate?: string;
+    };
+    video: {
+      validationComment?: string;
+      moderationDate?: string;
+    };
+  };
 }
 
 export interface ValidationField {
-  name: object;
-  description: object;
-  price: object;
-  countOfProduct: object;
+  name: string;
+  description: string;
+  price: string;
+  countOfProduct: string;
+}
+
+export interface ValidationFile {
+  photo: string;
+  video: string;
 }
