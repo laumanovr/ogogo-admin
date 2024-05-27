@@ -42,6 +42,18 @@ interface ValidationObject {
       validationComment?: string;
       moderationDate?: string;
     };
+    description: {
+      validationComment?: string;
+      moderationDate?: string;
+    };
+    price: {
+      validationComment?: string;
+      moderationDate?: string;
+    };
+    countOfProduct: {
+      validationComment?: string;
+      moderationDate?: string;
+    };
   };
 }
 
