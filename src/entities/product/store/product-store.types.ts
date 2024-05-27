@@ -26,7 +26,16 @@ export interface IProductState {
           verified: boolean;
         };
       };
-      files: object;
+      files: {
+        photo: {
+          validationComment: string;
+          verified: boolean;
+        };
+        video: {
+          validationComment: string;
+          verified: boolean;
+        };
+      };
       properties: object;
     };
   };
