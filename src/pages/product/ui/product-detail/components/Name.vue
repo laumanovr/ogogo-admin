@@ -8,7 +8,7 @@
     <CommentContainer
       v-if="hasComment"
       :name="'Админ'"
-      :date="product.validationDetails.fields.name.moderationDate"
+      :date="getDate()"
       :comment="commentValue"
       @edit="editNameComment"
     />
@@ -28,6 +28,7 @@
 import { ref, onMounted, computed } from "vue";
 import { CommentInput, CommentContainer } from "@/shared/ui";
 import { useProductStore } from "@/entities/product/store/product.store";
+import moment from "moment";
 
 const productStore = useProductStore();
 const commentValue = ref("");
@@ -37,13 +38,21 @@ const product = computed(() => productStore.getSelectedProduct);
 
 onMounted(() => {
   commentValue.value =
-    product.value.validationDetails.fields.name.validationComment;
+    product.value.validationDetails.fields.name?.validationComment;
   hasComment.value = Boolean(commentValue.value);
 });
 
 const handleInput = (value: string) => {
   commentValue.value = value;
   isShowButtons.value = Boolean(value && value.trim());
+};
+
+const getDate = () => {
+  let commentDate =
+    product.value.validationDetails.fields.price?.moderationDate || "";
+  return Boolean(commentDate)
+    ? commentDate
+    : moment(new Date()).format("YYYY-MM-DD HH:mm");
 };
 
 const addNameComment = () => {
