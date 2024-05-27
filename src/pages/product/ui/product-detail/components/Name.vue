@@ -9,13 +9,13 @@
       v-if="hasComment"
       :name="'Админ'"
       :date="product.validationDetails.fields.name.moderationDate"
-      :comment="nameComment"
+      :comment="commentValue"
       @edit="editNameComment"
     />
     <CommentInput
       v-else
       :placeholder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
-      :comment="nameComment"
+      :comment="commentValue"
       :is-show-actions="isShowButtons"
       @input="handleInput"
       @submit="addNameComment"
@@ -30,33 +30,33 @@ import { CommentInput, CommentContainer } from "@/shared/ui";
 import { useProductStore } from "@/entities/product/store/product.store";
 
 const productStore = useProductStore();
-const nameComment = ref("");
+const commentValue = ref("");
 const isShowButtons = ref(false);
 const hasComment = ref(false);
 const product = computed(() => productStore.getSelectedProduct);
 
 onMounted(() => {
-  nameComment.value =
+  commentValue.value =
     product.value.validationDetails.fields.name.validationComment;
-  hasComment.value = Boolean(nameComment.value);
+  hasComment.value = Boolean(commentValue.value);
 });
 
 const handleInput = (value: string) => {
-  nameComment.value = value;
+  commentValue.value = value;
   isShowButtons.value = Boolean(value && value.trim());
 };
 
 const addNameComment = () => {
   productStore.setValidationCommentForField(
     "name",
-    nameComment.value,
+    commentValue.value,
     product.value.id
   );
   hasComment.value = true;
 };
 
 const cancelNameComment = () => {
-  nameComment.value = "";
+  commentValue.value = "";
   isShowButtons.value = false;
 };
 
