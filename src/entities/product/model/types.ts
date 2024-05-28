@@ -78,3 +78,9 @@ export interface ValidationFile {
   photo: string;
   video: string;
 }
+
+export const enum PRODUCT_STATUS {
+  PUBLISHED = 14801,
+  PENDING = 14802,
+  REJECTED = 14806,
+}
