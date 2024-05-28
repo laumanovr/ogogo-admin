@@ -1,4 +1,3 @@
-import Name from "./Name.vue";
-import Description from "./Description.vue";
-
-export { Name, Description };
+import FieldComment from "./FieldComment.vue";
+import FileComment from "./FileComment.vue";
+export { FieldComment, FileComment };
