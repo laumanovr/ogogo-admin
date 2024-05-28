@@ -9,6 +9,7 @@ import {
   ProductEntity,
   ProductDetailEntity,
   ValidationField,
+  ValidationFile,
 } from "../model/types";
 import { useShopStore } from "@/entities/shop";
 
@@ -22,6 +23,13 @@ export const useProductStore = defineStore("product-store", {
       validationDetails: {
         fields: {
           name: {},
+          description: {},
+          price: {},
+          countOfProduct: {},
+        },
+        files: {
+          photo: {},
+          video: {},
         },
       },
     },
@@ -47,7 +55,16 @@ export const useProductStore = defineStore("product-store", {
             verified: false,
           },
         },
-        files: {},
+        files: {
+          photo: {
+            validationComment: "",
+            verified: false,
+          },
+          video: {
+            validationComment: "",
+            verified: false,
+          },
+        },
         properties: {},
       },
     },
@@ -130,17 +147,19 @@ export const useProductStore = defineStore("product-store", {
           });
       });
     },
-    setValidationCommentForField(
-      field: keyof ValidationField,
-      value: string,
-      productId: string
-    ) {
-      this.verificationData.id = productId;
+    setFieldComment(field: keyof ValidationField, comment: string) {
       this.verificationData.validationDetails.fields[field].validationComment =
-        value;
+        comment;
       this.verificationData.validationDetails.fields[field].verified = true;
     },
-    addVerifyComments() {
+    setFileComment(field: keyof ValidationFile, comment: string) {
+      this.verificationData.validationDetails.files[field].validationComment =
+        comment;
+      this.verificationData.validationDetails.files[field].verified = true;
+    },
+
+    addVerifyComments(productId: string) {
+      this.verificationData.id = productId;
       return new Promise((resolve, reject) => {
         const loaderStore = useLoaderStore();
         const alertStore = useAlertStore();
