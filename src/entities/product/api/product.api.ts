@@ -1,6 +1,10 @@
 import { API } from "@/shared/lib/plugins/axios";
 import { singleton } from "tsyringe";
-import { ProductPayload, ProductApiResponse } from "./product-api.types";
+import {
+  ProductPayload,
+  ProductApiResponse,
+  ProductStatusPayload,
+} from "./product-api.types";
 
 @singleton()
 export class ProductApi {
@@ -23,10 +27,19 @@ export class ProductApi {
       .then((response) => response.data)
       .catch((err) => Promise.reject(err));
   };
-  addValidationComments = (payload) => {
+  addValidationComments = (payload: any) => {
     return API({
       method: "PUT",
       url: "/MarketplaceProduct/VerifyMarketplaceProduct",
+      data: payload,
+    })
+      .then((response) => response.data)
+      .catch((err) => Promise.reject(err));
+  };
+  setActiveStatus = (payload: ProductStatusPayload) => {
+    return API({
+      method: "PUT",
+      url: "/MarketplaceProduct/SetActiveStatusMarketplaceProduct",
       data: payload,
     })
       .then((response) => response.data)
