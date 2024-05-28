@@ -154,11 +154,28 @@
       </div>
     </div>
     <div class="d-flex mt-40 actions">
-      <SButton size="large" color="violet" class="mr-12">
-        {{ $t("lang-01b61f03-58d8-4b95-880e-a6b75920efad") }}
+      <SButton
+        size="large"
+        color="violet"
+        class="mr-12"
+        @click="publishProduct"
+        :disabled="isPublished"
+        v-if="isPending || isPublished"
+      >
+        {{
+          isPending
+            ? $t("lang-01b61f03-58d8-4b95-880e-a6b75920efad")
+            : "Опубликован"
+        }}
       </SButton>
-      <SButton size="large" color="gray" @click="rejectProduct">
-        Отправить на доработку
+      <SButton
+        size="large"
+        color="gray"
+        @click="rejectProduct"
+        :disabled="!isPending"
+        v-if="!isPublished"
+      >
+        {{ isPending ? "Отправить на доработку" : "Отправлен на доработку" }}
       </SButton>
     </div>
   </div>
@@ -177,6 +194,7 @@ import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useProductStore } from "@/entities/product/store/product.store";
 import { FieldComment, FileComment } from "./components";
+import { PRODUCT_STATUS } from "@/entities/product";
 
 type IAnchor = { link: string; name: string };
 const anchors = reactive<IAnchor[]>([
@@ -200,6 +218,12 @@ const videoKey = ref(0);
 const selectedProductShop = ref({ name: "", logoBase64: "" });
 const selectedProduct = computed(() => productStore.getSelectedProduct);
 const isCommentReady = ref(false);
+const isPending = computed(
+  () => selectedProduct.value.status === PRODUCT_STATUS.PENDING
+);
+const isPublished = computed(
+  () => selectedProduct.value.status === PRODUCT_STATUS.PUBLISHED
+);
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
@@ -275,7 +299,16 @@ const handleScroll = () => {
 };
 
 const rejectProduct = () => {
-  productStore.addVerifyComments(productId);
+  productStore.addVerifyComments(productId).then(() => {
+    router.push("/products");
+  });
+};
+
+const publishProduct = () => {
+  const payload = { id: productId, activeStatus: true };
+  productStore.publishProduct(payload).then(() => {
+    router.push("/products");
+  });
 };
 </script>
 
