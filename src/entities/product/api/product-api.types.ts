@@ -13,3 +13,8 @@ export interface ProductPayload extends BasePageParams {
 export type ProductApiResponse = ResponseWithStatus<
   WithPagination<ProductEntity>
 >;
+
+export interface ProductStatusPayload {
+  id: string;
+  activeStatus: boolean;
+}
