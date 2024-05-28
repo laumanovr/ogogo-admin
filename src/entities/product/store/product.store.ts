@@ -4,7 +4,11 @@ import { useLoaderStore } from "@/shared/store/loader";
 import { useAlertStore } from "@/shared/store/alert";
 import { IProductState } from "./product-store.types";
 import { ProductApi } from "../api/product.api";
-import { ProductPayload, ProductApiResponse } from "../api/product-api.types";
+import {
+  ProductPayload,
+  ProductApiResponse,
+  ProductStatusPayload,
+} from "../api/product-api.types";
 import {
   ProductEntity,
   ProductDetailEntity,
@@ -133,9 +137,11 @@ export const useProductStore = defineStore("product-store", {
         const shopStore = useShopStore();
         const loaderStore = useLoaderStore();
         const alertStore = useAlertStore();
+        loaderStore.setLoaderState(true);
         shopStore
           .fetchShopById(id)
           .then((response) => {
+            loaderStore.setLoaderState(false);
             resolve(response);
           })
           .catch((err) => {
@@ -163,10 +169,33 @@ export const useProductStore = defineStore("product-store", {
       return new Promise((resolve, reject) => {
         const loaderStore = useLoaderStore();
         const alertStore = useAlertStore();
+        loaderStore.setLoaderState(true);
         productApi
           .addValidationComments(this.verificationData)
           .then((response) => {
             loaderStore.setLoaderState(false);
+            alertStore.showSuccess("Отправлено на доработку!");
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err?.error?.errorMessage);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
+    },
+    publishProduct(payload: ProductStatusPayload) {
+      return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
+        loaderStore.setLoaderState(true);
+        productApi
+          .setActiveStatus(payload)
+          .then((response) => {
+            loaderStore.setLoaderState(false);
+            alertStore.showSuccess("Успешно опубликовано!");
             resolve(response);
           })
           .catch((err) => {
