@@ -20,20 +20,22 @@
           <SInput
             :label="$t('lang-cb1dea14-fb31-4e97-9364-9e33b4227c3a')"
             width="100%"
+            disabled
             v-model="selectedProduct.productName"
           />
           <div class="d-flex mt-10">
-            <Name v-if="isCommentReady" />
+            <FieldComment fieldName="name" v-if="isCommentReady" />
           </div>
         </div>
         <div class="mt-24 description">
           <STextArea
             :label="$t('lang-240d2d7a-5a93-4647-a066-22a368702e04')"
             width="100%"
+            disabled
             v-model="selectedProduct.description"
           />
           <div class="d-flex mt-10">
-            <Description v-if="isCommentReady" />
+            <FieldComment fieldName="description" v-if="isCommentReady" />
           </div>
         </div>
         <div class="price-block mt-40" id="price">
@@ -45,24 +47,23 @@
               :label="$t('lang-333319c2-2df4-4057-a56a-28ddd7a790a1')"
               width="100%"
               class="mr-12"
+              disabled
               v-model="selectedProduct.price"
             />
             <SInput
               :label="$t('lang-1f6f2dca-070c-48bc-941f-e1300024ffbb')"
               width="100%"
               class="mr-12"
+              disabled
             />
             <SInput
               :label="$t('lang-5eb99c46-ed5f-4a24-85ad-d551ad812256')"
               width="100%"
+              disabled
             />
           </div>
-          <div class="d-flex mt-24">
-            <img src="/icons/ogogo-ava.svg" alt="" class="mr-12" />
-            <SInput
-              :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
-              width="100%"
-            />
+          <div class="d-flex mt-10">
+            <FieldComment fieldName="price" v-if="isCommentReady" />
           </div>
         </div>
         <div class="leftover" id="leftover">
@@ -72,14 +73,11 @@
           <SInput
             :label="$t('lang-3a76c0f0-6ebc-413e-8455-9363f5436da1')"
             width="100%"
+            disabled
             v-model="selectedProduct.countOfProduct"
           />
-          <div class="d-flex mt-24">
-            <img src="/icons/ogogo-ava.svg" alt="" class="mr-12" />
-            <SInput
-              :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
-              width="100%"
-            />
+          <div class="d-flex mt-10">
+            <FieldComment fieldName="countOfProduct" v-if="isCommentReady" />
           </div>
         </div>
         <div class="photo-block" id="photo">
@@ -98,12 +96,8 @@
               :key="i"
             />
           </div>
-          <div class="d-flex mt-24">
-            <img src="/icons/ogogo-ava.svg" alt="" class="mr-12" />
-            <SInput
-              :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
-              width="100%"
-            />
+          <div class="d-flex mt-10">
+            <FileComment field-name="photo" v-if="isCommentReady" />
           </div>
         </div>
         <div class="video-block" id="video" :key="videoKey">
@@ -118,12 +112,8 @@
               <source :src="videoUrl" type="video/mp4" />
             </video>
           </div>
-          <div class="d-flex mt-24">
-            <img src="/icons/ogogo-ava.svg" alt="" class="mr-12" />
-            <SInput
-              :placeHolder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
-              width="100%"
-            />
+          <div class="d-flex mt-10">
+            <FileComment field-name="video" v-if="isCommentReady" />
           </div>
         </div>
         <div class="characteristic-block" id="character">
@@ -186,7 +176,7 @@ import { Breadcrumbs } from "@/shared/ui";
 import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useProductStore } from "@/entities/product/store/product.store";
-import { Name, Description } from "./components";
+import { FieldComment, FileComment } from "./components";
 
 type IAnchor = { link: string; name: string };
 const anchors = reactive<IAnchor[]>([
@@ -285,7 +275,7 @@ const handleScroll = () => {
 };
 
 const rejectProduct = () => {
-  productStore.addVerifyComments();
+  productStore.addVerifyComments(productId);
 };
 </script>
 
