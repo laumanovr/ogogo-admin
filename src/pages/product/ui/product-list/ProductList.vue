@@ -82,12 +82,12 @@ const headers = ref([
 
 const statuses = ref([
   { id: 0, name: "Все", color: "red" },
-  { id: 14800, name: "Черновик", color: "red" },
+  { id: 14800, name: "Черновик", color: "grey" },
   { id: 14801, name: "Опубликовано", color: "green" },
-  { id: 14802, name: "Ожидает модерации", color: "red" },
-  { id: 14803, name: "Ожидает одобрения", color: "orange" },
-  { id: 14804, name: "Одобрено", color: "green" },
-  { id: 14805, name: "В архиве", color: "red" },
+  { id: 14802, name: "Ожидает модерации", color: "blue" },
+  { id: 14803, name: "Ожидает модерации ТО", color: "orange" },
+  { id: 14804, name: "Одобрено ТО", color: "green" },
+  { id: 14805, name: "В архиве", color: "dark-grey" },
   { id: 14806, name: "Требует доработки", color: "red" },
   { id: 14807, name: "Заблокировано", color: "red" },
 ]);
