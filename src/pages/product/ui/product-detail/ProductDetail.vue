@@ -124,17 +124,20 @@
             {{ $t("lang-0c4310a2-d07f-450a-9258-a907b7feb038") }}
           </p>
           <div class="d-flex flex-wrap justify-between">
-            <div class="mb-16 selects">
-              <SSelect label="Цвет" />
-            </div>
-            <div class="mb-16 selects">
-              <SSelect label="Конфигурация памяти" />
-            </div>
-            <div class="mb-16 selects">
-              <SSelect label="Состояние" />
-            </div>
-            <div class="mb-16 selects">
-              <SSelect label="Экран" />
+            <div
+              class="mb-16 selects"
+              v-for="property in properties"
+              :key="property.propertyId"
+            >
+              <SSelect
+                class="w-p-100"
+                :label="showPropertyName(property)"
+                :items="property.allowedValues"
+                showValue="propertyValueText"
+                getValue="propertyValueId"
+                v-model="property.selectedValueId"
+                disabled
+              />
             </div>
           </div>
         </div>
@@ -195,6 +198,7 @@ import { useRouter, useRoute } from "vue-router";
 import { useProductStore } from "@/entities/product/store/product.store";
 import { FieldComment, FileComment } from "./components";
 import { PRODUCT_STATUS } from "@/entities/product";
+import { useCategoryStore } from "@/entities/category";
 
 type IAnchor = { link: string; name: string };
 const anchors = reactive<IAnchor[]>([
@@ -209,10 +213,12 @@ const anchors = reactive<IAnchor[]>([
 const router = useRouter();
 const route = useRoute();
 const productStore = useProductStore();
+const categoryStore = useCategoryStore();
 const currentAnchor = ref("");
 const isDisableScroll = ref(false);
 const productId = route.params.id as string;
 const productPhotos = ref([]);
+const properties = ref([]);
 const videoUrl = ref("");
 const videoKey = ref(0);
 const selectedProductShop = ref({ name: "", logoBase64: "" });
@@ -239,6 +245,7 @@ const getProductById = () => {
   const sessionId = JSON.parse(window.localStorage.getItem("sessionId"));
   const defaultUrl = import.meta.env.VITE_API_SERVER;
   productStore.fetchProductById(productId).then(() => {
+    getPropertiesByCategoryId(selectedProduct.value.categoryId);
     selectedProduct.value.photos.forEach((photoId: string) => {
       const photo = `${defaultUrl}File/FileById?id=${photoId}&sessionId=${sessionId}`;
       productPhotos.value.push(photo);
@@ -249,6 +256,25 @@ const getProductById = () => {
       videoKey.value++;
     }
     isCommentReady.value = true;
+  });
+};
+
+const getPropertiesByCategoryId = (categoryId: string) => {
+  categoryStore.fetchCategoryById(categoryId).then((response) => {
+    properties.value = response.properties;
+    const selectedPropValues: any = [];
+    Object.entries(selectedProduct.value.properties).forEach((item) => {
+      selectedPropValues.push({ key: item[0], valueId: item[1] });
+    });
+    properties.value = properties.value.map((property) => {
+      const selectedObj = selectedPropValues.find(
+        (item: any) => item.key === property.key
+      );
+      if (selectedObj) {
+        property.selectedValueId = selectedObj.valueId;
+      }
+      return property;
+    });
   });
 };
 
@@ -268,6 +294,10 @@ const changeAnchor = (anchor: string) => {
   setTimeout(() => {
     isDisableScroll.value = false;
   }, 800);
+};
+
+const showPropertyName = (property: any) => {
+  return property.name;
 };
 
 const goBack = () => {
