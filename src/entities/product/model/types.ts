@@ -21,6 +21,7 @@ export interface ProductDetailEntity {
   categoryId?: string;
   price?: number;
   productType?: number;
+  properties?: object;
   ownerOrganizationId?: string;
   status?: number;
   verificationStatus?: number;
