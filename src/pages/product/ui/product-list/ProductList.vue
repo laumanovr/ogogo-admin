@@ -68,7 +68,7 @@ interface Status {
 
 const productStore = useProductStore();
 const filterModal = ref(null);
-const params = ref({ pageIndex: 0, productType: 14701 });
+const params = ref({ pageIndex: 0, productType: 14701, sortDirection: 1 });
 const products = computed(() => productStore.getModerationProductList);
 const totalItems = computed(() => productStore.getProductTotalCount);
 
@@ -108,7 +108,7 @@ const getStatusInfo = (item: any, field: keyof Status) => {
 };
 
 const onChangePage = (selectedPage: number) => {
-  params.value.pageIndex = selectedPage;
+  params.value.pageIndex = selectedPage - 1;
   getModerationProducts();
 };
 
