@@ -7,7 +7,7 @@
       </SButton>
       <h2 class="head-title">
         {{ $t("lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2") }} /
-        {{ propertyValueStore.selectedProperty?.name }}
+        {{ selectedProperty?.name }}
       </h2>
     </div>
     <div class="actions">
@@ -21,24 +21,22 @@
 </template>
 
 <script lang="ts" setup>
-import { ref } from "vue";
+import { ref, onMounted, computed } from "vue";
 import { SButton, SIconRender, SInput } from "@tumarsoft/ogogo-ui";
 import { PropertyValueTable } from "@/widgets/property-value-table";
 import { usePropertyValueStore } from "@/entities/property-value";
-import { useRouter } from "vue-router";
-// import { useRoute } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
 
 const router = useRouter();
-// const route = useRoute();
+const route = useRoute();
 const propertyValueStore = usePropertyValueStore();
 const propertyValueTable = ref(null);
 const searchTimer = ref<number>(null);
+const selectedProperty = computed(() => propertyValueStore.getSelectedProperty);
 
-// onMounted(() => {
-//   if (route.params && route.params.id && typeof route.params.id === "string") {
-//     propertyDetailStore.fetchPropertyById(route.params.id);
-//   }
-// });
+onMounted(() => {
+  propertyValueStore.fetchPropertyById(route.params.id as string);
+});
 
 const goBack = () => {
   router.push("/property");
