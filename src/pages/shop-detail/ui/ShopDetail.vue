@@ -53,21 +53,12 @@
       class="d-flex mt-40 actions"
       v-if="verificationStatus === PRODUCT_VERIFICATION_STATUS.PENDING"
     >
-      <SButton
-        :disabled="isDisabledAcceptBtn"
-        @click="verifyShop"
-        size="large"
-        color="violet"
-        class="mr-8"
-        >{{ $t("lang-12fe79b5-20d2-4f2f-90a4-58ce16506ba3") }}</SButton
-      >
-      <SButton
-        :disabled="isDisabledRejectBtn"
-        @click="rejectShop"
-        size="large"
-        color="gray"
-        >{{ $t("lang-4d92287d-f47c-47a1-80c1-3eb9f68352d4") }}</SButton
-      >
+      <SButton @click="verifyShop" size="large" color="violet" class="mr-8">
+        {{ $t("lang-12fe79b5-20d2-4f2f-90a4-58ce16506ba3") }}
+      </SButton>
+      <SButton @click="rejectShop" size="large" color="gray">
+        {{ $t("lang-4d92287d-f47c-47a1-80c1-3eb9f68352d4") }}
+      </SButton>
     </div>
   </div>
 </template>
@@ -116,7 +107,7 @@ const logo = computed(() => shop.value.logoBase64);
 const shopName = computed(() => shop.value.name);
 const description = computed(() => shop.value.description);
 const logoName = computed(() => shop.value.logoFileName);
-const moderationResult = computed(() => shop.value.moderationResult);
+// const moderationResult = computed(() => shop.value.moderationResult);
 
 const verificationStatus = computed(() => shop.value.verificationStatus);
 
@@ -153,20 +144,6 @@ const activeDescriptionBadge = computed(() => {
     return t("lang-cddb45b5-eff8-43d2-815e-4869a7603c04");
   }
 });
-
-const isDisabledAcceptBtn = computed(
-  () =>
-    !Object.values(moderationResult.value).every((item) =>
-      Boolean(item.validationComment)
-    )
-);
-
-const isDisabledRejectBtn = computed(
-  () =>
-    !Object.values(moderationResult.value).some((item) =>
-      Boolean(item.validationComment)
-    )
-);
 </script>
 
 <style scoped lang="scss">
