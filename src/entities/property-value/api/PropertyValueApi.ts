@@ -46,8 +46,12 @@ export class PropertyValueApi {
       .catch((err) => Promise.reject(err));
   };
 
-  // getPropertyById = (id: string): Promise<IPropertyApi> =>
-  //   API.get(`Marketplace/GetMarketplaceProperty?id=${id}`)
-  //     .then((response) => response.data.result)
-  //     .catch((err) => Promise.reject(err));
+  getPropertyById = (id: string) => {
+    return API({
+      method: "GET",
+      url: `Marketplace/GetMarketplaceProperty?id=${id}`,
+    })
+      .then((response) => response.data.result)
+      .catch((err) => Promise.reject(err));
+  };
 }
