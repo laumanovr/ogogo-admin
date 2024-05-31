@@ -11,6 +11,7 @@ import { useAlertStore } from "@/shared/store/alert";
 import { container } from "tsyringe";
 import { ResponseWithStatus, WithPagination } from "@/shared/api/api.types";
 import { PropertyValueState } from "./types";
+import { PropertyEntity } from "@/entities/property/model/PropertyEntity";
 
 const propertyValueApiService = container.resolve(PropertyValueApi);
 
@@ -26,6 +27,9 @@ export const usePropertyValueStore = defineStore(NAME_ID, {
   getters: {
     getPropertyValueList(): PropertyValueEntity[] {
       return this.propertyValueList;
+    },
+    getSelectedProperty(): PropertyEntity {
+      return this.selectedProperty;
     },
   },
   actions: {
@@ -102,25 +106,25 @@ export const usePropertyValueStore = defineStore(NAME_ID, {
           });
       });
     },
-    // fetchPropertyById(id: string): Promise<IPropertyApi> {
-    //   return new Promise((resolve, reject) => {
-    //     const loaderStore = useLoaderStore();
-    //     const alertStore = useAlertStore();
-    //     loaderStore.setLoaderState(true);
-    //     propertyValueApiService
-    //       .getPropertyById(id)
-    //       .then((response) => {
-    //         this.selectedProperty = response;
-    //         resolve(response);
-    //       })
-    //       .catch((err) => {
-    //         alertStore.showError(err.message);
-    //         reject(err);
-    //       })
-    //       .finally(() => {
-    //         loaderStore.setLoaderState(false);
-    //       });
-    //   });
-    // },
+    fetchPropertyById(id: string) {
+      return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        const alertStore = useAlertStore();
+        loaderStore.setLoaderState(true);
+        propertyValueApiService
+          .getPropertyById(id)
+          .then((response) => {
+            this.selectedProperty = response;
+            resolve(response);
+          })
+          .catch((err) => {
+            alertStore.showError(err.message);
+            reject(err);
+          })
+          .finally(() => {
+            loaderStore.setLoaderState(false);
+          });
+      });
+    },
   },
 });
