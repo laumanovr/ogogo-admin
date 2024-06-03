@@ -5,6 +5,7 @@ import { container } from "tsyringe";
 import { CategoryApi } from "../api/CategoryApi";
 import { CategoryState } from "./types";
 import {
+  AllowedValue,
   CategoryByIdProperty,
   CategoryEntity,
   CategoryModified,
@@ -184,28 +185,37 @@ export const useCategoryStore = defineStore(NAME_ID, {
     },
 
     setPropertyAllowedValueObj(
-      obj: { propertyValueId: string } | PropertyValueAutocomplete,
-      propertyId: string
+      propValues: PropertyValueAutocomplete[],
+      propId: string
     ) {
-      const foundProperty = this.getProperties.find((el) => {
-        return el.propertyId === propertyId;
+      this.properties = this.properties.map((property) => {
+        if (property.propertyId === propId) {
+          property.allowedValues = propValues;
+        }
+        return property;
       });
-
-      foundProperty.allowedValues.push(obj);
     },
 
     setDeletePropertyAllowedValueObj(
-      obj: { propertyValueId: string } | PropertyValueAutocomplete,
-      propertyId: string
+      obj: PropertyValueAutocomplete | AllowedValue,
+      propId: string
     ) {
-      const foundProperty = this.getProperties.find((el) => {
-        return el.propertyId === propertyId;
-      });
-      foundProperty.allowedValues = foundProperty.allowedValues.filter((el) => {
-        if ("id" in el && "id" in obj) {
-          return el.id !== obj.id;
+      this.properties = this.properties.map((property) => {
+        if (property.propertyId === propId) {
+          property.allowedValues = property.allowedValues.filter((item) => {
+            if ("id" in item && "id" in obj) {
+              return item.id !== obj.id;
+            }
+          });
         }
+        return property;
       });
+    },
+
+    removePropertyCard(propId: string) {
+      this.properties = this.properties.filter(
+        (property) => property.propertyId !== propId
+      );
     },
 
     fetchCategoryById(id: string): Promise<CategoryEntity> {
