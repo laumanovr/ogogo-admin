@@ -30,7 +30,7 @@ export const useCategoryStore = defineStore(NAME_ID, {
       categoryNameEn: null,
       icoBase64: null,
       imageId: null,
-      properties: null,
+      properties: [],
 
       parentId: null,
       sequenceNumber: null,
@@ -176,7 +176,7 @@ export const useCategoryStore = defineStore(NAME_ID, {
     },
 
     setProperties(value: CategoryByIdProperty) {
-      this.properties.push(value);
+      this.properties.push({ ...value });
     },
 
     setPropertiesArray(value: CategoryByIdProperty[]) {
@@ -221,7 +221,7 @@ export const useCategoryStore = defineStore(NAME_ID, {
 
             this.setCategoryId(res.id);
 
-            this.properties = res.properties;
+            // this.properties = res.properties;
 
             if (res.imageId) {
               // set image to show in category image preview
