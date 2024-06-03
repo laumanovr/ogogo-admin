@@ -112,7 +112,7 @@ import {
   SCheckbox,
   SButton,
 } from "@tumarsoft/ogogo-ui";
-import { ref, computed, type PropType, onBeforeMount } from "vue";
+import { ref, computed, type PropType } from "vue";
 // import { useCategorySharedStore } from "@/shared/store/category";
 // import { Property } from "@/widgets/category/category-settings/store/category-settings-store.types";
 import {
@@ -149,12 +149,6 @@ const onCloseShowAddPopertyValueModal = () => {
   showAddPopertyValueModal.value = false;
 };
 
-// const propertyCardListStore = usePropertyCardListStore();
-
-onBeforeMount(async () => {
-  categorySharedStore.fetchPropertiesListAutocomplete(props.property.id);
-});
-
 const getPropertyValueAutocomplete = computed(
   () => categorySharedStore.getPropertyValueAutocomplete
 );
@@ -178,7 +172,11 @@ const propretyValueName = (
 };
 
 const onShowAddPopertyValue = () => {
-  showAddPopertyValueModal.value = true;
+  categorySharedStore
+    .fetchPropertiesListAutocomplete(props.property.propertyId)
+    .then(() => {
+      showAddPopertyValueModal.value = true;
+    });
 };
 
 const onCloseAddPropertyValueModal = () => {
