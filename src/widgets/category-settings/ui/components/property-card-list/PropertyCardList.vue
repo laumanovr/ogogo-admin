@@ -21,34 +21,36 @@
           <p>{{ $t("lang-afd3cd36-ac2b-4852-bde7-3d2cb4d7842b") }}</p>
           <p>{{ getPropertyValueAutocomplete?.length ?? 0 }}</p>
         </div>
-        <div class="d-flex flex-row items-center gap-10">
+        <!-- <div class="d-flex flex-row items-center gap-10">
           <img class="w-17 h-17" src="/icons/star-icon.png" />
           <img class="w-17 h-17" src="/icons/paper-and-mouse-icon.png" />
           <img class="w-17 h-17" src="/icons/article-icon.png" />
-        </div>
+        </div> -->
       </div>
-      <div
-        class="relative hover:bg-slate-50 px-2 cursor-pointer rounded"
-        @click="onOpenPropertyToolsDropdown"
-      >
-        <img class="w-17 h-5" src="/icons/three-dots.png" alt="three-dots" />
+      <div class="relative hover:bg-slate-50 px-2 cursor-pointer rounded">
+        <img
+          class="w-17 h-5"
+          src="/icons/three-dots.png"
+          alt="three-dots"
+          @click="onOpenPropertyToolsDropdown"
+        />
         <ul
           v-if="openPropertyToolsDropdown"
           class="flex flex-col list-none rounded-lg shadow-2xl px-1.2 py-1.2 bg-white absolute left--14"
         >
-          <li
+          <!-- <li
             class="flex gap-4 cursor-pointer hover:bg-slate-50 px-2.5 py-3 rounded"
           >
             <img src="/icons/settings-icon.png" />{{
               $t("lang-910d305f-6cda-4bea-9829-3a26101da8a3")
             }}
-          </li>
+          </li> -->
           <li
             class="flex gap-4 cursor-pointer hover:bg-slate-50 px-2.5 py-3 rounded"
+            @click="deletePropertyCard"
           >
-            <img src="/icons/delete-icon.png" />{{
-              $t("lang-4d04ae16-7603-4e88-8a14-bf133f2e2c4a")
-            }}
+            <img src="/icons/delete-icon.png" />
+            {{ $t("lang-4d04ae16-7603-4e88-8a14-bf133f2e2c4a") }}
           </li>
         </ul>
       </div>
@@ -64,16 +66,18 @@
         </p>
       </div>
       <template v-if="'allowedValues' in property">
-        <template v-for="propertyValue in property.allowedValues">
-          <div class="value d-flex flex-row items-center gap-8">
-            <p>{{ propretyValueName(propertyValue) }}</p>
-            <SIconRender
-              name="CloseRoundIcon"
-              color="grey"
-              @click="onRemovePropertyValue(propertyValue)"
-            />
-          </div>
-        </template>
+        <div
+          class="value d-flex flex-row items-center gap-8"
+          v-for="(propertyValue, i) in property.allowedValues"
+          :key="i"
+        >
+          <p>{{ propretyValueName(propertyValue) }}</p>
+          <SIconRender
+            name="CloseRoundIcon"
+            color="grey"
+            @click="onRemovePropertyValue(propertyValue)"
+          />
+        </div>
       </template>
     </div>
     <SModal
@@ -85,12 +89,7 @@
       <SInput class="w-p-100" isSearchable />
       <div class="mt-24">
         <div v-for="value in getPropertyValueAutocomplete" class="mb-16">
-          <SCheckbox
-            v-model="isCheckedShown"
-            :value="isChecked(value.id)"
-            @onChange="onPropertyValueClick(value)"
-            >{{ value.value }}</SCheckbox
-          >
+          <SCheckbox v-model="value.checked">{{ value.value }}</SCheckbox>
         </div>
       </div>
       <SButton
@@ -98,8 +97,9 @@
         color="violet"
         class="w-p-100"
         @click="onCloseAddPropertyValueModal"
-        >{{ $t("lang-d0108c3e-9945-4245-a730-b011e5a47c35") }}</SButton
       >
+        {{ $t("lang-d0108c3e-9945-4245-a730-b011e5a47c35") }}
+      </SButton>
     </SModal>
   </div>
 </template>
@@ -113,13 +113,10 @@ import {
   SButton,
 } from "@tumarsoft/ogogo-ui";
 import { ref, computed, type PropType } from "vue";
-// import { useCategorySharedStore } from "@/shared/store/category";
-// import { Property } from "@/widgets/category/category-settings/store/category-settings-store.types";
 import {
   AllowedValue,
   PropertyValueAutocomplete,
 } from "@/shared/api/category/index.types";
-// import { IGetMarketplacePropertyAutocomplete } from "@/features/category/add-property/api/add-poperty.api.types";
 import { CategoryByIdProperty, useCategoryStore } from "@/entities/category";
 
 const props = defineProps({
@@ -131,7 +128,7 @@ const props = defineProps({
 
 let hideBody = ref(false);
 
-const categorySharedStore = useCategoryStore();
+const categoryStore = useCategoryStore();
 
 const showAddPopertyValueModal = ref(false);
 
@@ -150,7 +147,7 @@ const onCloseShowAddPopertyValueModal = () => {
 };
 
 const getPropertyValueAutocomplete = computed(
-  () => categorySharedStore.getPropertyValueAutocomplete
+  () => categoryStore.getPropertyValueAutocomplete
 );
 
 const propertyName = computed(() => {
@@ -172,7 +169,7 @@ const propretyValueName = (
 };
 
 const onShowAddPopertyValue = () => {
-  categorySharedStore
+  categoryStore
     .fetchPropertiesListAutocomplete(props.property.propertyId)
     .then(() => {
       showAddPopertyValueModal.value = true;
@@ -180,39 +177,30 @@ const onShowAddPopertyValue = () => {
 };
 
 const onCloseAddPropertyValueModal = () => {
+  const checkedValues = getPropertyValueAutocomplete.value.filter(
+    (value) => value.checked
+  );
+  categoryStore.setPropertyAllowedValueObj(
+    checkedValues,
+    props.property.propertyId
+  );
   showAddPopertyValueModal.value = false;
 };
 
-const isCheckedShown = ref(null);
-
-const isChecked = (id: string) => {
-  isCheckedShown.value = props.property.allowedValues.some((el) => {
-    if ("propertyValueId" in el) {
-      return el.propertyValueId === id;
-    }
-  });
-};
-
 const onRemovePropertyValue = (
-  obj: AllowedValue | PropertyValueAutocomplete
+  obj: PropertyValueAutocomplete | AllowedValue
 ) => {
   if ("propertyId" in props.property) {
-    categorySharedStore.setDeletePropertyAllowedValueObj(
+    categoryStore.setDeletePropertyAllowedValueObj(
       obj,
       props.property.propertyId
     );
   }
 };
 
-const onPropertyValueClick = (
-  value: AllowedValue | PropertyValueAutocomplete
-) => {
-  if ("propertyId" in props.property) {
-    categorySharedStore.setPropertyAllowedValueObj(
-      value,
-      props.property.propertyId
-    );
-  }
+const deletePropertyCard = () => {
+  categoryStore.removePropertyCard(props.property.propertyId);
+  onOpenPropertyToolsDropdown();
 };
 </script>
 <style scoped lang="scss">
