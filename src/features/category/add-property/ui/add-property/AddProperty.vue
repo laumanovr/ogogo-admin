@@ -4,7 +4,8 @@
     <p>{{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</p></SButton
   >
   <PropertyCardList
-    v-for="propertyItem in categoryStore.getProperties"
+    v-for="(propertyItem, i) in categoryStore.getProperties"
+    :key="i"
     :property="propertyItem"
   />
   <AddPropertyModal :value="modalValue" @close="onClose" />
