@@ -13,7 +13,6 @@
         v-model="propertyObject.propertyId"
         :label="$t('lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2')"
         class="w-p-100"
-        @focus="onFocusPropertiesList"
         showValue="value"
         getValue="id"
         :items="getPropertiesListAutocomplete"
@@ -60,7 +59,7 @@
 </template>
 
 <script lang="ts" setup>
-import { computed, reactive } from "vue";
+import { computed, reactive, onBeforeMount } from "vue";
 import {
   SButton,
   SModal,
@@ -83,6 +82,10 @@ const props = defineProps({
 });
 const emit = defineEmits(["close"]);
 
+onBeforeMount(() => {
+  addPropertyStore.fetchPropertiesListAutocomplete();
+});
+
 const propertyObject = reactive({
   propertyId: null,
   required: null,
@@ -90,6 +93,7 @@ const propertyObject = reactive({
   isAddNameToProductName: null,
   renderType: null,
   allowedValues: [],
+  name: null,
 });
 
 const addPropertyStore = useAddPropertyStore();
@@ -99,12 +103,6 @@ const getPropertiesListAutocomplete = computed(() => {
 });
 
 const categoryStore = useCategoryStore();
-
-const onFocusPropertiesList = () => {
-  addPropertyStore.fetchPropertiesListAutocomplete();
-};
-
-onFocusPropertiesList();
 
 const renderPropertyTypes = reactive([
   {
@@ -122,7 +120,10 @@ const onClose = () => {
 };
 
 const onSave = () => {
-  categoryStore.setProperties(propertyObject);
+  propertyObject.name = getPropertiesListAutocomplete.value.find(
+    (prop) => prop.id === propertyObject.propertyId
+  ).value;
+  categoryStore.setProperties({ ...propertyObject });
   onClose();
 };
 </script>
