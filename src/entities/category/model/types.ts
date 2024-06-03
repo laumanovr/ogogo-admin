@@ -85,4 +85,5 @@ export interface PropertyValueAutocomplete {
   value: string;
   description: string;
   icoBase64: string;
+  checked?: boolean;
 }
