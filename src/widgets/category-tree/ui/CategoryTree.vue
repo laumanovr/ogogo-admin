@@ -14,32 +14,35 @@
       <img src="/icons/plus-icon.png" />
       <span>{{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</span>
     </div>
-    <AddCategoryConfirmationModal
-      @close="onClose"
-      @save="onSave"
-      :value="addCategoryConfirmationModalValue"
-    />
   </div>
 </template>
 
 <script lang="ts" setup>
 import { ref, computed } from "vue";
 import { CategoryTreeItem } from "@/widgets/category-tree/ui/components";
-import { AddCategoryConfirmationModal } from "@/features/category/add-category";
 import { useCategoryStore } from "@/entities/category";
 
-let addCategoryConfirmationModalValue = ref(false);
-
 let depth = ref(0);
-function addCategory() {
-  addCategoryConfirmationModalValue.value = true;
-}
-
-const onClose = () => {
-  addCategoryConfirmationModalValue.value = false;
+const addCategory = () => {
+  deletePropertyFromMultidimensionalArray(categoriesLocal.value, "active");
+  categoryStore.setAddCategory({
+    categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
+    childMarketplaceCategoryIdList: [],
+    active: true,
+    icon: null,
+    id: null,
+    sequenceNumber: 0,
+  });
+  categoryStore.setTranslation(null, "ru");
+  categoryStore.setTranslation(null, "ky");
+  categoryStore.setTranslation(null, "en");
+  categoryStore.setIcoBase64(null);
+  categoryStore.setImageId(null);
+  categoryStore.setFile(null);
+  categoryStore.setCategoryId(null);
+  categoryStore.setPropertiesArray([]);
+  categoryStore.setMode("create");
 };
-
-// const leftSideBarStore = useLeftSideBarStore();
 
 const categoryStore = useCategoryStore();
 
@@ -69,22 +72,7 @@ function deletePropertyFromMultidimensionalArray(
   });
 }
 
-const onSave = () => {
-  deletePropertyFromMultidimensionalArray(categoriesLocal.value, "active");
-
-  categoryStore.setAddCategory({
-    categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
-    childMarketplaceCategoryIdList: [],
-    active: true,
-    icon: null,
-    id: null,
-    sequenceNumber: 0,
-  });
-  onClose();
-};
-
 const onSaveSubCategory = () => {
-  deletePropertyFromMultidimensionalArray(categoriesLocal.value, "active");
   categoryStore.setCategories(categoriesLocal.value);
 };
 </script>
