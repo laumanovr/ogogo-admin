@@ -22,10 +22,6 @@ let modalValue = ref(false);
 
 const categoryStore = useCategoryStore();
 
-// const getPopertyName = computed(() => {
-//   categorySharedStore.getProperties;
-// });
-
 const onOpenModal = () => {
   modalValue.value = true;
 };
