@@ -32,7 +32,8 @@ export const useCategoryStore = defineStore(NAME_ID, {
       icoBase64: null,
       imageId: null,
       properties: [],
-
+      selectedCategory: null,
+      mode: "",
       parentId: null,
       sequenceNumber: null,
       propertySetId: null,
@@ -138,6 +139,8 @@ export const useCategoryStore = defineStore(NAME_ID, {
     },
     setAddCategory(value: CategoryTreeEntity | CategoryModified) {
       this.categories.push(value);
+      this.selectedCategory = null;
+      this.mode = "create";
     },
     setCategories(value: CategoryTreeEntity[]) {
       this.categories = value;
@@ -183,6 +186,9 @@ export const useCategoryStore = defineStore(NAME_ID, {
     setPropertiesArray(value: CategoryByIdProperty[]) {
       this.properties = value;
     },
+    setMode(mode: string) {
+      this.mode = mode;
+    },
 
     setPropertyAllowedValueObj(
       propValues: PropertyValueAutocomplete[],
@@ -220,16 +226,19 @@ export const useCategoryStore = defineStore(NAME_ID, {
 
     fetchCategoryById(id: string): Promise<CategoryEntity> {
       return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        loaderStore.setLoaderState(true);
         categoryApiService
           .getCategoryById(id)
           .then((res) => {
+            this.selectedCategory = res;
             this.setTranslation(res.categoryName, "ru");
             this.setTranslation(res.categoryNameKy, "ky");
             this.setTranslation(res.categoryNameEn, "en");
             this.setIcoBase64(res.icoBase64);
             this.setImageId(res.imageId);
-
             this.setCategoryId(res.id);
+            this.setMode("update");
 
             this.properties = res.properties;
 
@@ -240,10 +249,12 @@ export const useCategoryStore = defineStore(NAME_ID, {
               // clear rile if there is no image
               this.file = null;
             }
+            loaderStore.setLoaderState(false);
             resolve(res);
           })
           .catch((err) => {
             reject(err);
+            loaderStore.setLoaderState(false);
           });
       });
     },
@@ -337,11 +348,6 @@ export const useCategoryStore = defineStore(NAME_ID, {
 
       let { t } = i18n.global;
 
-      const foundCategory = findObjectInMultidimensionalArray(
-        this.getCategories,
-        "parentId"
-      );
-
       const popertiesModified = [...this.getProperties];
 
       popertiesModified.forEach((el, i) => {
@@ -357,21 +363,27 @@ export const useCategoryStore = defineStore(NAME_ID, {
       });
 
       const payload = {
-        parentId: foundCategory?.parentId,
+        id: "",
+        parentId: "",
         categoryName: this.getRu ?? "",
         categoryNameKy: this.getKy,
         categoryNameEn: this.getEn,
         imageId: this.getImageId,
         icoBase64: this.getIcoBase64,
         properties: popertiesModified,
-        sequenceNumber: foundCategory?.sequenceNumber ?? 0,
+        sequenceNumber: this.selectedCategory?.sequenceNumber ?? 0,
       };
-
-      console.log(payload);
+      if (this.mode === "create") {
+        payload.parentId = this.selectedCategory?.id || null;
+        delete payload.id;
+      } else {
+        payload.id = this.selectedCategory?.id;
+        payload.parentId = this.selectedCategory?.parentId || null;
+      }
 
       return new Promise<CategoryEntity>((resolve, reject) => {
         loaderStore.setLoaderState(true);
-        if (!this.getCategoryId) {
+        if (this.mode === "create") {
           categoryApiService
             .createCategory(payload)
             .then((res) => {
@@ -381,7 +393,7 @@ export const useCategoryStore = defineStore(NAME_ID, {
               loaderStore.setLoaderState(false);
               this.setId(res.id);
               this.fetchCategoryById(res.id);
-
+              this.fetchCategoriesTree();
               resolve(res);
             })
             .catch((err) => {
@@ -390,19 +402,14 @@ export const useCategoryStore = defineStore(NAME_ID, {
               reject(err);
             });
         } else {
-          const updatePayload = {
-            ...payload,
-            // parentId: foundCategory?.parentId,тз
-            id: this.getCategoryId,
-          };
           categoryApiService
-            .updateCategory(updatePayload)
+            .updateCategory(payload)
             .then((res) => {
               alertStore.showSuccess(
                 t("lang-5fa5d291-8d85-49f0-bebe-0dae2f7e1858")
               );
               loaderStore.setLoaderState(false);
-              // this.fetchCategoriesTree();
+              this.fetchCategoriesTree();
               resolve(res);
             })
             .catch((err) => {
