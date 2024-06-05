@@ -26,11 +26,11 @@
       <span>{{ $t(`${props.categoryName}`) }}</span>
     </div>
     <img
-      v-if="isHovering"
       width="13px"
       height="13px"
       @click.stop="addSubCategory"
       src="/icons/plus-icon.png"
+      v-if="isSelectedCategory"
     />
   </div>
   <div
@@ -47,20 +47,13 @@
       @add-sub-category="addSubCategory"
     />
   </div>
-
-  <AddCategoryConfirmationModal
-    @close="onClose"
-    @save="onSave"
-    :value="addCategoryConfirmationModalValue"
-  />
 </template>
 
 <script lang="ts" setup>
 import { SIconRender } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
-import { AddCategoryConfirmationModal } from "@/features/category/add-category";
 import { CategoryTreeEntity, useCategoryStore } from "@/entities/category";
-import { watch } from "vue";
+import { watch, computed } from "vue";
 
 const props = defineProps({
   categoryName: {
@@ -79,17 +72,11 @@ const emit = defineEmits(["saveSubCategory", "addSubCategory"]);
 
 const isHovering = ref(false);
 
-const addCategoryConfirmationModalValue = ref(false);
-
 const categoryStore = useCategoryStore();
 
-function addSubCategory() {
-  deletePropertyFromMultidimensionalArray(
-    categoryStore.getCategories,
-    "active"
-  );
-  addCategoryConfirmationModalValue.value = true;
-}
+const isSelectedCategory = computed(
+  () => categoryStore.selectedCategory?.id === props.item?.id
+);
 
 watch(
   () => props.item,
@@ -100,7 +87,6 @@ watch(
           categoryStore.fetchCategoryById(props.item.id);
         }
       } else {
-        console.log("reset");
         categoryStore.setTranslation(null, "ru");
         categoryStore.setTranslation(null, "ky");
         categoryStore.setTranslation(null, "en");
@@ -113,10 +99,6 @@ watch(
     }
   }
 );
-
-const onClose = () => {
-  addCategoryConfirmationModalValue.value = false;
-};
 
 function deletePropertyFromMultidimensionalArray(
   array: CategoryTreeEntity[],
@@ -146,23 +128,15 @@ function deletePropertyFromMultidimensionalArray(
   );
 }
 
-const onSave = () => {
-  emit("saveSubCategory", true);
-
+const addSubCategory = () => {
+  deletePropertyFromMultidimensionalArray(
+    categoryStore.getCategories,
+    "active"
+  );
   deletePropertyFromMultidimensionalArray(
     props.item.childMarketplaceCategoryIdList,
     "active"
   );
-
-  categoryStore.setTranslation(null, "ru");
-  categoryStore.setTranslation(null, "ky");
-  categoryStore.setTranslation(null, "en");
-  categoryStore.setIcoBase64(null);
-  categoryStore.setImageId(null);
-  categoryStore.setFile(null);
-  categoryStore.setCategoryId(null);
-  categoryStore.setPropertiesArray([]);
-
   props.item.childMarketplaceCategoryIdList.push({
     categoryName: "lang-b14d63cd-580a-4645-8c82-860175a3830f",
     childMarketplaceCategoryIdList: [],
@@ -172,8 +146,17 @@ const onSave = () => {
     parentId: props.item.id,
     sequenceNumber: props.depth,
   });
+  categoryStore.setTranslation(null, "ru");
+  categoryStore.setTranslation(null, "ky");
+  categoryStore.setTranslation(null, "en");
+  categoryStore.setIcoBase64(null);
+  categoryStore.setImageId(null);
+  categoryStore.setFile(null);
+  categoryStore.setCategoryId(null);
+  categoryStore.setPropertiesArray([]);
+  categoryStore.setMode("create");
 
-  onClose();
+  emit("saveSubCategory", true);
 };
 
 const onChangeActive = () => {
@@ -197,7 +180,6 @@ const onChangeActive = () => {
     categoryStore.setPropertiesArray([]);
   }
 
-  // set active flag to clicked item
   categoryStore.setCategoryHasChanged(true);
   props.item.active = true;
 };
