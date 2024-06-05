@@ -324,6 +324,8 @@ export const useCategoryStore = defineStore(NAME_ID, {
 
     fetchPropertiesListAutocomplete(propertyId: string) {
       return new Promise((resolve, reject) => {
+        const loaderStore = useLoaderStore();
+        loaderStore.setLoaderState(true);
         categoryApiService
           .getPropertyValueAutocomplete({
             pageIndex: 0,
@@ -334,10 +336,12 @@ export const useCategoryStore = defineStore(NAME_ID, {
           })
           .then((data) => {
             this.propertyValueAutocomplete = data;
+            loaderStore.setLoaderState(false);
             resolve(data);
           })
           .catch((err) => {
             reject(err);
+            loaderStore.setLoaderState(false);
           });
       });
     },
