@@ -24,6 +24,8 @@ export interface CategoryState {
   categoryId: string;
   file: string | File;
   propertyValueAutocomplete: PropertyValueAutocomplete[];
+  selectedCategory: { id?: string; parentId?: string; sequenceNumber?: number };
+  mode: string;
 }
 
 export interface ICategory {
