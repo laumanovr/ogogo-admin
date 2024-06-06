@@ -3,7 +3,27 @@
     <h2 class="head-title">
       {{ $t("lang-9839245b-e40e-4ae1-92e9-0421dc97a154") }}
     </h2>
-    <FilterSearch @onClick="showFilterModal" />
+    <FilterSearch @onClick="showFilterModal" :show-filter="false" />
+    <STabs :tab-mode="'filter-tabs'" class="mb-20">
+      <STabItem value="0" :active-tab="tab" @changeTab="selectTab">
+        Все
+      </STabItem>
+      <STabItem value="14802" :active-tab="tab" @changeTab="selectTab">
+        Ожидает модерации
+      </STabItem>
+      <STabItem value="14806" :active-tab="tab" @changeTab="selectTab">
+        Требует доработки
+      </STabItem>
+      <STabItem value="14801" :active-tab="tab" @changeTab="selectTab">
+        Опубликковано
+      </STabItem>
+      <STabItem value="14800" :active-tab="tab" @changeTab="selectTab">
+        Черновик
+      </STabItem>
+      <STabItem value="14807" :active-tab="tab" @changeTab="selectTab">
+        Заблокировано
+      </STabItem>
+    </STabs>
     <STable
       :headers="headers"
       :data="products"
@@ -25,7 +45,7 @@
       <template v-slot:shopName="{ item }">
         <div class="d-flex">
           <img
-            :src="`data:image/png;base64,${item.shopIconBase64}`"
+            :src="item.shopIconBase64"
             class="shop-img"
             v-if="item.shopIconBase64"
           />
@@ -55,7 +75,7 @@
 </template>
 
 <script lang="ts" setup>
-import { STable, SBadge } from "@tumarsoft/ogogo-ui";
+import { STable, SBadge, STabs, STabItem } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted, computed } from "vue";
 import FilterSearch from "@/widgets/filter-search/FilterSearch.vue";
 import { FilterModal } from "@/shared/ui";
@@ -68,9 +88,19 @@ interface Status {
 
 const productStore = useProductStore();
 const filterModal = ref(null);
-const params = ref({ pageIndex: 0, productType: 14701, sortDirection: 1 });
+const params = ref({
+  pageIndex: 0,
+  productType: 14701,
+  statuses: [],
+  sortDirection: 1,
+});
 const products = computed(() => productStore.getModerationProductList);
 const totalItems = computed(() => productStore.getProductTotalCount);
+const tab = ref("one");
+
+const currentStatus = computed(() =>
+  Number(tab.value) ? [Number(tab.value)] : []
+);
 
 const headers = ref([
   { title: "Товар", key: "productName" },
@@ -93,8 +123,15 @@ const statuses = ref([
 ]);
 
 onMounted(() => {
-  getModerationProducts();
+  selectTab("0");
 });
+
+const selectTab = (value: string) => {
+  tab.value = value;
+  params.value.pageIndex = 0;
+  params.value.statuses = currentStatus.value;
+  getModerationProducts();
+};
 
 const getModerationProducts = () => {
   productStore.fetchModerationProducts(params.value);
@@ -109,6 +146,7 @@ const getStatusInfo = (item: any, field: keyof Status) => {
 
 const onChangePage = (selectedPage: number) => {
   params.value.pageIndex = selectedPage - 1;
+  params.value.statuses = currentStatus.value;
   getModerationProducts();
 };
 
