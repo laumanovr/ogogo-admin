@@ -11,7 +11,7 @@
 
         <div
           v-if="showIncorrectLoginAndPassword"
-          class="padding-11-15 mb-16 rounded-lg bg-#FEF2F2 border-1 border-solid border-red-400"
+          class="padding-11-15 s-mb-4 rounded-lg bg-#FEF2F2 border-1 border-solid border-red-400"
         >
           {{ $t("lang-cd89ff76-e757-45a3-8737-03294b4e1345") }}
         </div>
@@ -20,7 +20,7 @@
           <SInput
             :label="$t('lang-5b5360db-a6ff-43a7-a8d4-f35517b9c4a8')"
             width="100%"
-            :rules="requiredField"
+            :rules="[requiredField]"
             v-maska:[options]
             v-model="loginObj.pin"
           />
@@ -30,13 +30,15 @@
             type="password"
             :label="$t('lang-ad3a8ec6-bcb6-4dce-9ff6-a3ccc17c1e8d')"
             width="100%"
-            :rules="requiredField"
+            :rules="[requiredField]"
             v-model="loginObj.password"
           />
         </div>
-        <SButton size="large" color="violet" @click="onSubmitLogin">
-          {{ $t("lang-09888a35-0a9f-46d7-bc1e-34bbae78ccd9") }}
-        </SButton>
+        <div class="light">
+          <SButton size="large" @click="onSubmitLogin">
+            {{ $t("lang-09888a35-0a9f-46d7-bc1e-34bbae78ccd9") }}
+          </SButton>
+        </div>
       </SForm>
     </div>
   </div>
@@ -71,21 +73,23 @@ const onSubmitLogin = () => {
 
   loginObj.pin = removedDashesAndBrackets;
 
-  if (loginForm.value.validateForm()) {
-    loaderStore.setLoaderState(true);
-    authStore
-      .login(loginObj)
-      .then(() => {
-        loaderStore.setLoaderState(false);
-        router.push("/property");
-        showIncorrectLoginAndPassword.value = false;
-      })
-      .catch(() => {
-        loaderStore.setLoaderState(false);
-        showIncorrectLoginAndPassword.value = true;
-        // alertStore.showError(err?.error?.errorMessage);
-      });
-  }
+  loginForm.value.validate().then((isValid: boolean) => {
+    if (isValid) {
+      loaderStore.setLoaderState(true);
+      authStore
+        .login(loginObj)
+        .then(() => {
+          loaderStore.setLoaderState(false);
+          router.push("/property");
+          showIncorrectLoginAndPassword.value = false;
+        })
+        .catch(() => {
+          loaderStore.setLoaderState(false);
+          showIncorrectLoginAndPassword.value = true;
+          // alertStore.showError(err?.error?.errorMessage);
+        });
+    }
+  });
 };
 </script>
 
