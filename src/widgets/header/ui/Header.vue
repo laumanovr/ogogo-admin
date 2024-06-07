@@ -1,5 +1,5 @@
 <template>
-  <div class="d-flex flex-row justify-between padding-16-40 h-80">
+  <div class="d-flex flex-row justify-between padding-16-40 s-h-13">
     <img src="/icons/Ogogo-logo.png" alt="ogogo-logo" class="ogogo-img" />
 
     <div class="header-navigation">
@@ -50,7 +50,7 @@
         <img
           src=/icons/logout.svg
           alt="logout"
-          class="ml-20 cursor-pointer"
+          class="s-ml-4 cursor-pointer"
           @click="logOut"
         />
       </div>
