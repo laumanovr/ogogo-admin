@@ -5,7 +5,7 @@
       rejected: descriptionStatus === DETAIL_STATUS.READ,
     }"
   >
-    <img src="/icons/ava.png" alt="" class="mr-12 comment-icon" />
+    <img src="/icons/ava.png" alt="" class="s-mr-3 comment-icon" />
     <CommentInput
       v-if="descriptionStatus !== DETAIL_STATUS.READ"
       :placeholder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
