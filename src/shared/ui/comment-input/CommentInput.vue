@@ -5,12 +5,13 @@
       width="100%"
       :model-value="props.comment"
       @input="onInput"
+      hide-details
     />
-    <div class="comment-input-actions" v-show="isShowActions">
-      <SButton color="violet" size="small" @click="onSubmit">
+    <div class="comment-input-actions light" v-show="isShowActions">
+      <SButton size="small" @click="onSubmit">
         {{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}
       </SButton>
-      <SButton color="gray" size="small" @click="onCancel">
+      <SButton type="secondary" size="small" @click="onCancel">
         {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}
       </SButton>
     </div>
