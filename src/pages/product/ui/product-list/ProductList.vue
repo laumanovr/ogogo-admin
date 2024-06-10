@@ -4,7 +4,7 @@
       {{ $t("lang-9839245b-e40e-4ae1-92e9-0421dc97a154") }}
     </h2>
     <FilterSearch @onClick="showFilterModal" :show-filter="false" />
-    <STabs :tab-mode="'filter-tabs'" class="mb-20">
+    <STabs :tab-mode="'filter-tabs'" class="s-mb-4">
       <STabItem value="0" :active-tab="tab" @changeTab="selectTab">
         Все
       </STabItem>
@@ -39,7 +39,7 @@
             class="product-img"
             v-if="item.iconBase64"
           />
-          <span class="ml-8">{{ item.productName }}</span>
+          <span class="s-ml-2">{{ item.productName }}</span>
         </div>
       </template>
       <template v-slot:shopName="{ item }">
@@ -49,7 +49,7 @@
             class="shop-img"
             v-if="item.shopIconBase64"
           />
-          <span class="ml-8">{{ item.shopName }}</span>
+          <span class="s-ml-2">{{ item.shopName }}</span>
         </div>
       </template>
       <template v-slot:status="{ item }">
