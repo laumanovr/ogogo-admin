@@ -1,10 +1,21 @@
 <template>
   <div class="filter-search">
-    <SInput isSearchable :width="props.showFilter ? '90%' : '100%'" />
-    <SButton color="white" @click="onClick" v-if="props.showFilter">
-      <SIconRender name="SettingsIcon" />
-      {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
-    </SButton>
+    <SInput
+      isSearchable
+      hide-details
+      :width="props.showFilter ? '90%' : '100%'"
+    />
+    <div class="light">
+      <SButton
+        type="secondary"
+        variant="outlined"
+        @click="onClick"
+        v-if="props.showFilter"
+      >
+        <SIconRender name="SettingsIcon" />
+        {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
+      </SButton>
+    </div>
   </div>
 </template>
 
@@ -28,7 +39,7 @@ const onClick = () => {
 <style scoped lang="scss">
 .filter-search {
   display: flex;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
 
   .button {
     margin-left: 12px;
