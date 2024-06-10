@@ -3,7 +3,7 @@
     <img
       src="/icons/ogogo-ava.svg"
       alt=""
-      class="mr-12 comment-icon w-40 h-40"
+      class="s-mr-3 comment-icon s-w-8 s-h-8"
     />
     <CommentContainer
       v-if="hasComment"
