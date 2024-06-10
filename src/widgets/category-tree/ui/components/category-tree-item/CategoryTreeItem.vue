@@ -20,7 +20,7 @@
       <img
         v-if="item.icon || item.icoBase64"
         :src="item.icon || item.icoBase64"
-        class="w-20 h-20 rounded"
+        class="s-w-4 s-h-4 rounded"
       />
       <img v-else src="/icons/fileIcon.png" />
       <span>{{ $t(`${props.categoryName}`) }}</span>
