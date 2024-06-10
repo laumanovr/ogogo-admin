@@ -14,7 +14,7 @@
           <p>{{ propertyName }}</p>
         </div>
         <div class="d-flex flex-row items-center gap-10">
-          <img class="w-14 h-14" src="/icons/tree-icon.png" alt="tree-icon" />
+          <img class="s-w-3 s-h-3" src="/icons/tree-icon.png" alt="tree-icon" />
           <p>
             {{ "allowedValues" in property && property.allowedValues?.length }}
           </p>
@@ -29,7 +29,7 @@
       </div>
       <div class="relative hover:bg-slate-50 px-2 cursor-pointer rounded">
         <img
-          class="w-17 h-5"
+          class="s-w-4 s-h-1"
           src="/icons/three-dots.png"
           alt="three-dots"
           @click="onOpenPropertyToolsDropdown"
@@ -81,25 +81,26 @@
       </template>
     </div>
     <SModal
-      :isModalOpen="showAddPopertyValueModal"
+      v-model="showAddPopertyValueModal"
       height="auto"
       @onClose="onCloseShowAddPopertyValueModal"
       :width="'440px'"
     >
-      <SInput class="w-p-100" isSearchable />
-      <div class="mt-24">
-        <div v-for="value in getPropertyValueAutocomplete" class="mb-16">
+      <SInput class="w-p-100" isSearchable hide-details />
+      <div class="s-mt-5">
+        <div v-for="value in getPropertyValueAutocomplete" class="s-mb-4">
           <SCheckbox v-model="value.checked">{{ value.value }}</SCheckbox>
         </div>
       </div>
-      <SButton
-        size="large"
-        color="violet"
-        class="w-p-100"
-        @click="onCloseAddPropertyValueModal"
-      >
-        {{ $t("lang-d0108c3e-9945-4245-a730-b011e5a47c35") }}
-      </SButton>
+      <div class="light">
+        <SButton
+          size="large"
+          class="w-p-100"
+          @click="onCloseAddPropertyValueModal"
+        >
+          {{ $t("lang-d0108c3e-9945-4245-a730-b011e5a47c35") }}
+        </SButton>
+      </div>
     </SModal>
   </div>
 </template>
