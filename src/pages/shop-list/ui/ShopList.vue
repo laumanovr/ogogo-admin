@@ -3,7 +3,7 @@
     <h2 class="head-title">
       {{ $t("lang-dec7f483-cf4a-406a-8241-bfeb9cf1baef") }}
     </h2>
-    <FilterSearch @onClick="openModal" />
+    <FilterSearch @onClick="openModal" :show-filter="false" />
     <STable
       :headers="headers"
       :data="shops"
@@ -99,6 +99,6 @@ const formatDate = (date: string) => {
 };
 
 const openModal = () => {
-  filterModal.value.toggleModal();
+  filterModal.value.toggleFilterModal();
 };
 </script>
