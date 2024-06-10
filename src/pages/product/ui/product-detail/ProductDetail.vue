@@ -1,12 +1,16 @@
 <template>
-  <div class="product-detail-container mt-10">
-    <div class="d-flex items-center mb-24">
-      <SButton color="white" @click="goBack">
+  <div class="product-detail-container s-mt-3">
+    <div class="d-flex items-center s-mb-5 light">
+      <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="ArrowIcon" direction="left" />
         {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
-      <div class="d-flex items-center ml-24 mr-24">
-        <img :src="selectedProductShop.logoBase64" alt="" class="sm-img mr-8" />
+      <div class="d-flex items-center s-ml-5 s-mr-5">
+        <img
+          :src="selectedProductShop.logoBase64"
+          alt=""
+          class="sm-img s-mr-2"
+        />
         {{ selectedProductShop.name }}
       </div>
       <Breadcrumbs />
@@ -14,31 +18,33 @@
     <h2 class="head-title md" id="main">
       {{ $t("lang-3c525f10-24ab-44fa-9eda-8a503e97b2e9") }}
     </h2>
-    <div class="d-flex mt-24">
+    <div class="d-flex s-mt-5">
       <div class="content-block">
         <div>
           <SInput
             :label="$t('lang-cb1dea14-fb31-4e97-9364-9e33b4227c3a')"
             width="100%"
-            disabled
             v-model="selectedProduct.productName"
+            hide-details
+            readonly
           />
-          <div class="d-flex mt-10">
+          <div class="d-flex s-mt-3">
             <FieldComment fieldName="name" v-if="isCommentReady" />
           </div>
         </div>
-        <div class="mt-24 description">
+        <div class="s-mt-5 description">
           <STextArea
             :label="$t('lang-240d2d7a-5a93-4647-a066-22a368702e04')"
             width="100%"
-            disabled
+            readonly
             v-model="selectedProduct.description"
+            hide-details
           />
-          <div class="d-flex mt-10">
+          <div class="d-flex s-mt-5">
             <FieldComment fieldName="description" v-if="isCommentReady" />
           </div>
         </div>
-        <div class="price-block mt-40" id="price">
+        <div class="price-block s-mt-8" id="price">
           <div class="head-title md">
             {{ $t("lang-3bbbc87b-85a5-4434-a8b7-999c9146de08") }}
           </div>
@@ -46,23 +52,24 @@
             <SInput
               :label="$t('lang-333319c2-2df4-4057-a56a-28ddd7a790a1')"
               width="100%"
-              class="mr-12"
-              disabled
+              class="s-mr-3"
+              readonly
               v-model="selectedProduct.price"
+              hide-details
             />
             <SInput
               :label="$t('lang-1f6f2dca-070c-48bc-941f-e1300024ffbb')"
               width="100%"
-              class="mr-12"
-              disabled
+              class="s-mr-3"
+              readonly
             />
             <SInput
               :label="$t('lang-5eb99c46-ed5f-4a24-85ad-d551ad812256')"
               width="100%"
-              disabled
+              readonly
             />
           </div>
-          <div class="d-flex mt-10">
+          <div class="d-flex s-mt-3">
             <FieldComment fieldName="price" v-if="isCommentReady" />
           </div>
         </div>
@@ -73,10 +80,11 @@
           <SInput
             :label="$t('lang-3a76c0f0-6ebc-413e-8455-9363f5436da1')"
             width="100%"
-            disabled
+            readonly
             v-model="selectedProduct.countOfProduct"
+            hide-details
           />
-          <div class="d-flex mt-10">
+          <div class="d-flex s-mt-3">
             <FieldComment fieldName="countOfProduct" v-if="isCommentReady" />
           </div>
         </div>
@@ -84,7 +92,7 @@
           <div class="head-title md">
             {{ $t("lang-d820a72f-7c7f-4ac0-b993-8d57d1904dde") }}
           </div>
-          <p class="hint mb-24">
+          <p class="hint s-mb-5">
             {{ $t("lang-7c1a3ecf-841c-4ea1-951b-a5d27099a805") }}
           </p>
           <div class="d-flex flex-wrap">
@@ -92,11 +100,11 @@
               v-for="(photo, i) in productPhotos"
               :src="photo"
               alt="image"
-              class="photo mr-8 mb-8"
+              class="photo s-mr-2 s-mb-2"
               :key="i"
             />
           </div>
-          <div class="d-flex mt-10">
+          <div class="d-flex s-mt-3">
             <FileComment field-name="photo" v-if="isCommentReady" />
           </div>
         </div>
@@ -104,7 +112,7 @@
           <div class="head-title md">
             {{ $t("lang-65a33216-17a3-4f12-9e78-ef1b73efcdf0") }}
           </div>
-          <p class="hint mb-24">
+          <p class="hint s-mb-5">
             {{ $t("lang-9fc0c45e-0828-49af-a325-a11dbc4a9829") }}
           </p>
           <div class="d-flex flex-wrap">
@@ -112,7 +120,7 @@
               <source :src="videoUrl" type="video/mp4" />
             </video>
           </div>
-          <div class="d-flex mt-10">
+          <div class="d-flex s-mt-3">
             <FileComment field-name="video" v-if="isCommentReady" />
           </div>
         </div>
@@ -120,12 +128,12 @@
           <div class="head-title md">
             {{ $t("lang-c00a03d8-8bb2-4d54-93e7-fc0379b86f51") }}
           </div>
-          <p class="hint mb-24">
+          <p class="hint s-mb-5">
             {{ $t("lang-0c4310a2-d07f-450a-9258-a907b7feb038") }}
           </p>
           <div class="d-flex flex-wrap justify-between">
             <div
-              class="mb-16 selects"
+              class="s-mb-4 selects"
               v-for="property in properties"
               :key="property.propertyId"
             >
@@ -133,16 +141,17 @@
                 class="w-p-100"
                 :label="showPropertyName(property)"
                 :items="property.allowedValues"
-                showValue="propertyValueText"
-                getValue="propertyValueId"
+                itemTitle="propertyValueText"
+                itemValue="propertyValueId"
                 v-model="property.selectedValueId"
+                hide-details
                 disabled
               />
             </div>
           </div>
         </div>
       </div>
-      <div class="anchor-block ml-60">
+      <div class="anchor-block s-ml-10">
         <div class="anchor-items">
           <a
             v-for="anchor in anchors"
@@ -156,11 +165,10 @@
         </div>
       </div>
     </div>
-    <div class="d-flex mt-40 actions">
+    <div class="d-flex s-mt-8 actions light">
       <SButton
         size="large"
-        color="violet"
-        class="mr-12"
+        class="s-mr-3"
         @click="publishProduct"
         :disabled="isPublished"
         v-if="isPending || isPublished"
@@ -173,7 +181,7 @@
       </SButton>
       <SButton
         size="large"
-        color="gray"
+        type="secondary"
         @click="rejectProduct"
         :disabled="!isPending"
         v-if="!isPublished"
