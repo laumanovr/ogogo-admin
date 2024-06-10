@@ -1,9 +1,8 @@
 <template>
   <SModal
-    :isModalOpen="isShowModal"
-    class="filter-modal"
+    v-model="isShowModal"
+    class="filter-modal full-height"
     width="420px"
-    height="100%"
     position="right"
     @onClose="toggleFilterModal"
   >
@@ -63,7 +62,7 @@
         <div class="section-title">
           {{ $t("lang-a1011c48-9e0b-4f4a-904b-095e38e83d80") }}
         </div>
-        <SInput isSearchable width="100%" />
+        <SInput isSearchable width="100%" hide-details />
         <div class="property-items" :style="{ 'max-height': maxHeight + 'px' }">
           <div v-for="item in 50" :key="item">
             <SCheckbox>Характеристики</SCheckbox>
@@ -71,13 +70,13 @@
         </div>
       </div>
     </div>
-    <div class="filter-actions">
-      <SButton size="large" color="gray">{{
-        $t("lang-7967cf86-49d6-41c2-bdd7-23c6f8e5e8ea")
-      }}</SButton>
-      <SButton size="large" color="violet">{{
-        $t("lang-bdc9ab1e-91af-43ea-8bb9-e23c8ea98755")
-      }}</SButton>
+    <div class="filter-actions light">
+      <SButton size="large" type="secondary">
+        {{ $t("lang-7967cf86-49d6-41c2-bdd7-23c6f8e5e8ea") }}
+      </SButton>
+      <SButton size="large">
+        {{ $t("lang-bdc9ab1e-91af-43ea-8bb9-e23c8ea98755") }}
+      </SButton>
     </div>
   </SModal>
 </template>
