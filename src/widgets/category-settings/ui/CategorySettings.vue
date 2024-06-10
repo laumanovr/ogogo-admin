@@ -6,10 +6,10 @@
       <AddProperty />
     </div>
   </SForm>
-  <div class="save-block">
-    <SButton color="violet" class="w-213" @click="onSaveSettings">{{
-      $t("lang-b819743e-e6d9-4b27-9dd0-4604271a2395")
-    }}</SButton>
+  <div class="save-block light">
+    <SButton @click="onSaveSettings">
+      {{ $t("lang-b819743e-e6d9-4b27-9dd0-4604271a2395") }}
+    </SButton>
   </div>
 </template>
 <script lang="ts" setup>
@@ -24,9 +24,11 @@ import { useCategoryStore } from "@/entities/category";
 const categoryStore = useCategoryStore();
 
 const onSaveSettings = () => {
-  if (namingFieldsForm.value.validateForm()) {
-    categoryStore.saveCategorySettings();
-  }
+  namingFieldsForm.value.validate().then((isValid: boolean) => {
+    if (isValid) {
+      categoryStore.saveCategorySettings();
+    }
+  });
 };
 
 const namingFieldsForm = ref(null);
@@ -82,5 +84,11 @@ const namingFieldsForm = ref(null);
 .settings {
   overflow-y: scroll;
   height: 86vh;
+}
+
+.save-block {
+  .button {
+    width: 215px;
+  }
 }
 </style>
