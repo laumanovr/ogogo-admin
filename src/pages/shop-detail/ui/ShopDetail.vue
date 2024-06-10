@@ -1,17 +1,16 @@
 <template>
   <div class="shop-detail-container" v-if="!stateload">
-    <div class="top-block">
-      <SButton color="white" @click="goBack">
+    <div class="top-block light">
+      <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="ArrowIcon" direction="left" />
         {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
       <div class="shop-title">
-        <img :src="logo" alt="" class="sm-img mr-8" />
+        <img :src="logo" alt="" class="sm-img s-mr-2" />
         {{ shopName }}
       </div>
     </div>
     <StatusBadge
-      v-if="verifiedOrRejectedStatusBadge"
       :status="verificationStatus"
       :status-text="activeStatusText"
       :description="activeDescriptionBadge"
@@ -21,42 +20,44 @@
     </h2>
     <div class="shop-logo-block">
       <div class="d-flex items-center">
-        <img :src="logo" alt="logo" class="logo mr-24" />
+        <img :src="logo" alt="logo" class="logo s-mr-5" />
         <div class="logo-title">{{ logoName }}</div>
       </div>
       <Logo />
     </div>
-    <div class="shop-name-block mt-32">
+    <div class="shop-name-block s-mt-7">
       <div>
         <SInput
           :label="$t('lang-83ea23b9-0c12-4c48-a823-39cbc73f7219')"
           width="100%"
-          disabled
+          readonly
+          hide-details
           :modelValue="shopName"
         />
       </div>
       <Name />
     </div>
-    <div class="description-block mt-32">
+    <div class="description-block s-mt-7">
       <div>
         <STextArea
           :label="$t('lang-b1c420fe-8beb-4452-bf7c-165f69e8eabf')"
           width="100%"
           height="150px"
-          disabled
+          readonly
+          hide-details
           :modelValue="description"
         />
       </div>
       <Description />
     </div>
     <div
-      class="d-flex mt-40 actions"
+      class="d-flex s-mt-8 actions light"
       v-if="verificationStatus === PRODUCT_VERIFICATION_STATUS.PENDING"
     >
-      <SButton @click="verifyShop" size="large" color="violet" class="mr-8">
+      <SButton @click="verifyShop" size="large" class="s-mr-2">
         {{ $t("lang-12fe79b5-20d2-4f2f-90a4-58ce16506ba3") }}
       </SButton>
-      <SButton @click="rejectShop" size="large" color="gray">
+      <SButton @click="rejectShop" size="large" type="secondary">
         {{ $t("lang-4d92287d-f47c-47a1-80c1-3eb9f68352d4") }}
       </SButton>
     </div>
@@ -121,9 +122,9 @@ const rejectShop = () => {
   return shopStore.rejectShop();
 };
 
-const verifiedOrRejectedStatusBadge = computed(
-  () => shopDetailStore.getVerifiedOrRejectedStatusBadge
-);
+// const verifiedOrRejectedStatusBadge = computed(
+//   () => shopDetailStore.getVerifiedOrRejectedStatusBadge
+// );
 
 const activeStatusText = computed(() => {
   if (verificationStatus.value === PRODUCT_VERIFICATION_STATUS.ACCEPTED) {
