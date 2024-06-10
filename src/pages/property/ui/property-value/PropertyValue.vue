@@ -10,11 +10,11 @@
         {{ selectedProperty?.name }}
       </h2>
     </div>
-    <div class="actions">
+    <div class="actions light">
       <SInput isSearchable hide-details width="100%" @input="onSearch" />
-      <SButton color="violet" @click="onSave">{{
-        $t("lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf")
-      }}</SButton>
+      <SButton @click="onSave">
+        {{ $t("lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf") }}
+      </SButton>
     </div>
     <PropertyValueTable ref="propertyValueTable" />
   </div>
