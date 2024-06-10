@@ -35,18 +35,20 @@
           <td>
             <SSelect
               :items="propertyTypes"
-              showValue="name"
-              getValue="id"
+              itemTitle="name"
+              itemValue="id"
               v-model="item.propertyType"
+              hide-details
             />
           </td>
           <td>
             <SSelect
               :items="propertyValueTypes"
-              showValue="name"
-              getValue="id"
+              itemTitle="name"
+              itemValue="id"
               v-model="item.propertyValueType"
               @onChange="onSelectValue($event, item)"
+              hide-details
             />
           </td>
           <td>
@@ -61,36 +63,40 @@
             />
             <SSelect
               :items="validateRanges"
-              showValue="name"
-              getValue="id"
+              itemTitle="name"
+              itemValue="id"
               v-model="item.validationRules"
+              hide-details
               v-else
             />
           </td>
           <td>
             <SSelect
               :items="localizations"
-              showValue="name"
-              getValue="value"
+              itemTitle="name"
+              itemValue="value"
               v-model="item.localization"
+              hide-details
             />
           </td>
           <td>
             <SSelect
               :items="groupProperties"
-              showValue="value"
-              getValue="id"
+              itemTitle="value"
+              itemValue="id"
               isSearchable
               v-model="item.propertyGroupId"
+              hide-details
             />
           </td>
           <td>
             <SSelect
               :items="groupProperties"
-              showValue="value"
-              getValue="id"
+              itemTitle="value"
+              itemValue="id"
               isSearchable
               v-model="item.propertySubGroupId"
+              hide-details
             />
           </td>
           <td>
