@@ -1,8 +1,8 @@
 <template>
-  <p class="font-bold mb-10">
+  <p class="font-bold s-mb-2">
     {{ $t("lang-a4cb8b72-591b-4353-a8ac-0a910b6ea90d") }}
   </p>
-  <div class="info-text-container mb-24">
+  <div class="info-text-container s-mb-5">
     <SIconRender
       name="WarningIcon"
       color="violet-700"
@@ -11,7 +11,7 @@
     <p>{{ $t("lang-1c3dce6e-86b9-4523-a934-b391ddce337b") }}</p>
   </div>
 
-  <div class="add-image-buttons-container mb-40">
+  <div class="add-image-buttons-container s-mb-8">
     <label
       v-if="!imageUrl && !file"
       for="big-image"
