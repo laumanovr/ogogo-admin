@@ -15,14 +15,16 @@
         </STabs>
         <div class="filter-actions">
           <div class="search-input">
-            <SInput isSearchable @input="onSearch" />
+            <SInput isSearchable @input="onSearch" hide-details />
           </div>
           <div class="icon-border" @click="openFilterModal">
             <SIconRender name="SettingsIcon" />
           </div>
-          <SButton size="medium" color="violet" @click="onSubmit">
-            {{ $t("lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf") }}
-          </SButton>
+          <div class="light">
+            <SButton size="medium" @click="onSubmit">
+              {{ $t("lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf") }}
+            </SButton>
+          </div>
         </div>
       </div>
       <div class="table-container">
