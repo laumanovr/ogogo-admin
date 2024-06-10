@@ -1,7 +1,7 @@
 <template>
   <div class="property-value-container">
-    <div class="title-container">
-      <SButton color="white" @click="goBack">
+    <div class="title-container light">
+      <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="ArrowIcon" direction="left" />
         {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
@@ -11,7 +11,7 @@
       </h2>
     </div>
     <div class="actions">
-      <SInput isSearchable width="100%" @input="onSearch" />
+      <SInput isSearchable hide-details width="100%" @input="onSearch" />
       <SButton color="violet" @click="onSave">{{
         $t("lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf")
       }}</SButton>
