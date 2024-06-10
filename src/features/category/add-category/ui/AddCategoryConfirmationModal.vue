@@ -1,10 +1,5 @@
 <template>
-  <SModal
-    :isModalOpen="props.value"
-    width="100"
-    height="auto"
-    @onClose="onClose"
-  >
+  <SModal v-model="props.value" width="100" height="auto" @onClose="onClose">
     <div class="add-property-modal-main-wrapper">
       <p class="font-bold mb-10">
         {{ $t("lang-474c7de3-c095-4ac4-b222-2cf17b6d5343") }}

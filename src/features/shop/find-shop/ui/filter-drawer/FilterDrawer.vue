@@ -1,7 +1,7 @@
 <template>
   <SModal
-    :isModalOpen="isShow"
-    class="filter-modal"
+    v-model="isShow"
+    class="filter-modal full-height"
     width="420px"
     height="100%"
     position="right"
