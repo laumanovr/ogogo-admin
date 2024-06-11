@@ -3,7 +3,11 @@
     <h2 class="head-title">
       {{ $t("lang-dec7f483-cf4a-406a-8241-bfeb9cf1baef") }}
     </h2>
-    <FilterSearch @onClick="openModal" :show-filter="false" />
+    <FilterSearch
+      @onClick="openModal"
+      @onSearch="searchShop"
+      :show-filter="false"
+    />
     <STable
       :headers="headers"
       :data="shops"
@@ -50,9 +54,6 @@ import { SORT_DIRECTION } from "@/shared/api/api.types";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
 
-const shopStore = useShopStore();
-const { t } = useI18n();
-
 const headers = reactive([
   { title: "Магазин", key: "name" },
   { title: "Статус", key: "status" },
@@ -61,13 +62,19 @@ const headers = reactive([
   { title: "Действия", key: "action" },
 ]);
 
+const shopStore = useShopStore();
+const { t } = useI18n();
+const searchTimer = ref(null);
+const params = ref({
+  pageSize: 10,
+  sortDirection: SORT_DIRECTION.ASCENDING,
+  queryParams: {},
+  pageIndex: 0,
+  search: "",
+});
+
 const fetchShops = () => {
-  shopStore.fetchShopPagedList({
-    pageSize: 10,
-    sortDirection: SORT_DIRECTION.ASCENDING,
-    queryParams: undefined,
-    pageIndex: 0,
-  });
+  shopStore.fetchShopPagedList(params.value);
 };
 
 onBeforeMount(fetchShops);
@@ -96,6 +103,16 @@ const currentModeratorNameValue = (value: string) =>
 
 const formatDate = (date: string) => {
   return moment(date).format("DD.MM.YYYY, HH:mm");
+};
+
+const searchShop = (value: string) => {
+  clearTimeout(searchTimer.value);
+  params.value.pageIndex = 0;
+  params.value.queryParams = { statuses: [] };
+  params.value.search = value;
+  searchTimer.value = setTimeout(() => {
+    fetchShops();
+  }, 1000);
 };
 
 const openModal = () => {
