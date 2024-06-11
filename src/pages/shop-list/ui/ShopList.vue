@@ -14,6 +14,7 @@
       :totalItems="totalShops"
       :itemsPerPage="pageSize"
       paginateRange="2"
+      @onSelectPage="onChangePage"
     >
       <template v-slot:status="{ item }">
         <SBadge
@@ -113,6 +114,11 @@ const searchShop = (value: string) => {
   searchTimer.value = setTimeout(() => {
     fetchShops();
   }, 1000);
+};
+
+const onChangePage = (selectedPage: number) => {
+  params.value.pageIndex = selectedPage - 1;
+  fetchShops();
 };
 
 const openModal = () => {
