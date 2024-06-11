@@ -8,6 +8,22 @@
       @onSearch="searchShop"
       :show-filter="false"
     />
+
+    <STabs :tab-mode="'filter-tabs'" class="s-mb-4">
+      <STabItem value="0" :active-tab="tab" @changeTab="selectTab">
+        Все
+      </STabItem>
+      <STabItem value="14300" :active-tab="tab" @changeTab="selectTab">
+        {{ $t(`moderation-status.14300`) }}
+      </STabItem>
+      <STabItem value="14302" :active-tab="tab" @changeTab="selectTab">
+        {{ $t(`moderation-status.14302`) }}
+      </STabItem>
+      <STabItem value="14301" :active-tab="tab" @changeTab="selectTab">
+        {{ $t(`moderation-status.14301`) }}
+      </STabItem>
+    </STabs>
+
     <STable
       :headers="headers"
       :data="shops"
@@ -42,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-import { STable, SBadge } from "@tumarsoft/ogogo-ui";
+import { STable, SBadge, STabs, STabItem } from "@tumarsoft/ogogo-ui";
 import { ref, reactive, computed, onBeforeMount } from "vue";
 import FilterSearch from "@/widgets/filter-search/FilterSearch.vue";
 import { FilterModal } from "@/shared/ui";
@@ -63,9 +79,14 @@ const headers = reactive([
   { title: "Действия", key: "action" },
 ]);
 
+const currentStatus = computed(() =>
+  Number(tab.value) ? { statuses: [Number(tab.value)] } : {}
+);
+
 const shopStore = useShopStore();
 const { t } = useI18n();
 const searchTimer = ref(null);
+const tab = ref("");
 const params = ref({
   pageSize: 10,
   sortDirection: SORT_DIRECTION.ASCENDING,
@@ -74,11 +95,21 @@ const params = ref({
   search: "",
 });
 
+onBeforeMount(() => {
+  selectTab("0");
+});
+
+const selectTab = (selectedTab: string) => {
+  tab.value = selectedTab;
+  params.value.pageIndex = 0;
+  params.value.search = "";
+  params.value.queryParams = currentStatus.value;
+  fetchShops();
+};
+
 const fetchShops = () => {
   shopStore.fetchShopPagedList(params.value);
 };
-
-onBeforeMount(fetchShops);
 
 const shops = computed(() => shopStore.getShopPagedList.items);
 const pageSize = computed(() => shopStore.getShopPagedList.pageSize);
