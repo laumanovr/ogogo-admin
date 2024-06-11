@@ -3,7 +3,11 @@
     <h2 class="head-title">
       {{ $t("lang-9839245b-e40e-4ae1-92e9-0421dc97a154") }}
     </h2>
-    <FilterSearch @onClick="showFilterModal" :show-filter="false" />
+    <FilterSearch
+      @onClick="showFilterModal"
+      @onSearch="searchProduct"
+      :show-filter="false"
+    />
     <STabs :tab-mode="'filter-tabs'" class="s-mb-4">
       <STabItem value="0" :active-tab="tab" @changeTab="selectTab">
         Все
@@ -15,7 +19,7 @@
         Требует доработки
       </STabItem>
       <STabItem value="14801" :active-tab="tab" @changeTab="selectTab">
-        Опубликковано
+        Опубликовано
       </STabItem>
       <STabItem value="14800" :active-tab="tab" @changeTab="selectTab">
         Черновик
@@ -92,11 +96,13 @@ const params = ref({
   pageIndex: 0,
   productType: 14701,
   statuses: [],
+  search: "",
   sortDirection: 1,
 });
 const products = computed(() => productStore.getModerationProductList);
 const totalItems = computed(() => productStore.getProductTotalCount);
 const tab = ref("one");
+const searchTimer = ref(null);
 
 const currentStatus = computed(() =>
   Number(tab.value) ? [Number(tab.value)] : []
@@ -128,6 +134,7 @@ onMounted(() => {
 
 const selectTab = (value: string) => {
   tab.value = value;
+  params.value.search = "";
   params.value.pageIndex = 0;
   params.value.statuses = currentStatus.value;
   getModerationProducts();
@@ -148,6 +155,16 @@ const onChangePage = (selectedPage: number) => {
   params.value.pageIndex = selectedPage - 1;
   params.value.statuses = currentStatus.value;
   getModerationProducts();
+};
+
+const searchProduct = (value: string) => {
+  clearTimeout(searchTimer.value);
+  params.value.pageIndex = 0;
+  params.value.statuses = [];
+  params.value.search = value;
+  searchTimer.value = setTimeout(() => {
+    getModerationProducts();
+  }, 1000);
 };
 
 const showFilterModal = () => {
