@@ -1,3 +1,4 @@
+@import "../../../../app//styles/colors.scss";
 .label-container {
   position: relative;
 
@@ -12,12 +13,12 @@
     position: absolute;
     top: -45px;
     left: -28px;
-    background: var(--gray-800);
+    background: $gray-500;
     border-radius: 8px;
     padding: 8px;
     font-size: 10px;
     font-weight: 500;
-    color: var(--white);
+    color: $white;
     width: 208px;
     z-index: 999;
     white-space: pre-wrap;
