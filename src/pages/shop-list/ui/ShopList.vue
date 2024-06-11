@@ -149,6 +149,7 @@ const searchShop = (value: string) => {
 
 const onChangePage = (selectedPage: number) => {
   params.value.pageIndex = selectedPage - 1;
+  params.value.queryParams = currentStatus.value;
   fetchShops();
 };
 
