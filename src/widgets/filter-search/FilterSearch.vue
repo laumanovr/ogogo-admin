@@ -3,6 +3,7 @@
     <SInput
       isSearchable
       hide-details
+      @input="onSearch"
       :width="props.showFilter ? '90%' : '100%'"
     />
     <div class="light">
@@ -29,10 +30,15 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["onClick"]);
+const emit = defineEmits(["onClick", "onSearch"]);
 
 const onClick = () => {
   emit("onClick");
+};
+
+const onSearch = (e: Event) => {
+  const target = e.target as HTMLInputElement;
+  emit("onSearch", target.value);
 };
 </script>
 
