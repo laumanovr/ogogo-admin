@@ -23,7 +23,7 @@ export class PropertyGroupApi {
   };
   createGroupProperties = (
     payload: CreatePropertyGroupPayload[]
-  ): Promise<ResponseWithStatus<PropertyGroupEntity>[]> => {
+  ): Promise<ResponseWithStatus<PropertyGroupEntity[]>> => {
     return API({
       method: "POST",
       url: "/Marketplace/CreateMarketplacePropertyGroupList",
@@ -34,7 +34,7 @@ export class PropertyGroupApi {
   };
   updateGroupProperties = (
     payload: UpdatePropertyGroupPayload[]
-  ): Promise<ResponseWithStatus<PropertyGroupEntity>[]> => {
+  ): Promise<ResponseWithStatus<PropertyGroupEntity[]>> => {
     return API({
       method: "PUT",
       url: "/Marketplace/UpdateMarketplacePropertyGroupList",

@@ -57,15 +57,15 @@ export const usePropertyGroupStore = defineStore(NAME_ID, {
     },
     createGroupProperty(
       payload: CreatePropertyGroupPayload[]
-    ): Promise<ResponseWithStatus<PropertyGroupEntity>[]> {
+    ): Promise<ResponseWithStatus<PropertyGroupEntity[]>> {
       return new Promise((resolve, reject) => {
         const loaderStore = useLoaderStore();
         const alertStore = useAlertStore();
         loaderStore.setLoaderState(true);
         propertyGroupApiService
           .createGroupProperties(payload)
-          .then((response) => {
-            response.forEach((item) => {
+          .then((response) => {            
+            response.result.forEach((item: any) => {
               if (item.ok) {
                 this.propertyGroupList.unshift(item.result);
               }
@@ -85,7 +85,7 @@ export const usePropertyGroupStore = defineStore(NAME_ID, {
     },
     updateGroupProperty(
       payload: UpdatePropertyGroupPayload[]
-    ): Promise<ResponseWithStatus<PropertyGroupEntity>[]> {
+    ): Promise<ResponseWithStatus<PropertyGroupEntity[]>> {
       return new Promise((resolve, reject) => {
         const loaderStore = useLoaderStore();
         const alertStore = useAlertStore();
