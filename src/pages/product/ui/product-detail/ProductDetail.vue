@@ -13,7 +13,7 @@
         />
         {{ selectedProductShop.name }}
       </div>
-      <Breadcrumbs />
+      <!-- <Breadcrumbs /> -->
     </div>
     <h2 class="head-title md" id="main">
       {{ $t("lang-3c525f10-24ab-44fa-9eda-8a503e97b2e9") }}
