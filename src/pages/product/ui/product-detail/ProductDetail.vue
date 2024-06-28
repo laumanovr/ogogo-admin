@@ -200,7 +200,6 @@ import {
   SSelect,
   SIconRender,
 } from "@tumarsoft/ogogo-ui";
-import { Breadcrumbs } from "@/shared/ui";
 import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useProductStore } from "@/entities/product/store/product.store";
