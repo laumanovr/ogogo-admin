@@ -1,6 +1,6 @@
 <template>
   <div class="loader-container">
-    <div class="loader"></div>
+    <img src="@/shared/assets/loader.gif" class="loader" alt="" />
   </div>
 </template>
 
@@ -17,15 +17,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  .loader {
-    border: 3px solid $gray-50;
-    border-radius: 50%;
-    border-top-color: $violet-500;
-    width: 50px;
-    height: 50px;
-    -webkit-animation: spin 1.5s linear infinite;
-    animation: spin 1.5s linear infinite;
+  img {
+    width: 200px;
+    height: 200px;
   }
+  // .loader {
+  //   border: 3px solid $gray-50;
+  //   border-radius: 50%;
+  //   border-top-color: $violet-500;
+  //   width: 50px;
+  //   height: 50px;
+  //   -webkit-animation: spin 1.5s linear infinite;
+  //   animation: spin 1.5s linear infinite;
+  // }
 }
 
 @keyframes spin {
