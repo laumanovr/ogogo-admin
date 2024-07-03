@@ -23,7 +23,7 @@
         <img :src="logo" alt="logo" class="logo s-mr-5" />
         <div class="logo-title">{{ logoName }}</div>
       </div>
-      <Logo />
+      <Logo v-if="pendingOrRejected" />
     </div>
     <div class="shop-name-block s-mt-7">
       <div>
@@ -35,7 +35,7 @@
           :modelValue="shopName"
         />
       </div>
-      <Name />
+      <Name v-if="pendingOrRejected" />
     </div>
     <div class="description-block s-mt-7">
       <div>
@@ -48,7 +48,7 @@
           :modelValue="description"
         />
       </div>
-      <Description />
+      <Description v-if="pendingOrRejected" />
     </div>
     <div
       class="d-flex s-mt-8 actions light"
@@ -111,6 +111,12 @@ const logoName = computed(() => shop.value.logoFileName);
 // const moderationResult = computed(() => shop.value.moderationResult);
 
 const verificationStatus = computed(() => shop.value.verificationStatus);
+
+const pendingOrRejected = computed(
+  () =>
+    verificationStatus.value === PRODUCT_VERIFICATION_STATUS.PENDING ||
+    verificationStatus.value === PRODUCT_VERIFICATION_STATUS.REJECTED
+);
 
 const verifyShop = () => {
   shopDetailStore.setVerifiedOrRejectedStatusBadge(true);
