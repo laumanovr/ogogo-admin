@@ -28,8 +28,12 @@
             hide-details
             readonly
           />
-          <div class="d-flex s-mt-3">
-            <FieldComment fieldName="name" v-if="isCommentReady" />
+          <div class="d-flex s-mt-3" v-if="isPendingOrRejected">
+            <FieldComment
+              fieldName="name"
+              :isPending="isPending"
+              v-if="isCommentReady"
+            />
           </div>
         </div>
         <div class="s-mt-5 description">
@@ -40,8 +44,12 @@
             v-model="selectedProduct.description"
             hide-details
           />
-          <div class="d-flex s-mt-5">
-            <FieldComment fieldName="description" v-if="isCommentReady" />
+          <div class="d-flex s-mt-5" v-if="isPendingOrRejected">
+            <FieldComment
+              fieldName="description"
+              :isPending="isPending"
+              v-if="isCommentReady"
+            />
           </div>
         </div>
         <div class="price-block s-mt-8" id="price">
@@ -69,8 +77,12 @@
               readonly
             />
           </div>
-          <div class="d-flex s-mt-3">
-            <FieldComment fieldName="price" v-if="isCommentReady" />
+          <div class="d-flex s-mt-3" v-if="isPendingOrRejected">
+            <FieldComment
+              fieldName="price"
+              :isPending="isPending"
+              v-if="isCommentReady"
+            />
           </div>
         </div>
         <div class="leftover" id="leftover">
@@ -84,8 +96,12 @@
             v-model="selectedProduct.countOfProduct"
             hide-details
           />
-          <div class="d-flex s-mt-3">
-            <FieldComment fieldName="countOfProduct" v-if="isCommentReady" />
+          <div class="d-flex s-mt-3" v-if="isPendingOrRejected">
+            <FieldComment
+              fieldName="countOfProduct"
+              :isPending="isPending"
+              v-if="isCommentReady"
+            />
           </div>
         </div>
         <div class="photo-block" id="photo">
@@ -104,8 +120,12 @@
               :key="i"
             />
           </div>
-          <div class="d-flex s-mt-3">
-            <FileComment field-name="photo" v-if="isCommentReady" />
+          <div class="d-flex s-mt-3" v-if="isPendingOrRejected">
+            <FileComment
+              field-name="photo"
+              :isPending="isPending"
+              v-if="isCommentReady"
+            />
           </div>
         </div>
         <div class="video-block" id="video" :key="videoKey">
@@ -120,8 +140,12 @@
               <source :src="videoUrl" type="video/mp4" />
             </video>
           </div>
-          <div class="d-flex s-mt-3">
-            <FileComment field-name="video" v-if="isCommentReady" />
+          <div class="d-flex s-mt-3" v-if="isPendingOrRejected">
+            <FileComment
+              field-name="video"
+              :isPending="isPending"
+              v-if="isCommentReady"
+            />
           </div>
         </div>
         <div class="characteristic-block" id="character">
@@ -236,6 +260,11 @@ const isPending = computed(
 );
 const isPublished = computed(
   () => selectedProduct.value.status === PRODUCT_STATUS.PUBLISHED
+);
+const isPendingOrRejected = computed(
+  () =>
+    selectedProduct.value.status === PRODUCT_STATUS.PENDING ||
+    selectedProduct.value.status === PRODUCT_STATUS.REJECTED
 );
 
 onMounted(() => {
