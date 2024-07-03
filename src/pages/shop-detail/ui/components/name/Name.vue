@@ -10,7 +10,7 @@
       v-if="nameStatus !== DETAIL_STATUS.READ"
       :placeholder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
       :comment="nameComment"
-      :is-show-actions="isShowActions"
+      :is-show-actions="false"
       @input="handleUpdateNameComment($event)"
       @submit="addNameComment"
       @cancel="cancelNameComment"
@@ -43,13 +43,13 @@ const nameComment = computed(
 );
 const nameStatus = computed(() => shopDetailStore.getNameStatus);
 
-const isShowActions = computed(
-  () =>
-    (nameStatus.value === DETAIL_STATUS.CREATE ||
-      nameStatus.value === DETAIL_STATUS.UPDATE) &&
-    Boolean(nameComment.value) &&
-    Boolean(nameComment.value?.trim())
-);
+// const isShowActions = computed(
+//   () =>
+//     (nameStatus.value === DETAIL_STATUS.CREATE ||
+//       nameStatus.value === DETAIL_STATUS.UPDATE) &&
+//     Boolean(nameComment.value) &&
+//     Boolean(nameComment.value?.trim())
+// );
 
 onBeforeMount(() => {
   if (

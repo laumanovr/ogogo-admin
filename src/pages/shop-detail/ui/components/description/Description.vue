@@ -10,7 +10,7 @@
       v-if="descriptionStatus !== DETAIL_STATUS.READ"
       :placeholder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
       :comment="descriptionComment"
-      :is-show-actions="isShowActions"
+      :is-show-actions="false"
       @input="handleUpdateDescriptionComment($event)"
       @submit="onAddDescriptionComment"
       @cancel="cancelDescriptionComment"
@@ -43,13 +43,13 @@ const descriptionComment = computed(
 );
 const descriptionStatus = computed(() => shopDetailStore.getDescriptionStatus);
 
-const isShowActions = computed(
-  () =>
-    (descriptionStatus.value === DETAIL_STATUS.CREATE ||
-      descriptionStatus.value === DETAIL_STATUS.UPDATE) &&
-    Boolean(descriptionComment.value) &&
-    Boolean(descriptionComment.value?.trim())
-);
+// const isShowActions = computed(
+//   () =>
+//     (descriptionStatus.value === DETAIL_STATUS.CREATE ||
+//       descriptionStatus.value === DETAIL_STATUS.UPDATE) &&
+//     Boolean(descriptionComment.value) &&
+//     Boolean(descriptionComment.value?.trim())
+// );
 
 onBeforeMount(() => {
   if (

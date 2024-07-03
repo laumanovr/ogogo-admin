@@ -8,7 +8,7 @@
       v-if="logoStatus !== DETAIL_STATUS.READ"
       :placeholder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
       :comment="logoComment"
-      :is-show-actions="isShowActions"
+      :is-show-actions="false"
       @input="handleUpdateLogoComment($event)"
       @submit="onAddLogoComment"
       @cancel="cancelLogoComment"
@@ -41,13 +41,13 @@ const logoComment = computed(() => {
 });
 const logoStatus = computed(() => shopDetailStore.getLogoStatus);
 
-const isShowActions = computed(
-  () =>
-    (logoStatus.value === DETAIL_STATUS.CREATE ||
-      logoStatus.value === DETAIL_STATUS.UPDATE) &&
-    Boolean(logoComment.value) &&
-    Boolean(logoComment.value?.trim())
-);
+// const isShowActions = computed(
+//   () =>
+//     (logoStatus.value === DETAIL_STATUS.CREATE ||
+//       logoStatus.value === DETAIL_STATUS.UPDATE) &&
+//     Boolean(logoComment.value) &&
+//     Boolean(logoComment.value?.trim())
+// );
 
 onBeforeMount(() => {
   if (
