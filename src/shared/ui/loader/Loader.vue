@@ -9,7 +9,7 @@
 .loader-container {
   position: fixed;
   z-index: 999;
-  background: rgba($gray-900, 0.6);
+  background: rgba($white, 0.5);
   width: 100%;
   height: 100%;
   top: 0;
