@@ -5,13 +5,13 @@
       <span class="date">{{ formatDate(props.date) }}</span>
     </div>
     <div class="comment-body">{{ props.comment }}</div>
-    <div class="btn-group">
-      <span class="btn" @click="onEdit">{{
-        $t("lang-86a84b88-d2ec-4791-b06f-ca4d6aa58a4f")
-      }}</span>
-      <span class="btn" @delete="onDelete">{{
+    <div class="btn-group" v-if="props.isPending">
+      <span class="btn" @click="onEdit">
+        {{ $t("lang-86a84b88-d2ec-4791-b06f-ca4d6aa58a4f") }}
+      </span>
+      <!-- <span class="btn" @delete="onDelete">{{
         $t("lang-490771e8-1e16-4c61-b9f9-7e962ec4309b")
-      }}</span>
+      }}</span> -->
     </div>
   </div>
 </template>
@@ -32,6 +32,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  isPending: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const formatDate = (date: string) => {
@@ -44,9 +48,9 @@ const onEdit = () => {
   emit("edit");
 };
 
-const onDelete = () => {
-  emit("delete");
-};
+// const onDelete = () => {
+//   emit("delete");
+// };
 </script>
 
 <style scoped lang="scss">
