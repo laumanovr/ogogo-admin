@@ -47,7 +47,7 @@
               itemTitle="name"
               itemValue="id"
               v-model="item.propertyValueType"
-              @onChange="onSelectValue($event, item)"
+              @change="onSelectValue($event, item)"
               hide-details
             />
           </td>
@@ -202,16 +202,16 @@ watch(
 );
 
 const onSelectValue = (option: any, item: any) => {
-  if (option.id === 14100) {
+  if (option === 14100) {
     item.isPropertyString = true;
     item.isInputDisabled = false;
     item.validationRules = null;
   }
-  if (option.id === 14101 || option.id === 14103) {
+  if (option === 14101 || option === 14103) {
     item.isPropertyString = false;
     item.validationRules = null;
   }
-  if (option.id === 14102) {
+  if (option === 14102) {
     item.isPropertyString = true;
     item.isInputDisabled = true;
     item.validationRules = null;
