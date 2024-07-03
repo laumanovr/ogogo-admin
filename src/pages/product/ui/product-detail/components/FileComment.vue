@@ -80,7 +80,6 @@ const setComment = () => {
 };
 
 const cancelComment = () => {
-  commentValue.value = "";
   isShowButtons.value = false;
 };
 
