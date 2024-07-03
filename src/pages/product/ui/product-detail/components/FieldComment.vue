@@ -10,10 +10,11 @@
       :name="'Админ'"
       :date="getDate()"
       :comment="commentValue"
+      :isPending="props.isPending"
       @edit="editComment"
     />
     <CommentInput
-      v-else
+      v-if="!hasComment && props.isPending"
       :placeholder="$t('lang-5b31da57-d71a-4a20-9490-6ffd5285671c')"
       :comment="commentValue"
       :is-show-actions="isShowButtons"
@@ -34,6 +35,10 @@ import { ValidationField } from "@/entities/product";
 const props = defineProps({
   fieldName: {
     type: String,
+  },
+  isPending: {
+    type: Boolean,
+    default: false,
   },
 });
 
