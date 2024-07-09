@@ -11,11 +11,12 @@
   >
     <div class="category-item-content">
       <SIconRender
-        name="ArrowIcon"
+        name="chevron-right"
         size="small"
-        :direction="
-          item.childMarketplaceCategoryIdList?.length > 0 ? 'bottom' : 'right'
-        "
+        :class="[
+          'arrow s-text-gray-500',
+          { bottom: item.childMarketplaceCategoryIdList?.length },
+        ]"
       />
       <img
         v-if="item.icon || item.icoBase64"
@@ -185,7 +186,7 @@ const onChangeActive = () => {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .empty-category-container,
 .empty-category-container-active {
   width: 334px;
@@ -205,6 +206,9 @@ const onChangeActive = () => {
     flex-direction: row;
     align-items: center;
     gap: 7.5px;
+    .arrow.bottom {
+      transform: rotate(90deg);
+    }
   }
 }
 
