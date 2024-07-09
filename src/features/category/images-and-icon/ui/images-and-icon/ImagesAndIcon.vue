@@ -4,8 +4,8 @@
   </p>
   <div class="info-text-container s-mb-5">
     <SIconRender
-      name="WarningIcon"
-      color="violet-700"
+      name="alert-warning"
+      class="s-text-violet-700"
       @click="onOpenImageRecomendationModal"
     />
     <p>{{ $t("lang-1c3dce6e-86b9-4523-a934-b391ddce337b") }}</p>
