@@ -6,11 +6,8 @@
         class="left-toolbar d-flex flex-row items-center justify-between gap-15"
       >
         <div class="d-flex flex-row items-center gap-10">
-          <SIconRender
-            name="ArrowIcon"
-            :direction="!hideBody ? 'top' : 'right'"
-            @click="onHideBody"
-          />
+          <SIconRender name="chevron-up" @click="onHideBody" v-if="!hideBody" />
+          <SIconRender name="chevron-right" @click="onHideBody" v-else />
           <p>{{ propertyName }}</p>
         </div>
         <div class="d-flex flex-row items-center gap-10">
@@ -73,8 +70,7 @@
         >
           <p>{{ propretyValueName(propertyValue) }}</p>
           <SIconRender
-            name="CloseRoundIcon"
-            color="grey"
+            name="close"
             @click="onRemovePropertyValue(propertyValue)"
           />
         </div>
