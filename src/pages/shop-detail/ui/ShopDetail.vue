@@ -2,7 +2,7 @@
   <div class="shop-detail-container" v-if="!stateload">
     <div class="top-block light">
       <SButton type="secondary" variant="outlined" @click="goBack">
-        <SIconRender name="ArrowIcon" direction="left" />
+        <SIconRender name="chevron-left" class="s-text-gray-500" />
         {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
       <div class="shop-title">
