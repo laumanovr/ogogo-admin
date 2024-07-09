@@ -13,7 +13,7 @@
         @click="onClick"
         v-if="props.showFilter"
       >
-        <SIconRender name="SettingsIcon" />
+        <SIconRender name="filter" class="s-text-red-500" />
         {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
       </SButton>
     </div>
