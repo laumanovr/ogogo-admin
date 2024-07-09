@@ -36,11 +36,7 @@
                   alt="icon"
                   class="selected-image ml-10"
                 />
-                <SIconRender
-                  name="CloseRoundIcon"
-                  color="gray"
-                  @click="item.icoBase64 = null"
-                />
+                <SIconRender name="close" @click="item.icoBase64 = null" />
               </span>
               <label for="file" class="label-container" v-else>
                 <div class="tooltip-info">
