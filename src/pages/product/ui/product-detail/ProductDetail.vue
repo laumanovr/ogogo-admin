@@ -2,7 +2,7 @@
   <div class="product-detail-container s-mt-3">
     <div class="d-flex items-center s-mb-5 light">
       <SButton type="secondary" variant="outlined" @click="goBack">
-        <SIconRender name="ArrowIcon" direction="left" />
+        <SIconRender name="chevron-left" class="s-text-gray-500" />
         {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
       <div class="d-flex items-center s-ml-5 s-mr-5">
