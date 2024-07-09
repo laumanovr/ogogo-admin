@@ -18,7 +18,7 @@
             <SInput isSearchable @input="onSearch" hide-details />
           </div>
           <div class="icon-border" @click="openFilterModal">
-            <SIconRender name="SettingsIcon" />
+            <SIconRender name="filter" />
           </div>
           <div class="light">
             <SButton size="medium" @click="onSubmit">
