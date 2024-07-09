@@ -7,7 +7,7 @@
         @click="onMenuItemChange(MENU_ITEMS.Products)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender :color="isProductsActive.substr(6)" :name="'BoxIcon'" />
+        <SIconRender name="box" :class="isProductsActive" />
         <p :class="`${isProductsActive} font-size-12`">
           {{ $t("lang-9839245b-e40e-4ae1-92e9-0421dc97a154") }}
         </p>
@@ -16,7 +16,7 @@
         @click="onMenuItemChange(MENU_ITEMS.Stores)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender :color="isStoresActive.substr(6)" :name="'ShopIcon'" />
+        <SIconRender name="shop" :class="isStoresActive" />
         <p :class="`${isStoresActive} font-size-12`">
           {{ $t("lang-425a5a16-bf0a-4ded-a7bc-cbe7490b659a") }}
         </p>
@@ -25,7 +25,7 @@
         @click="onMenuItemChange(MENU_ITEMS.Category)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender :color="isCategoryActive.substr(6)" :name="'GridIcon'" />
+        <SIconRender name="grid" :class="isCategoryActive"/>
         <p :class="`${isCategoryActive} font-size-12`">
           {{ $t("lang-75805fdb-eac2-4c87-b481-563e318789b5") }}
         </p>
@@ -34,10 +34,7 @@
         @click="onMenuItemChange(MENU_ITEMS.Properties)"
         class="cursor-pointer d-flex flex-col items-center"
       >
-        <SIconRender
-          :color="isPropertyActive.substr(6)"
-          :name="'PropertyIcon'"
-        />
+        <SIconRender name="cards" :class="isPropertyActive"/>
         <p :class="`${isPropertyActive} font-size-12`">
           {{ $t("lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2") }}
         </p>
@@ -79,23 +76,23 @@ Object.values(MENU_ITEMS).forEach((item: any) => {
 
 const isProductsActive = computed(() => {
   return activeButton.value === MENU_ITEMS.Products
-    ? "color-violet-700"
-    : "gray-400";
+    ? "s-text-violet-700"
+    : "s-text-gray-500";
 });
 const isStoresActive = computed(() => {
   return activeButton.value === MENU_ITEMS.Stores
-    ? "color-violet-700"
-    : "gray-400";
+    ? "s-text-violet-700"
+    : "s-text-gray-500";
 });
 const isCategoryActive = computed(() => {
   return activeButton.value === MENU_ITEMS.Category
-    ? "color-violet-700"
-    : "gray-400";
+    ? "s-text-violet-700"
+    : "s-text-gray-500";
 });
 const isPropertyActive = computed(() => {
   return activeButton.value === MENU_ITEMS.Properties
-    ? "color-violet-700"
-    : "gray-400";
+    ? "s-text-violet-700"
+    : "s-text-gray-500";
 });
 
 const onMenuItemChange = (value: MENU_ITEMS) => {
