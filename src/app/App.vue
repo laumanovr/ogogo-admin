@@ -1,7 +1,7 @@
 <template>
   <component :is="currentComponent">
     <Loader v-if="loaderStore.isLoading" />
-    <SToaster ref="toaster" />
+    <SToaster ref="toaster" position="top-center" />
     <router-view />
   </component>
 </template>
