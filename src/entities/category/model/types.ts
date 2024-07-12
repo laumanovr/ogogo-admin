@@ -59,7 +59,7 @@ export type CategoryTreeEntity = CategoryModified & {
   categoryName: string;
   parentId?: string;
   icon?: string;
-  childMarketplaceCategories?: CategoryTreeEntity[]; // TODO: replace with real data
+  childMarketplaceCategories?: CategoryTreeEntity[];
 };
 
 export type CategoryModified = {

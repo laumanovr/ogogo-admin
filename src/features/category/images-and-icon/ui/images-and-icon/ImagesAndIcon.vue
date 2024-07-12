@@ -78,15 +78,12 @@ import {
   ImageRecomendationModal,
   useImagesAndIconStore,
 } from "@/features/category/images-and-icon";
-// import { useSaveCategorySettingsStore } from "@/features/category/save-category-settings";
-// import { useCategorySharedStore } from "@/shared/store/category";
 import { useCategoryStore } from "@/entities/category";
 
 let imageUrl = ref(null);
 let iconUrl = ref(null);
 
 const store = useImagesAndIconStore();
-// const saveCategorySettingsStore = useSaveCategorySettingsStore();
 
 const categoryStore = useCategoryStore();
 
@@ -120,26 +117,9 @@ function handleIconUpload(event: Event) {
 
   // Resize or crop the image
   resizeIcon(file);
-
-  // const reader = new FileReader();
-
-  // let base64String;
-
-  // Set up a callback function to run when the file has been read
-  // reader.onload = function (event) {
-  //   // 'event.target.result' contains the Base64 encoded string
-  //   base64String = event.target.result;
-  //   console.log(event);
-  //   console.log(base64String);
-  //   categorySharedStore.setIcoBase64(base64String);
-
-  //   console.log(categorySharedStore.getIcoBase64);
-  // };
-  // console.log(base64String);
 }
 
 function resizeImage(file: File) {
-  // saveCategorySettingsStore.setFile(file);
   const reader = new FileReader();
   reader.onload = (event) => {
     const img = new Image();

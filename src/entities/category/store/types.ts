@@ -41,14 +41,3 @@ export interface IPropertyNamingFields {
   en: string;
   ky: string;
 }
-
-// export type Property = CategorySettingPropertySetEntity & {
-//   id?: string;
-//   propertyId: string;
-//   name?: string;
-//   required: boolean;
-//   propertySelector: boolean;
-//   isAddNameToProductName: boolean;
-//   renderType: PropertyRenderType;
-//   allowedValues: Array<AllowedValue | PropertyValueAutocomplete>;
-// };

@@ -41,14 +41,6 @@ const logoComment = computed(() => {
 });
 const logoStatus = computed(() => shopDetailStore.getLogoStatus);
 
-// const isShowActions = computed(
-//   () =>
-//     (logoStatus.value === DETAIL_STATUS.CREATE ||
-//       logoStatus.value === DETAIL_STATUS.UPDATE) &&
-//     Boolean(logoComment.value) &&
-//     Boolean(logoComment.value?.trim())
-// );
-
 onBeforeMount(() => {
   if (
     shop.value.moderationResult?.logo.validationComment === null ||

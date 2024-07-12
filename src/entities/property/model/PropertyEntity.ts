@@ -25,7 +25,7 @@ export interface PropertyEntity {
   propertyGroupId: string;
   propertySubGroupId: string;
   localization: boolean;
-  validationRules: object; // TODO: replace with validation rules
+  validationRules: object;
   createdAt: string;
   createdBy: number;
   updatedAt: string;

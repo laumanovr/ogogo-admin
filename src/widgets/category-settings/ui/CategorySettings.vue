@@ -16,7 +16,6 @@
 import { ImagesAndIcon } from "@/features/category/images-and-icon";
 import { PropertyNamingFields } from "@/features/category/property-naming-fields";
 import { AddProperty } from "@/features/category/add-property";
-// import { useCategoryStore } from "@/widgets/category/category-settings";
 import { SButton, SForm } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
 import { useCategoryStore } from "@/entities/category";

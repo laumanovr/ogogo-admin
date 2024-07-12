@@ -229,7 +229,6 @@ const deletePropertyCard = () => {
 }
 .add-value {
   width: auto;
-  // padding: 14px 20px;
   border-radius: 384px;
   background-color: var(--violet-600);
   color: var(--white);

@@ -27,9 +27,7 @@
   </div>
 </template>
 <script lang="ts" setup>
-// import { computed, ref } from "vue";
 import { SInput } from "@tumarsoft/ogogo-ui";
-// import { useCategorySharedStore } from "@/shared/store/category";
 import { requiredField } from "@/shared/lib/utils/rules";
 import { useCategoryStore } from "@/entities/category";
 

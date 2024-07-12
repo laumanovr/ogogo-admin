@@ -1,4 +1,3 @@
-// import type { IRoute } from "@/utils/interfaces/route.types";
 import type { RouteLocationNormalized } from "vue-router";
 import { IHandler, IRoute } from "./auth.type";
 

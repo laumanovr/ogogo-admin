@@ -62,10 +62,8 @@ import {
   SCheckbox,
   SSwitch,
 } from "@tumarsoft/ogogo-ui";
-// import { useAddPropertyStore } from "../store/add-property.store";
 import { PropertyRenderType } from "@/shared/lib/utils/enums";
 import i18n from "@/shared/lib/plugins/i18n";
-// import { useCategorySharedStore } from "@/shared/store/category";
 import { useAddPropertyStore } from "@/features/category/add-property/store/add-property.store";
 import { useCategoryStore } from "@/entities/category";
 

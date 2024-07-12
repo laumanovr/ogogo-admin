@@ -43,14 +43,6 @@ const descriptionComment = computed(
 );
 const descriptionStatus = computed(() => shopDetailStore.getDescriptionStatus);
 
-// const isShowActions = computed(
-//   () =>
-//     (descriptionStatus.value === DETAIL_STATUS.CREATE ||
-//       descriptionStatus.value === DETAIL_STATUS.UPDATE) &&
-//     Boolean(descriptionComment.value) &&
-//     Boolean(descriptionComment.value?.trim())
-// );
-
 onBeforeMount(() => {
   if (
     shop.value.moderationResult?.description.validationComment === null ||

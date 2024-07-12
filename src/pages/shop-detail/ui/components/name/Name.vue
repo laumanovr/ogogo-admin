@@ -43,14 +43,6 @@ const nameComment = computed(
 );
 const nameStatus = computed(() => shopDetailStore.getNameStatus);
 
-// const isShowActions = computed(
-//   () =>
-//     (nameStatus.value === DETAIL_STATUS.CREATE ||
-//       nameStatus.value === DETAIL_STATUS.UPDATE) &&
-//     Boolean(nameComment.value) &&
-//     Boolean(nameComment.value?.trim())
-// );
-
 onBeforeMount(() => {
   if (
     shop.value.moderationResult?.name.validationComment === null ||

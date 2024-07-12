@@ -1,6 +1,3 @@
-// import { WorkingTimeWeekInterface } from '@/api/general';
-// import { WorkingTimeWeekInterface } from '@/api/general'
-// import { EmployeeStatus, KindOfDocumentType, StaffType } from '@/api/general/enums'
 import {
   EmployeeStatus,
   KindOfDocumentType,

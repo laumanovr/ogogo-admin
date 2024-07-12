@@ -4,7 +4,7 @@ export type CreateCategoryPayload = {
   categoryNameEn: string;
   parentId: string;
   sequenceNumber: number;
-  properties: any[]; // TODO: replace with real data
+  properties: any[];
   icoBase64: string | ArrayBuffer;
   imageId: string;
 };

@@ -47,10 +47,6 @@ const emit = defineEmits(["edit", "delete"]);
 const onEdit = () => {
   emit("edit");
 };
-
-// const onDelete = () => {
-//   emit("delete");
-// };
 </script>
 
 <style scoped lang="scss">

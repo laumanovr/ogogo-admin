@@ -100,12 +100,4 @@ const onSaveSubCategory = () => {
 .add-category-container {
   gap: 14px;
 }
-// .add-category-container {
-//   width: auto;
-//   cursor: pointer;
-//   display: flex;
-//   flex-direction: row;
-//   align-items: center;
-//   padding: 14px 17px;
-// }
 </style>

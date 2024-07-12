@@ -17,7 +17,7 @@ export function findObjectInMultidimensionalArray<T extends ObjectWithChildren>(
       obj.childMarketplaceCategoryIdList.length === 0
     ) {
       result = obj;
-      return true; // Exit loop if found
+      return true;
     }
 
     if (_.isArray(obj.childMarketplaceCategoryIdList)) {
@@ -25,7 +25,7 @@ export function findObjectInMultidimensionalArray<T extends ObjectWithChildren>(
         obj.childMarketplaceCategoryIdList,
         propName
       );
-      return !!result; // Exit loop if found
+      return !!result;
     }
 
     return false;

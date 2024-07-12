@@ -50,7 +50,6 @@ import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { requiredField } from "@/shared/lib/utils/rules";
 import { useAuthStore } from "@/shared/store/auth";
-// import { useAlertStore } from "@/shared/store/alert";
 import { useLoaderStore } from "@/shared/store/loader";
 
 const options = reactive({
@@ -59,7 +58,6 @@ const options = reactive({
 });
 
 const authStore = useAuthStore();
-// const alertStore = useAlertStore();
 const loaderStore = useLoaderStore();
 const router = useRouter();
 
@@ -86,7 +84,6 @@ const onSubmitLogin = () => {
         .catch(() => {
           loaderStore.setLoaderState(false);
           showIncorrectLoginAndPassword.value = true;
-          // alertStore.showError(err?.error?.errorMessage);
         });
     }
   });

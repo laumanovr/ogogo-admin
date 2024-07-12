@@ -1,6 +1,4 @@
-// import { useCategorySharedStore } from "@/shared/store/category";
 import { defineStore } from "pinia";
-// import { useSaveCategorySettingsStore } from "../../save-category-settings/store/save-category-settings-store";
 import { ImagesAndIconApi } from "../api/images-and-icon.api";
 import { container } from "tsyringe";
 import { IImagesAndIconState } from "./images-and-icon-store.types";
@@ -22,9 +20,6 @@ export const useImagesAndIconStore = defineStore("images-and-icon-store", {
   },
   actions: {
     setImgUrl(value: string) {
-      // const saveCategorySettingsStore = useSaveCategorySettingsStore();
-
-      // saveCategorySettingsStore.setImgUrl(value);
       this.imgUrl = value;
     },
 

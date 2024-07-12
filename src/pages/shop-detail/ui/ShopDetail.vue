@@ -108,7 +108,6 @@ const logo = computed(() => shop.value.logoBase64);
 const shopName = computed(() => shop.value.name);
 const description = computed(() => shop.value.description);
 const logoName = computed(() => shop.value.logoFileName);
-// const moderationResult = computed(() => shop.value.moderationResult);
 
 const verificationStatus = computed(() => shop.value.verificationStatus);
 
@@ -127,10 +126,6 @@ const rejectShop = () => {
   shopDetailStore.setVerifiedOrRejectedStatusBadge(true);
   return shopStore.rejectShop();
 };
-
-// const verifiedOrRejectedStatusBadge = computed(
-//   () => shopDetailStore.getVerifiedOrRejectedStatusBadge
-// );
 
 const activeStatusText = computed(() => {
   if (verificationStatus.value === PRODUCT_VERIFICATION_STATUS.ACCEPTED) {

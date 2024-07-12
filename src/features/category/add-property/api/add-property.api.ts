@@ -19,9 +19,3 @@ export class AddPropertyApi {
       .catch((err) => Promise.reject(err));
   };
 }
-// export const getProperty = (
-//   payload: ICategoryPayload
-// ): Promise<ICategorySettings> =>
-//   axios
-//     .post("Marketplace/GetMarketplacePropertyAutocomplete", payload)
-//     .then((res) => res.data.result);
