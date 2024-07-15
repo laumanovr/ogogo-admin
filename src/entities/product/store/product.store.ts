@@ -95,7 +95,6 @@ export const useProductStore = defineStore("product-store", {
         productApi
           .getModerationProducts(payload)
           .then((response) => {
-            loaderStore.setLoaderState(false);
             this.moderationProducts = response.result.items;
             this.totalCount = response.result.totalCount;
             resolve(response);
@@ -118,7 +117,6 @@ export const useProductStore = defineStore("product-store", {
           .getProductById(id)
           .then((response) => {
             this.selectedProduct = response.result;
-            loaderStore.setLoaderState(false);
             resolve(response);
           })
           .catch((err) => {
@@ -141,7 +139,6 @@ export const useProductStore = defineStore("product-store", {
         shopStore
           .fetchShopById(id)
           .then((response) => {
-            loaderStore.setLoaderState(false);
             resolve(response);
           })
           .catch((err) => {
@@ -173,7 +170,6 @@ export const useProductStore = defineStore("product-store", {
         productApi
           .addValidationComments(this.verificationData)
           .then((response) => {
-            loaderStore.setLoaderState(false);
             alertStore.showSuccess("Отправлено на доработку!");
             resolve(response);
           })
@@ -194,7 +190,6 @@ export const useProductStore = defineStore("product-store", {
         productApi
           .setActiveStatus(payload)
           .then((response) => {
-            loaderStore.setLoaderState(false);
             alertStore.showSuccess("Успешно опубликовано!");
             resolve(response);
           })
