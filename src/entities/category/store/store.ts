@@ -249,11 +249,12 @@ export const useCategoryStore = defineStore(NAME_ID, {
               // clear rile if there is no image
               this.file = null;
             }
-            loaderStore.setLoaderState(false);
             resolve(res);
           })
           .catch((err) => {
             reject(err);
+          })
+          .finally(() => {
             loaderStore.setLoaderState(false);
           });
       });
@@ -336,11 +337,12 @@ export const useCategoryStore = defineStore(NAME_ID, {
           })
           .then((data) => {
             this.propertyValueAutocomplete = data;
-            loaderStore.setLoaderState(false);
             resolve(data);
           })
           .catch((err) => {
             reject(err);
+          })
+          .finally(() => {
             loaderStore.setLoaderState(false);
           });
       });
@@ -394,7 +396,6 @@ export const useCategoryStore = defineStore(NAME_ID, {
               alertStore.showSuccess(
                 t("lang-5fa5d291-8d85-49f0-bebe-0dae2f7e1858")
               );
-              loaderStore.setLoaderState(false);
               this.setId(res.id);
               this.fetchCategoryById(res.id);
               this.fetchCategoriesTree();
@@ -402,8 +403,10 @@ export const useCategoryStore = defineStore(NAME_ID, {
             })
             .catch((err) => {
               alertStore.showError(err?.error?.errorMessage);
-              loaderStore.setLoaderState(false);
               reject(err);
+            })
+            .finally(() => {
+              loaderStore.setLoaderState(false);
             });
         } else {
           categoryApiService
@@ -412,14 +415,15 @@ export const useCategoryStore = defineStore(NAME_ID, {
               alertStore.showSuccess(
                 t("lang-5fa5d291-8d85-49f0-bebe-0dae2f7e1858")
               );
-              loaderStore.setLoaderState(false);
               this.fetchCategoriesTree();
               resolve(res);
             })
             .catch((err) => {
               alertStore.showError(err?.error?.errorMessage);
-              loaderStore.setLoaderState(false);
               reject(err);
+            })
+            .finally(() => {
+              loaderStore.setLoaderState(false);
             });
         }
       });
