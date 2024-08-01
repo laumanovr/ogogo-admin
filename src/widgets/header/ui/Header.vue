@@ -102,7 +102,7 @@ const onMenuItemChange = (value: MENU_ITEMS) => {
 
 const authStore = useAuthStore();
 
-const userPhone = computed(() => authStore.getUserProfile.phone);
+const userPhone = computed(() => authStore.getUserProfile?.phone);
 
 const logOut = () => {
   authStore.logout().then(() => {

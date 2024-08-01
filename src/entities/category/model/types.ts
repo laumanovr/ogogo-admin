@@ -40,6 +40,7 @@ export type CategoryPropertyShortEntity = {
 export type CategoryByIdProperty = {
   id?: string;
   propertyId: string;
+  selectedValueId: string;
   name?: string;
   required: boolean;
   propertySelector: boolean;
