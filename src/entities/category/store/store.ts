@@ -232,17 +232,19 @@ export const useCategoryStore = defineStore(NAME_ID, {
           this.setImageId(response.imageId);
           this.setCategoryId(response.id);
           this.setMode("update");
-          const selectedPropValues: any = [];
-          Object.entries(selectedProduct.properties).forEach((item) => {
-            selectedPropValues.push({ key: item[0], valueId: item[1] });
-          });
-          this.properties = this.properties.map((property: any) => {
-            const selectedObj = selectedPropValues.find(
-              (item: any) => item.key === property.key
-            );
-            property.selectedValueId = selectedObj?.valueId;
-            return property;
-          });
+          if (selectedProduct) {
+            const selectedPropValues: any = [];
+            Object.entries(selectedProduct.properties).forEach((item) => {
+              selectedPropValues.push({ key: item[0], valueId: item[1] });
+            });
+            this.properties = this.properties.map((property: any) => {
+              const selectedObj = selectedPropValues.find(
+                (item: any) => item.key === property.key
+              );
+              property.selectedValueId = selectedObj?.valueId;
+              return property;
+            });
+          }
           if (response.imageId) {
             this.fetchFileById(response.imageId);
           } else {
@@ -254,72 +256,48 @@ export const useCategoryStore = defineStore(NAME_ID, {
     },
 
     fetchCategoriesTree() {
-      return new Promise((resolve, reject) => {
-        categoryApiService
-          .getCategories()
-          .then((res) => {
-            // this.categories = res;
-
-            const multidimensionalArray = (
-              array: CategoryTreeEntity[] | CategoryModified[]
-            ): CategoryTreeEntity[] | CategoryModified[] => {
-              return array.map((obj: CategoryTreeEntity | CategoryModified) => {
-                // Delete the property from the current object
-                if ("childMarketplaceCategories" in obj) {
-                  obj.childMarketplaceCategoryIdList =
-                    obj.childMarketplaceCategories;
-                  delete obj.childMarketplaceCategories;
-                }
-
-                if (
-                  obj.childMarketplaceCategoryIdList &&
-                  Array.isArray(obj.childMarketplaceCategoryIdList)
-                ) {
-                  multidimensionalArray(obj.childMarketplaceCategoryIdList);
-                }
-
-                return obj;
-              });
-            };
-
-            const payload = multidimensionalArray(res);
-            payload[0].active = true;
-
-            this.setCategories(payload as CategoryTreeEntity[]);
-
-            resolve(res);
-          })
-          .catch((err) => {
-            reject(err);
-          });
+      return new Promise((resolve, _) => {
+        categoryApiService.getCategories().then((res) => {
+          const multidimensionalArray = (
+            array: CategoryTreeEntity[] | CategoryModified[]
+          ): CategoryTreeEntity[] | CategoryModified[] => {
+            return array.map((obj: CategoryTreeEntity | CategoryModified) => {
+              if ("childMarketplaceCategories" in obj) {
+                obj.childMarketplaceCategoryIdList =
+                  obj.childMarketplaceCategories;
+                delete obj.childMarketplaceCategories;
+              }
+              if (
+                obj.childMarketplaceCategoryIdList &&
+                Array.isArray(obj.childMarketplaceCategoryIdList)
+              ) {
+                multidimensionalArray(obj.childMarketplaceCategoryIdList);
+              }
+              return obj;
+            });
+          };
+          const payload = multidimensionalArray(res);
+          payload[0].active = true;
+          this.setCategories(payload as CategoryTreeEntity[]);
+          resolve(res);
+        });
       });
     },
 
     fetchFileById(id: string): Promise<any> {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         const authStore = useAuthStore();
-
         const sessionId = authStore.getSessionId;
-
-        fileApiService
-          .getFileById(id, sessionId)
-          .then((result) => {
-            const imageUrl = URL.createObjectURL(result);
-
-            this.file = imageUrl;
-            resolve(result);
-          })
-          .catch((err) => {
-            reject(err);
-          })
-          .finally(() => {});
+        fileApiService.getFileById(id, sessionId).then((result) => {
+          const imageUrl = URL.createObjectURL(result);
+          this.file = imageUrl;
+          resolve(result);
+        });
       });
     },
 
     fetchPropertiesListAutocomplete(propertyId: string) {
-      return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        loaderStore.setLoaderState(true);
+      return new Promise((resolve, _) => {
         categoryApiService
           .getPropertyValueAutocomplete({
             pageIndex: 0,
@@ -331,24 +309,13 @@ export const useCategoryStore = defineStore(NAME_ID, {
           .then((data) => {
             this.propertyValueAutocomplete = data;
             resolve(data);
-          })
-          .catch((err) => {
-            reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
           });
       });
     },
 
-    saveCategorySettings() {
-      const loaderStore = useLoaderStore();
-      const alertStore = useAlertStore();
-
+    saveCategorySettings(): Promise<string> {
       let { t } = i18n.global;
-
       const popertiesModified = [...this.getProperties];
-
       popertiesModified.forEach((el, i) => {
         el.allowedValues.forEach((el2, i2) => {
           if ("propertyValueId" in el2) {
@@ -360,7 +327,6 @@ export const useCategoryStore = defineStore(NAME_ID, {
           }
         });
       });
-
       const payload = {
         id: "",
         parentId: "",
@@ -379,45 +345,19 @@ export const useCategoryStore = defineStore(NAME_ID, {
         payload.id = this.selectedCategory?.id;
         payload.parentId = this.selectedCategory?.parentId || null;
       }
-
-      return new Promise<CategoryEntity>((resolve, reject) => {
-        loaderStore.setLoaderState(true);
+      return new Promise((resolve, _) => {
         if (this.mode === "create") {
-          categoryApiService
-            .createCategory(payload)
-            .then((res) => {
-              alertStore.showSuccess(
-                t("lang-5fa5d291-8d85-49f0-bebe-0dae2f7e1858")
-              );
-              this.setId(res.id);
-              this.fetchCategoryById(res.id);
-              this.fetchCategoriesTree();
-              resolve(res);
-            })
-            .catch((err) => {
-              alertStore.showError(err?.error?.errorMessage);
-              reject(err);
-            })
-            .finally(() => {
-              loaderStore.setLoaderState(false);
-            });
+          categoryApiService.createCategory(payload).then((res) => {
+            this.setId(res.id);
+            this.fetchCategoryById(res.id, "");
+            this.fetchCategoriesTree();
+            resolve(t("lang-5fa5d291-8d85-49f0-bebe-0dae2f7e1858"));
+          });
         } else {
-          categoryApiService
-            .updateCategory(payload)
-            .then((res) => {
-              alertStore.showSuccess(
-                t("lang-5fa5d291-8d85-49f0-bebe-0dae2f7e1858")
-              );
-              this.fetchCategoriesTree();
-              resolve(res);
-            })
-            .catch((err) => {
-              alertStore.showError(err?.error?.errorMessage);
-              reject(err);
-            })
-            .finally(() => {
-              loaderStore.setLoaderState(false);
-            });
+          categoryApiService.updateCategory(payload).then(() => {
+            this.fetchCategoriesTree();
+            resolve(t("lang-b4f39135-e5f9-41cb-b086-87820e991410"));
+          });
         }
       });
     },
