@@ -1,5 +1,6 @@
 <template>
   <SForm class="main-wrapper h-p-100" ref="namingFieldsForm">
+    <SLoader v-if="isLoading" />
     <div class="settings h-p-100 w-p-100">
       <ImagesAndIcon />
       <PropertyNamingFields />
@@ -16,22 +17,33 @@
 import { ImagesAndIcon } from "@/features/category/images-and-icon";
 import { PropertyNamingFields } from "@/features/category/property-naming-fields";
 import { AddProperty } from "@/features/category/add-property";
-import { SButton, SForm } from "@tumarsoft/ogogo-ui";
+import { SButton, SForm, SLoader } from "@tumarsoft/ogogo-ui";
 import { ref } from "vue";
 import { useCategoryStore } from "@/entities/category";
+import { useAlertStore } from "@/shared/store/alert";
 
 const categoryStore = useCategoryStore();
+const alertStore = useAlertStore();
+const namingFieldsForm = ref(null);
+const isLoading = ref(false);
 
 const onSaveSettings = () => {
   namingFieldsForm.value.validate().then((isValid: boolean) => {
     if (isValid) {
-      categoryStore.saveCategorySettings();
+      isLoading.value = true;
+      categoryStore
+        .saveCategorySettings()
+        .then((message: string) => {
+          alertStore.showSuccess(message);
+        })
+        .finally(() => {
+          isLoading.value = false;
+        });
     }
   });
 };
-
-const namingFieldsForm = ref(null);
 </script>
+
 <style scoped lang="scss">
 @import "../../../app/styles/colors.scss";
 

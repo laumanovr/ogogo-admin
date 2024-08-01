@@ -1,5 +1,6 @@
 // Идея такая, что надо сделать отдельный список функций валидации
 // isValidSomething(value):boolean, которые будут просто true/false возвращать.
+
 // а список функции rules будут переиспользовать и возвращать error-message
 
 export type ValidateFunction = (value: any) => boolean;
