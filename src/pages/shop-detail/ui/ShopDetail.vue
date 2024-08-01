@@ -15,7 +15,7 @@
       :status-text="activeStatusText"
       :description="activeDescriptionBadge"
     />
-    <h2 class="head-title md">
+    <h2 class="s-text-title-1 s-mb-6 s-mt-6">
       {{ $t("lang-2c57a873-df1a-437e-a38b-2a0772342fc4") }}
     </h2>
     <div class="shop-logo-block">

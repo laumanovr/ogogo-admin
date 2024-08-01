@@ -15,7 +15,7 @@
       </div>
       <!-- <Breadcrumbs /> -->
     </div>
-    <h2 class="head-title md" id="main">
+    <h2 class="s-text-title-1 s-mb-6 s-mt-6" id="main">
       {{ $t("lang-3c525f10-24ab-44fa-9eda-8a503e97b2e9") }}
     </h2>
     <div class="d-flex s-mt-5">
@@ -53,7 +53,7 @@
           </div>
         </div>
         <div class="price-block s-mt-8" id="price">
-          <div class="head-title md">
+          <div class="s-text-title-1 s-mb-6 s-mt-6">
             {{ $t("lang-3bbbc87b-85a5-4434-a8b7-999c9146de08") }}
           </div>
           <div class="d-flex">
@@ -86,7 +86,7 @@
           </div>
         </div>
         <div class="leftover" id="leftover">
-          <div class="head-title md">
+          <div class="s-text-title-1 s-mb-6 s-mt-6">
             {{ $t("lang-a6dc23d1-d5cc-4c0a-8412-32f6ff24a2dd") }}
           </div>
           <SInput
@@ -105,7 +105,7 @@
           </div>
         </div>
         <div class="photo-block" id="photo">
-          <div class="head-title md">
+          <div class="s-text-title-1 s-mb-6 s-mt-6">
             {{ $t("lang-d820a72f-7c7f-4ac0-b993-8d57d1904dde") }}
           </div>
           <p class="hint s-mb-5">
@@ -129,7 +129,7 @@
           </div>
         </div>
         <div class="video-block" id="video" :key="videoKey">
-          <div class="head-title md">
+          <div class="s-text-title-1 s-mb-6 s-mt-6">
             {{ $t("lang-65a33216-17a3-4f12-9e78-ef1b73efcdf0") }}
           </div>
           <p class="hint s-mb-5">
@@ -149,7 +149,7 @@
           </div>
         </div>
         <div class="characteristic-block" id="character">
-          <div class="head-title md">
+          <div class="s-text-title-1 s-mb-6 s-mt-6">
             {{ $t("lang-c00a03d8-8bb2-4d54-93e7-fc0379b86f51") }}
           </div>
           <p class="hint s-mb-5">

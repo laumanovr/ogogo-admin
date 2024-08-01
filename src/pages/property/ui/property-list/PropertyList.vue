@@ -1,8 +1,8 @@
 <template>
   <div class="property-container">
-    <h2 class="head-title">
+    <div class="s-text-h-2 s-mb-6 s-mt-6">
       {{ $t("lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2") }}
-    </h2>
+    </div>
     <template v-if="hasData">
       <div class="filter-container">
         <STabs :tab-mode="'filter-tabs'">

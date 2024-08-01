@@ -1,8 +1,8 @@
 <template>
   <div class="product-list-container">
-    <h2 class="head-title">
+    <div class="s-text-h-2 s-mb-6 s-mt-6">
       {{ $t("lang-9839245b-e40e-4ae1-92e9-0421dc97a154") }}
-    </h2>
+    </div>
     <FilterSearch
       @onClick="showFilterModal"
       @onSearch="searchProduct"

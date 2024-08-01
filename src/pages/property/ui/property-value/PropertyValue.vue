@@ -5,10 +5,10 @@
         <SIconRender name="chevron-left" class="s-text-gray-500" />
         {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
-      <h2 class="head-title">
+      <div class="s-text-h-2 s-mb-6 s-mt-6">
         {{ $t("lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2") }} /
         {{ selectedProperty?.name }}
-      </h2>
+      </div>
     </div>
     <div class="actions light">
       <SInput isSearchable hide-details width="100%" @input="onSearch" />
