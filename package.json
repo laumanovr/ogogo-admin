@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@babel/preset-env": "^7.23.9",
-    "@tumarsoft/ogogo-ui": "^0.1.109",
+    "@tumarsoft/ogogo-ui": "^0.1.117",
     "@vue/compiler-sfc": "^3.4.15",
     "axios": "^1.6.5",
     "lodash": "^4.17.21",
@@ -37,7 +37,6 @@
     "@types/ramda": "^0.29.11",
     "@types/uuid": "^9.0.8",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
-    "@unocss/preset-rem-to-px": "^0.58.5",
     "@vitejs/plugin-vue": "^5.0.3",
     "babel-eslint": "^10.1.0",
     "babel-plugin-transform-typescript-metadata": "^0.3.2",
@@ -53,7 +52,7 @@
     "prettier": "3.2.4",
     "sass": "^1.69.7",
     "typescript": "^5.3.3",
-    "unocss": "^0.58.5",
+    "unocss": "^0.61.6",
     "vite": "^5.0.8",
     "vue-eslint-parser": "^9.4.2",
     "vue-tsc": "^2.0.22"
