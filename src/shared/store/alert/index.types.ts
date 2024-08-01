@@ -16,9 +16,7 @@ export interface IAlertState {
 }
 
 export interface IAlert {
-  successMessage: null,
-  errorMessage: null,
-  infoMessage: null,
+  items: AlertItem[];
   id: string;
   message: string;
   caption: string;
@@ -38,6 +36,13 @@ export interface IAlert {
   // v-progress-circular
   circularProgressOptions: Partial<ICircularProgressOptions>;
   [key: string]: any;
+}
+export interface AlertItem {
+  id?: string;
+  title: string;
+  content?: string;
+  type: string;
+  timeout: number;
 }
 
 export interface IAlertAction {
