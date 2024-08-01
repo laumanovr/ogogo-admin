@@ -1,6 +1,7 @@
 <template>
   <SModal v-model="isModalOpen" height="auto" :width="'440px'">
     <div class="add-property-modal-main-wrapper">
+      <SLoader v-if="isLoading" />
       <p class="font-bold">
         {{ $t("lang-13910017-20f7-43fd-a9a8-7dbcd2b474f0") }}
       </p>
@@ -61,17 +62,22 @@ import {
   SSelect,
   SCheckbox,
   SSwitch,
+  SLoader,
 } from "@tumarsoft/ogogo-ui";
 import { PropertyRenderType } from "@/shared/lib/utils/enums";
 import i18n from "@/shared/lib/plugins/i18n";
 import { useAddPropertyStore } from "@/features/category/add-property/store/add-property.store";
 import { useCategoryStore } from "@/entities/category";
 
-const isModalOpen = ref(false);
 const emit = defineEmits(["close"]);
+const isModalOpen = ref(false);
+const isLoading = ref(false);
 
 onBeforeMount(() => {
-  addPropertyStore.fetchPropertiesListAutocomplete();
+  isLoading.value = true;
+  addPropertyStore.fetchPropertiesListAutocomplete().finally(() => {
+    isLoading.value = false;
+  });
 });
 
 const propertyObject = reactive({
