@@ -1,5 +1,3 @@
-import { useAlertStore } from "@/shared/store/alert";
-import { useLoaderStore } from "@/shared/store/loader";
 import { defineStore } from "pinia";
 import { container } from "tsyringe";
 import { CategoryApi } from "../api/CategoryApi";
@@ -49,15 +47,10 @@ export const useCategoryStore = defineStore(NAME_ID, {
       ],
       categoryIcon: null,
       categoryHasChanged: false,
-
       categoryById: null,
-
       categoryId: null,
-
       file: null,
-
       propertyValueAutocomplete: null,
-
       namingFields: {
         ru: null,
         en: null,
@@ -224,39 +217,39 @@ export const useCategoryStore = defineStore(NAME_ID, {
       );
     },
 
-    fetchCategoryById(id: string): Promise<CategoryEntity> {
-      return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        loaderStore.setLoaderState(true);
-        categoryApiService
-          .getCategoryById(id)
-          .then((res) => {
-            this.selectedCategory = res;
-            this.setTranslation(res.categoryName, "ru");
-            this.setTranslation(res.categoryNameKy, "ky");
-            this.setTranslation(res.categoryNameEn, "en");
-            this.setIcoBase64(res.icoBase64);
-            this.setImageId(res.imageId);
-            this.setCategoryId(res.id);
-            this.setMode("update");
-
-            this.properties = res.properties;
-
-            if (res.imageId) {
-              // set image to show in category image preview
-              this.fetchFileById(res.imageId);
-            } else {
-              // clear rile if there is no image
-              this.file = null;
-            }
-            resolve(res);
-          })
-          .catch((err) => {
-            reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
+    fetchCategoryById(
+      id: string,
+      selectedProduct: any
+    ): Promise<CategoryEntity> {
+      return new Promise((resolve, _) => {
+        categoryApiService.getCategoryById(id).then((response) => {
+          this.properties = response.properties;
+          this.selectedCategory = response;
+          this.setTranslation(response.categoryName, "ru");
+          this.setTranslation(response.categoryNameKy, "ky");
+          this.setTranslation(response.categoryNameEn, "en");
+          this.setIcoBase64(response.icoBase64);
+          this.setImageId(response.imageId);
+          this.setCategoryId(response.id);
+          this.setMode("update");
+          const selectedPropValues: any = [];
+          Object.entries(selectedProduct.properties).forEach((item) => {
+            selectedPropValues.push({ key: item[0], valueId: item[1] });
           });
+          this.properties = this.properties.map((property: any) => {
+            const selectedObj = selectedPropValues.find(
+              (item: any) => item.key === property.key
+            );
+            property.selectedValueId = selectedObj?.valueId;
+            return property;
+          });
+          if (response.imageId) {
+            this.fetchFileById(response.imageId);
+          } else {
+            this.file = null;
+          }
+          resolve(response);
+        });
       });
     },
 
