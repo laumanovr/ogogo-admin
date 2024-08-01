@@ -1,5 +1,6 @@
 <template>
   <div class="product-detail-container s-mt-3">
+    <SLoader v-if="isLoading" />
     <div class="d-flex items-center s-mb-5 light">
       <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="chevron-left" class="s-text-gray-500" />
@@ -223,6 +224,7 @@ import {
   STextArea,
   SSelect,
   SIconRender,
+  SLoader,
 } from "@tumarsoft/ogogo-ui";
 import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
@@ -249,12 +251,12 @@ const currentAnchor = ref("");
 const isDisableScroll = ref(false);
 const productId = route.params.id as string;
 const productPhotos = ref([]);
-const properties = ref([]);
 const videoUrl = ref("");
 const videoKey = ref(0);
 const selectedProductShop = ref({ name: "", logoBase64: "" });
-const selectedProduct = computed(() => productStore.getSelectedProduct);
 const isCommentReady = ref(false);
+const isLoading = ref(false);
+const selectedProduct = computed(() => productStore.getSelectedProduct);
 const isPending = computed(
   () => selectedProduct.value.status === PRODUCT_STATUS.PENDING
 );
@@ -266,6 +268,7 @@ const isPendingOrRejected = computed(
     selectedProduct.value.status === PRODUCT_STATUS.PENDING ||
     selectedProduct.value.status === PRODUCT_STATUS.REJECTED
 );
+const properties = computed(() => categoryStore.getProperties);
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
@@ -296,22 +299,12 @@ const getProductById = () => {
 };
 
 const getPropertiesByCategoryId = (categoryId: string) => {
-  categoryStore.fetchCategoryById(categoryId).then((response) => {
-    properties.value = response.properties;
-    const selectedPropValues: any = [];
-    Object.entries(selectedProduct.value.properties).forEach((item) => {
-      selectedPropValues.push({ key: item[0], valueId: item[1] });
+  isLoading.value = true;
+  categoryStore
+    .fetchCategoryById(categoryId, selectedProduct.value)
+    .finally(() => {
+      isLoading.value = false;
     });
-    properties.value = properties.value.map((property) => {
-      const selectedObj = selectedPropValues.find(
-        (item: any) => item.key === property.key
-      );
-      if (selectedObj) {
-        property.selectedValueId = selectedObj.valueId;
-      }
-      return property;
-    });
-  });
 };
 
 const getShopById = () => {
