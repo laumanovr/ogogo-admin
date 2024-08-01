@@ -1,5 +1,6 @@
 <template>
   <div class="main-wrapper-property">
+    <SLoader v-if="isLoading" />
     <img class="six-dots" src="/icons/six-dots-icon.png" alt="six-dots" />
     <div :class="!hideBody ? 'header-property' : 'header-property-closed'">
       <div
@@ -108,6 +109,7 @@ import {
   SInput,
   SCheckbox,
   SButton,
+  SLoader,
 } from "@tumarsoft/ogogo-ui";
 import { ref, computed, type PropType } from "vue";
 import {
@@ -128,6 +130,7 @@ let hideBody = ref(false);
 const categoryStore = useCategoryStore();
 
 const showAddPopertyValueModal = ref(false);
+const isLoading = ref(false);
 
 const onHideBody = () => {
   hideBody.value = !hideBody.value;
@@ -166,10 +169,12 @@ const propretyValueName = (
 };
 
 const onShowAddPopertyValue = () => {
+  isLoading.value = true;
   categoryStore
     .fetchPropertiesListAutocomplete(props.property.propertyId)
-    .then(() => {
+    .finally(() => {
       showAddPopertyValueModal.value = true;
+      isLoading.value = false;
     });
 };
 

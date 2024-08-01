@@ -85,7 +85,7 @@ watch(
     if (newValue) {
       if (props.item.active) {
         if (props.item.id) {
-          categoryStore.fetchCategoryById(props.item.id);
+          categoryStore.fetchCategoryById(props.item.id, "");
         }
       } else {
         categoryStore.setTranslation(null, "ru");
@@ -168,7 +168,7 @@ const onChangeActive = () => {
   );
 
   if (props.item.id) {
-    categoryStore.fetchCategoryById(props.item.id);
+    categoryStore.fetchCategoryById(props.item.id, "");
   } else {
     // reset settings on other item click
     categoryStore.setTranslation(null, "ru");
