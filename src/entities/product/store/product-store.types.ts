@@ -4,6 +4,7 @@ export interface IProductState {
   moderationProducts: ProductEntity[];
   totalCount: number;
   selectedProduct: ProductDetailEntity;
+  selectedProductShop: object;
   verificationData: {
     id: string;
     verifierComment: string;
