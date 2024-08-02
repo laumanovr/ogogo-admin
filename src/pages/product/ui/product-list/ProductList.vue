@@ -32,6 +32,7 @@
       :headers="headers"
       :data="products"
       :totalItems="totalItems"
+      :loading="isLoading"
       itemsPerPage="10"
       paginateRange="2"
       @onSelectPage="onChangePage"
@@ -99,14 +100,15 @@ const params = ref({
   search: "",
   sortDirection: 1,
 });
-const products = computed(() => productStore.getModerationProductList);
-const totalItems = computed(() => productStore.getProductTotalCount);
-const tab = ref("one");
+const tab = ref("0");
 const searchTimer = ref(null);
+const isLoading = ref(false);
 
 const currentStatus = computed(() =>
   Number(tab.value) ? [Number(tab.value)] : []
 );
+const products = computed(() => productStore.getModerationProductList);
+const totalItems = computed(() => productStore.getProductTotalCount);
 
 const headers = ref([
   { title: "Товар", key: "productName" },
@@ -141,7 +143,10 @@ const selectTab = (value: string) => {
 };
 
 const getModerationProducts = () => {
-  productStore.fetchModerationProducts(params.value);
+  isLoading.value = true;
+  productStore.fetchModerationProducts(params.value).finally(() => {
+    isLoading.value = false;
+  });
 };
 
 const getStatusInfo = (item: any, field: keyof Status) => {
