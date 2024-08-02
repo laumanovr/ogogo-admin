@@ -7,19 +7,14 @@ import {
   PropertyEntity,
   UpdatePropertyPayload,
 } from "@/entities/property";
-import { useLoaderStore } from "@/shared/store/loader";
-import { useAlertStore } from "@/shared/store/alert";
+import i18n from "@/shared/lib/plugins/i18n";
 import { container } from "tsyringe";
-import {
-  AutocompleteEntity,
-  ResponseWithStatus,
-  WithPagination,
-} from "@/shared/api/api.types";
+import { AutocompleteEntity, WithPagination } from "@/shared/api/api.types";
 import { PropertyState } from "./types";
 
 const propertyApiService = container.resolve(PropertyApi);
 
-const NAME_ID = "propertyStore";
+const NAME_ID = "property";
 
 export const usePropertyStore = defineStore(NAME_ID, {
   state: (): PropertyState => {
@@ -40,93 +35,40 @@ export const usePropertyStore = defineStore(NAME_ID, {
     fetchPropertyGroupListAutocomplete(
       payload: GetSubGroupPropertiesPayload
     ): Promise<AutocompleteEntity[]> {
-      return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
-        propertyApiService
-          .getSubGroupProperties(payload)
-          .then((response) => {
-            this.propertyGroupListAutocomplete = response;
-            loaderStore.setLoaderState(false);
-            resolve(response);
-          })
-          .catch((err) => {
-            alertStore.showError(err.message);
-            reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+      return new Promise((resolve, _) => {
+        propertyApiService.getSubGroupProperties(payload).then((response) => {
+          this.propertyGroupListAutocomplete = response;
+          resolve(response);
+        });
       });
     },
     fetchPropertyList(
       payload: GetPropertyPagedListPayload
     ): Promise<WithPagination<PropertyEntity>> {
-      return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        loaderStore.setLoaderState(true);
-        propertyApiService
-          .getProperties(payload)
-          .then((response) => {
-            this.propertyList = response.items;
-            loaderStore.setLoaderState(false);
-            resolve(response);
-          })
-          .catch((err) => reject(err))
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+      return new Promise((resolve, _) => {
+        propertyApiService.getProperties(payload).then((response) => {
+          this.propertyList = response.items;
+          resolve(response);
+        });
       });
     },
-    createPropertyList(
-      payload: CreatePropertyPayload[]
-    ): Promise<ResponseWithStatus<PropertyEntity>[]> {
-      return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
-        propertyApiService
-          .createProperties(payload)
-          .then((response) => {
-            response.forEach((item) => {
-              if (item.ok) {
-                this.propertyList.unshift(item.result);
-              }
-            });
-            loaderStore.setLoaderState(false);
-            alertStore.showSuccess("Успешно добавлено!");
-            resolve(response);
-          })
-          .catch((err) => {
-            alertStore.showError(err.message);
-            reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
+    createPropertyList(payload: CreatePropertyPayload[]): Promise<string> {
+      return new Promise((resolve, _) => {
+        propertyApiService.createProperties(payload).then((response) => {
+          response.forEach((item) => {
+            if (item.ok) {
+              this.propertyList.unshift(item.result);
+            }
           });
+          resolve(i18n.global.t("lang-e4130c8c-ba3a-4077-b87c-79fa6c8a2c78"));
+        });
       });
     },
-    updatePropertyList(
-      payload: UpdatePropertyPayload[]
-    ): Promise<ResponseWithStatus<PropertyEntity>[]> {
-      return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
-        propertyApiService
-          .updateProperties(payload)
-          .then((response) => {
-            alertStore.showSuccess("Успешно обновлено!");
-            resolve(response);
-          })
-          .catch((err) => {
-            alertStore.showError(err.message);
-            reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+    updatePropertyList(payload: UpdatePropertyPayload[]): Promise<string> {
+      return new Promise((resolve, _) => {
+        propertyApiService.updateProperties(payload).then(() => {
+          resolve(i18n.global.t("lang-289aea10-b34b-4ecb-aea3-801be049558f"));
+        });
       });
     },
   },
