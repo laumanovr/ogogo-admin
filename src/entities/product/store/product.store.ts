@@ -1,7 +1,6 @@
 import { defineStore } from "pinia";
 import { container } from "tsyringe";
-import { useLoaderStore } from "@/shared/store/loader";
-import { useAlertStore } from "@/shared/store/alert";
+import i18n from "@/shared/lib/plugins/i18n";
 import { IProductState } from "./product-store.types";
 import { ProductApi } from "../api/product.api";
 import {
@@ -19,10 +18,11 @@ import { useShopStore } from "@/entities/shop";
 
 const productApi = container.resolve(ProductApi);
 
-export const useProductStore = defineStore("product-store", {
+export const useProductStore = defineStore("product", {
   state: (): IProductState => ({
     moderationProducts: [],
     totalCount: 0,
+    selectedProductShop: {},
     selectedProduct: {
       validationDetails: {
         fields: {
@@ -83,71 +83,39 @@ export const useProductStore = defineStore("product-store", {
     getSelectedProduct(): ProductDetailEntity {
       return this.selectedProduct;
     },
+    getSelectedProductShop(): any {
+      return this.selectedProductShop;
+    },
   },
   actions: {
     fetchModerationProducts(
       payload: ProductPayload
     ): Promise<ProductApiResponse> {
-      return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
-        productApi
-          .getModerationProducts(payload)
-          .then((response) => {
-            this.moderationProducts = response.result.items;
-            this.totalCount = response.result.totalCount;
-            resolve(response);
-          })
-          .catch((err) => {
-            alertStore.showError(err?.error?.errorMessage);
-            reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+      return new Promise((resolve, _) => {
+        productApi.getModerationProducts(payload).then((response) => {
+          this.moderationProducts = response.result.items;
+          this.totalCount = response.result.totalCount;
+          resolve(response);
+        });
       });
     },
     fetchProductById(id: string) {
-      return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
-        productApi
-          .getProductById(id)
-          .then((response) => {
-            this.selectedProduct = response.result;
-            resolve(response);
-          })
-          .catch((err) => {
-            alertStore.showError(err?.error?.errorMessage);
-            reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+      return new Promise((resolve, _) => {
+        productApi.getProductById(id).then((response) => {
+          this.selectedProduct = response.result;
+          resolve(response);
+        });
       });
     },
     fetchProductShopById(
       id: string
     ): Promise<{ name: string; logoBase64: string }> {
-      return new Promise((resolve, reject) => {
+      return new Promise((resolve, _) => {
         const shopStore = useShopStore();
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
-        shopStore
-          .fetchShopById(id)
-          .then((response) => {
-            resolve(response);
-          })
-          .catch((err) => {
-            alertStore.showError(err?.error?.errorMessage);
-            reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+        shopStore.fetchShopById(id).then((response) => {
+          this.selectedProductShop = response;
+          resolve(response);
+        });
       });
     },
     setFieldComment(field: keyof ValidationField, comment: string) {
@@ -161,45 +129,19 @@ export const useProductStore = defineStore("product-store", {
       this.verificationData.validationDetails.files[field].verified = true;
     },
 
-    addVerifyComments(productId: string) {
+    addVerifyComments(productId: string): Promise<string> {
       this.verificationData.id = productId;
-      return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
-        productApi
-          .addValidationComments(this.verificationData)
-          .then((response) => {
-            alertStore.showSuccess("Отправлено на доработку!");
-            resolve(response);
-          })
-          .catch((err) => {
-            alertStore.showError(err?.error?.errorMessage);
-            reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+      return new Promise((resolve, _) => {
+        productApi.addValidationComments(this.verificationData).then(() => {
+          resolve(i18n.global.t("lang-b862d2de-20b0-48c6-b639-713b22ead7d0"));
+        });
       });
     },
-    publishProduct(payload: ProductStatusPayload) {
-      return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
-        productApi
-          .setActiveStatus(payload)
-          .then((response) => {
-            alertStore.showSuccess("Успешно опубликовано!");
-            resolve(response);
-          })
-          .catch((err) => {
-            alertStore.showError(err?.error?.errorMessage);
-            reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
-          });
+    publishProduct(payload: ProductStatusPayload): Promise<string> {
+      return new Promise((resolve, _) => {
+        productApi.setActiveStatus(payload).then(() => {
+          resolve(i18n.global.t("lang-b986ed5e-0f8c-4cd1-ad42-3806144544be"));
+        });
       });
     },
   },
