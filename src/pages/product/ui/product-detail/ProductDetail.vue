@@ -114,8 +114,8 @@
           </p>
           <div class="d-flex flex-wrap">
             <img
-              v-for="(photo, i) in productPhotos"
-              :src="photo"
+              v-for="(photoId, i) in selectedProduct.photos"
+              :src="getFileById(photoId)"
               alt="image"
               class="photo s-mr-2 s-mb-2"
               :key="i"
@@ -138,7 +138,11 @@
           </p>
           <div class="d-flex flex-wrap">
             <video class="video" controls width="180" height="180">
-              <source :src="videoUrl" type="video/mp4" />
+              <source
+                :src="getFileById(selectedProduct.videos[0])"
+                type="video/mp4"
+                v-if="selectedProduct.videos?.length"
+              />
             </video>
           </div>
           <div class="d-flex s-mt-3" v-if="isPendingOrRejected">
@@ -229,9 +233,11 @@ import {
 import { ref, reactive, computed, onMounted, onUnmounted } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import { useProductStore } from "@/entities/product/store/product.store";
+import { useAlertStore } from "@/shared/store/alert";
 import { FieldComment, FileComment } from "./components";
 import { PRODUCT_STATUS } from "@/entities/product";
 import { useCategoryStore } from "@/entities/category";
+import { getFileById } from "@/shared/composable";
 
 type IAnchor = { link: string; name: string };
 const anchors = reactive<IAnchor[]>([
@@ -245,15 +251,13 @@ const anchors = reactive<IAnchor[]>([
 
 const router = useRouter();
 const route = useRoute();
+const alertStore = useAlertStore();
 const productStore = useProductStore();
 const categoryStore = useCategoryStore();
 const currentAnchor = ref("");
 const isDisableScroll = ref(false);
 const productId = route.params.id as string;
-const productPhotos = ref([]);
-const videoUrl = ref("");
 const videoKey = ref(0);
-const selectedProductShop = ref({ name: "", logoBase64: "" });
 const isCommentReady = ref(false);
 const isLoading = ref(false);
 const selectedProduct = computed(() => productStore.getSelectedProduct);
@@ -269,6 +273,7 @@ const isPendingOrRejected = computed(
     selectedProduct.value.status === PRODUCT_STATUS.REJECTED
 );
 const properties = computed(() => categoryStore.getProperties);
+const selectedProductShop = computed(() => productStore.getSelectedProductShop);
 
 onMounted(() => {
   window.addEventListener("scroll", handleScroll);
@@ -281,21 +286,16 @@ onUnmounted(() => {
 });
 
 const getProductById = () => {
-  const sessionId = JSON.parse(window.localStorage.getItem("sessionId"));
-  const defaultUrl = import.meta.env.VITE_API_SERVER;
-  productStore.fetchProductById(productId).then(() => {
-    getPropertiesByCategoryId(selectedProduct.value.categoryId);
-    selectedProduct.value.photos.forEach((photoId: string) => {
-      const photo = `${defaultUrl}File/FileById?id=${photoId}&sessionId=${sessionId}`;
-      productPhotos.value.push(photo);
+  isLoading.value = true;
+  productStore
+    .fetchProductById(productId)
+    .then(() => {
+      getPropertiesByCategoryId(selectedProduct.value.categoryId);
+      isCommentReady.value = true;
+    })
+    .finally(() => {
+      isLoading.value = false;
     });
-    if (selectedProduct.value.videos.length) {
-      const videoId = selectedProduct.value.videos[0];
-      videoUrl.value = `${defaultUrl}File/FileById?id=${videoId}&sessionId=${sessionId}`;
-      videoKey.value++;
-    }
-    isCommentReady.value = true;
-  });
 };
 
 const getPropertiesByCategoryId = (categoryId: string) => {
@@ -308,10 +308,11 @@ const getPropertiesByCategoryId = (categoryId: string) => {
 };
 
 const getShopById = () => {
+  isLoading.value = true;
   productStore
     .fetchProductShopById(route.query.shopId as string)
-    .then((response) => {
-      selectedProductShop.value = response;
+    .finally(() => {
+      isLoading.value = false;
     });
 };
 
@@ -358,15 +359,23 @@ const handleScroll = () => {
 };
 
 const rejectProduct = () => {
-  productStore.addVerifyComments(productId).then(() => {
-    router.push("/products");
-  });
+  isLoading.value = true;
+  productStore
+    .addVerifyComments(productId)
+    .then((message: string) => {
+      router.push({ name: "products" });
+      alertStore.showSuccess(message);
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const publishProduct = () => {
   const payload = { id: productId, activeStatus: true };
-  productStore.publishProduct(payload).then(() => {
-    router.push("/products");
+  productStore.publishProduct(payload).then((message: string) => {
+    router.push({ name: "products" });
+    alertStore.showSuccess(message);
   });
 };
 </script>
