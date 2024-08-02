@@ -1,5 +1,6 @@
 <template>
   <div class="table-data" :key="key" v-if="isShowTable">
+    <SLoader v-if="isLoading" />
     <table class="table">
       <thead>
         <tr>
@@ -117,7 +118,7 @@
 
 <script lang="ts" setup>
 import { computed, ref, reactive, onMounted, watch } from "vue";
-import { SSelect } from "@tumarsoft/ogogo-ui";
+import { SSelect, SLoader } from "@tumarsoft/ogogo-ui";
 import { usePropertyStore } from "@/entities/property";
 import { useAlertStore } from "@/shared/store/alert";
 import lodash from "lodash";
@@ -158,6 +159,7 @@ const propertyList = ref([]);
 const currentProperties = ref([]);
 const key = ref(0);
 const isShowTable = ref(false);
+const isLoading = ref(false);
 
 onMounted(() => {
   Promise.all([getPropertyList(), getGroupPropertyList()]);
@@ -218,14 +220,21 @@ const onSelectValue = (option: any, item: any) => {
   }
 };
 
-const getPropertyList = () =>
-  propertyStore.fetchPropertyList({
-    pageSize: 500,
-    sortDirection: SORT_DIRECTION.ASCENDING,
-    pageIndex: 0,
-  });
+const getPropertyList = () => {
+  isLoading.value = true;
+  propertyStore
+    .fetchPropertyList({
+      pageSize: 500,
+      sortDirection: SORT_DIRECTION.ASCENDING,
+      pageIndex: 0,
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
+};
 
-const getGroupPropertyList = () =>
+const getGroupPropertyList = () => {
+  isLoading.value = true;
   propertyStore
     .fetchPropertyGroupListAutocomplete({
       pageSize: 500,
@@ -234,7 +243,11 @@ const getGroupPropertyList = () =>
     })
     .then(() => {
       isShowTable.value = true;
+    })
+    .finally(() => {
+      isLoading.value = false;
     });
+};
 
 const addProperty = () => {
   currentProperties.value.unshift({
@@ -292,7 +305,15 @@ const onCreate = (newProperties: any) => {
     }
     return item;
   });
-  propertyStore.createPropertyList(preparedData);
+  isLoading.value = true;
+  propertyStore
+    .createPropertyList(preparedData)
+    .then((message: string) => {
+      alertStore.showSuccess(message);
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const onUpdate = (updatedProperties: any) => {
@@ -317,17 +338,30 @@ const onUpdate = (updatedProperties: any) => {
     }
     return item;
   });
-  propertyStore.updatePropertyList(preparedData);
+  isLoading.value = true;
+  propertyStore
+    .updatePropertyList(preparedData)
+    .then((message: string) => {
+      alertStore.showSuccess(message);
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const searchProperty = (value: any) => {
-  propertyStore.fetchPropertyList({
-    pageSize: 500,
-    search: value,
-    sortDirection: SORT_DIRECTION.ASCENDING,
-    queryParams: undefined,
-    pageIndex: 0,
-  });
+  isLoading.value = true;
+  propertyStore
+    .fetchPropertyList({
+      pageSize: 500,
+      search: value,
+      sortDirection: SORT_DIRECTION.ASCENDING,
+      queryParams: undefined,
+      pageIndex: 0,
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 defineExpose({
