@@ -1,5 +1,6 @@
 <template>
   <div class="property-container">
+    <SLoader v-if="isLoading" />
     <div class="s-text-h-2 s-mb-6 s-mt-6">
       {{ $t("lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2") }}
     </div>
@@ -54,6 +55,7 @@ import {
   STabWindow,
   SIconRender,
   SInput,
+  SLoader,
 } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted } from "vue";
 import { PropertyTable } from "@/widgets/property-table";
@@ -70,8 +72,10 @@ const propertyTable = ref(null);
 const propertyGroupTable = ref(null);
 const hasData = ref(false);
 const searchTimer = ref<number>(null);
+const isLoading = ref(false);
 
 onMounted(() => {
+  isLoading.value = true;
   propertyStore
     .fetchPropertyList({
       pageSize: 500,
@@ -80,6 +84,9 @@ onMounted(() => {
     })
     .then(() => {
       hasData.value = propertyStore.propertyList.length > 0;
+    })
+    .finally(() => {
+      isLoading.value = false;
     });
 });
 
