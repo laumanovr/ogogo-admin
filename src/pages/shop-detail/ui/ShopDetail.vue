@@ -1,5 +1,6 @@
 <template>
   <div class="shop-detail-container" v-if="!stateload">
+    <SLoader v-if="isLoading" />
     <div class="top-block light">
       <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="chevron-left" class="s-text-gray-500" />
@@ -66,8 +67,14 @@
 
 <script lang="ts" setup>
 import { PRODUCT_VERIFICATION_STATUS, useShopStore } from "@/entities/shop";
-import { SButton, SInput, STextArea, SIconRender } from "@tumarsoft/ogogo-ui";
-import { computed, onBeforeMount, watch, onBeforeUnmount } from "vue";
+import {
+  SButton,
+  SInput,
+  STextArea,
+  SIconRender,
+  SLoader,
+} from "@tumarsoft/ogogo-ui";
+import { computed, onBeforeMount, watch, onBeforeUnmount, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useLoaderStore } from "@/shared/store/loader";
 import { Logo, Name, Description, StatusBadge } from "./components";
@@ -80,14 +87,16 @@ const route = useRoute();
 const shopStore = useShopStore();
 const shopDetailStore = useShopDetailStore();
 const loaderStore = useLoaderStore();
+const isLoading = ref(false);
 const { t } = useI18n();
-
 const stateload = computed(() => loaderStore.isLoading);
-
 const id = computed(() => route.params.id as string);
 
 const fetchShopById = () => {
-  shopStore.fetchShopById(id.value);
+  isLoading.value = true;
+  shopStore.fetchShopById(id.value).finally(() => {
+    isLoading.value = false;
+  });
 };
 
 onBeforeMount(fetchShopById);
@@ -118,13 +127,19 @@ const pendingOrRejected = computed(
 );
 
 const verifyShop = () => {
+  isLoading.value = true;
   shopDetailStore.setVerifiedOrRejectedStatusBadge(true);
-  return shopStore.verifyShop();
+  shopStore.verifyShop().finally(() => {
+    isLoading.value = false;
+  });
 };
 
 const rejectShop = () => {
+  isLoading.value = true;
   shopDetailStore.setVerifiedOrRejectedStatusBadge(true);
-  return shopStore.rejectShop();
+  shopStore.rejectShop().finally(() => {
+    isLoading.value = false;
+  });
 };
 
 const activeStatusText = computed(() => {

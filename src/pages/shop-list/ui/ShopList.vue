@@ -29,6 +29,7 @@
       :data="shops"
       :totalItems="totalShops"
       :itemsPerPage="pageSize"
+      :loading="isLoading"
       paginateRange="2"
       @onSelectPage="onChangePage"
     >
@@ -87,6 +88,7 @@ const shopStore = useShopStore();
 const { t } = useI18n();
 const searchTimer = ref(null);
 const tab = ref("");
+const isLoading = ref(false);
 const params = ref({
   pageSize: 10,
   sortDirection: SORT_DIRECTION.ASCENDING,
@@ -108,7 +110,10 @@ const selectTab = (selectedTab: string) => {
 };
 
 const fetchShops = () => {
-  shopStore.fetchShopPagedList(params.value);
+  isLoading.value = true;
+  shopStore.fetchShopPagedList(params.value).finally(() => {
+    isLoading.value = false;
+  });
 };
 
 const shops = computed(() => shopStore.getShopPagedList.items);
