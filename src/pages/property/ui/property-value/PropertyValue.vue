@@ -1,5 +1,6 @@
 <template>
   <div class="property-value-container">
+    <SLoader v-if="isLoading" />
     <div class="title-container light">
       <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="chevron-left" class="s-text-gray-500" />
@@ -22,7 +23,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted, computed } from "vue";
-import { SButton, SIconRender, SInput } from "@tumarsoft/ogogo-ui";
+import { SButton, SIconRender, SInput, SLoader } from "@tumarsoft/ogogo-ui";
 import { PropertyValueTable } from "@/widgets/property-value-table";
 import { usePropertyValueStore } from "@/entities/property-value";
 import { useRouter, useRoute } from "vue-router";
@@ -32,10 +33,16 @@ const route = useRoute();
 const propertyValueStore = usePropertyValueStore();
 const propertyValueTable = ref(null);
 const searchTimer = ref<number>(null);
+const isLoading = ref(false);
 const selectedProperty = computed(() => propertyValueStore.getSelectedProperty);
 
 onMounted(() => {
-  propertyValueStore.fetchPropertyById(route.params.id as string);
+  isLoading.value = true;
+  propertyValueStore
+    .fetchPropertyById(route.params.id as string)
+    .finally(() => {
+      isLoading.value = false;
+    });
 });
 
 const goBack = () => {
