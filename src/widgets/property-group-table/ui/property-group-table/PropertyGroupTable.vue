@@ -1,5 +1,6 @@
 <template>
   <div class="table-data group">
+    <SLoader v-if="isLoading" />
     <table class="table">
       <thead>
         <tr>
@@ -66,8 +67,8 @@
 </template>
 
 <script lang="ts" setup>
-import { SIconRender } from "@tumarsoft/ogogo-ui";
-import { ref, onMounted, watch } from "vue";
+import { SIconRender, SLoader } from "@tumarsoft/ogogo-ui";
+import { ref, onMounted, watch, computed } from "vue";
 import { usePropertyGroupStore } from "@/entities/property-group";
 import { useAlertStore } from "@/shared/store/alert";
 import lodash from "lodash";
@@ -79,6 +80,10 @@ const propertyGroupStore = usePropertyGroupStore();
 const alertStore = useAlertStore();
 let currentGroupProperties = ref([]);
 let groupProperties = ref([]);
+const isLoading = ref(false);
+const propertyGroupList = computed(
+  () => propertyGroupStore.getPropertyGroupList
+);
 
 onMounted(() => {
   getGroupPropertyList();
@@ -108,7 +113,7 @@ const onSelectFile = async (e: Event, item: PropertyGroupEntity) => {
 };
 
 watch(
-  () => propertyGroupStore.propertyGroupList,
+  () => propertyGroupList.value,
   (newValue: any[]) => {
     if (newValue) {
       groupProperties.value = newValue.reverse();
@@ -120,12 +125,17 @@ watch(
 );
 
 const getGroupPropertyList = () => {
-  propertyGroupStore.fetchGroupPropertyList({
-    pageSize: 500,
-    sortDirection: SORT_DIRECTION.ASCENDING,
-    queryParams: undefined,
-    pageIndex: 0,
-  });
+  isLoading.value = true;
+  propertyGroupStore
+    .fetchGroupPropertyList({
+      pageSize: 500,
+      sortDirection: SORT_DIRECTION.ASCENDING,
+      queryParams: undefined,
+      pageIndex: 0,
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const addGroupProperty = () => {
@@ -163,7 +173,15 @@ const onCreate = (newItems: any) => {
     alertStore.showInfo("Заполните поля");
     return;
   }
-  propertyGroupStore.createGroupProperty(newItems);
+  isLoading.value = true;
+  propertyGroupStore
+    .createGroupProperty(newItems)
+    .then((message: string) => {
+      alertStore.showSuccess(message);
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const onUpdate = (updatedItems: any) => {
@@ -171,17 +189,30 @@ const onUpdate = (updatedItems: any) => {
     alertStore.showInfo("Заполните поля");
     return;
   }
-  propertyGroupStore.updateGroupProperty(updatedItems);
+  isLoading.value = true;
+  propertyGroupStore
+    .updateGroupProperty(updatedItems)
+    .then((message: string) => {
+      alertStore.showSuccess(message);
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const searchGroupProperty = (value: any) => {
-  propertyGroupStore.fetchGroupPropertyList({
-    pageSize: 500,
-    search: value,
-    sortDirection: SORT_DIRECTION.ASCENDING,
-    queryParams: null,
-    pageIndex: 0,
-  });
+  isLoading.value = true;
+  propertyGroupStore
+    .fetchGroupPropertyList({
+      pageSize: 500,
+      search: value,
+      sortDirection: SORT_DIRECTION.ASCENDING,
+      queryParams: null,
+      pageIndex: 0,
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 defineExpose({

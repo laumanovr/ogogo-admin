@@ -1,5 +1,6 @@
 <template>
   <div class="table-container">
+    <SLoader v-if="isLoading" />
     <div class="table-data group">
       <table class="table">
         <thead>
@@ -61,8 +62,8 @@
 </template>
 
 <script lang="ts" setup>
-import { SIconRender } from "@tumarsoft/ogogo-ui";
-import { ref, onMounted, watch } from "vue";
+import { SIconRender, SLoader } from "@tumarsoft/ogogo-ui";
+import { ref, onMounted, watch, computed } from "vue";
 import { usePropertyValueStore } from "@/entities/property-value";
 import { useAlertStore } from "@/shared/store/alert";
 import { useRoute } from "vue-router";
@@ -74,6 +75,10 @@ const alertStore = useAlertStore();
 const route = useRoute();
 const currentValues = ref([]);
 const propertyValues = ref([]);
+const isLoading = ref(false);
+const propertyValueList = computed(
+  () => propertyValueStore.getPropertyValueList
+);
 
 onMounted(() => {
   getPropertyValueList();
@@ -103,7 +108,7 @@ const onSelectFile = async (e: Event, item: any) => {
 };
 
 watch(
-  () => propertyValueStore.propertyValueList,
+  () => propertyValueList.value,
   (newValue: any) => {
     if (newValue) {
       propertyValues.value = newValue.reverse();
@@ -113,11 +118,16 @@ watch(
 );
 
 const getPropertyValueList = () => {
-  propertyValueStore.fetchPropertyValueList({
-    pageSize: 500,
-    queryParams: { propertyId: route.params.id },
-    pageIndex: 0,
-  });
+  isLoading.value = true;
+  propertyValueStore
+    .fetchPropertyValueList({
+      pageSize: 500,
+      queryParams: { propertyId: route.params.id },
+      pageIndex: 0,
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const addValue = () => {
@@ -156,7 +166,15 @@ const onCreate = (newValues: any) => {
     alertStore.showInfo("Заполните поля и иконку");
     return;
   }
-  propertyValueStore.createPropertyValue(newValues);
+  isLoading.value = true;
+  propertyValueStore
+    .createPropertyValue(newValues)
+    .then((message: string) => {
+      alertStore.showSuccess(message);
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const onUpdate = (updatedValues: any) => {
@@ -164,16 +182,29 @@ const onUpdate = (updatedValues: any) => {
     alertStore.showInfo("Заполните поля и иконку");
     return;
   }
-  propertyValueStore.updatePropertyValue(updatedValues);
+  isLoading.value = true;
+  propertyValueStore
+    .updatePropertyValue(updatedValues)
+    .then((message: string) => {
+      alertStore.showSuccess(message);
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 const searchPropertyValue = (value: any) => {
-  propertyValueStore.fetchPropertyValueList({
-    pageSize: 500,
-    search: value,
-    queryParams: { propertyId: route.params.id },
-    pageIndex: 0,
-  });
+  isLoading.value = true;
+  propertyValueStore
+    .fetchPropertyValueList({
+      pageSize: 500,
+      search: value,
+      queryParams: { propertyId: route.params.id },
+      pageIndex: 0,
+    })
+    .finally(() => {
+      isLoading.value = false;
+    });
 };
 
 defineExpose({
