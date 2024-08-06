@@ -37,35 +37,47 @@ export interface ProductDetailEntity {
   videos?: string[];
 }
 
+export interface ISelectedShop {
+  name?: string;
+  logoBase64?: string;
+}
+
 export interface ValidationObject {
   fields: {
     name: {
       validationComment?: string;
       moderationDate?: string;
+      verified?: boolean;
     };
     description: {
       validationComment?: string;
       moderationDate?: string;
+      verified?: boolean;
     };
     price: {
       validationComment?: string;
       moderationDate?: string;
+      verified?: boolean;
     };
     countOfProduct: {
       validationComment?: string;
       moderationDate?: string;
+      verified?: boolean;
     };
   };
   files: {
     photo: {
       validationComment?: string;
       moderationDate?: string;
+      verified?: boolean;
     };
     video: {
       validationComment?: string;
       moderationDate?: string;
+      verified?: boolean;
     };
   };
+  properties?: object;
 }
 
 export interface ValidationField {
