@@ -35,40 +35,60 @@ export const usePropertyStore = defineStore(NAME_ID, {
     fetchPropertyGroupListAutocomplete(
       payload: GetSubGroupPropertiesPayload
     ): Promise<AutocompleteEntity[]> {
-      return new Promise((resolve, _) => {
-        propertyApiService.getSubGroupProperties(payload).then((response) => {
-          this.propertyGroupListAutocomplete = response;
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        propertyApiService
+          .getSubGroupProperties(payload)
+          .then((response) => {
+            this.propertyGroupListAutocomplete = response;
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
     fetchPropertyList(
       payload: GetPropertyPagedListPayload
     ): Promise<WithPagination<PropertyEntity>> {
-      return new Promise((resolve, _) => {
-        propertyApiService.getProperties(payload).then((response) => {
-          this.propertyList = response.items;
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        propertyApiService
+          .getProperties(payload)
+          .then((response) => {
+            this.propertyList = response.items;
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
     createPropertyList(payload: CreatePropertyPayload[]): Promise<string> {
-      return new Promise((resolve, _) => {
-        propertyApiService.createProperties(payload).then((response) => {
-          response.forEach((item) => {
-            if (item.ok) {
-              this.propertyList.unshift(item.result);
-            }
+      return new Promise((resolve, reject) => {
+        propertyApiService
+          .createProperties(payload)
+          .then((response) => {
+            response.forEach((item) => {
+              if (item.ok) {
+                this.propertyList.unshift(item.result);
+              }
+            });
+            resolve(i18n.global.t("lang-e4130c8c-ba3a-4077-b87c-79fa6c8a2c78"));
+          })
+          .catch((err) => {
+            reject(err);
           });
-          resolve(i18n.global.t("lang-e4130c8c-ba3a-4077-b87c-79fa6c8a2c78"));
-        });
       });
     },
     updatePropertyList(payload: UpdatePropertyPayload[]): Promise<string> {
-      return new Promise((resolve, _) => {
-        propertyApiService.updateProperties(payload).then(() => {
-          resolve(i18n.global.t("lang-289aea10-b34b-4ecb-aea3-801be049558f"));
-        });
+      return new Promise((resolve, reject) => {
+        propertyApiService
+          .updateProperties(payload)
+          .then(() => {
+            resolve(i18n.global.t("lang-289aea10-b34b-4ecb-aea3-801be049558f"));
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
   },

@@ -6,8 +6,7 @@ import {
   PropertyValueEntity,
   UpdatePropertyValuePayload,
 } from "@/entities/property-value";
-import { useLoaderStore } from "@/shared/store/loader";
-import { useAlertStore } from "@/shared/store/alert";
+import i18n from "@/shared/lib/plugins/i18n";
 import { container } from "tsyringe";
 import { ResponseWithStatus, WithPagination } from "@/shared/api/api.types";
 import { PropertyValueState } from "./types";
@@ -37,32 +36,21 @@ export const usePropertyValueStore = defineStore(NAME_ID, {
       payload: GetPropertyValuePagedListPayload
     ): Promise<WithPagination<PropertyValueEntity>> {
       return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
         propertyValueApiService
           .getPropertyValues(payload)
           .then((response) => {
             this.propertyValueList = response.items;
-            loaderStore.setLoaderState(false);
             resolve(response);
           })
           .catch((err) => {
-            alertStore.showError(err.message);
             reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
           });
       });
     },
     createPropertyValue(
       payload: CreatePropertyValuePayload[]
-    ): Promise<ResponseWithStatus<PropertyValueEntity>[]> {
+    ): Promise<string> {
       return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
         propertyValueApiService
           .createPropertyValues(payload)
           .then((response) => {
@@ -71,46 +59,29 @@ export const usePropertyValueStore = defineStore(NAME_ID, {
             );
             const currentItems = this.propertyValueList.reverse();
             this.propertyValueList = [...currentItems, ...items];
-            loaderStore.setLoaderState(false);
-            alertStore.showSuccess("Успешно добавлено!");
-            resolve(response);
+            resolve(i18n.global.t("lang-e4130c8c-ba3a-4077-b87c-79fa6c8a2c78"));
           })
           .catch((err) => {
-            alertStore.showError(err.message);
             reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
           });
       });
     },
     updatePropertyValue(
       payload: UpdatePropertyValuePayload[]
-    ): Promise<ResponseWithStatus<PropertyValueEntity>[]> {
+    ): Promise<string> {
       return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
         propertyValueApiService
           .updatePropertyValues(payload)
-          .then((response) => {
-            alertStore.showSuccess("Успешно обновлено!");
-            resolve(response);
+          .then(() => {
+            resolve(i18n.global.t("lang-289aea10-b34b-4ecb-aea3-801be049558f"));
           })
           .catch((err) => {
-            alertStore.showError(err.message);
             reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
           });
       });
     },
     fetchPropertyById(id: string) {
       return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
         propertyValueApiService
           .getPropertyById(id)
           .then((response) => {
@@ -118,11 +89,7 @@ export const usePropertyValueStore = defineStore(NAME_ID, {
             resolve(response);
           })
           .catch((err) => {
-            alertStore.showError(err.message);
             reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
           });
       });
     },

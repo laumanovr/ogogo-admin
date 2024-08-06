@@ -13,6 +13,8 @@ import {
   ProductDetailEntity,
   ValidationField,
   ValidationFile,
+  ISelectedShop,
+  ValidationObject,
 } from "../model/types";
 import { useShopStore } from "@/entities/shop";
 
@@ -83,65 +85,89 @@ export const useProductStore = defineStore("product", {
     getSelectedProduct(): ProductDetailEntity {
       return this.selectedProduct;
     },
-    getSelectedProductShop(): any {
+    getSelectedProductShop(): ISelectedShop {
       return this.selectedProductShop;
+    },
+    getValidationObject(): ValidationObject {
+      return this.verificationData.validationDetails;
     },
   },
   actions: {
     fetchModerationProducts(
       payload: ProductPayload
     ): Promise<ProductApiResponse> {
-      return new Promise((resolve, _) => {
-        productApi.getModerationProducts(payload).then((response) => {
-          this.moderationProducts = response.result.items;
-          this.totalCount = response.result.totalCount;
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        productApi
+          .getModerationProducts(payload)
+          .then((response) => {
+            this.moderationProducts = response.result.items;
+            this.totalCount = response.result.totalCount;
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
     fetchProductById(id: string) {
-      return new Promise((resolve, _) => {
-        productApi.getProductById(id).then((response) => {
-          this.selectedProduct = response.result;
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        productApi
+          .getProductById(id)
+          .then((response) => {
+            this.selectedProduct = response.result;
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
-    fetchProductShopById(
-      id: string
-    ): Promise<{ name: string; logoBase64: string }> {
-      return new Promise((resolve, _) => {
+    fetchProductShopById(id: string): Promise<ISelectedShop> {
+      return new Promise((resolve, reject) => {
         const shopStore = useShopStore();
-        shopStore.fetchShopById(id).then((response) => {
-          this.selectedProductShop = response;
-          resolve(response);
-        });
+        shopStore
+          .fetchShopById(id)
+          .then((response) => {
+            this.selectedProductShop = response;
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
     setFieldComment(field: keyof ValidationField, comment: string) {
-      this.verificationData.validationDetails.fields[field].validationComment =
-        comment;
-      this.verificationData.validationDetails.fields[field].verified = true;
+      this.getValidationObject.fields[field].validationComment = comment;
+      this.getValidationObject.fields[field].verified = true;
     },
     setFileComment(field: keyof ValidationFile, comment: string) {
-      this.verificationData.validationDetails.files[field].validationComment =
-        comment;
-      this.verificationData.validationDetails.files[field].verified = true;
+      this.getValidationObject.files[field].validationComment = comment;
+      this.getValidationObject.files[field].verified = true;
     },
 
     addVerifyComments(productId: string): Promise<string> {
       this.verificationData.id = productId;
-      return new Promise((resolve, _) => {
-        productApi.addValidationComments(this.verificationData).then(() => {
-          resolve(i18n.global.t("lang-b862d2de-20b0-48c6-b639-713b22ead7d0"));
-        });
+      return new Promise((resolve, reject) => {
+        productApi
+          .addValidationComments(this.verificationData)
+          .then(() => {
+            resolve(i18n.global.t("lang-b862d2de-20b0-48c6-b639-713b22ead7d0"));
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
     publishProduct(payload: ProductStatusPayload): Promise<string> {
-      return new Promise((resolve, _) => {
-        productApi.setActiveStatus(payload).then(() => {
-          resolve(i18n.global.t("lang-b986ed5e-0f8c-4cd1-ad42-3806144544be"));
-        });
+      return new Promise((resolve, reject) => {
+        productApi
+          .setActiveStatus(payload)
+          .then(() => {
+            resolve(i18n.global.t("lang-b986ed5e-0f8c-4cd1-ad42-3806144544be"));
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
   },

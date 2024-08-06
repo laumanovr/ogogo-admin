@@ -19,7 +19,7 @@ const categoryApiService = container.resolve(CategoryApi);
 
 const fileApiService = container.resolve(FileApi);
 
-const NAME_ID = "category-store";
+const NAME_ID = "category";
 
 export const useCategoryStore = defineStore(NAME_ID, {
   state: (): CategoryState => {
@@ -221,83 +221,98 @@ export const useCategoryStore = defineStore(NAME_ID, {
       id: string,
       selectedProduct: any
     ): Promise<CategoryEntity> {
-      return new Promise((resolve, _) => {
-        categoryApiService.getCategoryById(id).then((response) => {
-          this.properties = response.properties;
-          this.selectedCategory = response;
-          this.setTranslation(response.categoryName, "ru");
-          this.setTranslation(response.categoryNameKy, "ky");
-          this.setTranslation(response.categoryNameEn, "en");
-          this.setIcoBase64(response.icoBase64);
-          this.setImageId(response.imageId);
-          this.setCategoryId(response.id);
-          this.setMode("update");
-          if (selectedProduct) {
-            const selectedPropValues: any = [];
-            Object.entries(selectedProduct.properties).forEach((item) => {
-              selectedPropValues.push({ key: item[0], valueId: item[1] });
-            });
-            this.properties = this.properties.map((property: any) => {
-              const selectedObj = selectedPropValues.find(
-                (item: any) => item.key === property.key
-              );
-              property.selectedValueId = selectedObj?.valueId;
-              return property;
-            });
-          }
-          if (response.imageId) {
-            this.fetchFileById(response.imageId);
-          } else {
-            this.file = null;
-          }
-          resolve(response);
-        });
+      return new Promise((resolve, reject) => {
+        categoryApiService
+          .getCategoryById(id)
+          .then((response) => {
+            this.properties = response.properties;
+            this.selectedCategory = response;
+            this.setTranslation(response.categoryName, "ru");
+            this.setTranslation(response.categoryNameKy, "ky");
+            this.setTranslation(response.categoryNameEn, "en");
+            this.setIcoBase64(response.icoBase64);
+            this.setImageId(response.imageId);
+            this.setCategoryId(response.id);
+            this.setMode("update");
+            if (selectedProduct) {
+              const selectedPropValues: any = [];
+              Object.entries(selectedProduct.properties).forEach((item) => {
+                selectedPropValues.push({ key: item[0], valueId: item[1] });
+              });
+              this.properties = this.properties.map((property: any) => {
+                const selectedObj = selectedPropValues.find(
+                  (item: any) => item.key === property.key
+                );
+                property.selectedValueId = selectedObj?.valueId;
+                return property;
+              });
+            }
+            if (response.imageId) {
+              this.fetchFileById(response.imageId);
+            } else {
+              this.file = null;
+            }
+            resolve(response);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
 
     fetchCategoriesTree() {
-      return new Promise((resolve, _) => {
-        categoryApiService.getCategories().then((res) => {
-          const multidimensionalArray = (
-            array: CategoryTreeEntity[] | CategoryModified[]
-          ): CategoryTreeEntity[] | CategoryModified[] => {
-            return array.map((obj: CategoryTreeEntity | CategoryModified) => {
-              if ("childMarketplaceCategories" in obj) {
-                obj.childMarketplaceCategoryIdList =
-                  obj.childMarketplaceCategories;
-                delete obj.childMarketplaceCategories;
-              }
-              if (
-                obj.childMarketplaceCategoryIdList &&
-                Array.isArray(obj.childMarketplaceCategoryIdList)
-              ) {
-                multidimensionalArray(obj.childMarketplaceCategoryIdList);
-              }
-              return obj;
-            });
-          };
-          const payload = multidimensionalArray(res);
-          payload[0].active = true;
-          this.setCategories(payload as CategoryTreeEntity[]);
-          resolve(res);
-        });
+      return new Promise((resolve, reject) => {
+        categoryApiService
+          .getCategories()
+          .then((res) => {
+            const multidimensionalArray = (
+              array: CategoryTreeEntity[] | CategoryModified[]
+            ): CategoryTreeEntity[] | CategoryModified[] => {
+              return array.map((obj: CategoryTreeEntity | CategoryModified) => {
+                if ("childMarketplaceCategories" in obj) {
+                  obj.childMarketplaceCategoryIdList =
+                    obj.childMarketplaceCategories;
+                  delete obj.childMarketplaceCategories;
+                }
+                if (
+                  obj.childMarketplaceCategoryIdList &&
+                  Array.isArray(obj.childMarketplaceCategoryIdList)
+                ) {
+                  multidimensionalArray(obj.childMarketplaceCategoryIdList);
+                }
+                return obj;
+              });
+            };
+            const payload = multidimensionalArray(res);
+            payload[0].active = true;
+            this.setCategories(payload as CategoryTreeEntity[]);
+            resolve(res);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
 
-    fetchFileById(id: string): Promise<any> {
-      return new Promise((resolve, _) => {
+    fetchFileById(id: string) {
+      return new Promise((resolve, reject) => {
         const authStore = useAuthStore();
         const sessionId = authStore.getSessionId;
-        fileApiService.getFileById(id, sessionId).then((result) => {
-          const imageUrl = URL.createObjectURL(result);
-          this.file = imageUrl;
-          resolve(result);
-        });
+        fileApiService
+          .getFileById(id, sessionId)
+          .then((result) => {
+            const imageUrl = URL.createObjectURL(result);
+            this.file = imageUrl;
+            resolve(result);
+          })
+          .catch((err) => {
+            reject(err);
+          });
       });
     },
 
     fetchPropertiesListAutocomplete(propertyId: string) {
-      return new Promise((resolve, _) => {
+      return new Promise((resolve, reject) => {
         categoryApiService
           .getPropertyValueAutocomplete({
             pageIndex: 0,
@@ -309,6 +324,9 @@ export const useCategoryStore = defineStore(NAME_ID, {
           .then((data) => {
             this.propertyValueAutocomplete = data;
             resolve(data);
+          })
+          .catch((err) => {
+            reject(err);
           });
       });
     },
@@ -345,19 +363,29 @@ export const useCategoryStore = defineStore(NAME_ID, {
         payload.id = this.selectedCategory?.id;
         payload.parentId = this.selectedCategory?.parentId || null;
       }
-      return new Promise((resolve, _) => {
+      return new Promise((resolve, reject) => {
         if (this.mode === "create") {
-          categoryApiService.createCategory(payload).then((res) => {
-            this.setId(res.id);
-            this.fetchCategoryById(res.id, "");
-            this.fetchCategoriesTree();
-            resolve(t("lang-5fa5d291-8d85-49f0-bebe-0dae2f7e1858"));
-          });
+          categoryApiService
+            .createCategory(payload)
+            .then((res) => {
+              this.setId(res.id);
+              this.fetchCategoryById(res.id, "");
+              this.fetchCategoriesTree();
+              resolve(t("lang-5fa5d291-8d85-49f0-bebe-0dae2f7e1858"));
+            })
+            .catch((err) => {
+              reject(err);
+            });
         } else {
-          categoryApiService.updateCategory(payload).then(() => {
-            this.fetchCategoriesTree();
-            resolve(t("lang-b4f39135-e5f9-41cb-b086-87820e991410"));
-          });
+          categoryApiService
+            .updateCategory(payload)
+            .then(() => {
+              this.fetchCategoriesTree();
+              resolve(t("lang-b4f39135-e5f9-41cb-b086-87820e991410"));
+            })
+            .catch((err) => {
+              reject(err);
+            });
         }
       });
     },

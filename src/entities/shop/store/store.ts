@@ -4,10 +4,8 @@ import { ShopState } from "./types";
 import { ShopEntity } from "../model/types";
 import { GetShopPagedListPayload, ShopApi, VerifyShopPayload } from "..";
 import { WithResultPagination } from "@/shared/api/api.types";
-import { useLoaderStore } from "@/shared/store/loader";
-import { useAlertStore } from "@/shared/store/alert";
 
-const NAME_ID = "shop-store";
+const NAME_ID = "shop";
 
 const shopApiService = container.resolve(ShopApi);
 
@@ -114,30 +112,19 @@ export const useShopStore = defineStore(NAME_ID, {
       payload: GetShopPagedListPayload
     ): Promise<WithResultPagination<ShopEntity>> {
       return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
         shopApiService
           .getShopPagedList(payload)
           .then((response) => {
             this.shopPagedList = response;
-            loaderStore.setLoaderState(false);
             resolve(response);
           })
           .catch((err) => {
-            alertStore.showError(err?.error?.errorMessage);
             reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
           });
       });
     },
     fetchShopById(id: string): Promise<ShopEntity> {
       return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
         shopApiService
           .getShopById(id)
           .then((response) => {
@@ -160,23 +147,15 @@ export const useShopStore = defineStore(NAME_ID, {
                 },
               },
             };
-            loaderStore.setLoaderState(false);
             resolve(response);
           })
           .catch((err) => {
-            alertStore.showError(err?.error?.errorMessage);
             reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
           });
       });
     },
     verifyShop(): Promise<ShopEntity> {
       return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
         Object.values(this.verifyInfo.moderationResult).forEach((item) => {
           item.verified = true;
           item.isRejected = false;
@@ -184,7 +163,6 @@ export const useShopStore = defineStore(NAME_ID, {
         shopApiService
           .verifyShop(this.verifyInfo)
           .then((response) => {
-            loaderStore.setLoaderState(false);
             this.openedShop = response;
             this.verifyInfo = {
               id: response.id,
@@ -207,19 +185,12 @@ export const useShopStore = defineStore(NAME_ID, {
             resolve(response);
           })
           .catch((err) => {
-            alertStore.showError(err?.error?.errorMessage);
             reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
           });
       });
     },
     rejectShop(): Promise<ShopEntity> {
       return new Promise((resolve, reject) => {
-        const loaderStore = useLoaderStore();
-        const alertStore = useAlertStore();
-        loaderStore.setLoaderState(true);
         Object.values(this.verifyInfo.moderationResult).forEach((item) => {
           item.verified = false;
           item.isRejected = true;
@@ -227,7 +198,6 @@ export const useShopStore = defineStore(NAME_ID, {
         shopApiService
           .verifyShop(this.verifyInfo)
           .then((response) => {
-            loaderStore.setLoaderState(false);
             this.openedShop = response;
             this.verifyInfo = {
               id: response.id,
@@ -250,11 +220,7 @@ export const useShopStore = defineStore(NAME_ID, {
             resolve(response);
           })
           .catch((err) => {
-            alertStore.showError(err?.error?.errorMessage);
             reject(err);
-          })
-          .finally(() => {
-            loaderStore.setLoaderState(false);
           });
       });
     },
