@@ -1,13 +1,13 @@
 <template>
-  <SForm class="main-wrapper h-p-100" ref="namingFieldsForm">
+  <SForm class="main-wrapper s-h-full" ref="namingFieldsForm">
     <SLoader v-if="isLoading" />
-    <div class="settings h-p-100 w-p-100">
+    <div class="settings s-h-full s-w-full">
       <ImagesAndIcon />
       <PropertyNamingFields />
       <AddProperty />
     </div>
   </SForm>
-  <div class="save-block light">
+  <div class="save-block">
     <SButton @click="onSaveSettings">
       {{ $t("lang-b819743e-e6d9-4b27-9dd0-4604271a2395") }}
     </SButton>
