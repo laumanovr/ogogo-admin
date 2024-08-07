@@ -10,16 +10,16 @@
     />
 
     <STabs :tab-mode="'filter-tabs'" class="s-mb-4">
-      <STabItem value="0" :active-tab="tab" @changeTab="selectTab">
+      <STabItem :value="PRODUCT_VERIFICATION_STATUS.NONE" :active-tab="tab" @changeTab="selectTab">
         Все
       </STabItem>
-      <STabItem value="14300" :active-tab="tab" @changeTab="selectTab">
+      <STabItem :value="PRODUCT_VERIFICATION_STATUS.PENDING" :active-tab="tab" @changeTab="selectTab">
         {{ $t(`moderation-status.14300`) }}
       </STabItem>
-      <STabItem value="14302" :active-tab="tab" @changeTab="selectTab">
+      <STabItem :value="PRODUCT_VERIFICATION_STATUS.REJECTED" :active-tab="tab" @changeTab="selectTab">
         {{ $t(`moderation-status.14302`) }}
       </STabItem>
-      <STabItem value="14301" :active-tab="tab" @changeTab="selectTab">
+      <STabItem :value="PRODUCT_VERIFICATION_STATUS.ACCEPTED" :active-tab="tab" @changeTab="selectTab">
         {{ $t(`moderation-status.14301`) }}
       </STabItem>
     </STabs>

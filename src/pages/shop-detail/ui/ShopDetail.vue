@@ -1,13 +1,13 @@
 <template>
-  <div class="shop-detail-container" v-if="!stateload">
+  <div class="shop-detail-container">
     <SLoader v-if="isLoading" />
-    <div class="top-block light">
+    <div class="top-block">
       <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="chevron-left" class="s-text-gray-500" />
         {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
       <div class="shop-title">
-        <img :src="logo" alt="" class="sm-img s-mr-2" />
+        <img :src="logo" alt="" class="s-w-6 s-h-6 s-mr-2" />
         {{ shopName }}
       </div>
     </div>
@@ -20,7 +20,7 @@
       {{ $t("lang-2c57a873-df1a-437e-a38b-2a0772342fc4") }}
     </h2>
     <div class="shop-logo-block">
-      <div class="d-flex items-center">
+      <div class="s-flex s-items-center">
         <img :src="logo" alt="logo" class="logo s-mr-5" />
         <div class="logo-title">{{ logoName }}</div>
       </div>
@@ -30,7 +30,6 @@
       <div>
         <SInput
           :label="$t('lang-83ea23b9-0c12-4c48-a823-39cbc73f7219')"
-          width="100%"
           readonly
           hide-details
           :modelValue="shopName"
@@ -42,7 +41,6 @@
       <div>
         <STextArea
           :label="$t('lang-b1c420fe-8beb-4452-bf7c-165f69e8eabf')"
-          width="100%"
           height="150px"
           readonly
           hide-details
@@ -52,7 +50,7 @@
       <Description v-if="pendingOrRejected" />
     </div>
     <div
-      class="d-flex s-mt-8 actions light"
+      class="s-flex s-mt-8 actions"
       v-if="verificationStatus === PRODUCT_VERIFICATION_STATUS.PENDING"
     >
       <SButton @click="verifyShop" size="large" class="s-mr-2">
@@ -76,7 +74,6 @@ import {
 } from "@tumarsoft/ogogo-ui";
 import { computed, onBeforeMount, watch, onBeforeUnmount, ref } from "vue";
 import { useRoute, useRouter } from "vue-router";
-import { useLoaderStore } from "@/shared/store/loader";
 import { Logo, Name, Description, StatusBadge } from "./components";
 import { ROUTES } from "@/shared/router/index.type";
 import { useI18n } from "vue-i18n";
@@ -86,10 +83,8 @@ const router = useRouter();
 const route = useRoute();
 const shopStore = useShopStore();
 const shopDetailStore = useShopDetailStore();
-const loaderStore = useLoaderStore();
 const isLoading = ref(false);
 const { t } = useI18n();
-const stateload = computed(() => loaderStore.isLoading);
 const id = computed(() => route.params.id as string);
 
 const fetchShopById = () => {
