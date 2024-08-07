@@ -1,4 +1,5 @@
 <template>
+  <!--TODO: -->
   <SModal
     v-model="isShow"
     class="filter-modal full-height"
@@ -54,11 +55,11 @@
         </div>
       </div>
     </div>
-    <div class="filter-actions">
-      <SButton size="large" color="gray">{{
+    <div class="filter-actions light">
+      <SButton size="large">{{
         $t("lang-7967cf86-49d6-41c2-bdd7-23c6f8e5e8ea")
       }}</SButton>
-      <SButton size="large" color="violet">{{
+      <SButton size="large">{{
         $t("lang-bdc9ab1e-91af-43ea-8bb9-e23c8ea98755")
       }}</SButton>
     </div>

@@ -1,5 +1,5 @@
 <template>
-  <p class="font-bold s-mb-2">
+  <p class="s-text-title-2 s-mb-2">
     {{ $t("lang-a4cb8b72-591b-4353-a8ac-0a910b6ea90d") }}
   </p>
   <div class="info-text-container s-mb-5">
@@ -12,19 +12,12 @@
   </div>
 
   <div class="add-image-buttons-container s-mb-8">
-    <label
+    <SFileInput
+      size="medium"
+      @change="handleImageUpload"
       v-if="!imageUrl && !file"
-      for="big-image"
-      class="add-image-big-button"
-    >
-      <input
-        id="big-image"
-        class="file-upload-input"
-        type="file"
-        @change="handleImageUpload"
-      />
-      <img src="/icons/plus-icon.png" />
-    </label>
+    />
+
     <div v-if="imageUrl || file" class="preview-selected-big-image rounded-lg">
       <img
         :src="imageUrl || file"
@@ -32,24 +25,14 @@
         class="big-image-under-container"
       />
       <img
-        src="../../../../../shared/assets/close-rounded-icon.svg"
+        src="@/shared/assets/close-rounded-icon.svg"
         @click="closeImage"
         class="absolute left-69 bottom-38 cursor-pointer"
       />
     </div>
-    <label
-      v-if="!iconUrl && !iconFetched"
-      for="small-image"
-      class="add-image-small-button"
-    >
-      <input
-        id="small-image"
-        class="file-upload-input"
-        type="file"
-        @change="handleIconUpload"
-      />
-      <img src="/icons/plus-icon.png" />
-    </label>
+
+    <SFileInput @change="handleIconUpload" v-if="!iconUrl && !iconFetched" />
+
     <div v-if="iconUrl || iconFetched" class="relative">
       <div class="preview-selected-small-image rounded-lg">
         <img
@@ -59,20 +42,17 @@
         />
       </div>
       <img
-        src="../../../../../shared/assets/close-rounded-icon.svg"
+        src="@/shared/assets/close-rounded-icon.svg"
         @click="closeIcon"
         class="absolute left-14.5 bottom-14.5 cursor-pointer"
       />
     </div>
-    <ImageRecomendationModal
-      :value="imageRecomendationModalValue"
-      @close="onClose"
-    />
+    <ImageRecomendationModal ref="imageInfoModal" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { SIconRender } from "@tumarsoft/ogogo-ui";
+import { SIconRender, SFileInput } from "@tumarsoft/ogogo-ui";
 import { ref, computed } from "vue";
 import {
   ImageRecomendationModal,
@@ -82,6 +62,7 @@ import { useCategoryStore } from "@/entities/category";
 
 let imageUrl = ref(null);
 let iconUrl = ref(null);
+const imageInfoModal = ref(null);
 
 const store = useImagesAndIconStore();
 
@@ -95,27 +76,16 @@ const file = computed(() => {
   return categoryStore.getFile;
 });
 
-function handleImageUpload(event: Event) {
-  const file = (event.target as HTMLInputElement).files[0];
+function handleImageUpload(file: File) {
   if (!file) return;
-
-  // Read the selected image file and generate a data URL
-
-  // Resize or crop the image
   resizeImage(file);
-
   const formData = new FormData();
   formData.append("File", file);
-
   store.saveUploadImage(formData);
 }
-function handleIconUpload(event: Event) {
-  const file = (event.target as HTMLInputElement).files[0];
+
+function handleIconUpload(file: File) {
   if (!file) return;
-
-  // Read the selected image file and generate a data URL
-
-  // Resize or crop the image
   resizeIcon(file);
 }
 
@@ -219,14 +189,8 @@ const closeIcon = () => {
   categoryStore.setIcoBase64(null);
 };
 
-let imageRecomendationModalValue = ref(false);
-
 const onOpenImageRecomendationModal = () => {
-  imageRecomendationModalValue.value = true;
-};
-
-const onClose = () => {
-  imageRecomendationModalValue.value = false;
+  imageInfoModal.value.toggle();
 };
 </script>
 
