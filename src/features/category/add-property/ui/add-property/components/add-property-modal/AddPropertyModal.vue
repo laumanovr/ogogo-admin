@@ -2,13 +2,12 @@
   <SModal v-model="isModalOpen" height="auto" :width="'440px'">
     <div class="add-property-modal-main-wrapper">
       <SLoader v-if="isLoading" />
-      <p class="font-bold">
+      <p class="s-text-title-2">
         {{ $t("lang-13910017-20f7-43fd-a9a8-7dbcd2b474f0") }}
       </p>
       <SSelect
         v-model="propertyObject.propertyId"
         :label="$t('lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2')"
-        class="w-p-100"
         itemTitle="value"
         itemValue="id"
         :items="getPropertiesListAutocomplete"
@@ -19,7 +18,6 @@
       <SSelect
         v-model="propertyObject.renderType"
         :label="$t('lang-d5ed16f8-b6af-4c0a-ba0a-820cf3ce91ba')"
-        class="w-p-100"
         :items="renderPropertyTypes"
         itemTitle="text"
         itemValue="value"
@@ -88,6 +86,7 @@ const propertyObject = reactive({
   renderType: null,
   allowedValues: [],
   name: null,
+  selectedValueId: "",
 });
 
 const addPropertyStore = useAddPropertyStore();
