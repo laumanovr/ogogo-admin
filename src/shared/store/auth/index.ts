@@ -4,61 +4,26 @@ import {
   AuthState,
   ILogin,
 } from "./index.types";
-import { useAlertStore } from "@/shared/store/alert";
 import { container } from "tsyringe";
 import { AuthApi } from "@/shared/api/auth/index.ts";
 import { isAxiosError } from "axios";
-import { setItem } from "@/shared/lib/utils/persistanceStorage";
 
 const authApiService = container.resolve(AuthApi);
 
 export const useAuthStore = defineStore("auth", {
   state: (): AuthState => {
     return {
-      user: null,
-      userProfile: null,
-      accessRequestIds: {},
-      fidoAuth: false,
-      availableLanguages: null,
       currentUser: null,
-      isLoading: false,
       needChangePassword: false,
-      roleScreensObj: {},
-      sipAccount: {
-        login: null,
-        password: null,
-      },
       sessionId: null,
-      tabId: null,
     };
   },
   getters: {
-    getFullName(): string {
-      return this.user?.fullName ?? "";
-    },
-    getAuthToken(): string {
-      return this.user?.token ?? null;
-    },
-    getLoading(): boolean {
-      return this.isLoading;
-    },
-    getUserLogin(): string {
-      return this.user?.login ?? "";
-    },
-    getRoleId(): string {
-      return this.user.roleId;
-    },
-    getRoleName(): string {
-      return this.user.roleName;
-    },
     getSessionId(): string {
       return this.sessionId;
     },
-    getTabId(): string {
-      return this.tabId;
-    },
     getUserProfile(): AuthGetProfileResultInterface {
-      return this.userProfile;
+      return this.currentUser;
     },
   },
   actions: {
@@ -69,10 +34,7 @@ export const useAuthStore = defineStore("auth", {
           .then((result) => {
             const needChangePassword = result?.needChangePassword ?? false;
             this.needChangePassword = needChangePassword as boolean;
-
             this.sessionId = result?.sessionId;
-
-            setItem("sessionId", result?.sessionId);
 
             return this.getCurrentUser()
               .then((user) => {
@@ -86,9 +48,6 @@ export const useAuthStore = defineStore("auth", {
             } else {
               reject(err);
             }
-          })
-          .finally(() => {
-            this.isLoading = false;
           });
       });
     },
@@ -97,7 +56,7 @@ export const useAuthStore = defineStore("auth", {
         authApiService
           .getCurrentUser()
           .then((userProfile) => {
-            this.userProfile = userProfile;
+            this.currentUser = userProfile;
             resolve(userProfile);
           })
           .catch((error) => {
@@ -107,25 +66,12 @@ export const useAuthStore = defineStore("auth", {
     },
 
     logout(): Promise<boolean> {
-      return new Promise((resolve, reject) => {
-        authApiService
-          .logout()
-          .then((res) => {
-            this.user = null;
-            this.accessRequestIds = {};
-
-            this.sessionId = null;
-
-            const alertStore = useAlertStore();
-            alertStore.clearAlerts();
-
-            resolve(res);
-          })
-          .catch((err) => {
-            reject(err);
-          });
-      });
+      this.currentUser = null;
+      this.sessionId = "";
+      return Promise.resolve(true);
     },
   },
-  persist: true,
+  persist: {
+    storage: localStorage,
+  },
 });
