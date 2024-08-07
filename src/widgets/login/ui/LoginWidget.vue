@@ -1,5 +1,6 @@
 <template>
   <div class="login-container">
+    <SLoader v-if="isLoading" />
     <div class="login-block">
       <div class="login-logo">
         <img src="/icons/Ogogo-logo.png" alt="ogogo-logo" />
@@ -11,7 +12,7 @@
 
         <div
           v-if="showIncorrectLoginAndPassword"
-          class="padding-11-15 s-mb-4 rounded-lg bg-#FEF2F2 border-1 border-solid border-red-400"
+          class="s-py-3 s-px-4 s-mb-4 rounded-lg bg-#FEF2F2 border-1 border-solid border-red-400"
         >
           {{ $t("lang-cd89ff76-e757-45a3-8737-03294b4e1345") }}
         </div>
@@ -19,9 +20,9 @@
         <div>
           <SInput
             :label="$t('lang-5b5360db-a6ff-43a7-a8d4-f35517b9c4a8')"
-            width="100%"
             :rules="[requiredField]"
-            v-maska:[options]
+            animated
+            v-maska:[maskOptions]
             v-model="loginObj.pin"
           />
         </div>
@@ -29,8 +30,8 @@
           <SInput
             type="password"
             :label="$t('lang-ad3a8ec6-bcb6-4dce-9ff6-a3ccc17c1e8d')"
-            width="100%"
             :rules="[requiredField]"
+            animated
             v-model="loginObj.password"
           />
         </div>
@@ -45,45 +46,34 @@
 </template>
 
 <script lang="ts" setup>
-import { SButton, SForm, SInput } from "@tumarsoft/ogogo-ui";
+import { SButton, SForm, SInput, SLoader } from "@tumarsoft/ogogo-ui";
 import { ref, reactive } from "vue";
 import { useRouter } from "vue-router";
 import { requiredField } from "@/shared/lib/utils/rules";
 import { useAuthStore } from "@/shared/store/auth";
-import { useLoaderStore } from "@/shared/store/loader";
-
-const options = reactive({
-  mask: "996-(###)-##-##-##",
-  eager: true,
-});
+import { maskOptions } from "@/shared/helper";
 
 const authStore = useAuthStore();
-const loaderStore = useLoaderStore();
 const router = useRouter();
-
 const loginObj = reactive({ pin: "", password: "" });
 const loginForm = ref(null);
-
+const isLoading = ref(false);
 const showIncorrectLoginAndPassword = ref(false);
 
 const onSubmitLogin = () => {
   const removedDashesAndBrackets = loginObj.pin.replace(/\D/g, "");
-
   loginObj.pin = removedDashesAndBrackets;
-
   loginForm.value.validate().then((isValid: boolean) => {
     if (isValid) {
-      loaderStore.setLoaderState(true);
+      isLoading.value = true;
       authStore
         .login(loginObj)
         .then(() => {
-          loaderStore.setLoaderState(false);
-          router.push("/property");
+          router.push({ name: "products" });
           showIncorrectLoginAndPassword.value = false;
         })
-        .catch(() => {
-          loaderStore.setLoaderState(false);
-          showIncorrectLoginAndPassword.value = true;
+        .finally(() => {
+          isLoading.value = false;
         });
     }
   });
