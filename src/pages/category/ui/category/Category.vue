@@ -1,6 +1,6 @@
 <template>
   <div class="category-main-wrapper s-mt-4">
-    <div class="left-side-bar-container h-p-100">
+    <div class="left-side-bar-container s-h-full">
       <CategoryTree />
     </div>
     <CategorySettings />
