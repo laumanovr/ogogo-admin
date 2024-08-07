@@ -1,5 +1,5 @@
 <template>
-  <div class="comment-block d-flex w-p-100" :class="{ 'bg-gray': hasComment }">
+  <div class="comment-block s-flex s-w-full" :class="{ 'bg-gray': hasComment }">
     <img
       src="/icons/ogogo-ava.svg"
       alt=""
@@ -88,7 +88,7 @@ const editComment = () => {
 };
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 @import "../../../../../app/styles/colors.scss";
 .comment-block {
   &.bg-gray {

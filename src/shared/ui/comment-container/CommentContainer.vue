@@ -9,9 +9,7 @@
       <span class="btn" @click="onEdit">
         {{ $t("lang-86a84b88-d2ec-4791-b06f-ca4d6aa58a4f") }}
       </span>
-      <!-- <span class="btn" @delete="onDelete">{{
-        $t("lang-490771e8-1e16-4c61-b9f9-7e962ec4309b")
-      }}</span> -->
+      
     </div>
   </div>
 </template>

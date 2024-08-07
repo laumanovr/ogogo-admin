@@ -7,7 +7,7 @@
       @input="onInput"
       hide-details
     />
-    <div class="comment-input-actions light" v-show="isShowActions">
+    <div class="comment-input-actions" v-show="isShowActions">
       <SButton size="small" @click="onSubmit">
         {{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}
       </SButton>
