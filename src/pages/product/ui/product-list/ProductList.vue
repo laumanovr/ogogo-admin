@@ -6,25 +6,49 @@
     <FilterSearch
       @onClick="showFilterModal"
       @onSearch="searchProduct"
-      :show-filter="false"
+      :show-filter="true"
     />
     <STabs :tab-mode="'filter-tabs'" class="s-mb-4">
-      <STabItem value="0" :active-tab="tab" @changeTab="selectTab">
+      <STabItem
+        :value="ProductStatus.ALL"
+        :active-tab="tab"
+        @changeTab="selectTab"
+      >
         Все
       </STabItem>
-      <STabItem value="14802" :active-tab="tab" @changeTab="selectTab">
+      <STabItem
+        :value="ProductStatus.AWAITING_MODERATION"
+        :active-tab="tab"
+        @changeTab="selectTab"
+      >
         Ожидает модерации
       </STabItem>
-      <STabItem value="14806" :active-tab="tab" @changeTab="selectTab">
+      <STabItem
+        :value="ProductStatus.REQUIRE_IMPROVEMENT"
+        :active-tab="tab"
+        @changeTab="selectTab"
+      >
         Требует доработки
       </STabItem>
-      <STabItem value="14801" :active-tab="tab" @changeTab="selectTab">
+      <STabItem
+        :value="ProductStatus.PUBLISHED"
+        :active-tab="tab"
+        @changeTab="selectTab"
+      >
         Опубликовано
       </STabItem>
-      <STabItem value="14800" :active-tab="tab" @changeTab="selectTab">
+      <STabItem
+        :value="ProductStatus.DRAFT"
+        :active-tab="tab"
+        @changeTab="selectTab"
+      >
         Черновик
       </STabItem>
-      <STabItem value="14807" :active-tab="tab" @changeTab="selectTab">
+      <STabItem
+        :value="ProductStatus.BLOCKED"
+        :active-tab="tab"
+        @changeTab="selectTab"
+      >
         Заблокировано
       </STabItem>
     </STabs>
@@ -33,14 +57,12 @@
       :data="products"
       :totalItems="totalItems"
       :loading="isLoading"
-      itemsPerPage="10"
-      paginateRange="2"
       @onSelectPage="onChangePage"
     >
       <template v-slot:productName="{ item }">
-        <div class="d-flex">
+        <div class="s-flex">
           <img
-            :src="`data:image/png;base64,${item.iconBase64}`"
+            :src="getFullIcon(item.iconBase64)"
             class="product-img"
             v-if="item.iconBase64"
           />
@@ -48,7 +70,7 @@
         </div>
       </template>
       <template v-slot:shopName="{ item }">
-        <div class="d-flex">
+        <div class="s-flex">
           <img
             :src="item.shopIconBase64"
             class="shop-img"
@@ -85,6 +107,8 @@ import { ref, onMounted, computed } from "vue";
 import FilterSearch from "@/widgets/filter-search/FilterSearch.vue";
 import { FilterModal } from "@/shared/ui";
 import { useProductStore } from "@/entities/product/store/product.store";
+import { ProductStatus } from "@/shared/lib/utils/enums";
+import { getFullIcon } from "@/shared/composable";
 
 interface Status {
   name: string;
@@ -119,15 +143,27 @@ const headers = ref([
 ]);
 
 const statuses = ref([
-  { id: 0, name: "Все", color: "red" },
-  { id: 14800, name: "Черновик", color: "grey" },
-  { id: 14801, name: "Опубликовано", color: "green" },
-  { id: 14802, name: "Ожидает модерации", color: "blue" },
-  { id: 14803, name: "Ожидает модерации ТО", color: "orange" },
-  { id: 14804, name: "Одобрено ТО", color: "green" },
-  { id: 14805, name: "В архиве", color: "dark-grey" },
-  { id: 14806, name: "Требует доработки", color: "red" },
-  { id: 14807, name: "Заблокировано", color: "red" },
+  { id: ProductStatus.ALL, name: "Все", color: "red" },
+  { id: ProductStatus.DRAFT, name: "Черновик", color: "grey" },
+  { id: ProductStatus.PUBLISHED, name: "Опубликовано", color: "green" },
+  {
+    id: ProductStatus.AWAITING_MODERATION,
+    name: "Ожидает модерации",
+    color: "blue",
+  },
+  {
+    id: ProductStatus.AWAITING_APPROVE_TO,
+    name: "Ожидает модерации ТО",
+    color: "orange",
+  },
+  { id: ProductStatus.APPROVED, name: "Одобрено ТО", color: "green" },
+  { id: ProductStatus.ARCHIVED, name: "В архиве", color: "dark-grey" },
+  {
+    id: ProductStatus.REQUIRE_IMPROVEMENT,
+    name: "Требует доработки",
+    color: "red",
+  },
+  { id: ProductStatus.BLOCKED, name: "Заблокировано", color: "red" },
 ]);
 
 onMounted(() => {

@@ -1,35 +1,33 @@
 <template>
   <div class="product-detail-container s-mt-3">
     <SLoader v-if="isLoading" />
-    <div class="d-flex items-center s-mb-5 light">
+    <div class="s-flex s-items-center s-mb-5">
       <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="chevron-left" class="s-text-gray-500" />
         {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
-      <div class="d-flex items-center s-ml-5 s-mr-5">
+      <div class="s-flex s-items-center s-ml-5 s-mr-5">
         <img
           :src="selectedProductShop.logoBase64"
           alt=""
-          class="sm-img s-mr-2"
+          class="s-mr-2 s-w-6"
         />
         {{ selectedProductShop.name }}
       </div>
-      <!-- <Breadcrumbs /> -->
     </div>
     <h2 class="s-text-title-1 s-mb-6 s-mt-6" id="main">
       {{ $t("lang-3c525f10-24ab-44fa-9eda-8a503e97b2e9") }}
     </h2>
-    <div class="d-flex s-mt-5">
+    <div class="s-flex s-mt-5">
       <div class="content-block">
         <div>
           <SInput
             :label="$t('lang-cb1dea14-fb31-4e97-9364-9e33b4227c3a')"
-            width="100%"
             v-model="selectedProduct.productName"
             hide-details
             readonly
           />
-          <div class="d-flex s-mt-3" v-if="isPendingOrRejected">
+          <div class="s-flex s-mt-3" v-if="isPendingOrRejected">
             <FieldComment
               fieldName="name"
               :isPending="isPending"
@@ -45,7 +43,7 @@
             v-model="selectedProduct.description"
             hide-details
           />
-          <div class="d-flex s-mt-5" v-if="isPendingOrRejected">
+          <div class="s-flex s-mt-5" v-if="isPendingOrRejected">
             <FieldComment
               fieldName="description"
               :isPending="isPending"
@@ -57,10 +55,9 @@
           <div class="s-text-title-1 s-mb-6 s-mt-6">
             {{ $t("lang-3bbbc87b-85a5-4434-a8b7-999c9146de08") }}
           </div>
-          <div class="d-flex">
+          <div class="s-flex">
             <SInput
               :label="$t('lang-333319c2-2df4-4057-a56a-28ddd7a790a1')"
-              width="100%"
               class="s-mr-3"
               readonly
               v-model="selectedProduct.price"
@@ -68,17 +65,15 @@
             />
             <SInput
               :label="$t('lang-1f6f2dca-070c-48bc-941f-e1300024ffbb')"
-              width="100%"
               class="s-mr-3"
               readonly
             />
             <SInput
               :label="$t('lang-5eb99c46-ed5f-4a24-85ad-d551ad812256')"
-              width="100%"
               readonly
             />
           </div>
-          <div class="d-flex s-mt-3" v-if="isPendingOrRejected">
+          <div class="s-flex s-mt-3" v-if="isPendingOrRejected">
             <FieldComment
               fieldName="price"
               :isPending="isPending"
@@ -92,12 +87,11 @@
           </div>
           <SInput
             :label="$t('lang-3a76c0f0-6ebc-413e-8455-9363f5436da1')"
-            width="100%"
             readonly
             v-model="selectedProduct.countOfProduct"
             hide-details
           />
-          <div class="d-flex s-mt-3" v-if="isPendingOrRejected">
+          <div class="s-flex s-mt-3" v-if="isPendingOrRejected">
             <FieldComment
               fieldName="countOfProduct"
               :isPending="isPending"
@@ -112,7 +106,7 @@
           <p class="hint s-mb-5">
             {{ $t("lang-7c1a3ecf-841c-4ea1-951b-a5d27099a805") }}
           </p>
-          <div class="d-flex flex-wrap">
+          <div class="s-flex flex-wrap">
             <img
               v-for="(photoId, i) in selectedProduct.photos"
               :src="getFileById(photoId)"
@@ -121,7 +115,7 @@
               :key="i"
             />
           </div>
-          <div class="d-flex s-mt-3" v-if="isPendingOrRejected">
+          <div class="s-flex s-mt-3" v-if="isPendingOrRejected">
             <FileComment
               field-name="photo"
               :isPending="isPending"
@@ -136,7 +130,7 @@
           <p class="hint s-mb-5">
             {{ $t("lang-9fc0c45e-0828-49af-a325-a11dbc4a9829") }}
           </p>
-          <div class="d-flex flex-wrap">
+          <div class="s-flex s-flex-wrap">
             <video class="video" controls width="180" height="180">
               <source
                 :src="getFileById(selectedProduct.videos[0])"
@@ -145,7 +139,7 @@
               />
             </video>
           </div>
-          <div class="d-flex s-mt-3" v-if="isPendingOrRejected">
+          <div class="s-flex s-mt-3" v-if="isPendingOrRejected">
             <FileComment
               field-name="video"
               :isPending="isPending"
@@ -160,14 +154,14 @@
           <p class="hint s-mb-5">
             {{ $t("lang-0c4310a2-d07f-450a-9258-a907b7feb038") }}
           </p>
-          <div class="d-flex flex-wrap justify-between">
+          <div class="s-flex s-flex-wrap s-justify-between">
             <div
               class="s-mb-4 selects"
               v-for="property in properties"
               :key="property.propertyId"
             >
               <SSelect
-                class="w-p-100"
+                class="s-w-full"
                 :label="showPropertyName(property)"
                 :items="property.allowedValues"
                 itemTitle="propertyValueText"
@@ -194,7 +188,7 @@
         </div>
       </div>
     </div>
-    <div class="d-flex s-mt-8 actions light">
+    <div class="s-flex s-mt-8 actions">
       <SButton
         size="large"
         class="s-mr-3"
