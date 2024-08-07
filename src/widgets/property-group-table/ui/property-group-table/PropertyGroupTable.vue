@@ -36,7 +36,7 @@
           <td>
             <span
               v-if="item.icoBase64"
-              class="d-flex items-center justify-between"
+              class="s-flex s-items-center s-justify-between"
             >
               <img
                 :src="item.icoBase64"
@@ -45,11 +45,12 @@
               />
               <SIconRender name="close" @click="item.icoBase64 = null" />
             </span>
-            <label for="file" class="label-container" v-else>
+            <div class="label-container" v-else>
+              <!--TODO: Change-->
               <div class="tooltip-info">
                 {{ $t("lang-4ae6eb0a-a362-49ab-824e-4ee51c97542b") }}
               </div>
-              <span class="d-flex items-center font-size-15 cursor-pointer">
+              <span class="s-flex s-items-center">
                 <img src="/icons/attach.svg" class="mr-12 ml-10" />
                 {{ $t("lang-c1d4974f-d48f-4107-99d8-d6a188b31129") }}
               </span>
@@ -58,7 +59,7 @@
                 id="file"
                 @change="onSelectFile($event, item)"
               />
-            </label>
+            </div>
           </td>
         </tr>
       </tbody>

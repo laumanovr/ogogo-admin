@@ -1,18 +1,18 @@
 <template>
   <div class="property-value-container">
     <SLoader v-if="isLoading" />
-    <div class="title-container light">
+    <div class="title-container">
       <SButton type="secondary" variant="outlined" @click="goBack">
         <SIconRender name="chevron-left" class="s-text-gray-500" />
         {{ $t("lang-943d7231-c402-4b11-929c-b26a3ee10276") }}
       </SButton>
-      <div class="s-text-h-2 s-mb-6 s-mt-6">
+      <div class="s-text-h-2 s-mb-6 s-mt-6 s-ml-6">
         {{ $t("lang-c9b8a310-7c1a-4936-9912-fc00c4d165d2") }} /
         {{ selectedProperty?.name }}
       </div>
     </div>
-    <div class="actions light">
-      <SInput isSearchable hide-details width="100%" @input="onSearch" />
+    <div class="actions">
+      <SInput isSearchable hide-details @input="onSearch" />
       <SButton @click="onSave">
         {{ $t("lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf") }}
       </SButton>
@@ -46,7 +46,7 @@ onMounted(() => {
 });
 
 const goBack = () => {
-  router.push("/property");
+  router.push({ name: "property" });
 };
 
 const onSave = () => {

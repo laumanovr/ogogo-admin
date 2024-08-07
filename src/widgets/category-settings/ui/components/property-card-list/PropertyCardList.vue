@@ -4,14 +4,14 @@
     <img class="six-dots" src="/icons/six-dots-icon.png" alt="six-dots" />
     <div :class="!hideBody ? 'header-property' : 'header-property-closed'">
       <div
-        class="left-toolbar d-flex flex-row items-center justify-between gap-15"
+        class="left-toolbar s-flex s-flex-row s-items-center s-justify-between s-gap-4"
       >
-        <div class="d-flex flex-row items-center gap-10">
+        <div class="s-flex s-flex-row s-items-center s-gap-3">
           <SIconRender name="chevron-up" @click="onHideBody" v-if="!hideBody" />
           <SIconRender name="chevron-right" @click="onHideBody" v-else />
           <p>{{ propertyName }}</p>
         </div>
-        <div class="d-flex flex-row items-center gap-10">
+        <div class="s-flex s-flex-row s-items-center s-gap-3">
           <img class="s-w-3 s-h-3" src="/icons/tree-icon.png" alt="tree-icon" />
           <p>
             {{ "allowedValues" in property && property.allowedValues?.length }}
@@ -19,11 +19,7 @@
           <p>{{ $t("lang-afd3cd36-ac2b-4852-bde7-3d2cb4d7842b") }}</p>
           <p>{{ getPropertyValueAutocomplete?.length ?? 0 }}</p>
         </div>
-        <!-- <div class="d-flex flex-row items-center gap-10">
-          <img class="w-17 h-17" src="/icons/star-icon.png" />
-          <img class="w-17 h-17" src="/icons/paper-and-mouse-icon.png" />
-          <img class="w-17 h-17" src="/icons/article-icon.png" />
-        </div> -->
+       
       </div>
       <div class="relative hover:bg-slate-50 px-2 cursor-pointer rounded">
         <img
@@ -34,17 +30,11 @@
         />
         <ul
           v-if="openPropertyToolsDropdown"
-          class="flex flex-col list-none rounded-lg shadow-2xl px-1.2 py-1.2 bg-white absolute left--14"
+          class="s-flex s-flex-col list-none rounded-lg shadow-2xl px-1.2 py-1.2 bg-white absolute left--14"
         >
-          <!-- <li
-            class="flex gap-4 cursor-pointer hover:bg-slate-50 px-2.5 py-3 rounded"
-          >
-            <img src="/icons/settings-icon.png" />{{
-              $t("lang-910d305f-6cda-4bea-9829-3a26101da8a3")
-            }}
-          </li> -->
+          
           <li
-            class="flex gap-4 cursor-pointer hover:bg-slate-50 px-2.5 py-3 rounded"
+            class="s-flex s-gap-4 cursor-pointer hover:bg-slate-50 px-2.5 py-3 rounded"
             @click="deletePropertyCard"
           >
             <img src="/icons/delete-icon.png" />
@@ -53,9 +43,9 @@
         </ul>
       </div>
     </div>
-    <div v-if="!hideBody" class="body d-flex flex-row flex-wrap gap-8">
+    <div v-if="!hideBody" class="body s-flex s-flex-row s-flex-wrap s-gap-3">
       <div
-        class="add-value d-flex flex-row items-center gap-10 cursor-pointer hover:-translate-y-0.60 hover:scale-102 duration-300 padding-14-20"
+        class="add-value s-flex s-flex-row s-items-center s-gap-3 cursor-pointer hover:-translate-y-0.60 hover:scale-102 duration-300 s-py-4 s-px-5"
         @click="onShowAddPopertyValue"
       >
         <img src="/icons/plus-icon.png" />
@@ -65,7 +55,7 @@
       </div>
       <template v-if="'allowedValues' in property">
         <div
-          class="value d-flex flex-row items-center gap-8"
+          class="value s-flex s-flex-row s-items-center s-gap-2"
           v-for="(propertyValue, i) in property.allowedValues"
           :key="i"
         >
@@ -83,16 +73,16 @@
       @onClose="onCloseShowAddPopertyValueModal"
       :width="'440px'"
     >
-      <SInput class="w-p-100" isSearchable hide-details />
+      <SInput isSearchable hide-details />
       <div class="s-mt-5">
         <div v-for="value in getPropertyValueAutocomplete" class="s-mb-4">
           <SCheckbox v-model="value.checked">{{ value.value }}</SCheckbox>
         </div>
       </div>
-      <div class="light">
+      <div>
         <SButton
           size="large"
-          class="w-p-100"
+          class="s-w-full"
           @click="onCloseAddPropertyValueModal"
         >
           {{ $t("lang-d0108c3e-9945-4245-a730-b011e5a47c35") }}

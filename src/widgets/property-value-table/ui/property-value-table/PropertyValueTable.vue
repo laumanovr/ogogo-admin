@@ -30,12 +30,12 @@
             <td>
               <span
                 v-if="item.icoBase64"
-                class="d-flex items-center justify-between"
+                class="s-flex s-items-center s-justify-between"
               >
                 <img
                   :src="item.icoBase64"
                   alt="icon"
-                  class="selected-image ml-10"
+                  class="selected-image s-ml-3"
                 />
                 <SIconRender name="close" @click="item.icoBase64 = null" />
               </span>

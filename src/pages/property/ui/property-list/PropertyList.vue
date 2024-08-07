@@ -21,7 +21,7 @@
           <div class="icon-border" @click="openFilterModal">
             <SIconRender name="filter" />
           </div>
-          <div class="light">
+          <div>
             <SButton size="medium" @click="onSubmit">
               {{ $t("lang-e11e13e8-1d9c-438a-8be1-27ce3792dbaf") }}
             </SButton>
