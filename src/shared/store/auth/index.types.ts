@@ -25,25 +25,11 @@ export interface ILogin {
 }
 
 export interface AuthState {
-  user: Nullable<IUser>;
-  userProfile: Nullable<AuthGetProfileResultInterface>;
-
-  isLoading: boolean;
-  fidoAuth: boolean;
-  theme?: any;
-  accessRequestIds: {
-    [key: string]: boolean;
-  };
-  availableLanguages?: any;
+  user?: Nullable<IUser>;
+  userProfile?: Nullable<AuthGetProfileResultInterface>;
   currentUser: AuthGetProfileResultInterface;
   needChangePassword: boolean;
-  roleScreensObj: {};
-  sipAccount: {
-    login: string;
-    password: string;
-  };
   sessionId: string;
-  tabId: string;
 }
 export interface makeAssertionOptionsType {
   challenge: any;
