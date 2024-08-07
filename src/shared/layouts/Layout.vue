@@ -1,7 +1,6 @@
 <template>
   <Header />
-
-  <div class="wrapper-layout">
+  <div class="wrapper-layout light">
     <slot></slot>
   </div>
 </template>
