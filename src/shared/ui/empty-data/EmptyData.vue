@@ -3,7 +3,7 @@
     <div class="empty-action">
       <img src="/icons/empty-folder.svg" alt="empty" />
       <p>{{ props.text }}</p>
-      <div class="light">
+      <div>
         <SButton size="large" @click="addData">
           + {{ props.buttonTitle }}
         </SButton>

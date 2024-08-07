@@ -70,7 +70,7 @@
         </div>
       </div>
     </div>
-    <div class="filter-actions light">
+    <div class="filter-actions">
       <SButton size="large" type="secondary">
         {{ $t("lang-7967cf86-49d6-41c2-bdd7-23c6f8e5e8ea") }}
       </SButton>

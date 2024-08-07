@@ -6,14 +6,14 @@
       @input="onSearch"
       :width="props.showFilter ? '90%' : '100%'"
     />
-    <div class="light">
+    <div>
       <SButton
         type="secondary"
         variant="outlined"
         @click="onClick"
         v-if="props.showFilter"
       >
-        <SIconRender name="filter" class="s-text-red-500" />
+        <SIconRender name="filter" class="s-text-gray-700" />
         {{ $t("lang-7de4a879-828e-48b2-997c-310f0d6e0d75") }}
       </SButton>
     </div>
