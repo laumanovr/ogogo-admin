@@ -26,3 +26,15 @@ export enum ProductStatus {
   REQUIRE_IMPROVEMENT = 14806,
   BLOCKED = 14807,
 }
+
+export enum PropertyType {
+  DIRECTORY = 14000,
+  MANUAL = 14001
+}
+
+export enum PropertyValueType {
+  TEXT = 14100,
+  NUMBER = 14101,
+  BOOLEAN = 14102,
+  FRACTIONAL_NUMBER = 14103
+}
