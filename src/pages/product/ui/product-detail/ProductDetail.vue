@@ -199,7 +199,7 @@
         {{
           isPending
             ? $t("lang-01b61f03-58d8-4b95-880e-a6b75920efad")
-            : "Опубликован"
+            : $t("lang-b47e5143-97ba-4e6d-880e-d6d70c7262e8")
         }}
       </SButton>
       <SButton
@@ -209,7 +209,11 @@
         :disabled="!isPending"
         v-if="!isPublished"
       >
-        {{ isPending ? "Отправить на доработку" : "Отправлен на доработку" }}
+        {{
+          isPending
+            ? $t("lang-4d92287d-f47c-47a1-80c1-3eb9f68352d4")
+            : $t("lang-ae2d0a7b-4d85-4fbc-ad1d-50d61a1012b3")
+        }}
       </SButton>
     </div>
   </div>
@@ -325,7 +329,7 @@ const showPropertyName = (property: any) => {
 };
 
 const goBack = () => {
-  router.push("/products");
+  router.push({ name: "products" });
 };
 
 const handleScroll = () => {

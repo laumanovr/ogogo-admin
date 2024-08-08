@@ -14,42 +14,42 @@
         :active-tab="tab"
         @changeTab="selectTab"
       >
-        Все
+        {{ $t("lang-d738dc32-5ed0-4069-a614-72af9d8d84b8") }}
       </STabItem>
       <STabItem
         :value="ProductStatus.AWAITING_MODERATION"
         :active-tab="tab"
         @changeTab="selectTab"
       >
-        Ожидает модерации
+        {{ $t("lang-e9950db6-482c-423e-bc03-dcfdd2982298") }}
       </STabItem>
       <STabItem
         :value="ProductStatus.REQUIRE_IMPROVEMENT"
         :active-tab="tab"
         @changeTab="selectTab"
       >
-        Требует доработки
+        {{ $t("lang-325e66a7-5954-4447-b894-7a75a7869c84") }}
       </STabItem>
       <STabItem
         :value="ProductStatus.PUBLISHED"
         :active-tab="tab"
         @changeTab="selectTab"
       >
-        Опубликовано
+        {{ $t("lang-b47e5143-97ba-4e6d-880e-d6d70c7262e8") }}
       </STabItem>
       <STabItem
         :value="ProductStatus.DRAFT"
         :active-tab="tab"
         @changeTab="selectTab"
       >
-        Черновик
+        {{ $t("lang-55078558-54bd-4a08-b5d4-8ec322321eea") }}
       </STabItem>
       <STabItem
         :value="ProductStatus.BLOCKED"
         :active-tab="tab"
         @changeTab="selectTab"
       >
-        Заблокировано
+        {{ $t("lang-063c217d-47c2-4a7a-9305-6d22e114b2e0") }}
       </STabItem>
     </STabs>
     <STable
@@ -109,6 +109,7 @@ import { FilterModal } from "@/shared/ui";
 import { useProductStore } from "@/entities/product/store/product.store";
 import { ProductStatus } from "@/shared/lib/utils/enums";
 import { getFullIcon } from "@/shared/composable";
+import i18n from "@/shared/lib/plugins/i18n";
 
 interface Status {
   name: string;
@@ -135,35 +136,71 @@ const products = computed(() => productStore.getModerationProductList);
 const totalItems = computed(() => productStore.getProductTotalCount);
 
 const headers = ref([
-  { title: "Товар", key: "productName" },
-  { title: "Продавец", key: "shopName" },
-  { title: "Статус", key: "status" },
-  { title: "Модератор", key: "verifierName" },
+  {
+    title: i18n.global.t("lang-005fca64-7f65-4776-b5db-1f15c2035231"),
+    key: "productName",
+  },
+  {
+    title: i18n.global.t("lang-5ef270e6-2074-46fb-a423-e33253661570"),
+    key: "shopName",
+  },
+  {
+    title: i18n.global.t("lang-75200a6e-e148-4665-9633-456fa1dca337"),
+    key: "status",
+  },
+  {
+    title: i18n.global.t("lang-ac03bd59-de6a-4baa-bb3b-c48e93959e66"),
+    key: "verifierName",
+  },
   { title: "", key: "action" },
 ]);
 
 const statuses = ref([
-  { id: ProductStatus.ALL, name: "Все", color: "red" },
-  { id: ProductStatus.DRAFT, name: "Черновик", color: "grey" },
-  { id: ProductStatus.PUBLISHED, name: "Опубликовано", color: "green" },
+  {
+    id: ProductStatus.ALL,
+    name: i18n.global.t("lang-d738dc32-5ed0-4069-a614-72af9d8d84b8"),
+    color: "red",
+  },
+  {
+    id: ProductStatus.DRAFT,
+    name: i18n.global.t("lang-55078558-54bd-4a08-b5d4-8ec322321eea"),
+    color: "grey",
+  },
+  {
+    id: ProductStatus.PUBLISHED,
+    name: i18n.global.t("lang-b47e5143-97ba-4e6d-880e-d6d70c7262e8"),
+    color: "green",
+  },
   {
     id: ProductStatus.AWAITING_MODERATION,
-    name: "Ожидает модерации",
+    name: i18n.global.t("lang-e9950db6-482c-423e-bc03-dcfdd2982298"),
     color: "blue",
   },
   {
     id: ProductStatus.AWAITING_APPROVE_TO,
-    name: "Ожидает модерации ТО",
+    name: i18n.global.t("lang-ede70066-b280-4c65-bad5-4f50dda5fef3"),
     color: "orange",
   },
-  { id: ProductStatus.APPROVED, name: "Одобрено ТО", color: "green" },
-  { id: ProductStatus.ARCHIVED, name: "В архиве", color: "dark-grey" },
+  {
+    id: ProductStatus.APPROVED,
+    name: i18n.global.t("lang-6db83ab5-0763-4836-a1a6-522ddb67f9f8"),
+    color: "green",
+  },
+  {
+    id: ProductStatus.ARCHIVED,
+    name: i18n.global.t("lang-bd71e6a8-5634-4ec7-b021-7b504b529b21"),
+    color: "dark-grey",
+  },
   {
     id: ProductStatus.REQUIRE_IMPROVEMENT,
-    name: "Требует доработки",
+    name: i18n.global.t("lang-325e66a7-5954-4447-b894-7a75a7869c84"),
     color: "red",
   },
-  { id: ProductStatus.BLOCKED, name: "Заблокировано", color: "red" },
+  {
+    id: ProductStatus.BLOCKED,
+    name: i18n.global.t("lang-063c217d-47c2-4a7a-9305-6d22e114b2e0"),
+    color: "red",
+  },
 ]);
 
 onMounted(() => {
