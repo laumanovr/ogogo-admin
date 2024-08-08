@@ -10,16 +10,32 @@
     />
 
     <STabs :tab-mode="'filter-tabs'" class="s-mb-4">
-      <STabItem :value="PRODUCT_VERIFICATION_STATUS.NONE" :active-tab="tab" @changeTab="selectTab">
-        Все
+      <STabItem
+        :value="PRODUCT_VERIFICATION_STATUS.NONE"
+        :active-tab="tab"
+        @changeTab="selectTab"
+      >
+        {{ $t("lang-d738dc32-5ed0-4069-a614-72af9d8d84b8") }}
       </STabItem>
-      <STabItem :value="PRODUCT_VERIFICATION_STATUS.PENDING" :active-tab="tab" @changeTab="selectTab">
+      <STabItem
+        :value="PRODUCT_VERIFICATION_STATUS.PENDING"
+        :active-tab="tab"
+        @changeTab="selectTab"
+      >
         {{ $t(`moderation-status.14300`) }}
       </STabItem>
-      <STabItem :value="PRODUCT_VERIFICATION_STATUS.REJECTED" :active-tab="tab" @changeTab="selectTab">
+      <STabItem
+        :value="PRODUCT_VERIFICATION_STATUS.REJECTED"
+        :active-tab="tab"
+        @changeTab="selectTab"
+      >
         {{ $t(`moderation-status.14302`) }}
       </STabItem>
-      <STabItem :value="PRODUCT_VERIFICATION_STATUS.ACCEPTED" :active-tab="tab" @changeTab="selectTab">
+      <STabItem
+        :value="PRODUCT_VERIFICATION_STATUS.ACCEPTED"
+        :active-tab="tab"
+        @changeTab="selectTab"
+      >
         {{ $t(`moderation-status.14301`) }}
       </STabItem>
     </STabs>
@@ -71,13 +87,29 @@ import {
 import { SORT_DIRECTION } from "@/shared/api/api.types";
 import { useI18n } from "vue-i18n";
 import moment from "moment";
+import i18n from "@/shared/lib/plugins/i18n";
 
 const headers = reactive([
-  { title: "Магазин", key: "name" },
-  { title: "Статус", key: "status" },
-  { title: "Модератор", key: "moderator" },
-  { title: "Дата", key: "date" },
-  { title: "Действия", key: "action" },
+  {
+    title: i18n.global.t("lang-d13ef000-a5c0-41eb-95a0-a658494a4c8f"),
+    key: "name",
+  },
+  {
+    title: i18n.global.t("lang-75200a6e-e148-4665-9633-456fa1dca337"),
+    key: "status",
+  },
+  {
+    title: i18n.global.t("lang-ac03bd59-de6a-4baa-bb3b-c48e93959e66"),
+    key: "moderator",
+  },
+  {
+    title: i18n.global.t("lang-7df3b416-8fb4-4bc9-b88b-d8b734c96cbb"),
+    key: "date",
+  },
+  {
+    title: i18n.global.t("lang-9e7ab341-0291-4da5-a9e1-c24006a8a712"),
+    key: "action",
+  },
 ]);
 
 const currentStatus = computed(() =>
