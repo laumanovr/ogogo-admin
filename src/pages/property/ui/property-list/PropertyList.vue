@@ -15,11 +15,8 @@
           </STabItem>
         </STabs>
         <div class="filter-actions">
-          <div class="search-input">
+          <div class="search-input s-mr-4">
             <SInput isSearchable @input="onSearch" hide-details />
-          </div>
-          <div class="icon-border" @click="openFilterModal">
-            <SIconRender name="filter" />
           </div>
           <div>
             <SButton size="medium" @click="onSubmit">
@@ -36,7 +33,6 @@
           <PropertyGroupTable ref="propertyGroupTable" />
         </STabWindow>
       </div>
-      <FilterModal ref="filterModal" />
     </template>
     <template v-else>
       <EmptyData
@@ -53,7 +49,6 @@ import {
   STabs,
   STabItem,
   STabWindow,
-  SIconRender,
   SInput,
   SLoader,
 } from "@tumarsoft/ogogo-ui";
@@ -62,12 +57,10 @@ import { PropertyTable } from "@/widgets/property-table";
 import { usePropertyStore } from "@/entities/property";
 import { PropertyGroupTable } from "@/widgets/property-group-table";
 import { EmptyData } from "@/shared/ui";
-import { FilterModal } from "@/shared/ui";
 import { SORT_DIRECTION } from "@/shared/api/api.types";
 
 const propertyStore = usePropertyStore();
 const tab = ref("one");
-const filterModal = ref(null);
 const propertyTable = ref(null);
 const propertyGroupTable = ref(null);
 const hasData = ref(false);
@@ -96,10 +89,6 @@ const handleTabChange = (newTab: string) => {
 
 const addData = () => {
   hasData.value = true;
-};
-
-const openFilterModal = () => {
-  filterModal.value.toggleFilterModal();
 };
 
 const onSearch = (e: Event) => {

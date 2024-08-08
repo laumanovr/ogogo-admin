@@ -56,7 +56,9 @@
             <input
               type="number"
               :placeholder="
-                !item.isInputDisabled ? 'Введите макс.значение' : ''
+                !item.isInputDisabled
+                  ? $t('lang-37babc3e-d8b2-4f97-a14b-f09e8e720bba')
+                  : ''
               "
               :disabled="item.isInputDisabled"
               v-model="item.validationRules"
@@ -123,6 +125,8 @@ import { usePropertyStore } from "@/entities/property";
 import { useAlertStore } from "@/shared/store/alert";
 import lodash from "lodash";
 import { SORT_DIRECTION } from "@/shared/api/api.types";
+import i18n from "@/shared/lib/plugins/i18n";
+import { PropertyType, PropertyValueType } from "@/shared/lib/utils/enums";
 
 const propertyStore = usePropertyStore();
 const alertStore = useAlertStore();
@@ -132,24 +136,47 @@ const validateRanges = reactive([
   { id: 2, name: "От 10 до 100", range: { min: 10, max: 100 } },
   { id: 3, name: "От 10 до 500", range: { min: 10, max: 500 } },
   { id: 4, name: "От 10 до 1000", range: { min: 10, max: 1000 } },
-  { id: 5, name: "Ot 4 do 4", range: { min: 4, max: 4 } },
 ]);
 
 const localizations = reactive([
-  { name: "Нужна", value: true },
-  { name: "Не нужна", value: false },
+  {
+    name: i18n.global.t("lang-bebd78bd-e0f1-43d8-b67c-c49cd3cad402"),
+    value: true,
+  },
+  {
+    name: i18n.global.t("lang-5cf9b5fe-b483-4e36-8175-55e09a96ad0c"),
+    value: false,
+  },
 ]);
 
 const propertyTypes = reactive([
-  { name: "Справочник", id: 14000 },
-  { name: "Ручное", id: 14001 },
+  {
+    name: i18n.global.t("lang-b556b932-7106-4e40-b4ed-8314af8e958e"),
+    id: PropertyType.DIRECTORY,
+  },
+  {
+    name: i18n.global.t("lang-724aee48-4344-4801-877d-bc0365712d09"),
+    id: PropertyType.MANUAL,
+  },
 ]);
 
 const propertyValueTypes = reactive([
-  { name: "Текстовое", id: 14100 },
-  { name: "Числовое", id: 14101 },
-  { name: "Булеан", id: 14102 },
-  { name: "Дробные числа", id: 14103 },
+  {
+    name: i18n.global.t("lang-ba38d69e-acf1-4177-aaad-28f3c1a686c3"),
+    id: PropertyValueType.TEXT,
+  },
+  {
+    name: i18n.global.t("lang-d3444b70-fb84-4c93-8835-86352d19e50e"),
+    id: PropertyValueType.NUMBER,
+  },
+  {
+    name: i18n.global.t("lang-bf52cc09-dd8c-4a5e-bc91-5b8f1cc01a37"),
+    id: PropertyValueType.BOOLEAN,
+  },
+  {
+    name: i18n.global.t("lang-3eb2df9e-5602-4d69-8574-eef4fcf1f898"),
+    id: PropertyValueType.FRACTIONAL_NUMBER,
+  },
 ]);
 
 const groupProperties = computed(
@@ -274,7 +301,9 @@ const submitProperty = () => {
     lodash.isEqual
   );
   if (!newProperties.length && !updatedProperties.length) {
-    alertStore.showInfo("Вы ничего не добавили!");
+    alertStore.showInfo(
+      i18n.global.t("lang-61e05094-f247-4a4c-8ff0-8b0e6947c1ab")
+    );
     return;
   }
   if (newProperties.length) {
@@ -292,7 +321,9 @@ const onCreate = (newProperties: any) => {
         item.key && item.name && item.propertyType && item.propertyValueType
     )
   ) {
-    alertStore.showInfo("Заполните поля!");
+    alertStore.showInfo(
+      i18n.global.t("lang-f424ab7b-4c2c-4122-983d-2d74ec68a4b8")
+    );
     return;
   }
   const preparedData = newProperties.map((item: any) => {
@@ -323,7 +354,9 @@ const onUpdate = (updatedProperties: any) => {
         item.key && item.name && item.propertyType && item.propertyValueType
     )
   ) {
-    alertStore.showInfo("Заполните поля!");
+    alertStore.showInfo(
+      i18n.global.t("lang-f424ab7b-4c2c-4122-983d-2d74ec68a4b8")
+    );
     return;
   }
   const preparedData = updatedProperties.map((item: any) => {

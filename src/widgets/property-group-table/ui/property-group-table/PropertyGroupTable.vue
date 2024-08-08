@@ -76,6 +76,7 @@ import lodash from "lodash";
 import { Nullable } from "@/shared/lib/utils/nullable";
 import { SORT_DIRECTION } from "@/shared/api/api.types";
 import { PropertyGroupEntity } from "@/entities/property-group";
+import i18n from "@/shared/lib/plugins/i18n";
 
 const propertyGroupStore = usePropertyGroupStore();
 const alertStore = useAlertStore();
@@ -158,7 +159,9 @@ const submitGroupProperty = () => {
     lodash.isEqual
   );
   if (!newItems.length && !updatedItems.length) {
-    alertStore.showInfo("Вы ничего не добавили!");
+    alertStore.showInfo(
+      i18n.global.t("lang-61e05094-f247-4a4c-8ff0-8b0e6947c1ab")
+    );
     return;
   }
   if (newItems.length) {
@@ -171,7 +174,9 @@ const submitGroupProperty = () => {
 
 const onCreate = (newItems: any) => {
   if (!newItems.every((item: any) => item.name)) {
-    alertStore.showInfo("Заполните поля");
+    alertStore.showInfo(
+      i18n.global.t("lang-f424ab7b-4c2c-4122-983d-2d74ec68a4b8")
+    );
     return;
   }
   isLoading.value = true;
@@ -187,7 +192,9 @@ const onCreate = (newItems: any) => {
 
 const onUpdate = (updatedItems: any) => {
   if (!updatedItems.every((item: any) => item.name)) {
-    alertStore.showInfo("Заполните поля");
+    alertStore.showInfo(
+      i18n.global.t("lang-f424ab7b-4c2c-4122-983d-2d74ec68a4b8")
+    );
     return;
   }
   isLoading.value = true;

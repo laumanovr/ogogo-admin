@@ -69,6 +69,7 @@ import { useAlertStore } from "@/shared/store/alert";
 import { useRoute } from "vue-router";
 import lodash from "lodash";
 import { Nullable } from "@/shared/lib/utils/nullable";
+import i18n from "@/shared/lib/plugins/i18n";
 
 const propertyValueStore = usePropertyValueStore();
 const alertStore = useAlertStore();
@@ -151,7 +152,9 @@ const submitPropertyValues = () => {
     lodash.isEqual
   );
   if (!newValues.length && !updatedValues.length) {
-    alertStore.showInfo("Вы ничего не добавили!");
+    alertStore.showInfo(
+      i18n.global.t("lang-61e05094-f247-4a4c-8ff0-8b0e6947c1ab")
+    );
   }
   if (newValues.length) {
     onCreate(newValues);
@@ -163,7 +166,9 @@ const submitPropertyValues = () => {
 
 const onCreate = (newValues: any) => {
   if (!newValues.every((item: any) => item.value && item.icoBase64)) {
-    alertStore.showInfo("Заполните поля и иконку");
+    alertStore.showInfo(
+      i18n.global.t("lang-ab57eb65-6d3a-4fce-9458-9578727a3d75")
+    );
     return;
   }
   isLoading.value = true;
@@ -179,7 +184,9 @@ const onCreate = (newValues: any) => {
 
 const onUpdate = (updatedValues: any) => {
   if (!updatedValues.every((item: any) => item.value && item.icoBase64)) {
-    alertStore.showInfo("Заполните поля и иконку");
+    alertStore.showInfo(
+      i18n.global.t("lang-ab57eb65-6d3a-4fce-9458-9578727a3d75")
+    );
     return;
   }
   isLoading.value = true;
