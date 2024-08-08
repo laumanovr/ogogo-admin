@@ -13,6 +13,7 @@
 </template>
 
 <script lang="ts" setup>
+import i18n from "@/shared/lib/plugins/i18n";
 import { SButton } from "@tumarsoft/ogogo-ui";
 
 const emit = defineEmits(["onClick"]);
@@ -20,11 +21,11 @@ const emit = defineEmits(["onClick"]);
 const props = defineProps({
   buttonTitle: {
     type: String,
-    default: "Добавить",
+    default: i18n.global.t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4"),
   },
   text: {
     type: String,
-    default: "Здесь пока пусто, добавьте свойство",
+    default: i18n.global.t("lang-aff478ae-d0ac-4050-b047-b01b13b8fbd2"),
   },
 });
 

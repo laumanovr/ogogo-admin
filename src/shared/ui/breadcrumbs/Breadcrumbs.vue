@@ -18,14 +18,6 @@ const props = defineProps({
 });
 
 let items = reactive(props.items);
-
-//TODO: Delete later
-items = [
-  { name: "Электроника", link: "#" },
-  { name: "Смартфоны и гаджеты", link: "#" },
-  { name: "Apple", link: "#" },
-  { name: "Iphone 15 pro", link: "#" },
-];
 </script>
 
 <style scoped lang="scss">
