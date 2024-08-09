@@ -3,11 +3,8 @@
     <div class="s-text-h-2 s-mb-6 s-mt-6">
       {{ $t("lang-dec7f483-cf4a-406a-8241-bfeb9cf1baef") }}
     </div>
-    <FilterSearch
-      @onClick="openModal"
-      @onSearch="searchShop"
-      :show-filter="false"
-    />
+
+    <SInput class="s-mb-4" isSearchable hide-details @input="searchShop" />
 
     <STabs :tab-mode="'filter-tabs'" class="s-mb-4">
       <STabItem
@@ -70,15 +67,12 @@
         </router-link>
       </template>
     </STable>
-    <FilterModal ref="filterModal" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { STable, SBadge, STabs, STabItem } from "@tumarsoft/ogogo-ui";
+import { STable, SBadge, STabs, STabItem, SInput } from "@tumarsoft/ogogo-ui";
 import { ref, reactive, computed, onBeforeMount } from "vue";
-import FilterSearch from "@/widgets/filter-search/FilterSearch.vue";
-import { FilterModal } from "@/shared/ui";
 import {
   PRODUCT_VERIFICATION_STATUS,
   ShopEntity,
@@ -152,8 +146,6 @@ const shops = computed(() => shopStore.getShopPagedList.items);
 const pageSize = computed(() => shopStore.getShopPagedList.pageSize);
 const totalShops = computed(() => shopStore.getShopPagedList.totalCount);
 
-const filterModal = ref(null);
-
 const getColorByStatus = (item: ShopEntity) => {
   switch (item.verificationStatus) {
     case 0:
@@ -188,9 +180,5 @@ const onChangePage = (selectedPage: number) => {
   params.value.pageIndex = selectedPage - 1;
   params.value.queryParams = currentStatus.value;
   fetchShops();
-};
-
-const openModal = () => {
-  filterModal.value.toggleFilterModal();
 };
 </script>
