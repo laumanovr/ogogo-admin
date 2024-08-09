@@ -14,6 +14,7 @@
   <div class="add-image-buttons-container s-mb-8">
     <SFileInput
       size="medium"
+      mode="plus"
       @change="handleImageUpload"
       v-if="!imageUrl && !file"
     />
@@ -31,7 +32,11 @@
       />
     </div>
 
-    <SFileInput @change="handleIconUpload" v-if="!iconUrl && !iconFetched" />
+    <SFileInput
+      mode="plus"
+      @change="handleIconUpload"
+      v-if="!iconUrl && !iconFetched"
+    />
 
     <div v-if="iconUrl || iconFetched" class="relative">
       <div class="preview-selected-small-image rounded-lg">
