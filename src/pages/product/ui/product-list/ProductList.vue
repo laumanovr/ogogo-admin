@@ -3,11 +3,9 @@
     <div class="s-text-h-2 s-mb-6 s-mt-6">
       {{ $t("lang-9839245b-e40e-4ae1-92e9-0421dc97a154") }}
     </div>
-    <FilterSearch
-      @onClick="showFilterModal"
-      @onSearch="searchProduct"
-      :show-filter="true"
-    />
+
+    <SInput class="s-mb-4" isSearchable hide-details @input="searchProduct" />
+
     <STabs :tab-mode="'filter-tabs'" class="s-mb-4">
       <STabItem
         :value="ProductStatus.ALL"
@@ -97,15 +95,12 @@
         </router-link>
       </template>
     </STable>
-    <FilterModal ref="filterModal" />
   </div>
 </template>
 
 <script lang="ts" setup>
-import { STable, SBadge, STabs, STabItem } from "@tumarsoft/ogogo-ui";
+import { STable, SBadge, STabs, STabItem, SInput } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted, computed } from "vue";
-import FilterSearch from "@/widgets/filter-search/FilterSearch.vue";
-import { FilterModal } from "@/shared/ui";
 import { useProductStore } from "@/entities/product/store/product.store";
 import { ProductStatus } from "@/shared/lib/utils/enums";
 import { getFullIcon } from "@/shared/composable";
@@ -117,7 +112,6 @@ interface Status {
 }
 
 const productStore = useProductStore();
-const filterModal = ref(null);
 const params = ref({
   pageIndex: 0,
   productType: 14701,
@@ -243,10 +237,6 @@ const searchProduct = (value: string) => {
   searchTimer.value = setTimeout(() => {
     getModerationProducts();
   }, 1000);
-};
-
-const showFilterModal = () => {
-  filterModal.value.toggleFilterModal();
 };
 </script>
 
