@@ -4,13 +4,15 @@ import { useAuthStore } from "../../store/auth";
 
 export const authMiddleware: NavigationGuard = (to, _from, next) => {
   const authStore = useAuthStore();
-  const token = authStore.getSessionId;
+  const isAuthenticated = authStore.getSessionId;
 
-  if (!token && to.path !== ROUTES.login) {
-    next({ path: ROUTES.login });
-  } else if (token && to.path === ROUTES.login) {
-    next({ name: "property" });
-  } else {
+  if (to.name === "login" && isAuthenticated) {
+    next({ name: "products" });
+  } else if (to.name === "login" && !isAuthenticated) {
     next();
+  } else if (isAuthenticated) {
+    next();
+  } else {
+    next({ path: ROUTES.login });
   }
 };
