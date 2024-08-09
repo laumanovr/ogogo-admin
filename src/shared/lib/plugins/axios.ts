@@ -69,7 +69,7 @@ API.interceptors.response.use(
       switch (error?.response?.status) {
         case HTTP_CODES.BAD_REQUEST:
           showError = false;
-          alertStore.showError(error.response.data.error.errorMessage);
+          alertStore.showError(error.response.data.error?.errorMessage);
           break;
         case HTTP_CODES.UNAUTHORIZED:
           showError = false;
@@ -78,10 +78,10 @@ API.interceptors.response.use(
           });
           break;
         case HTTP_CODES.FORBIDDEN:
-          alert(t("lang-cd753f43-d3f9-44c8-8ad6-c383e6281497"));
+          alertStore.showError(t("lang-cd753f43-d3f9-44c8-8ad6-c383e6281497"));
           break;
         case HTTP_CODES.INTERNAL_SERVER_ERROR:
-          alertStore.showError("Ошибка");
+          alertStore.showError(t("lang-97807400-0038-4261-8bb7-1ad50fbbd35b"));
           break;
       }
       return Promise.reject(error);
