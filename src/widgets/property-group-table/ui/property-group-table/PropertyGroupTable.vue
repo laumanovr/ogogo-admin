@@ -41,25 +41,15 @@
               <img
                 :src="item.icoBase64"
                 alt="icon"
-                class="selected-image ml-10"
+                class="selected-image s-ml-3"
               />
               <SIconRender name="close" @click="item.icoBase64 = null" />
             </span>
-            <div class="label-container" v-else>
-              <!--TODO: Change-->
-              <div class="tooltip-info">
-                {{ $t("lang-4ae6eb0a-a362-49ab-824e-4ee51c97542b") }}
-              </div>
-              <span class="s-flex s-items-center">
-                <img src="/icons/attach.svg" class="mr-12 ml-10" />
-                {{ $t("lang-c1d4974f-d48f-4107-99d8-d6a188b31129") }}
-              </span>
-              <input
-                type="file"
-                id="file"
-                @change="onSelectFile($event, item)"
-              />
-            </div>
+            <SFileInput
+              mode="attach"
+              @change="onSelectFile($event, item)"
+              v-else
+            />
           </td>
         </tr>
       </tbody>
@@ -68,7 +58,7 @@
 </template>
 
 <script lang="ts" setup>
-import { SIconRender, SLoader } from "@tumarsoft/ogogo-ui";
+import { SIconRender, SLoader, SFileInput } from "@tumarsoft/ogogo-ui";
 import { ref, onMounted, watch, computed } from "vue";
 import { usePropertyGroupStore } from "@/entities/property-group";
 import { useAlertStore } from "@/shared/store/alert";
@@ -106,9 +96,7 @@ const convertToBase64 = (
   });
 };
 
-const onSelectFile = async (e: Event, item: PropertyGroupEntity) => {
-  const target = e.target as HTMLInputElement;
-  const file = target.files[0];
+const onSelectFile = async (file: File, item: PropertyGroupEntity) => {
   if (file) {
     item.icoBase64 = await convertToBase64(file);
   }
