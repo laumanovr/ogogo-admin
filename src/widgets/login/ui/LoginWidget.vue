@@ -5,14 +5,14 @@
       <div class="login-logo">
         <img src="/icons/Ogogo-logo.png" alt="ogogo-logo" />
       </div>
-      <SForm class="form-block" ref="loginForm">
+      <SForm class="form-block s-bg-white" ref="loginForm">
         <div class="form-title">
           {{ $t("lang-29a329cd-0145-44d5-804d-446c68eb158a") }}
         </div>
 
         <div
           v-if="showIncorrectLoginAndPassword"
-          class="s-py-3 s-px-4 s-mb-4 rounded-lg bg-#FEF2F2 border-1 border-solid border-red-400"
+          class="s-py-3 s-px-4 s-mb-4 s-border s-rounded-md s-border-red-300 s-bg-red-50"
         >
           {{ $t("lang-cd89ff76-e757-45a3-8737-03294b4e1345") }}
         </div>
@@ -72,6 +72,9 @@ const onSubmitLogin = () => {
           router.push({ name: "products" });
           showIncorrectLoginAndPassword.value = false;
         })
+        .catch(() => {
+          showIncorrectLoginAndPassword.value = true;
+        })
         .finally(() => {
           isLoading.value = false;
         });
@@ -95,7 +98,6 @@ const onSubmitLogin = () => {
   }
 
   .form-block {
-    background: #fff;
     width: 360px;
     padding: 24px;
     border-radius: 16px;
