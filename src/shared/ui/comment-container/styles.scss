@@ -25,19 +25,14 @@
     font-weight: 500;
   }
 
-  .btn-group {
-    display: flex;
-    gap: 8px;
-
     .btn {
       font-size: 12px;
       font-weight: 500;
       color: var(--gray-500);
-      cursor: pointer;
+      padding: 0;
     }
 
     .btn:hover {
       text-decoration: underline;
     }
-  }
 }

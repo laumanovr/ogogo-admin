@@ -5,16 +5,20 @@
       <span class="date">{{ formatDate(props.date) }}</span>
     </div>
     <div class="comment-body">{{ props.comment }}</div>
-    <div class="btn-group" v-if="props.isPending">
-      <span class="btn" @click="onEdit">
-        {{ $t("lang-86a84b88-d2ec-4791-b06f-ca4d6aa58a4f") }}
-      </span>
-      
-    </div>
+    <SButton
+      type="text"
+      size="small"
+      class="btn"
+      @click="onEdit"
+      v-if="props.isPending"
+    >
+      {{ $t("lang-86a84b88-d2ec-4791-b06f-ca4d6aa58a4f") }}
+    </SButton>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { SButton } from "@tumarsoft/ogogo-ui";
 import moment from "moment";
 
 const props = defineProps({
