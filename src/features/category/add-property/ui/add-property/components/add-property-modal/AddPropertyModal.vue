@@ -12,7 +12,7 @@
         itemValue="id"
         :items="getPropertiesListAutocomplete"
       />
-      <SCheckbox id="0" class="w-p-100">
+      <SCheckbox id="0" class="s-w-full">
         {{ $t("lang-030b4140-be2c-482a-ba23-45c62ada7613") }}
       </SCheckbox>
       <SSelect
