@@ -2,7 +2,6 @@
   <div class="comment-input">
     <SInput
       :placeHolder="props.placeholder"
-      width="100%"
       :model-value="props.comment"
       @input="onInput"
       hide-details
