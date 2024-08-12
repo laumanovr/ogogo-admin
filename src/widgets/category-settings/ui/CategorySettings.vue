@@ -92,10 +92,6 @@ const onSaveSettings = () => {
     }
   }
 }
-.settings {
-  overflow-y: scroll;
-  height: 86vh;
-}
 
 .save-block {
   .button {
