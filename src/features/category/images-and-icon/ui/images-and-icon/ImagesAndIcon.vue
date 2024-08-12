@@ -19,7 +19,10 @@
       v-if="!imageUrl && !file"
     />
 
-    <div v-if="imageUrl || file" class="preview-selected-big-image rounded-lg">
+    <div
+      v-if="imageUrl || file"
+      class="preview-selected-big-image s-rounded-lg"
+    >
       <img
         :src="imageUrl || file"
         alt="Preview"
@@ -28,7 +31,7 @@
       <img
         src="@/shared/assets/close-rounded-icon.svg"
         @click="closeImage"
-        class="absolute left-69 bottom-38 cursor-pointer"
+        class="remove-icon cursor-pointer"
       />
     </div>
 
@@ -38,19 +41,19 @@
       v-if="!iconUrl && !iconFetched"
     />
 
-    <div v-if="iconUrl || iconFetched" class="relative">
-      <div class="preview-selected-small-image rounded-lg">
+    <div v-if="iconUrl || iconFetched" class="s-relative">
+      <div class="preview-selected-small-image s-rounded-lg">
         <img
           :src="iconUrl || iconFetched"
           alt="Preview"
           class="small-image-under-container"
         />
+        <img
+          src="@/shared/assets/close-rounded-icon.svg"
+          @click="closeIcon"
+          class="remove-icon cursor-pointer"
+        />
       </div>
-      <img
-        src="@/shared/assets/close-rounded-icon.svg"
-        @click="closeIcon"
-        class="absolute left-14.5 bottom-14.5 cursor-pointer"
-      />
     </div>
     <ImageRecomendationModal ref="imageInfoModal" />
   </div>

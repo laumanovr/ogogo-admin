@@ -47,8 +47,6 @@
 .preview-selected-big-image {
   width: 310px;
   height: 186px;
-  overflow: hidden;
-  /* Clip content that exceeds div bounds */
   position: relative;
   background: #0000000a;
   border-radius: 16px;
@@ -64,15 +62,13 @@
     /* Ensure image fills the div horizontally */
     height: 100%;
     /* Ensure image fills the div vertically */
-    object-fit: cover;
+    object-fit: contain;
   }
 }
 
 .preview-selected-small-image {
   width: 72px;
   height: 72px;
-  overflow: hidden;
-  /* Clip content that exceeds div bounds */
   position: relative;
   background: #0000000a;
   border-radius: 16px;
@@ -88,12 +84,12 @@
     /* Ensure image fills the div horizontally */
     height: 100%;
     /* Ensure image fills the div vertically */
-    object-fit: cover;
+    object-fit: contain;
   }
 }
 
 .remove-icon {
   position: absolute;
-  top: 15px;
-  right: 15px;
+  top: -10px;
+  right: -10px;
 }
