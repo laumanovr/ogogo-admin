@@ -96,6 +96,8 @@ const onSaveSettings = () => {
 .save-block {
   .button {
     width: 215px;
+    position: sticky;
+    top: 10px;
   }
 }
 </style>
