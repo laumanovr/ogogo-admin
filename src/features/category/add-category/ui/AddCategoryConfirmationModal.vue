@@ -1,5 +1,5 @@
 <template>
-  <SModal v-model="props.value" width="100" height="auto" @onClose="onClose">
+  <SModal v-model="props.value" width="100px" height="auto" @onClose="onClose">
     <div class="add-property-modal-main-wrapper">
       <p class="s-text-title-2 s-mb-2">
         {{ $t("lang-474c7de3-c095-4ac4-b222-2cf17b6d5343") }}
@@ -7,13 +7,15 @@
       <p class="text s-mb-2">
         {{ $t("lang-6d09ed42-5da2-4bef-a54f-3a2f23735af1") }}
       </p>
-      <div class="buttons-container s-flex s-justify-end s-gap-12 s-mt-12 light">
+      <div
+        class="buttons-container s-flex s-justify-end s-gap-12 s-mt-12 light"
+      >
         <SButton class="button" @click="onClose">
-          {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}</SButton
-        >
+          {{ $t("lang-c66fcd83-27ea-4c39-a1e9-be9c01dfdb36") }}
+        </SButton>
         <SButton class="button" @click="onSave">
-          {{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</SButton
-        >
+          {{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}
+        </SButton>
       </div>
     </div>
   </SModal>
