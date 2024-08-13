@@ -1,7 +1,7 @@
 import { defineStore } from "pinia";
 import { DETAIL_STATUS, ShopDetailState } from "./types";
 
-const NAME_ID = "shop-detail-store";
+const NAME_ID = "shop-detail";
 
 export const useShopDetailStore = defineStore(NAME_ID, {
   state: (): ShopDetailState => {

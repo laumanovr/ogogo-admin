@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 
 import { ICategory, ICategoryPageState } from "./category-page-store.types";
 
-export const useCategoryPageStore = defineStore("category-page-store", {
+export const useCategoryPageStore = defineStore("category-page", {
   state: (): ICategoryPageState => {
     return {
       leftSideBarhierarchy: [
