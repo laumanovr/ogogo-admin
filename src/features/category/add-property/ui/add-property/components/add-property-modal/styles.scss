@@ -1,3 +1,4 @@
+@import "../../../../../../../app/styles/colors.scss";
 .add-property-modal-main-wrapper {
   width: auto;
   height: 100%;
@@ -25,5 +26,5 @@
 }
 
 .text {
-  color: #7c3aed;
+  color: $violet-600;
 }

@@ -1,3 +1,4 @@
+@import "../../../app/styles/colors.scss";
 .left-side-bar-container {
   width: auto;
   height: 100vh;
@@ -16,7 +17,7 @@
   border-radius: 12px;
 
   &:hover {
-    background-color: #f5f3ff;
+    background-color: $violet-50;
   }
 }
 

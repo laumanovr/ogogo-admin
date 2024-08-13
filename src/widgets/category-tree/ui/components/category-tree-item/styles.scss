@@ -1,3 +1,4 @@
+@import "../../../../../app/styles/colors.scss";
 .empty-category-container,
 .empty-category-container-active {
   width: 334px;
@@ -11,7 +12,7 @@
   border-radius: 12px;
 
   &:hover {
-    background-color: #f5f3ff;
+    background-color: $violet-50;
   }
 
   .category-item-content {
@@ -23,5 +24,5 @@
 }
 
 .empty-category-container-active {
-  background-color: #f5f3ff;
+  background-color: $violet-50;
 }
