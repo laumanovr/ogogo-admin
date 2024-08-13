@@ -56,7 +56,7 @@ const onSaveSettings = () => {
   display: flex;
   flex-direction: row;
   align-items: center;
-  color: #6d28d9;
+  color: $violet-700;
   gap: 10px;
 }
 
@@ -74,7 +74,7 @@ const onSaveSettings = () => {
   align-items: center;
   justify-content: center;
   border-radius: 16px;
-  background-color: #0000000a;
+  background-color: $black;
   cursor: pointer;
 }
 .add-image-small-button {

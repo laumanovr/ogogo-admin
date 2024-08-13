@@ -1,5 +1,5 @@
 <template>
-  <div class="left-side-bar-container overflow-y-scroll">
+  <div class="left-side-bar-container">
     <div class="item"></div>
     <div v-for="(item, i) in categoriesLocal" :key="i">
       <CategoryTreeItem
@@ -10,14 +10,22 @@
         @saveSubCategory="onSaveSubCategory"
       />
     </div>
-    <div class="add-category-container" @click="addCategory">
+    <SButton
+      class="s-w-full s-mt-3"
+      type="secondary"
+      variant="outlined"
+      @click="addCategory"
+    >
       <img src="/icons/plus-icon.png" />
-      <span>{{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}</span>
-    </div>
+      <span class="s-ml-2">
+        {{ $t("lang-af8b01aa-014b-421c-98fd-e68365f64cf4") }}
+      </span>
+    </SButton>
   </div>
 </template>
 
 <script lang="ts" setup>
+import { SButton } from "@tumarsoft/ogogo-ui";
 import { ref, computed } from "vue";
 import { CategoryTreeItem } from "@/widgets/category-tree/ui/components";
 import { useCategoryStore } from "@/entities/category";
@@ -55,11 +63,7 @@ function deletePropertyFromMultidimensionalArray(
   propertyToDelete: any
 ) {
   array.forEach((obj: any) => {
-    // Delete the property from the current object
     delete obj[propertyToDelete];
-
-    // If the current object has childMarketplaceCategoryIdList property and it's an array,
-    // recursively call the function to process its elements
     if (
       obj.childMarketplaceCategoryIdList &&
       Array.isArray(obj.childMarketplaceCategoryIdList)
@@ -81,23 +85,5 @@ const onSaveSubCategory = () => {
 .left-side-bar-container {
   width: auto;
   height: 86vh;
-}
-.empty-category-container,
-.add-category-container {
-  width: auto;
-  cursor: pointer;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 14px 17px;
-  background-color: transparent;
-  gap: 7.5px;
-  border-radius: 12px;
-  &:hover {
-    background-color: #f5f3ff;
-  }
-}
-.add-category-container {
-  gap: 14px;
 }
 </style>
