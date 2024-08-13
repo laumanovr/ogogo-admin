@@ -2,8 +2,8 @@
   <div class="light">
     <SButton type="secondary" class="add-button" @click="onOpenModal">
       <img src="/icons/plus-icon.png" />
-      <p>{{ $t("lang-1d55fd08-eaa6-4b4b-84b9-225f2d0dc1ad") }}</p></SButton
-    >
+      <p>{{ $t("lang-1d55fd08-eaa6-4b4b-84b9-225f2d0dc1ad") }}</p>
+    </SButton>
   </div>
   <PropertyCardList
     v-for="(propertyItem, i) in categoryStore.getProperties"

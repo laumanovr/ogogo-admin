@@ -18,7 +18,6 @@
       @change="handleImageUpload"
       v-if="!imageUrl && !file"
     />
-
     <div
       v-if="imageUrl || file"
       class="preview-selected-big-image s-rounded-lg"
@@ -34,13 +33,11 @@
         class="remove-icon cursor-pointer"
       />
     </div>
-
     <SFileInput
       mode="plus"
       @change="handleIconUpload"
       v-if="!iconUrl && !iconFetched"
     />
-
     <div v-if="iconUrl || iconFetched" class="s-relative">
       <div class="preview-selected-small-image s-rounded-lg">
         <img
@@ -71,15 +68,11 @@ import { useCategoryStore } from "@/entities/category";
 let imageUrl = ref(null);
 let iconUrl = ref(null);
 const imageInfoModal = ref(null);
-
 const store = useImagesAndIconStore();
-
 const categoryStore = useCategoryStore();
-
 const iconFetched = computed(() => {
   return categoryStore.getIcoBase64 as string;
 });
-
 const file = computed(() => {
   return categoryStore.getFile;
 });
@@ -105,7 +98,6 @@ function resizeImage(file: File) {
       const canvas = document.createElement("canvas");
       const ctx = canvas.getContext("2d");
 
-      // Set canvas dimensions to desired size (e.g., 300x300)
       const maxWidth = 310;
       const maxHeight = 186;
       let width = img.width;
