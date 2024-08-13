@@ -3,9 +3,7 @@
     <SLoader v-if="isLoading" />
     <img class="six-dots" src="/icons/six-dots-icon.png" alt="six-dots" />
     <div :class="!hideBody ? 'header-property' : 'header-property-closed'">
-      <div
-        class="left-toolbar s-flex s-flex-row s-items-center s-justify-between s-gap-4"
-      >
+      <div class="s-flex s-flex-row s-items-center s-justify-between s-gap-4">
         <div class="s-flex s-flex-row s-items-center s-gap-3">
           <SIconRender name="chevron-up" @click="onHideBody" v-if="!hideBody" />
           <SIconRender name="chevron-right" @click="onHideBody" v-else />
@@ -19,49 +17,33 @@
           <p>{{ $t("lang-afd3cd36-ac2b-4852-bde7-3d2cb4d7842b") }}</p>
           <p>{{ getPropertyValueAutocomplete?.length ?? 0 }}</p>
         </div>
-       
       </div>
-      <div class="relative hover:bg-slate-50 px-2 cursor-pointer rounded">
-        <img
-          class="s-w-4 s-h-1"
-          src="/icons/three-dots.png"
-          alt="three-dots"
-          @click="onOpenPropertyToolsDropdown"
-        />
-        <ul
-          v-if="openPropertyToolsDropdown"
-          class="s-flex s-flex-col list-none rounded-lg shadow-2xl px-1.2 py-1.2 bg-white absolute left--14"
-        >
-          
-          <li
-            class="s-flex s-gap-4 cursor-pointer hover:bg-slate-50 px-2.5 py-3 rounded"
-            @click="deletePropertyCard"
-          >
-            <img src="/icons/delete-icon.png" />
-            {{ $t("lang-4d04ae16-7603-4e88-8a14-bf133f2e2c4a") }}
-          </li>
-        </ul>
+
+      <div class="s-relative cursor-pointer s-rounded">
+        <img src="/icons/delete-icon.png" @click="deletePropertyCard" />
       </div>
     </div>
     <div v-if="!hideBody" class="body s-flex s-flex-row s-flex-wrap s-gap-3">
-      <div
-        class="add-value s-flex s-flex-row s-items-center s-gap-3 cursor-pointer hover:-translate-y-0.60 hover:scale-102 duration-300 s-py-4 s-px-5"
+      <SButton
+        size="large"
+        class="add-value s-flex s-items-center s-gap-3 cursor-pointer s-py-4 s-px-5"
         @click="onShowAddPopertyValue"
       >
         <img src="/icons/plus-icon.png" />
-        <p class="text-white">
+        <p class="s-text-white">
           {{ $t("lang-614cdebf-5132-4c67-b75c-767d3f711423") }}
         </p>
-      </div>
+      </SButton>
       <template v-if="'allowedValues' in property">
         <div
-          class="value s-flex s-flex-row s-items-center s-gap-2"
+          class="value s-flex s-items-center s-gap-2"
           v-for="(propertyValue, i) in property.allowedValues"
           :key="i"
         >
           <p>{{ propretyValueName(propertyValue) }}</p>
           <SIconRender
             name="close"
+            class="cursor-pointer"
             @click="onRemovePropertyValue(propertyValue)"
           />
         </div>

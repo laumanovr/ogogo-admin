@@ -21,14 +21,13 @@
       <img
         v-if="item.icon || item.icoBase64"
         :src="item.icon || item.icoBase64"
-        class="s-w-4 s-h-4 rounded"
+        class="s-w-4 s-h-4 s-rounded"
       />
       <img v-else src="/icons/fileIcon.png" />
       <span>{{ $t(`${props.categoryName}`) }}</span>
     </div>
     <img
-      width="13px"
-      height="13px"
+      class="s-w-3 s-h-3"
       @click.stop="addSubCategory"
       src="/icons/plus-icon.png"
       v-if="isSelectedCategory"
@@ -111,11 +110,7 @@ function deletePropertyFromMultidimensionalArray(
         [key: string]: any;
       }
     ) => {
-      // Delete the property from the current object
       delete obj[propertyToDelete];
-
-      // If the current object has childMarketplaceCategoryIdList property and it's an array,
-      // recursively call the function to process its elements
       if (
         obj.childMarketplaceCategoryIdList &&
         Array.isArray(obj.childMarketplaceCategoryIdList)
@@ -161,7 +156,6 @@ const addSubCategory = () => {
 };
 
 const onChangeActive = () => {
-  //remove active flag on other item to show actual active item
   deletePropertyFromMultidimensionalArray(
     categoryStore.getCategories,
     "active"
@@ -170,7 +164,6 @@ const onChangeActive = () => {
   if (props.item.id) {
     categoryStore.fetchCategoryById(props.item.id, "");
   } else {
-    // reset settings on other item click
     categoryStore.setTranslation(null, "ru");
     categoryStore.setTranslation(null, "ky");
     categoryStore.setTranslation(null, "en");
@@ -187,6 +180,7 @@ const onChangeActive = () => {
 </script>
 
 <style lang="scss" scoped>
+@import "../../../../../app/styles/colors.scss";
 .empty-category-container,
 .empty-category-container-active {
   width: 334px;
@@ -199,7 +193,7 @@ const onChangeActive = () => {
   background-color: transparent;
   border-radius: 12px;
   &:hover {
-    background-color: #f5f3ff;
+    background-color: $violet-50;
   }
   .category-item-content {
     display: flex;
@@ -213,6 +207,6 @@ const onChangeActive = () => {
 }
 
 .empty-category-container-active {
-  background-color: #f5f3ff;
+  background-color: $violet-50;
 }
 </style>
