@@ -1,5 +1,5 @@
 <template>
-  <div class="category-main-wrapper s-mt-4">
+  <div class="s-mt-4 s-h-full s-flex s-justify-start s-gap-12">
     <div class="left-side-bar-container s-h-full">
       <CategoryTree />
     </div>
@@ -14,11 +14,4 @@ import { CategorySettings } from "@/widgets/category-settings";
 
 <style scoped lang="scss">
 @import "../../../../app/styles/colors.scss";
-.category-main-wrapper {
-  height: 86vh;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  gap: 48px;
-}
 </style>
